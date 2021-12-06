@@ -1,0 +1,12 @@
+<dx-popup *ngIf="isVisible" class="popup popup-warning" width="500" height="auto" (onContentReady)="readyPopWarning($event)" [visible]="isVisible" (onHidden)="hidePopup()"
+  [title]="title">
+  <div class="amis-popup-container-warning" [innerHTML]="textWarning">
+  </div>
+  <div class="amis-footer-warning dis-flex m-row">
+    <div class="flex"></div>
+    <div class="right">
+      <amis-button class="mr-2" name="{{'CANCEL2' | translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.Normal" (clickButton)="hidePopup()"></amis-button>
+      <amis-button name="{{'ACCEPT' | translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary" (clickButton)="confirmWarning()"></amis-button>
+    </div>
+  </div>
+</dx-popup>

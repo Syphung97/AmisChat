@@ -1,0 +1,187 @@
+@import "../../../assets/scss/var-font.scss";
+@import "../../../assets/scss/var-color.scss";
+@import "../../../assets/scss//var-styleguide.scss";
+
+:host {
+  .remind {
+    background-color: $bg-btn-red-primary;
+    border-radius: 8px;
+    border: 1px solid $white;
+    width: auto;
+    height: 17px;
+    min-width: 17px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: $white;
+    font-size: 12px;
+    padding: 3px;
+  }
+  .list-tab {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $border;
+    box-sizing: initial;
+  }
+  .list-tab-1 {
+    background: $bg-row;
+    height: 56px;
+  }
+  .list-tab-2 {
+    background: $white;
+    height: 48px;
+  }
+  .list-tab-3 {
+    // padding: 2px 4px;
+    // width: fit-content;
+    border-bottom: none;
+    border-radius: $border-radius-8;
+  }
+
+  .item-tab {
+    height: calc(100% - 8px);
+    display: flex;
+    align-items: center;
+    border-radius: $border-radius-8;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: $font-size-base;
+    color: $text;
+  }
+  .item-tab-1 {
+    padding: 0 24px;
+    margin: 2px;
+  }
+  .item-tab-2 {
+    padding: 0 16px;
+    margin: 2px 0;
+  }
+  .item-tab-3 {
+    padding: 8px 16px;
+    box-sizing: border-box;
+  }
+  .item-tab:hover {
+    background-color: $tab-hover;
+  }
+
+  .item-tab:active {
+    background-color: $tab-press;
+  }
+
+  .item-tab-active-1 {
+    border-bottom: 3px solid $selected;
+    height: 100% !important;
+    border-radius: 0 !important;
+    padding: 3px 24px 0 24px;
+    margin: 0 2px;
+    color: $selected;
+  }
+  .item-tab-active-2 {
+    border-bottom: 3px solid $selected;
+    height: 100% !important;
+    border-radius: 0 !important;
+    margin: 0;
+    padding-top: 4px;
+    color: $selected;
+  }
+  // .item-tab-active-3{
+  //     background-color: $white !important;
+  // }
+  .font-bold {
+    font-weight: $font-weight-bold !important;
+  }
+
+  .dis-none {
+    display: none;
+  }
+
+  .collapse-column {
+    position: absolute;
+    right: 8px;
+    align-items: center;
+  }
+  .icon-collapse-column {
+    float: right;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .more-column {
+    padding: 8px 16px;
+  }
+
+  .event-none {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .w-537 {
+    width: 537px !important;
+  }
+}
+
+::ng-deep {
+  .list-tab {
+    .dx-scrollable-scrollbar.dx-widget.dx-scrollbar-horizontal.dx-scrollbar-hoverable {
+      display: none !important;
+    }
+  }
+  .popover-more-column {
+    .dx-popover-arrow {
+      display: none;
+    }
+    .two-cloumn {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    @media only screen and (min-height: 800px) {
+      .scroll-data-listTab {
+        max-height: 350px;
+      }
+    }
+    @media only screen and (max-height: 800px) {
+      .scroll-data-listTab {
+        max-height: 244px;
+      }
+    }
+    .content-more-column {
+      padding: 8px 0;
+      // top: 37px !important;
+      // width: 277px;
+      .item-tab-popover {
+        padding: 8px 16px;
+        cursor: pointer;
+        width: 244px;
+        margin-left: 16px;
+        font-size: $font-size-base;
+        border-radius: $border-radius-8;
+        justify-content: space-between;
+      }
+      .item-tab-popover:hover {
+        background-color: $hover;
+      }
+      .item-tab-active {
+        color: $bd-btn-blue-secondary;
+        .icon-tick-16 {
+          background-color: $selected;
+          width: 16px;
+        }
+      }
+      .input-search {
+        margin: 8px 16px;
+      }
+      .amis-tab-search-no-data {
+        margin: 8px 16px;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+  // .dropdown-more-column{
+
+  .amis-tab-button {
+    .btn-normal {
+      border: none !important;
+    }
+  }
+}

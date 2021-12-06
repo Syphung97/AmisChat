@@ -1,0 +1,31 @@
+<div style="min-width: 360px" class="flex-m p4">
+  <div>
+    <amis-avatar [size]="48" [src]="item?.AvatarUrl"></amis-avatar>
+  </div>
+  <div class="info flex-col m-l-16">
+    <div class="title">
+      {{ item?.DisplayName ? item?.DisplayName : "Lập trình viên" }}
+    </div>
+    <div class="text-gray">
+      {{ item?.JobPositionName ? item?.JobPositionName : "Lập trình viên" }}
+    </div>
+    <div style="max-width: 360px" class="text-gray">
+      {{
+        item?.OrganizationUnitName
+          ? item?.OrganizationUnitName
+          : ""
+      }}
+    </div>
+    <div class="m-t-8 w-full flex-c-m">
+      <button
+        amisHidenPermission
+        [appCode]="'Newsfeed'"
+        (click)="handleDirectToNewsfeed()"
+        nz-button
+        nzType="default"
+      >
+        Xem trang cá nhân
+      </button>
+    </div>
+  </div>
+</div>

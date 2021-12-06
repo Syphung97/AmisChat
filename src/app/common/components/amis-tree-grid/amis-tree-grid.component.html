@@ -1,0 +1,153 @@
+<div class="dis-flex flex-column amis-tree-grid">
+  <div class="dis-flex h-100 amis-custom-tree">
+
+    <!-- Phần lọc phía trên bên trái tree -->
+    <div *ngIf="true" ngbDropdown placement="bottom-left" #myDrop="ngbDropdown" autoClose="false"
+      (openChange)="toggle($event)">
+      <div ngbDropdownToggle>
+        <div class="column-chooser">
+          <amis-icon [classIcon]="'icon-colunm-option'" [isActive]="isShowDrop" tooltipContent="{{'CONTEXT_MENU_CUSTOM_COLUMN' | translate}}">
+          </amis-icon>
+        </div>
+      </div>
+      <div ngbDropdownMenu class="app-dropdown menu-column" id="misa-grid-custom-colum-dropdown">
+        <div class="drop-header dis-flex dis-justify-content-between">
+          <div class="title">{{'CONTEXT_MENU_CUSTOM_COLUMN' | translate}}</div>
+          <div class="cursor mar-icon icon-close hover-icon" (click)="closeCustomColumn($event)"></div>
+        </div>
+
+        <div *ngIf="isShowDrop" class="drop-content">
+          <amis-list-drag-drop #customColumn [items]="columns" [isLoadIsSystem]="isLoadIsSystem" [isReordering]="true"
+            [selectedItems]="selectedColumns" (saveCustomColumn)="customSettingColumn($event)"></amis-list-drag-drop>
+        </div>
+
+        <div class="dis-flex dis-justify-content-between align-items-center drop-footer">
+          <amis-button name="Mặc định" class="w-100-p hov-pointer" [type]="buttonType.OnlyText"
+            [color]="buttonColor.Normal" (clickButton)="setDefaultSettingColumn($event)"></amis-button>
+          <amis-button name="Lưu" class="w-100-p" [class.disable-btn]="!isCustomed" [type]="buttonType.OnlyText"
+            [color]="buttonColor.BluePrimary" (clickButton)="saveOptionColumn($event)">
+          </amis-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RENDER NỘI DUNG GRID -->
+    <div class="hrm-tree-grid">
+      <dx-tree-list #tree [dataSource]="dataSource" class="custom-tree-control" [keyExpr]="keyID" dataStructure="plain"
+        [rootValue]="rootValue" [parentIdExpr]="parentID" [showColumnLines]="showColumnLines"
+        [showBorders]="showBorders" [allowColumnReordering]="true" [expandedRowKeys]="listIDExpanded"
+        [allowColumnResizing]="allowColumnResizing" [showRowLines]="showRowLines" hoverStateEnabled="true"
+        [disabled]="isDisabled" focusedRowEnabled="true" [showBorders]="showBorders" columnResizingMode="widget"
+        [wordWrapEnabled]="true" [noDataText]="noDataText"
+        (allowColumnReorderingChange)="allowColumnReorderingChange($event)" (onRowClick)="onRowClick($event)"
+        (onRowDblClick)="onRowDblClick($event)" (selectedRowKeysChange)="selectedRowKeysChange($event)">
+
+        <ng-container *ngIf="contextMenuList.length == 0; else elses">
+          <dxi-column *ngIf="isShowMoreOption" type="buttons" [fixed]="true" [width]="56" [fixedPosition]="0">
+
+          </dxi-column>
+        </ng-container>
+
+        <ng-template #elses>
+          <ng-container *ngIf="contextMenuList.length <= 1; else secondCondition">
+            <dxi-column type="buttons" [fixed]="true" [width]="52" [fixedPosition]="0" cellTemplate="menuTemplate">
+
+              <div *dxTemplate="let param of 'menuTemplate'">
+                <div class="wrapper-button">
+
+                  <div class="dis-flex dis-justify-content-around">
+                    <ng-container *ngFor="let item of contextMenuList">
+                      <amis-icon [classIcon]="item.Icon" [isHoverState]="false"
+                        isIgnorePermission="{{item.PermissionCode ? item.IsIgnorePermission: true}}"
+                        permissionCode="{{item.PermissionCode}}" subSystemCode="{{item.SubSystemCode}}"
+                        tooltipContent="{{'EDIT2' | translate}}" (passPermissionClick)="clickContextMenu($event, item, param)">
+                      </amis-icon>
+                      <!-- <div isIgnorePermission="{{item.PermissionCode ? item.IsIgnorePermission: true}}"
+                        permissionCode="{{item.PermissionCode}}" subSystemCode="{{item.SubSystemCode}}"
+                        class="{{item.Icon}} pointer cursor icon-action"
+                        (passPermissionClick)="clickContextMenu($event, item, param)">
+                      </div> -->
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </dxi-column>
+          </ng-container>
+        </ng-template>
+
+        <ng-template #secondCondition>
+          <dxi-column type="buttons" [fixed]="true" [width]="52" [fixedPosition]="0" cellTemplate="moreTemplate">
+            <div *dxTemplate="let param of 'moreTemplate'" (click)="onShowContextMenu($event, param)"
+              class="icon-optional-more cursor viewmore">
+              <div *ngIf="param.value">
+                {{ param.value }}
+              </div>
+            </div>
+          </dxi-column>
+        </ng-template>
+        <dxo-paging [enabled]="true" [pageSize]="10">
+        </dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]" [showInfo]="true">
+        </dxo-pager>
+        <dxo-selection [mode]="modeSelection" [allowSelectAll]="false" [showCheckBoxesMode]="'hide'"></dxo-selection>
+
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+        <ng-container #container *ngFor="let item of columns; let i=index">
+          <dxi-column [allowFixing]="item.IsFlex" [allowResizing]="!item.IsFlex" [minWidth]="item.MinWidth"
+            [cssClass]="item.ClassColumn" *ngIf="item.IsFlex && item.IsVisible && !item.IsDataEnum"
+            [dataField]="item.FieldName" [caption]="item.Caption" cellTemplate="cellTemplate"
+            headerCellTemplate="item.Caption" alignment="left">
+            <div *dxTemplate="let param of 'cellTemplate'" class="dis-flex">
+              <div *ngIf="param.value != null; then contentNormal; else emptyContent"></div>
+              <ng-template #contentNormal>
+                <div class="hrm-cell-tree-value" *ngIf="!item.IsDataEnum" [title]="param.value">{{param.value}}</div>
+              </ng-template>
+              <ng-template #emptyContent>--</ng-template>
+            </div>
+            <div *dxTemplate="let info of 'item.Caption'">
+              <div class="custom-title">{{info.column.caption}}</div>
+            </div>
+          </dxi-column>
+          <dxi-column [width]="item.Width" [minWidth]="item.MinWidth" [cssClass]="item.ClassColumn"
+            *ngIf="!item.IsFlex && item.IsVisible && !item.IsDataEnum" [dataField]="item.FieldName"
+            [caption]="item.Caption" cellTemplate="cellTemplate" headerCellTemplate="item.Caption" alignment="left">
+            <div *dxTemplate="let param of 'cellTemplate'" class="dis-flex">
+              <div *ngIf="param.value != null; then contentNormal; else emptyContent"></div>
+              <ng-template #contentNormal>
+                <div class="hrm-cell-tree-value" *ngIf="!item.IsDataEnum" [title]="param.value">{{param.value}}</div>
+              </ng-template>
+              <ng-template #emptyContent>--</ng-template>
+            </div>
+            <div *dxTemplate="let info of 'item.Caption'">
+              <div class="custom-title">{{info.column.caption}}</div>
+            </div>
+          </dxi-column>
+          <dxi-column [width]="item.Width" [minWidth]="item.MinWidth" [cssClass]="item.ClassColumn"
+            *ngIf="item.IsVisible && item.IsDataEnum" [dataField]="item.FieldName" [caption]="item.Caption"
+            cellTemplate="item.FieldName" headerCellTemplate="item.Caption" alignment="left">
+            <div *dxTemplate="let param of 'item.FieldName'" class="dis-flex">
+              <div *ngIf="param.value != null; then contentNormal; else emptyContent"></div>
+              <ng-template #contentNormal>
+                <div *ngIf="item.IsDataEnum" class="dis-flex value-{{param.value}}">
+                  <div class="ic-svg {{item.IconCustom}}"></div>
+                  <div class="custom-cell m-l-5">{{item.DataTypeValue[param.value]}}</div>
+                </div>
+              </ng-template>
+              <ng-template #emptyContent>--</ng-template>
+            </div>
+            <div *dxTemplate="let info of 'item.Caption'">
+              <div class="custom-title">{{info.column.caption}}</div>
+            </div>
+          </dxi-column>
+        </ng-container>
+      </dx-tree-list>
+    </div>
+  </div>
+</div>
+<dx-popover *ngIf="isContextMenuVisible" [(visible)]="isContextMenuVisible" [target]="popoverTarget">
+  <dxo-position my="right-bottom"></dxo-position>
+  <div class="list-sub-button-tree dis-flex dis-flex-column">
+    <ng-content select="[popovertree]"></ng-content>
+  </div>
+</dx-popover>

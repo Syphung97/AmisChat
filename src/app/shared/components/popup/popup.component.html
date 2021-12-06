@@ -1,0 +1,11 @@
+<nz-modal [(nzVisible)]="isVisible" [nzStyle]="style" [nzTitle]="title" [nzWidth]="width" (nzOnCancel)="cancel($event)" nzMaskClosable="false">
+  <div *nzModalTitle>
+    <ng-content select="[title]"></ng-content>
+  </div>
+  <div *nzModalContent>
+    <ng-content select="[content]"></ng-content>
+  </div>
+  <div *nzModalFooter>
+    <ng-content select="[footer]"></ng-content>
+  </div>
+</nz-modal>

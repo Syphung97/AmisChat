@@ -1,0 +1,111 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" [height]="641" [width]="1000"
+    (closePopup)="closePopup()" [isResizePopup]="true" [isHaveScrollView]="false">
+    <div contentPopupNoScroll class="h-100">
+        <div class="h-100 popup-import-doc-series-mapping">
+            <div class="toolbar-mapping">
+                <dx-text-box [(value)]="filterValue" mode="search" class="search-mapping-import"
+                    placeholder="{{'SEARCH'|translate}}" (onValueChanged)="onValueChangedSearch($event)"
+                    (onKeyUp)="onSearchControl($event)"></dx-text-box>
+                <div class="d-flex align-items-center">
+                    <div class="ic-svg icon-infor-circle-default mr-2"></div>
+                    <div [innerHTML]="attachDescription"></div>
+                </div>
+            </div>
+
+            <div class="map-colums-data">
+                <div class="d-flex title-info-step2">
+                    <div class="caption-column">{{'IMPORT_ATTACHMENT_COLUMN_ATTACHMENT_NAME' | translate}}</div>
+                    <div class="ml-3">{{'IMPORT_ATTACHMENT_COLUMN_ATTACHMENT_CODE' | translate}}</div>
+                </div>
+                <div style="height: calc(100% - 43px);overflow: hidden;" id="scroll-mapping-loading">
+                    <dx-scroll-view>
+                        <div class="scroll-mapping" >
+                            <div class="scroll-info-file" *ngIf="!isNodataSetting">
+                                <div class="row-select-colums dis-flex dis-flex-row row-title-colums"
+                                    *ngFor="let item of listMappingKeyword; let index=index" [class.dis-none-imp]="item.isDisplay==false">
+                                    <div class="caption-column">
+                                        <!-- {{item.Caption}} -->
+                                        <div><input  #input type="text" class="w-100 text-ellipsis" [class.border-error]="item.Duplicate" (keyup)="keyupInput(item)" (focusout)="focusOut(item)" [(ngModel)]="item.FileName"
+                                                [class.disable]="item.ImportMappingAttachmentID"></div>
+                                    </div>
+                                    <div class="select-column-excel " [class.column-expand]="item.ImportMappingAttachmentID">
+                                    <!-- <div class="select-column-excel "> -->
+                                        <div><input type="text" (mouseenter)="showToolTip($event,item.MappingKeyword)" (mouseleave)="hideToolTip()" (focus)="hideToolTip()" (keyup)="hideToolTip()" class="w-100 text-ellipsis" [(ngModel)]="item.MappingKeyword"></div>
+                                    </div>
+                                    <div class="delete-row" *ngIf="!item.ImportMappingAttachmentID" [class.disabled]="item.ImportMappingAttachmentID" (click)="removeItem(index)">
+                                    <div [ngClass]="{'icon-dash' :item.IsSystem, 'icon-dash-red' : !item.IsSystem}"></div>
+                                        <!-- <div class="delete-row" [class.disabled]="item.ImportMappingAttachmentID" (click)="removeItem(index)">
+                                        <div [ngClass]="{'icon-dash' :item.ImportMappingAttachmentID, 'icon-dash-red' : !item.ImportMappingAttachmentID}"></div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="no-data" *ngIf="isNodataSetting">
+                                {{'NO_DATA_MATCH' | translate}}
+                            </div>
+                        </div>
+                    </dx-scroll-view>
+                </div>
+                <div class="mt-3">
+                    <amis-button (clickButton)="addRow()" iconLeft="icon-plus" name="{{'ADD_ROW' | translate}}"
+                        [color]="buttonColor.BlueWhiteSecondary">
+                    </amis-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div buttonsPopup class="w-100 popup-import-doc-series-footer">
+        <!-- Thiết lập từ điển ghép cột -->
+        <div class="dx-popup-footer-column-matching">
+            <div class="float-left footer-left">
+                <div class="text-checkbox-action">{{'IMPORT_ATTACHMENT_NAME_ATTACHMENT_DESCRIPTION' | translate}}</div>
+                <div class="checkbox-action">
+                    <label class="custom-radio radio-popup" (click)="changeCheck(isUnderlined)">
+                        <div class="mr-1 icon-svg"
+                            [ngClass]="{'icon-circle':!isUnderlined, 'icon-circle-checked':isUnderlined}"></div>
+                        {{'[Mã nhân viên]_[Mã tài liệu]' | translate}}
+                    </label>
+                </div>
+                <div class="checkbox-action">
+                    <label class="custom-radio radio-popup" (click)="changeCheck(!isUnderlined)">
+                        <div class="mr-1 icon-svg"
+                            [ngClass]="{'icon-circle':isUnderlined, 'icon-circle-checked':!isUnderlined}"></div>
+                        {{'[Mã nhân viên]-[Mã tài liệu]' | translate}}
+                    </label>
+                </div>
+            </div>
+            <div class="float-right">
+                <amis-button class="mr-2" (clickButton)="closePopup()" name="{{'CANCEL2' | translate}}"
+                    [color]="buttonColor.Normal">
+                </amis-button>
+                <amis-button (clickButton)="saveMapping()" name="{{'SAVE' | translate}}"
+                    [color]="buttonColor.BluePrimary">
+                </amis-button>
+            </div>
+        </div>
+    </div>
+</amis-popup-base>
+
+<!-- Thông báo -->
+<amis-popup-notify title="{{'ERROR_HAPPENED'|translate}}" [visiblePopup]="visibleNotify"
+    *ngIf="visibleNotify" (closePopup)="cancelPopupNotify()">
+    <div textContentPopupConfirm>
+        <div [innerHTML]="contentNotify"></div>
+    </div>
+    <div amisButtons>
+        <amis-button (clickButton)="cancelPopupNotify()" [color]="buttonColor.BluePrimary" [type]="buttonType.OnlyText"
+            name="{{'CLOSE'|translate}}"></amis-button>
+    </div>
+</amis-popup-notify>
+
+<!-- tooltip hiển thị trường dữ liệu bị ẩn do dài -->
+<dx-popover *ngIf="visiblePopover" [(visible)]="visiblePopover" showEvent="dxhoverstart" hideEvent="dxhoverend"
+    [target]="tooltipTarget" class="tooltip-popover">
+    <div *dxTemplate="let data of 'content'">
+        <ng-container>
+            <div class="tooltip-content">
+                {{tooltipContent | translate}}
+            </div>
+        </ng-container>
+    </div>
+</dx-popover>

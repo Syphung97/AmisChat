@@ -1,0 +1,51 @@
+<div class="dis-flex dis-flex-row dis-justify-content-between m-b-8" *ngIf="!_isDisplayHeader">
+  <div *ngIf="!_isDisplayHeader && (groupbox.DataGroupConfig?.length || !_isShowNodataGrid) && !isViewOnly"
+    class="dis-flex">
+    <amis-button subSystemCode="{{_typeShow.SubSystemCode}}" permissionCodeList="{{_typeShow.PermissionCode}}"
+      actionCode="{{permissionCodeEntity.Insert}}" permissionObject="{{groupbox.PermissionConfig}}"
+      [type]="buttonType.Link" name="Thêm" iconLeft="icon-plus" (clickButton)="addItemIntoGrid()">
+    </amis-button>
+  </div>
+</div>
+<div *ngIf="groupbox.DataGroupConfig?.length || !_isShowNodataGrid">
+
+  <div *ngIf="isAllowSelect && !isViewOnly" class="menu-options">
+    <div *ngIf="selectedData?.length>0" class="d-flex align-items-center ml-1 mb-2">
+      <div>{{'GRID_SELECTED'|translate}} <span class="count-record">{{selectedData?.length}}</span></div>
+      <div class="ml-4 mr-4 text-red cursor-pointer" (click)="removeSelectedRecord()">
+        {{'GRID_UNSELECT'|translate}}</div>
+      <div *ngIf="headerMenu?.length" class="dis-flex dis-align-item-center">
+        <div *ngFor="let item of headerMenu" (click)="onClickHeaderMenuItem(item)" class="ml-3 cursor-pointer">
+          <span [style.color]="item.Color ? item.Color : '#1c80f2'">
+            {{item.Text | translate}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <amis-paging-grid #pagingGrid [isPageSizeEditable]="false" [isShowPaging]="false" [gridColumnConfig]="groupbox"
+    (clickViewMoreRow)="clickOptions($event)" [dataSource]="dataSourceGrid" [columns]="gridColumns"
+    (chooseRecord)="chooseRecord($event)" [showNavigationButtons]="true" [allowColumnResizing]="true"
+    [showBorders]="true" [isGridOnPopup]="true" [isBorderGrid]="true" [contextMenuList]="isViewOnly ? [] : listOption"
+    [isActionWithFile]="!isCallFromEmployeeApp" [isShowSelection]="isAllowSelect && !isViewOnly"
+    [isShowCustomColumn]="true" (clickRow)="onClickRow($event)" (contextMenuAction)="contextMenuExecuteAction($event)"
+    [configGridTable]="configGridTable" [subSystemCode]="subsys" (saveConfigColumn)="saveCustomColumns($event)">
+  </amis-paging-grid>
+</div>
+<div *ngIf="!groupbox.DataGroupConfig?.length && _isShowNodataGrid"
+  class="dis-flex dis-flex-row group-grid-nodata flex-1">
+  <div class="dis-flex dis-flex-row dis-align-items-center m-r-16"><i>Chưa có dữ liệu</i></div>
+  <div *ngIf="!groupbox.IsNotAddable && !isViewOnly">
+    <amis-button subSystemCode="{{_typeShow.SubSystemCode}}" permissionCodeList="{{_typeShow.PermissionCode}}"
+      [type]="buttonType.Link" name="Thêm" iconLeft="icon-plus" (clickButton)="addItemIntoGrid()"
+      actionCode="{{permissionCodeEntity.Insert}}" permissionObject="{{groupbox.PermissionConfig}}">
+    </amis-button>
+  </div>
+</div>
+
+<ng-container #formGrid></ng-container>
+
+<!-- Popup confirm xóa dữ liệu -->
+<amis-popup-delete *ngIf="isShowDeleteDataGrid" [content]="contentPopupDelete" [visiblePopup]="isShowDeleteDataGrid"
+  (eventHiddenPopup)="closePopupDelete($event)" (eventDelete)="deleteDataGrid($event)"></amis-popup-delete>

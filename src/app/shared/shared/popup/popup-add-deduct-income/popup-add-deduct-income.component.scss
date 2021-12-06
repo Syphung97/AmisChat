@@ -1,0 +1,18 @@
+
+    .cloumn-input{
+        width: calc(100% - 84px);
+    }
+    .text-cloumn{
+        width: 170px;
+    }
+
+:ng-deep{
+    .content-deduct-income{
+        .group-box{
+            margin-top: 0 !important;
+            .group-box-footer{
+                margin-top: 0 !important;
+            }
+        }
+    }
+}

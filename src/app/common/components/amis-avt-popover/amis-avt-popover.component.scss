@@ -1,0 +1,81 @@
+@import "../../../assets/scss/var-mixin.scss";
+@import "../../../assets/scss/var-color.scss";
+@import "../../../assets/scss/var-font.scss";
+@import "../../../assets/scss/var-font-family.scss";
+@import "../../../assets/scss/var-dx-styles.scss";
+@import "../../../assets/scss/var-cls.scss";
+@import "../../../assets/scss/var-icon.scss";
+
+::ng-deep {
+  .popover-avt {
+    .body-popover {
+      padding: 24px;
+      padding-bottom: 0px;
+      .text-user-info {
+        .img-avt {
+          width: 32px;
+          height: 32px;
+          margin: 0 auto;
+          border-radius: 50%;
+        }
+      }
+      .text-user-info {
+        div {
+          margin-bottom: 5px;
+          &:last-child {
+            margin-bottom: 0px;
+          }
+        }
+        .name {
+          span {
+            font-size: 20px;
+            font-weight: 700;
+            color: $border-2;
+            margin-top: 5px;
+          }
+        }
+        .mail {
+          span {
+            font-size: 15px;
+            color: $default-icon;
+          }
+        }
+        .info {
+          span {
+            font-size: 15px;
+            color: $cl-btn-text;
+          }
+        }
+      }
+    }
+    .setting {
+        padding: 16px 0px 10px 0px;
+        .setting-child {
+          height: 40px;
+        }
+        span {
+          font-size: 15px;
+          color: $border-2;
+        }
+        .setting-user:hover {
+          background-color: $bg-hover;
+        }
+        .setting-general:hover {
+          background-color: $bg-hover;
+        }
+        .logout:hover {
+          background-color: $bg-hover;
+        }
+      }
+    .btn {
+      height: 20px !important;
+    }
+  }
+}
+:host {
+  .avatar-user {
+    margin-right: 16px !important;
+    background-color: rebeccapurple;
+    border-radius: 50%;
+  }
+}

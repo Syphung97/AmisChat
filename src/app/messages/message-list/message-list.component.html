@@ -1,0 +1,96 @@
+<div class="mess-container h-full w-full flex-col">
+  <!-- <div class="decoratorMessageStyle">
+    <p class="decoratorMessageTxtStyle">
+    </p>
+  </div> -->
+
+  <div #scrollable class="wrap-list-message flex-1" (scroll)="onScroll($event)">
+
+    <div class="m-b-4" *ngFor="let msg of _listMessage; let i = index">
+
+      <!-- Hiển thị ngày của tin nhắn đầu tiên trong ngày -->
+
+      <div class="messageDateContainerStyle" *ngIf="
+          i > 0 && isDateDifferent(_listMessage[i - 1]?.createdAt, _listMessage[i]?.createdAt)
+        ">
+        <span class="fs-12 text-grey flex-c-m m-t-24 m-b-24">------------------------- {{
+          msg?.createdAt | date: "hh:mm - dd/MM/yyyy"
+          }} -------------------------</span>
+      </div>
+      <ng-container [ngSwitch]="msg.type">
+        <ng-container *ngSwitchCase="MessageType.Notification">
+          <amis-notify-message [conv]="_conv" [msg]="msg"></amis-notify-message>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="MessageType.Creation">
+          <amis-notify-message [conv]="_conv" [msg]="msg"></amis-notify-message>
+        </ng-container>
+
+        <!-- Text -->
+        <ng-container *ngSwitchCase="MessageType.Text">
+
+          <ng-container *ngIf="msg?.sender == currentUserStringeeID">
+
+            <amis-sender-text-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+            </amis-sender-text-message>
+          </ng-container>
+          <ng-container *ngIf="msg?.sender != currentUserStringeeID">
+            <amis-receiver-text-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+
+            </amis-receiver-text-message>
+
+          </ng-container>
+        </ng-container>
+
+        <!-- Sticker -->
+        <ng-container *ngSwitchCase="MessageType.Sticker">
+          <ng-container *ngIf="msg?.sender == currentUserStringeeID">
+
+            <amis-sender-text-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+            </amis-sender-text-message>
+          </ng-container>
+          <ng-container *ngIf="msg?.sender != currentUserStringeeID">
+            <amis-receiver-text-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+
+            </amis-receiver-text-message>
+
+          </ng-container>
+        </ng-container>
+
+        <!-- File -->
+        <ng-container *ngSwitchCase="MessageType.File">
+          <ng-container *ngIf="msg?.sender == currentUserStringeeID">
+            <amis-sender-file-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+            </amis-sender-file-message>
+
+          </ng-container>
+          <ng-container *ngIf="msg?.sender != currentUserStringeeID">
+
+            <amis-receiver-file-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+            </amis-receiver-file-message>
+
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="MessageType.Photo">
+          <ng-container *ngIf="msg?.sender == currentUserStringeeID">
+            <amis-sender-photo-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+            </amis-sender-photo-message>
+
+          </ng-container>
+          <ng-container *ngIf="msg?.sender != currentUserStringeeID">
+
+            <amis-receiver-photo-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+            </amis-receiver-photo-message>
+
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+
+  </div>
+  <div class="typing-indicator">
+    <amis-typing-indicator *ngIf="typingIndicatorObject"></amis-typing-indicator>
+  </div>
+
+</div>

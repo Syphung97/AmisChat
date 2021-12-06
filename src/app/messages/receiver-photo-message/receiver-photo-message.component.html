@@ -1,0 +1,96 @@
+<div class="w-full receiver" [class.m-b-12]="_msg?.isFirstMessage">
+  <div
+    class="fs-11 text-grey m-b-2 m-l-32"
+    *ngIf="_conv?.isGroup && _msg?.isFirstMessage"
+  >
+    {{ receiverUser?.name ? receiverUser?.name : "" }}
+  </div>
+
+  <div class="m-l-32">
+    <amis-reply-message *ngIf="_msg?.content?.metadata?.Reference" [msg]="_msg" [type]="'receiver'"></amis-reply-message>
+  </div>
+  <div class="pos-relative flex-l-m" style="width: 75%">
+    <ng-template #actionOptionTemplate>
+      <div class="flex-m">
+        <amis-icon
+          (click)="actionOptionHandler()"
+          [classIcon]="'icon-mess-action'"
+          [(nzPopoverVisible)]="visibleActionPopover"
+          nz-popover
+          nzPopoverTrigger="click"
+          [nzPopoverPlacement]="['bottomLeft', 'topLeft']"
+          [nzPopoverOverlayClassName]="'mess-action'"
+          [nzPopoverContent]="actionTemplate"
+        >
+        </amis-icon>
+        <amis-icon [classIcon]="'icon-mess-reaction'"></amis-icon>
+      </div>
+    </ng-template>
+    <ng-template #actionTemplate>
+      <amis-message-action
+        (actionGenerate)="handleAction($event)"
+        [msg]="_msg"
+        [isOwner]="true"
+      ></amis-message-action>
+    </ng-template>
+    <amis-avatar
+      *ngIf="_msg?.isLastMessage"
+      class="ab-b-l"
+      [stringeeUserID]="receiverUser?.userId"
+      [size]="28"
+    ></amis-avatar>
+    <nz-image-group
+      class="flex flex-wrap flex-l-m w-full m-l-36 h-full"
+      [nzTooltipMouseEnterDelay]="0.5"
+      [nzTooltipTitle]="_msg?.createdAt | date: 'hh:mm'"
+      nzTooltipPlacement="top"
+      nz-tooltip
+      [(nzPopoverVisible)]="visibleOptionActionPopover"
+      nz-popover
+      nzPopoverTrigger="hover"
+      nzPopoverPlacement="right"
+      [nzPopoverOverlayClassName]="'mess-action-option'"
+      [nzPopoverContent]="actionOptionTemplate"
+      [nzPopoverOverlayClassName]="'mess-action-option'"
+      [nzPopoverMouseLeaveDelay]="2"
+      (click)="openAction()"
+    >
+      <div
+        class="attachment flex-m pos-relative hov-pointer h-full"
+        *ngFor="let item of _msg?.content?.metadata?.ListFile; let i = index"
+      >
+        <div
+          *ngIf="_msg?.content?.metadata?.ListFile.length == 1"
+          style="border-radius: 8px; overflow: hidden"
+          class="overflow-hidden single w-full h-full m-t-8"
+        >
+          <img
+            (click)="preview(i)"
+            [nzDisablePreview]="true"
+            class="hov-pointer"
+            nz-image
+            nzSrc="{{ item.PreviewUrl }}"
+            alt=""
+          />
+        </div>
+
+        <div
+          *ngIf="_msg?.content?.metadata?.ListFile.length > 1"
+          style="border-radius: 8px; overflow: hidden"
+          class="overflow-hidden m-r-8 m-t-8"
+        >
+          <img
+            (click)="preview(i)"
+            [nzDisablePreview]="true"
+            class="hov-pointer"
+            nz-image
+            width="90"
+            height="90"
+            nzSrc="{{ item.PreviewUrl }}"
+            alt=""
+          />
+        </div>
+      </div>
+    </nz-image-group>
+  </div>
+</div>

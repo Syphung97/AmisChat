@@ -1,0 +1,197 @@
+<amis-popup-base [width]="width" [height]="height" *ngIf="visiblePopup" [visiblePopup]="visiblePopup"
+  [isResizePopup]="true" title="{{'TOOLBAR_SEND_EMAIL'| translate}}" (shownPopup)="onShown()"
+  (closePopup)="closePopupAction()" (onZoom)="onZoom($event)">
+  <div contentPopup class="editMainInfo">
+    <div class="content-popup-base" [ngStyle]="{'max-height': '500px' }">
+      <div class="control pos-relative">
+        <div class="cc pos-absolute">
+          <span *ngIf="!isCC" (click)="isCC = true">Cc</span>
+          <span *ngIf="!isBCC" (click)="isBCC = true" class="m-l-16">Bcc</span>
+        </div>
+        <div class="label flex-m">
+          Đến <font class="m-l-4" style="color: red;">*</font>
+        </div>
+        <amis-amis-control-human-tagbox [dataSource]="dataSource" [listCandidateSelected]="employees"
+          (onValueChanged)="this.listCandidateSelected = $event;"></amis-amis-control-human-tagbox>
+        <div></div>
+        <div class="text-error" *ngIf="!_isValidAddress" [innerHTML]="'Địa chỉ email không được để trống'">
+          <!-- {{formControl.errors?.message}} -->
+        </div>
+      </div>
+      <div class="control" *ngIf="isCC">
+        <div class="label flex-m">
+          Cc
+        </div>
+        <amis-amis-control-human-tagbox [dataSource]="dataSourceCC" (onValueChanged)="this.CcRecipients = $event;">
+        </amis-amis-control-human-tagbox>
+      </div>
+      <div class="control" *ngIf="isBCC">
+        <div class="label flex-m">
+          Bcc
+        </div>
+        <amis-amis-control-human-tagbox [dataSource]="dataSourceBCC" (onValueChanged)="this.BccRecipients = $event;">
+        </amis-amis-control-human-tagbox>
+      </div>
+      <div class="control m-b-8">
+        <div class="label flex-m">
+          Mẫu Email
+        </div>
+        <amis-button *ngIf="!emailModelType" (clickButton)="PickTemplate()" class="mr-2"
+          name="{{'Chọn mẫu' | translate}}" [color]="buttonColor.White">
+        </amis-button>
+        <!-- <amis-amis-control-combobox [ngModel]="emailModelType" [isRemoteServer]="true"
+          [inputParam]="groupFieldConfigs" [isUseFns]="false" [displayExpr]="'TemplateName'" [valueExpr]="'TemplateID'"
+          [isDynamicCombobox]="false" [controller]="'Dictionary'" [url]="'data'"
+          (onItemClick)="onEmailTypeChange($event)">
+        </amis-amis-control-combobox> -->
+        <!-- <amis-amis-control-combobox *ngIf="emailModelType" [value]="emailModelType.TemplateName" [isRemoteServer]="true"
+                [isUseFns]="false" [isDynamicCombobox]="false" [url]="'data'" (onItemClick)="onEmailTypeChange($event)">
+              </amis-amis-control-combobox> -->
+
+        <div *ngIf="emailModelType" class="pos-relative">
+          <amis-amis-control-upload-file [data]="{ValueText: emailModelType.TemplateName}">
+          </amis-amis-control-upload-file>
+          <div (click)="emailModelType = null" class="icon-close-popup pos-absolute"></div>
+          <div class="optional-more pos-absolute cursor-pointer" (click)="PickTemplate()">
+            <div class="ic-control icon-optional-more">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="control email-title m-b-8">
+        <div class="label flex-m">
+          Tiêu đề
+        </div>
+        <amis-amis-ckeditor [feedData]="ckeditorFeedsData" [mentionByClick]="ckeditorMentionClickSubject"
+          [value]="emailSubject" [height]="'36px'" [toolbarItems]="[]" [name]="'ckSubject'"
+          (focused)="setCkObject($event)" (onContentChange)="ckeditorOnHeaderChange($event)">
+        </amis-amis-ckeditor>
+      </div>
+      <amis-amis-ckeditor [feedData]="ckeditorFeedsData" [mentionByClick]="ckeditorMentionClickContent"
+        [minHeight]="heightCKE" [name]="'ckContent'" (focused)="setCkObject($event)" [value]="emailContent"
+        (onContentChange)="ckeditorOnContentChange($event)">
+      </amis-amis-ckeditor>
+
+      <!-- Trường trộn -->
+      <div class="mix-field-wrap">
+        <div class="mix-title m-r-8">{{'Trường trộn' | translate}}:</div>
+        <div class="mix-listitem flex-m">
+          <!-- one item -->
+          <div class="mix-item flex-c-m" *ngFor="let item of mixedFieldOutside; index as index"
+            (click)="insertMixFieldHandler(item)">
+
+            {{item.Caption}}
+
+          </div>
+        </div>
+        <div class="wrap-icon-more cursor-pointer flex-c-m" (click)="showSearchPoupHandler()">
+
+          <div id="more" class="icon-optional-more" style="min-width: 24px">
+          </div>
+        </div>
+
+        <div class="wrap-search-popup" *ngIf="isShowSearchPopup">
+
+          <!-- Search popover  -->
+          <!-- <div class="wrap-search-popover">
+            <div class="wrap-input-search">
+              <div class="search-icon icon-gray icon-search-hrm m-r-8"></div>
+              <input type="text" [(ngModel)]="valueSearchMixField" (keyup)="onSearchHandler($event)">
+            </div>
+
+            <div class="wrap-list-item" id="scrollview-use">
+
+              <dx-scroll-view class="scrollview-user" [height]="300">
+                <div class="search-item" *ngFor="let item of searchPopOverData; index as index"
+                  [class.active]="index === 0" (click)="selectMixFieldHandler(item)">
+                  <div class="item-content">
+
+                    {{item.Caption}}
+
+                  </div>
+                </div>
+              </dx-scroll-view>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div id="loading-attachment">
+        <dx-scroll-view [direction]="'horizontal'" class="scroll-attachment">
+          <div *ngIf="attachments.length > 0" class="email-attachments dis-flex">
+            <div *ngFor="let attachment of attachments" class="email-attachment dis-flex">
+              <div class="email-attachment-name">{{attachment.FileName}}</div>
+              <div class="icon-close-small" (click)="removeAttachment(attachment.FileID)"></div>
+            </div>
+          </div>
+        </dx-scroll-view>
+      </div>
+    </div>
+  </div>
+  <input #importTemplateDoc #fileDropRef multiple accept=".doc,.docx,.rtf,.txt,.odt,.zip,.pdf,.png,.jpg,.gif"
+    (change)="onFileChange($event)" class="input-import" type="file">
+  <div buttonsPopup style="width: 100%; justify-content: space-between; display: flex;">
+    <amis-button [isDisable]="isDisableBtnAttach" (clickButton)="importAttachment()" class="mr-2"
+      name="{{'Đính kèm tệp' | translate}}" [color]="buttonColor.BlueSecondary" [iconLeft]="'icon-attachment'">
+    </amis-button>
+    <div>
+      <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}" [type]="buttonType.OnlyText"
+        [color]="buttonColor.Normal" (clickButton)="closePopupAction()"></amis-button>
+      <amis-button [isDisable]="isDisableBtnSend()" name="Gửi" [type]="buttonType.OnlyText"
+        [color]="buttonColor.BluePrimary" (clickButton)="beforeSendMail()">
+      </amis-button>
+    </div>
+  </div>
+</amis-popup-base>
+<amis-popup-notify title="{{'HRM_SETTING_JOB_ROLE_NOTIFY'|translate}}" [visiblePopup]="visibleNotify"
+  *ngIf="visibleNotify" (closePopup)="cancelPopupNotify()">
+  <div textContentPopupConfirm>
+    <div [innerHTML]="contentNotify"></div>
+  </div>
+  <div amisButtons *ngIf="typeNotify !== 'Confirm'">
+    <amis-button (clickButton)="cancelPopupNotify()" [color]="buttonColor.BluePrimary" [type]="buttonType.OnlyText"
+      name="{{'CLOSE'|translate}}"></amis-button>
+  </div>
+  <div amisButtons *ngIf="typeNotify === 'Confirm'">
+    <amis-button (clickButton)="cancelPopupNotify()" [color]="buttonColor.Normal" [type]="buttonType.OnlyText"
+      name="{{'CANCEL2'|translate}}"></amis-button>
+    <amis-button (clickButton)="sendMail(); visibleNotify = false;" [color]="buttonColor.BluePrimary"
+      [type]="buttonType.OnlyText" name="{{'CONFIRM'|translate}}"></amis-button>
+  </div>
+</amis-popup-notify>
+<amis-popup-create-document [listSelectedRecord]="emailModelType" [typePopup]="'SelectTemplate'"
+  [documentType]="_documentType.Email" [profileHasMadeDocument]="profileHasMadeDocument" *ngIf="isVisiblePopupDocument"
+  (onOpenFormCreateDocument)="visibleCreateDocumentForm = true;" (onClosePopup)="isVisiblePopupDocument = false"
+  (onOpenPopupImport)="openPopupImport()" (onSelect)="onSelectEmailTemplate($event)">
+</amis-popup-create-document>
+<!-- <amis-hrm-setting-document-sample-create *ngIf="visibleCreateDocumentForm" (close)="visibleCreateDocumentForm = false;">
+</amis-hrm-setting-document-sample-create> -->
+
+<dx-popover class="mixed-field-popover" target="#more" [visible]="isShowSearchPopup" [width]="300" [height]="350"
+  [position]="{my: 'right bottom', at: 'right top', of: '#more'}" (onHidden)="isShowSearchPopup = false"
+  (onShown)="onShownPopover($event)">
+  <div *dxTemplate="let data of 'content'">
+    <div class="wrap-search-popover">
+      <div class="wrap-input-search">
+        <div class="search-box flex-m w-100 h-100">
+
+          <div class="icon-search-hrm m-l-8 m-r-8"></div>
+          <input type="text" [(ngModel)]="valueSearchMixField" placeholder="Tìm kiếm trường trộn" (keyup)="onSearchHandler($event)">
+        </div>
+      </div>
+
+      <div class="wrap-list-item" id="scrollview-use">
+
+        <dx-scroll-view class="scrollview-user" [height]="300">
+          <div class="search-item" *ngFor="let item of searchPopOverData; index as index" [class.active]="index === 0"
+            (click)="selectMixFieldHandler(item)">
+            <div class="item-content">
+
+              {{item.Caption}}
+
+            </div>
+          </div>
+        </dx-scroll-view>
+      </div>
+    </div>
+  </div>
+</dx-popover>

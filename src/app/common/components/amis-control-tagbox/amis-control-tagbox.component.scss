@@ -1,0 +1,107 @@
+@import "../../../assets/scss/var-color.scss";
+
+:host{
+    // .control-dynamic-selectbox{
+    //     display: flex;
+    //     border: 1px solid $border;
+    //     border-radius: 4px;
+    //     .tagbox-control{
+    //         border:none !important;
+    //     }
+    //     .more-option-icon{
+    //         padding-right: 6px;
+    //         padding-left: 6px;
+    //         border-left: 1px solid $border;
+    //         background-color: $bg-icon-hover;
+    //         border-top-right-radius: 4px;
+    //         border-bottom-right-radius: 4px;
+    //     }
+    //     .more-option-icon:hover{
+    //         background-color: $bg-count;
+    //     }
+    // }
+    
+    // .control-dynamic-selectbox:hover{
+    //     border-color: $highlight;
+    // }
+
+
+    .control-dynamic-selectbox{
+        display: flex;
+        align-items: center;
+        dx-tag-box{
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .more-option-icon{
+            height: 36px;
+            padding: 0 6px;
+            border: 1px solid $border;
+            border-left: none;
+            background-color: $bg-icon-hover;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+        .more-option-icon:hover{
+            background-color: $bg-count;
+        }
+    }
+
+    .div-wrap-selectbox{
+        height: 36px;
+        border-radius: 4px;
+    }
+}
+
+::ng-deep{
+    .tagbox-control{
+        .dx-tag-content{
+            position: relative;
+            background-color: $background-gray !important;
+            padding: 3px;
+            padding-left: 8px;
+            border-radius: 4px;
+            .tag-remove-icon{
+                position: absolute;
+                right: 5px;
+                top: 4px;
+            }
+        }
+    }
+    .tagbox-control.dx-tagbox:not(.dx-texteditor-empty) .dx-texteditor-input{
+        padding-left: 8px;
+    }
+    .dx-tagbox-popup-wrapper{
+        .dx-list-select-all{
+            display: none;
+        }
+        .dx-item.dx-list-item{
+            .dx-list-item-before-bag.dx-list-select-checkbox-container{
+                display: none;
+            }
+            .dx-list-item-content{                
+                padding: 0px 8px;
+                height: 36px;
+            }
+        }
+    }
+
+    .load-panel-tagbox-dropdown{
+        .dx-loadpanel-content{
+          width: 100% !important;
+          background-color: $white !important;
+          border: 1px solid $border;
+          border-top-right-radius: 0;
+          border-top-left-radius: 0;
+          min-width: 250px !important;
+        }
+    }
+    .dx-tag-container{
+        text-overflow: ellipsis;
+white-space: nowrap;
+overflow: auto;
+max-height: 100px;
+    }
+}
+
+

@@ -1,0 +1,79 @@
+<amis-form-control [labelFontWeight]="_labelFontWeight" [labelClass]="_labelClass" [isShowLabel]="_isShowLabel"
+  [labelWidth]="_labelWidth" [labelText]="_labelText" [isRequired]="_isRequiredLabel  && !_isViewOnly"
+  [labelPositon]="_labelPositon" [tooltipContent]="_tooltipContent" [isShowTooltip]="_isShowTooltip"
+  [fieldName]="_fieldName" [labelColor]="labelColor">
+  <div #control class="wrap-control dis-flex dis-align-items-center" title="{{value && (_readonly || isNotPermissionUpdate) ? value : ''}}">
+    <div *ngIf="!_isViewOnly || (_isEditable && !_isViewEditable)" class="dis-flex-grow text-overflow">
+      <div class="dis-flex-grow dis-align-items-center dis-flex dis-flex-row text-overflow">
+        <div class="dis-flex-grow wrapper-text-box" [class.disabled-control]="_readonly || isNotPermissionUpdate">
+          <dx-text-area #input class="form-textarea w-100" [placeholder]="_placeholder"
+            (keydown)="onKeyDown.emit($event)" #formControl="ngModel" [(ngModel)]="value"
+            [class.disabled-control]="_readonly || isNotPermissionUpdate"
+            [disabled]="_readonly || isNotPermissionUpdate" (onValueChanged)="onValueChanged($event)"
+            [class.border-error]="_isSubmit && _isShowError && (formControl.errors || _isErrorCustom || _isError)"
+            (onFocusIn)="selectAll(input, 'textarea')">
+          </dx-text-area>
+          <div class="text-area-zoom-icon">
+            <amis-icon [classIcon]="'icon-zoom-out-2-way'" (click)="visiblePopup = true" [isSquareBG]="true"
+              [tooltipContent]="'ZOOM_IN'|translate">
+            </amis-icon>
+          </div>
+        </div>
+
+        <!-- Icon -->
+        <div *ngIf="_isEditable && !_isViewEditable" class="dis-flex dis-align-items-center option-icons pl-2">
+          <amis-icon [classIcon]="'icon-tick-circle-green'" (click)="onClickDone()"
+            tooltipContent="{{'SAVE' | translate}}">
+          </amis-icon>
+
+          <amis-icon [classIcon]="'icon-error-circle'" (click)="onClickCancel()"
+            tooltipContent="{{'CANCEL' | translate}}">
+          </amis-icon>
+        </div>
+
+      </div>
+      <div *ngIf="_isSubmit && _isShowError && !_readonly" class="white-space-initial">
+        <div class="text-error" *ngIf="formControl.errors && !_isErrorCustom && !_isError"
+          [innerHTML]="formControl.errors?.message">
+          <!-- {{formControl.errors?.message}} -->
+        </div>
+        <div class="text-error" *ngIf="_isErrorCustom || _isError" [innerHTML]="_errorMessage">
+          <!-- {{ _errorMessage }} -->
+        </div>
+      </div>
+    </div>
+    <div *ngIf="_isViewOnly || (_isEditable && _isViewEditable)" class="dis-flex-grow  value-display text-overflow">
+      <div [title]="value ? value : ''" class="dis-flex-grow dis-flex dis-flex-row field-value text-overflow"
+        [class.editable-field-value]="!_readonly && _isEditable && _isViewEditable">
+        <div *ngIf="value" class="text-overflow" style="max-height: 100px;" [innerText]="value"></div>
+        <div *ngIf="!value">-</div>
+      </div>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && !_readonly" class="cursor-pointer option-icons">
+      <div class="ml-2" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCode}}"
+        actionCode="{{permissionCodeEntity.Edit}}" permissionObject="{{_permissionObject}}">
+        <amis-icon [classIcon]="'icon-edit '" (click)="onClickEdit()" tooltipContent="{{'EDIT2' | translate}}">
+        </amis-icon>
+      </div>
+      <amis-icon [classIcon]="'icon-duplicate '" (click)="onClickDuplicate()" tooltipContent="{{'COPY' | translate}}">
+      </amis-icon>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && _readonly" class="option-icons">
+      <div class="no-hover-icon ml-2" subSystemCode="{{_permissionSubSystemCode}}"
+        permissionCodeList="{{_permissionCode}}" actionCode="{{permissionCodeEntity.Edit}}"
+        permissionObject="{{_permissionObject}}">
+        <amis-icon [classIcon]="'icon-lock '" [isCursorPointer]="false" [isHoverState]="false" [isShowTooltip]="false">
+        </amis-icon>
+      </div>
+      <amis-icon [classIcon]="'icon-duplicate '" (click)="onClickDuplicate()" tooltipContent="{{'COPY' | translate}}">
+      </amis-icon>
+    </div>
+
+  </div>
+
+</amis-form-control>
+
+
+<amis-popup-expand-text-area *ngIf="visiblePopup" [value]="value" [labelText]="labelText"
+  (closePopup)="visiblePopup=false" (onSave)="onGetValue($event)">
+</amis-popup-expand-text-area>

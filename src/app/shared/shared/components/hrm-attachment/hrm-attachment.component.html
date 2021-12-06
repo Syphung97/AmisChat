@@ -1,0 +1,37 @@
+<amis-amis-form-grid [isHaveData]="_dataSource?.length ? true: false">
+    <div formGridTitle>
+        {{formTitle}}
+    </div>
+    <div formGridHeaderButton>
+        <amis-button [type]="buttonType.Link" name="{{'CREATE'| translate}}" iconLeft="icon-plus-blue" 
+            (clickButton)="onClickAddAttachment();" actionCode="{{permissionCodeEntity.Insert}}" permissionCodeList="{{permissionActionCode}}" subSystemCode="{{subSystemActionCode}}" permissionObject="{{permissionObject}}">
+        </amis-button>
+    </div>
+    <div noDataFormGridButton>
+        <amis-button [type]="buttonType.Link" name="{{'CREATE'| translate}}" iconLeft="icon-plus-blue" 
+            (clickButton)="onClickAddAttachment();" actionCode="{{permissionCodeEntity.Insert}}" permissionCodeList="{{permissionActionCode}}" subSystemCode="{{subSystemActionCode}}" permissionObject="{{permissionObject}}">
+        </amis-button>
+    </div>
+    <div formGridContent>
+        <amis-paging-grid #grid *ngIf="isLoaded" [dataSource]="_dataSource" [columns]="gridColumns" [showBorders]="true"
+            [isBorderGrid]="true" [isShowSelection]="true" [contextMenuList]="listOption" [isPageSizeEditable]="false"
+            [wordWrapEnabled]="false" [showNavigationButtons]="false" [allowColumnResizing]="false" [showInfo]="false"
+            [showPageSizeSelector]="false" [clearSelection]="false" [isShowCustomColumn]="true"
+            (clickViewMoreRow)="viewMoreRow($event)" [isShowSelection]="false" [isShowPaging]="false"
+            [layoutGridType]="subsys" [subSystemCode]="subsys" (contextMenuAction)="contextMenuExecuteAction($event)"
+            (saveConfigColumn)="saveCustomColumnsClient($event)" (clickRow)="onClickRow($event)">
+        </amis-paging-grid>
+    </div>
+</amis-amis-form-grid>
+
+<ng-container #attachmentForm></ng-container>
+
+<!-- Sửa tài liệu đính kèm -->
+<amis-hrm-attachment-edit *ngIf="visibleEditForm" [formTitle]="titleEdit" [formPosition]="formPosition"
+    [dataSource]="dataRow" (afterClose)="onCloseAttachmentForm()" (afterSaveSuccess)="afterSaveEditForm($event)"
+    (afterDeleteSuccess)="afterDeleteEditForm($event)" [inputData]="inputForm"></amis-hrm-attachment-edit>
+
+<!-- Xóa tài liệu đính kèm -->
+<amis-popup-delete *ngIf="popupDelete.VisiblePopupDelete" [title]="popupDelete.TitlePopupDelete"
+    [visiblePopup]="popupDelete.VisiblePopupDelete" [content]="popupDelete.ContentPopupDelete"
+    (eventDelete)="confirmPopupDelete($event)" (eventHiddenPopup)="cancelPopupDelete($event)"></amis-popup-delete>

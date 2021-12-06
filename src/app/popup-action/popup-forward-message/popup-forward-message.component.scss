@@ -1,0 +1,41 @@
+
+.ant-modal-header {
+    border-radius: 4px;
+}
+.forward-mess {
+    height: auto;
+    background-color: #F5F5F5;
+    padding: 12px;
+    margin-bottom: 16px;
+    min-height: 62px;
+    max-height: 200px;
+}
+.search-user {
+    height: 61px;
+    margin-bottom: 16px;
+}
+.contact-recently {
+    overflow-y: scroll;
+}
+
+.footer-forward-mess {
+    height: 60px;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.btn-done {
+    height: 36px;
+    background-color: #0077FF;
+    margin-right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.btn-done-text {
+    color: #FFFFFF;
+}

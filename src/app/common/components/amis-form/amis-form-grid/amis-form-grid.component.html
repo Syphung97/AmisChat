@@ -1,0 +1,22 @@
+<div class="hrm-form-grid">
+    <div class="hrm-form-grid-header d-flex">
+        <div class="title flex-1">
+            <ng-content select=[formGridTitle]></ng-content>
+        </div>
+        <div class="header-button" *ngIf="isHaveData" [style.display]="isHaveData?'':'none'">
+            <ng-content select=[formGridHeaderButton]></ng-content>
+        </div>
+    </div>
+    <div class="hrm-form-grid-content mt-3" *ngIf="isHaveData" [style.display]="isHaveData?'':'none'">
+        <ng-content select=[formGridContent]></ng-content>
+    </div>
+
+    <div class="dis-flex group-grid-nodata dis-align-items-center" *ngIf="!isHaveData" [style.display]="isHaveData?'none':''">
+        <div class="no-data-grid-form">
+            {{'NOT_HAVE_DATA'|translate}}
+        </div>
+        <div>
+            <ng-content select=[noDataFormGridButton]></ng-content>
+        </div>
+    </div>
+</div>

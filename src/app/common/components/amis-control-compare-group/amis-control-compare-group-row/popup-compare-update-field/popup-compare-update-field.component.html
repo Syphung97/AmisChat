@@ -1,0 +1,23 @@
+<amis-popup-base [width]="432" [title]="title"  [(visiblePopup)]="visiblePopup" (closePopup)="closePopup()">
+  <div contentPopup>
+    <!-- <div>
+      <amis-amis-control-field [typeShow]="typeShowControlCurrent" [item]="groupFieldConfig"></amis-amis-control-field>
+    </div>
+    <div class="m-t-16">
+      <amis-amis-control-field (valueChanged)="onValueChanged($event)" [typeShow]="typeShowControlUpdate" [item]="groupFieldConfigUpdate"></amis-amis-control-field>
+    </div> -->
+    <amis-amis-control-form-group [listGroupbox]="groupConfig" [isSubmit]="isSubmit" [typeShow]="typeShowControlCurrent"
+        [isDisplayHeader]="false" [DependentDictionaries]="dependentDictionaries"
+      [formMode]="formModeEntity.Update" (afterValidatedForm)="afterValidated($event)" (afterUpdateField)="updatedField($event)"
+      (valueFieldChanged)="valueFieldChanged($event)">
+    </amis-amis-control-form-group>
+  </div>
+  <div buttonsPopup>
+    <amis-button #btnClose [color]="buttonColor.Normal" name="{{'CANCEL2' | translate}}" (click)="closePopup()">
+    </amis-button>
+    <amis-button name="{{'SAVE' | translate}}" [color]="buttonColor.BlueSecondary" (click)="onClickSave(false)">
+    </amis-button>
+    <amis-button name="{{'SAVE_AND_APPROVE' | translate}}" [color]="buttonColor.BluePrimary" (click)="onClickSave(true)">
+    </amis-button>
+  </div>
+</amis-popup-base>

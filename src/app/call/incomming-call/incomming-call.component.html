@@ -1,0 +1,39 @@
+<div class="overlay flex-c-m pos-relative">
+  <div class="incomming-call pos-absolute">
+    <div class="w-full h-full pos-relative">
+      <div style="padding: 8px;" class="flex-r-m">
+        <amis-icon [classIcon]="'icon-close'" (clickAction)="rejectCall()"></amis-icon>
+      </div>
+      <div class="flex-c-m">
+        <amis-avatar [size]="138" [src]="_inComingCallObject?.custom?.avatar"></amis-avatar>
+      </div>
+
+      <div class="caller flex-c-m m-t-32">
+        {{_inComingCallObject?.fromAlias}}
+      </div>
+      <div class="call-type flex-c-m text-grey fs-16 m-t-8">
+        {{!_inComingCallObject?.isVideoCall ? 'Đang gọi bạn' : 'Đang gọi video cho bạn' }}
+      </div>
+
+      <div class="btn-action flex-sa-m m-t-48 p-l-32 p-r-32">
+        <div class="accept-call flex-c-m flex-col hov-pointer" (click)="rejectCall()">
+          <div class="icon-reject-call">
+
+          </div>
+          <div class="text-grey m-t-8">
+            Từ chối
+          </div>
+        </div>
+        <div class="reject-call flex-c-m flex-col hov-pointer" (click)="answerCall()">
+          <div [ngClass]="{ 'icon-accept-call': !isVideoCall , 'icon-accept-video': isVideoCall}">
+
+          </div>
+          <div class="text-grey m-t-8">
+            Trả lời
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

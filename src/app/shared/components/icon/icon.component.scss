@@ -1,0 +1,41 @@
+
+$bg-icon-hover: #EFF1F6;
+$bg-icon-press: #E8EAEF;
+$bg-icon-active: #D1E0FF;
+$icon-color-active: #2566E9;
+.amis-icon.active-icon{
+    background-color: $bg-icon-active;
+    border-radius: 50%;
+    .inner-icon{
+        background-color: $icon-color-active;
+    }
+}
+
+.hover-icon {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.hover-icon.square-bg {
+  border-radius: 4px;
+}
+
+.no-hover-icon {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hover-icon:hover {
+  background-color: $bg-icon-hover;
+}
+
+.hover-icon:active {
+  background-color: $bg-icon-press;
+}
+

@@ -1,0 +1,19 @@
+    ::ng-deep{
+        .popup-overview-remind-setting{
+            .checkbox-item{
+                width: 370px;
+                .dx-checkbox-icon{
+                    margin-right: 4px;
+                }
+            }
+            .day-numberbox{
+                .dx-numberbox-spin-container{
+                    width: 25px;
+                }
+                .dx-texteditor-input{
+                    padding-right: 12px !important;
+                    padding-left: 12px;
+                }
+            }
+        }
+    }

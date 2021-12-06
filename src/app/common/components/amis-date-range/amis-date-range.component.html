@@ -1,0 +1,25 @@
+<!--  Vị trí mặc định -->
+<div class="dis-flex dis-flex-column amis-date-range">
+    <div class="period" [ngStyle]="{'margin': periodControlMargin}">
+        <amis-amis-control-combobox [labelWidth]="periodLabelWidth" isEmpty="true" labelText="{{'PERIOD'|translate}}"
+            name="Period" (onItemClick)="valuePeriodChanged($event)" [labelPositon]="'top'" [(ngModel)]="value.Period"
+            [setDataSource]="statisticTypeOption" [displayExpr]="'PeriodName'" [valueExpr]="'PeriodID'"
+            [isShowError]="true" [isRequiredLabel]="false" [isErrorCustom]="true" [errorMessage]="errorMessagePeriod"
+            (valueChanged)="changeComboboxPeriod($event)" [searchEnabled]="false">
+        </amis-amis-control-combobox>
+    </div>
+    <div class="fromdate" [ngStyle]="{'margin': fromdateControlMargin}">
+        <amis-amis-control-datebox [(ngModel)]="value.FromDate" [labelPositon]="'top'"
+            labelText="{{'FROMDATE'|translate}}" [labelWidth]="200" (valueChanged)="fromdate_valueChanged($event)"
+            name="FromDate" [isShowError]="true" [isSubmit]="true" [isError]="_isErrorFromDate"
+            [errorMessage]="errorMessageFrom" [placehoder]="'DD/MM/YYYY'" [isRequiredLabel]="false">
+        </amis-amis-control-datebox>
+    </div>
+    <div class="todate" [ngStyle]="{'margin': todateControlMargin}">
+        <amis-amis-control-datebox [(ngModel)]="value.ToDate" [labelPositon]="'top'" labelText="{{'TODATE'|translate}}"
+            [labelWidth]="200" (valueChanged)="todate_valueChanged($event)" name="ToDate" [isShowError]="true"
+            [isSubmit]="true" [isError]="_isErrorToDate" [errorMessage]="errorMessageTo" [placehoder]="'DD/MM/YYYY'"
+            [isRequiredLabel]="false">
+        </amis-amis-control-datebox>
+    </div>
+</div>

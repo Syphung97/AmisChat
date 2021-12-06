@@ -1,0 +1,84 @@
+<div cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+</div>
+<ng-template (detach)="attach($event)" cdkConnectedOverlay cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="true" [cdkConnectedOverlayHasBackdrop]="true" [cdkConnectedOverlayHeight]="'100%'"
+  [cdkConnectedOverlayWidth]="'100%'" [cdkConnectedOverlayPanelClass]="'call-overlay'">
+  <div class="overlay">
+    <div class=" incomming-call pos-absolute">
+      <div class="w-full h-full pos-relative flex-sb-m  flex-col">
+        <!-- Waiting -->
+        <div class="m-t-200" *ngIf="_signalingstate?.code == callState.RINGING">
+          <div class="flex-c-m ">
+            <amis-avatar [size]="138" [src]="_callee?.avatar"></amis-avatar>
+          </div>
+
+          <div class="caller flex-c-m m-t-32">
+            {{_callee?.name}}
+          </div>
+          <div class="call-type flex-c-m fs-16 m-t-8">
+            {{isVideoCall ? 'Đang gọi video...' : 'Đang gọi thoại...' }}
+          </div>
+        </div>
+
+        <!-- Calling -->
+        <div class="m-t-40" *ngIf="_signalingstate?.code == callState.ANSWERED || (_inComingCallObject)">
+          <div class="call-type flex-c-m fs-16">
+            {{!isVideoCall ? 'Cuộc gọi thoại' : 'Cuộc gọi video' }}
+          </div>
+          <div class="caller flex-c-m">
+            {{_callee?.name}}
+          </div>
+          <div *ngIf="!isVideoCall" class="flex-c-m m-t-180">
+            <amis-avatar style="border: 2px solid #0077FF; border-radius: 50%;padding: 4px;" [size]="204"
+              [src]="_callee?.avatar"></amis-avatar>
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="btn-action-out-call flex-c-m m-t-48 m-b-40 p-l-32 p-r-32">
+      <div class="reject-call flex-c-m flex-col hov-pointer m-r-40" (click)="mute()">
+        <div [ngClass]="{'icon-disable-call': isDisableVoice, 'icon-enable-call': !isDisableVoice}">
+
+        </div>
+      </div>
+      <div class="accept-call flex-c-m flex-col hov-pointer" (click)="cancleCall()">
+        <div class="icon-reject-call">
+
+        </div>
+
+      </div>
+      <div *ngIf="isVideoCall" class="reject-call flex-c-m flex-col hov-pointer m-l-40" (click)="enableVideoCall()">
+        <div [ngClass]="{'icon-disable-video': !isVideoCall, 'icon-enable-video': isVideoCall}">
+
+        </div>
+      </div>
+    </div>
+
+
+    <video [style.visibility]="isVideoCall? 'unset' : 'hidden'" #localVideo class="pos-absolute"
+      style="border: 1px solid white;" id="localVideo" muted playsinline autoplay></video>
+
+    <div *ngIf="!isVideoCall && (_signalingstate?.code == callState.ANSWERED || _inComingCallObject) "
+      style="bottom: 40px; right: 56px;" class="flex-c-m pos-absolute">
+      <amis-avatar style="border: 2px solid #0077FF; border-radius: 50%;padding: 4px;" [size]="80"
+        [src]="_caller?.avatar">
+      </amis-avatar>
+    </div>
+
+    <video [style.visibility]="_signalingstate?.code == callState.ANSWERED  && isVideoCall? 'unset' : 'hidden'"
+      #remoteVideo style="width: 100%; height: 100%;" class="pos-absolute" id="remoteVideo" playsinline
+      autoplay></video>
+
+    <div>
+
+    </div>
+  </div>
+
+
+</ng-template>

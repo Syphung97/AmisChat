@@ -1,0 +1,93 @@
+<div>
+  <div class="filterTimeContainer">
+    <!-- Nếu người dùng chưa bấm vào tùy chọn -->
+    <div *ngIf="visible == true" class="optionFilterDateMain">
+      <dx-select-box [dataSource]="listIntervalTypeCustomType" [(value)]="currentInterval.Key" [height]="40"
+        displayExpr="IntervalText" valueExpr="Key" (onValueChanged)="onSelectInterval($event)"
+        itemTemplate="itemDateFilter">
+        <div *dxTemplate="let data of 'itemDateFilter'" class="main-filter">
+          {{data.IntervalText}}
+          <div class="icon-carret-down main-filter-date-report" *ngIf="data.Key === 1">
+          </div>
+        </div>
+      </dx-select-box>
+    </div>
+    <!-- Nếu người dùng đã bấm vào tùy chọn -->
+    <div *ngIf="visible == false">
+      <div class="dis-flex align-items-center">
+        <div id="select-department-date" class="control-select-date dis-flex align-items-center cursor-pointer">
+          <div class="medium mr-1 position-relative">
+            <div class="optionalFilterDate" [ngStyle]="{'border': isFocusFromDateToDate == true ? '1px solid #007bff':'1px solid #e0e0e0'}" [class.border-error]="validMessage.length > 0">
+              <div class="from-date pointer">
+                <!-- Từ ngày -->
+                <dx-text-box #inputFromDate [maskInvalidMessage]="''" [maskChar]="'_'" mask="00/00/0000"
+                  class="w-100 textbox-filter-date" [(value)]="startDateText" (onValueChanged)="enterFromDate($event)"
+                  (onFocusIn)="showChooseCalendarDateFrom()" (onEnterKey)="enterFromDate($event)">
+                </dx-text-box>
+              </div>
+              <div class="ellipse-filter-date"
+                [ngStyle]="{'margin-left': startDateText.length != 0 ? '-2px': '-15px' }">-</div>
+              <div class="to-date pointer">
+                <!-- Đến ngày -->
+                <dx-text-box #inputToDate [maskInvalidMessage]="''" [maskChar]="'_'" mask="00/00/0000"
+                  class="w-100 textbox-filter-date todate-textbox-filter" [(value)]="endDateText"
+                  (onValueChanged)="enterToDate($event)" (onFocusIn)="showChooseCalendarDateTo()"
+                  (onEnterKey)="enterToDate($event)">
+                </dx-text-box>
+              </div>
+              <div class="target-dropdown dis-flex align-items-center justify-content-center"
+                (click)="showFilterDate($event)">
+                <div class="icon-carret-down dateFilterCarretDown pointer"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-error">{{validMessage}}</div>
+  </div>
+
+  <!-- Hiển thị date picker của date from -->
+  <div [ngStyle]="{'right': calendarMarginRight }" class="custom-calendar calendar-content-fromdate content-center p-3"
+    *ngIf="isShowCalenderDateFrom===true">
+    <div class="arrow date-arrow"></div>
+    <div class="content-center">
+      <dx-calendar (onInitialized)="onDisplayCalendar($event)" (onOptionChanged)="onDisplayCalendar($event)"
+      [width]="190" [(value)]="startDate" (onValueChanged)="changeStartDateOnPickerFromDate($event)">
+      </dx-calendar>
+    </div>
+  </div>
+
+  <!-- Lịch chọn đến ngày -->
+  <div [ngStyle]="{'right': calendarMarginRight }" class="custom-calendar calendar-content-todate content-center p-3"
+    *ngIf="isShowCalenderDateTo===true">
+    <div class="arrow date-arrow"></div>
+    <div class="content-center">
+      <dx-calendar (onInitialized)="onDisplayCalendar($event)" (onOptionChanged)="onDisplayCalendar($event)"
+      [width]="190" [(value)]="endDate" (onValueChanged)="changeEndDateOnPickerToDate($event)">
+      </dx-calendar>
+    </div>
+  </div>
+
+</div>
+
+<!-- Popover hiển thị 1 số option khi người dùng đã bấm tùy chọn -->
+<dx-popover class="popover-select-date" [(visible)]="visibleOptionFilter" [target]="targetPopover" [width]="258"
+  [height]="240" [position]="{my: 'right top', at: 'right bottom', of: 'targetPopover',offset:'0 -8'}">
+
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view>
+      <div class="optional-filter-date-dropdown">
+        <div *ngFor="let item of listIntervalTypeCustomTypeOptional"
+          class="app-dropdown-item dis-flex-cen align-items-center justify-content-between"
+          (click)="choosingOptionFilterDate(item.Key)">
+          {{item.IntervalText}}
+        </div>
+      </div>
+    </dx-scroll-view>
+  </div>
+
+</dx-popover>
+
+<!-- text box để focus khi ấn enter chọn ngày bộ lọc -->
+<dx-text-box class="focus-in-entered" #focus></dx-text-box>

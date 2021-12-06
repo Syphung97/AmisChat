@@ -1,0 +1,188 @@
+@import "../../../assets/scss/var-color.scss";
+@import "../../../assets/scss/var-font.scss";
+
+:host {
+  .chart {
+    height: 240px;
+    background-color: $white;
+    position: relative;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    &.full-chart{
+      height: 100% !important;
+      margin-bottom: 0 !important;
+    }
+    .zoom-chart{
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+    }
+  }
+  .grid-report {
+    height: calc(100% - 256px);
+  }
+  .grid-not-chart {
+    height: 100%;
+  }
+  .empty-content {
+    margin-top: 16px;
+    font-style: italic;
+    color: $nodata-report;
+  }
+  .empty-chart {
+    width: 100%;
+  }
+  .empty-data {
+    background-color: $white;
+    border-radius: 4px;
+    width: 100%;
+    position: relative;
+  }
+  .empty-data-chart {
+    height: calc(100% - 256px);
+  }
+  .empty-not-chart {
+    height: 100%;
+  }
+  .pie-chart{
+    position: relative;
+  }
+  .grid-report-content{
+    position: relative;
+  }
+  .report-loading > svg {
+    top: calc(50%);
+    left: calc(50%);
+    position: absolute;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+  .report-loading{
+    // height: 100%;
+    // max-height: 240px;
+    // width: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: absolute;
+    background-color: $white;
+    z-index: 30;
+    .spinner-big {
+      -webkit-animation: rotatorbig 1.4s linear infinite;
+              animation: rotatorbig 1.4s linear infinite;
+    }
+    .loading-text{
+      position: absolute;
+      top: 60%!important;
+      left: calc(50%);
+      color: $text-silver;
+    }
+  
+    @-webkit-keyframes rotatorbig {
+      0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(270deg);
+                transform: rotate(270deg);
+      }
+    }
+  
+    @keyframes rotatorbig {
+      0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(270deg);
+                transform: rotate(270deg);
+      }
+    }
+    .path {
+      stroke-dasharray: 187;
+      stroke-dashoffset: 0;
+      -webkit-transform-origin: center;
+              transform-origin: center;
+      -webkit-animation: dashbig 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+              animation: dashbig 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    }
+  
+    @-webkit-keyframes colors {
+      0% {
+        stroke: #008DF2;
+      }
+      25% {
+        stroke: #FA3D3F;
+      }
+      50% {
+        stroke: #F6BB02;
+      }
+      75% {
+        stroke: #1AC70E;
+      }
+      100% {
+        stroke: #008DF2;
+      }
+    }
+  
+    @keyframes colors {
+      0% {
+        stroke: #008DF2;
+      }
+      25% {
+        stroke: #FA3D3F;
+      }
+      50% {
+        stroke: #F6BB02;
+      }
+      75% {
+        stroke: #1AC70E;
+      }
+      100% {
+        stroke: #008DF2;
+      }
+    }
+    @-webkit-keyframes dashbig {
+      0% {
+        stroke-dashoffset: 187;
+      }
+      50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+                transform: rotate(135deg);
+      }
+      100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+                transform: rotate(450deg);
+      }
+    }
+    @keyframes dashbig {
+      0% {
+        stroke-dashoffset: 187;
+      }
+      50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+                transform: rotate(135deg);
+      }
+      100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+                transform: rotate(450deg);
+      }
+    }
+  }
+
+}
+
+::ng-deep{
+  .dx-datagrid-content .dx-row.dx-group-row{
+    background-color: $bg-row-group !important;
+    color: $title-report !important;
+    font-weight: $font-weight-medium !important;
+  }
+}

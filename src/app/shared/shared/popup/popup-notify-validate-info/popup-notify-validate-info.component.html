@@ -1,0 +1,21 @@
+<amis-popup-notify *ngIf="visiblePopupNotify" [visiblePopup]="visiblePopupNotify" [width]="800" [offsetY]="'0 150'"
+    title="{{title}}" (closePopup)="cancel()">
+    <div textContentPopupConfirm class="hrm-contract-create-multi-form">
+        <div class="mb-3">
+            {{notifyHeaderContent}}
+        </div>
+        <amis-paging-grid #pagingGrid [isBorderGrid]="true" [pageSize]="25" [dataSource]="listError"
+            [gridHeight]="300" [columns]="columns" [isShowSelection]="false" [isShowCustomColumn]="false"
+            [isShowMoreOption]="false" [isShowPaging]="false">
+        </amis-paging-grid>
+        <div class="mt-3" *ngIf="!isErrorAll&&notifyFooterContent">
+            {{notifyFooterContent}}
+        </div>
+    </div>
+    <div amisButtons>
+        <amis-button *ngIf="!isErrorAll" name="{{'CANCEL2'|translate}}" [color]="buttonColor.Normal"
+            (clickButton)="cancel()"></amis-button>
+        <amis-button name="{{'ACCEPT'|translate}}" (clickButton)="onConfirmFunc()">
+        </amis-button>
+    </div>
+</amis-popup-notify>

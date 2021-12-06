@@ -1,0 +1,34 @@
+<div class="paging dis-flex dis-flex-row dis-justify-content-between" [ngClass]="{'report-paging':isReport}">
+  <div class="dis-align-self-center" *ngIf="!isReport">
+    {{'PAGING_GRID_TOTAL'|translate}} <span class="total m-l-4">{{totalShowRows}}</span>
+  </div>
+
+  <div class="dis-align-self-center dis-flex" *ngIf="isReport">
+    {{'PAGING_GRID_TOTAL_REPORT'|translate}} <span class="total m-l-4">{{totalShowRows}}</span>
+    <ng-container *ngIf="isGroup">
+
+      <div class="m-l-16 cursor-pointer custom-style" (click)="expandAll(true)" *ngIf="!isExpandAll">{{'EXPAND_ALL'|translate}}</div>
+      <div class="m-l-16 cursor-pointer custom-style" (click)="expandAll(false)" *ngIf="isExpandAll">{{'COLLAPPSE_ALL'|translate}}</div>
+    </ng-container>
+  </div>
+
+  <div class="dis-flex" *ngIf="isShowPaging">
+    <dx-select-box *ngIf="isPageSizeEditable" class="paging-selection" [dataSource]="listFilterPageSize"
+      [(value)]="currentPageSize.PageSize" displayExpr="Text" valueExpr="PageSize"
+      (onValueChanged)="changedSizePaging($event)" [width]="76">
+    </dx-select-box>
+
+    <div class="control-paging dis-flex dis-flex-row dis-justify-content-between">
+
+      <div class="text-paging dis-flex dis-flex-row dis-justify-content-between">
+        <div class="start">{{'FROM'|translate}} <b>{{startRowNumber}}</b> {{'TO_LOWERCASE'|translate}} <b>{{endRowNumber}}</b></div>
+      </div>
+      <amis-icon [classIcon]="'icon-big-caret-left'" class="m-l-16" (click)="backPage($event)"
+        [isDisable]="!visibleBack" [isSquareBG]="true" [tooltipContent]="'BACK_PAGE'|translate">
+      </amis-icon>
+      <amis-icon [classIcon]="'icon-big-caret-right'" class="m-l-4" (click)="nextPage($event)"
+        [isDisable]="!visibleNext" [isSquareBG]="true" [tooltipContent]="'NEXT_PAGE'|translate">
+      </amis-icon>
+    </div>
+  </div>
+</div>

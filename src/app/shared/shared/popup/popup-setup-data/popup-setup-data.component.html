@@ -1,0 +1,89 @@
+<amis-popup-base [width]="500" *ngIf="visiblePopup" [visiblePopup]="visiblePopup" [offsetY]="offsetY"
+    [isHaveScrollView]="false" title="{{'POPUP_SETUP_DATA'| translate}}" (closePopup)="onClosePopup()">
+    <div contentPopupNoScroll class="setup-data-popup">
+        <div class="data-setup-list" *ngIf="!isLoading">
+            <div class="text-box-search">
+                <dx-text-box #searchTextBox mode="search" [(value)]="searchName" class="search-box"
+                    (onValueChanged)="changeTextBoxValue($event)" (onKeyUp)="onKeyupSearchBox($event)"
+                    placeholder="{{'Tìm kiếm' | translate}}">
+                </dx-text-box>
+            </div>
+
+            <div class="widget-container">
+                <dx-scroll-view [height]="listHeight" #dxScrollView [showScrollbar]="'always'">
+                    <dx-list #list [items]="dataSource" [dataSource]="dataSource" [repaintChangesOnly]="true"
+                        [showSelectionControls]="true" itemTemplate="data" [selectionMode]="'multiple'"
+                        [selectedItems]="selectedItems" (onSelectionChanged)="selectItem($event)" pageLoadMode="any"
+                        noDataText="{{'NO_DATA'| translate}}" nextButtonText="{{'SHOW_MORE' | translate}}"
+                        (onContentReady)="onListContentReady($event)">
+                        <div *dxTemplate="let data of 'data'"
+                            class="flex dis-align-items-center dis-flex list-data-item">
+                            <dx-text-box [class.border-error]="data.IsError"
+                                (onFocusOut)="onFocusOutTextbox($event, data)" (onKeyUp)="onKeyupTextbox($event, data)"
+                                [(value)]="data.PickListValue" class="flex" [class.disabled-control]="data.IsSystem">
+                            </dx-text-box>
+
+                            <div class="hover-icon ml-2" [class.disabled]="data.IsSystem" (click)="deleteItem(data)">
+                                <div [ngClass]="{'icon-dash-red': !data.IsSystem, 'icon-dash': data.IsSystem}"
+                                    class="icon-dash-red">
+                                </div>
+                            </div>
+
+                        </div>
+                        <dxo-item-dragging *ngIf="!isFilter" [data]="dataSource" [allowReordering]="true"
+                            [onDragStart]="onDragStart" [onAdd]="onAdd" [onRemove]="onRemove" [onDragEnd]="onDragEnd">
+                        </dxo-item-dragging>
+                    </dx-list>
+                </dx-scroll-view>
+            </div>
+
+            <div class="dis-flex footer-popup">
+                <amis-button [type]="buttonType.Link" name="{{'ADD_ROW'| translate}}" iconLeft="icon-plus-blue"
+                    (clickButton)="addRow()">
+                </amis-button>
+            </div>
+        </div>
+        <div *ngIf="isLoading">
+            <div class="ph-item w-100">
+                <div class="loading-content">
+                    <div class="loading-sidebar-item" *ngFor="let item of [1,2,3,4]"></div>
+                    <div class="loading-sidebar-item" *ngFor="let item of [1,2,3,4]"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div buttonsPopup>
+        <amis-button [color]="buttonColor.Normal" name="{{'CANCEL2'| translate}}" (clickButton)="onClosePopup()">
+        </amis-button>
+        <amis-button name="{{'SAVE'| translate}}" (clickButton)="saveDataSetup(true)">
+        </amis-button>
+    </div>
+</amis-popup-base>
+
+<!-- popup confirm xoas -->
+<amis-popup-delete *ngIf="popupDelete.VisiblePopupDelete" [title]="popupDelete.TitlePopupDelete"
+    [visiblePopup]="popupDelete.VisiblePopupDelete" [content]="popupDelete.ContentPopupDelete"
+    (eventDelete)="confirmPopupDelete($event)" (eventHiddenPopup)="cancelPopupDelete($event)"></amis-popup-delete>
+
+<!-- poup thông báo xóa vai trò -->
+<amis-popup-notify [title]="popupNotifyTitle" [visiblePopup]="visibleNotify" *ngIf="visibleNotify"
+    (closePopup)="visibleNotify = false">
+    <div textContentPopupConfirm [innerHTML]="popupNotifyContent">
+    </div>
+    <div amisButtons>
+        <amis-button [color]="buttonColor.Normal" name="{{'CLOSE'| translate}}" (clickButton)="visibleNotify = false">
+        </amis-button>
+    </div>
+</amis-popup-notify>
+
+<!-- popover tooltip -->
+<dx-popover *ngIf="visiblePopover" [(visible)]="visiblePopover" showEvent="dxhoverstart" hideEvent="dxhoverend"
+    [target]="tooltipTarget" class="tooltip-popover">
+    <div *dxTemplate="let data of 'content'">
+        <ng-container>
+            <div class="tooltip-content">
+                {{tooltipContent}}
+            </div>
+        </ng-container>
+    </div>
+</dx-popover>

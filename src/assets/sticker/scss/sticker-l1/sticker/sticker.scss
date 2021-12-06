@@ -1,0 +1,46 @@
+﻿ 
+.sticker {
+    display: block;
+    width: 64px;
+    height: 64px;
+    background-size: cover;
+}
+ 
+.animation {
+    background-size: 304px 228px !important;
+    cursor: default;
+    height: 64px;
+    width: 64px;
+    background-position: -6px -6px;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.sticker_animate {
+    -webkit-animation-name: stickerAnimation;
+    -webkit-animation-duration: 0.9s;
+    -webkit-animation-timing-function: step-start;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: both;
+}
+
+@-webkit-keyframes stickerAnimation {
+    0% {
+        background-position: -6px -6px;
+    }
+
+    25% {
+        background-position: -82px -234px;
+    }
+
+    50% {
+        background-position: -158px -158px;
+    }
+
+    75% {
+        background-position: -234px -82px;
+    }
+
+    100% {
+        background-position: -316px -6px;
+    }
+}

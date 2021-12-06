@@ -1,0 +1,10 @@
+@import "../../../assets/scss/var-color.scss";
+
+::ng-deep{
+    .amis-date-range{
+        .dis-flex-grow.font-weight-medium.label-text{
+            font-weight: 300 !important;
+            color: $text-grey !important;
+        }
+    }
+}

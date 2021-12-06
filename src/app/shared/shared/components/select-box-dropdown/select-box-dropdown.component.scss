@@ -1,0 +1,139 @@
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+.icon-search-hrm{
+    position: absolute;
+    top: 6px;
+    left: 8px;
+}
+#input-search{
+    width: 400px;
+    height: 36px;
+    padding-left: 36px;
+    background-color: $bg-setting-sidebar-light;
+    border: 1px solid $bg-icon-hover;
+}
+#input-search:hover{
+    border: 1px solid $control-hover;
+}
+#input-search:focus{
+    border: 1px solid $control-focus;
+
+}
+.profile-popover-title{
+    font-size: 16px;
+    font-weight: $font-weight-medium;
+    display: flex;
+    padding: 20px 16px;
+    .title-action{
+    font-size: $font-size-base;
+    cursor: pointer;
+    color: $text-blue-heavy;
+    }
+}
+
+::ng-deep{
+    .search-profile{
+        @media screen and (max-width: 1400px) {
+            .dx-popup-content {
+                .dx-scrollable-content{
+                    max-height: 560px !important;
+                }
+            }
+          }
+        .dx-popup-content{
+            width: 397px;
+        }
+        .dx-overlay-content{
+            .dx-popover-arrow{
+                display: none;
+            }
+        }
+    }
+
+}
+    .profile-item.hovered{
+        .employee-name{
+            font-weight: $font-weight-medium !important;
+        }
+    background-color: $hover;
+    .detail-profile-info{
+        display: flex;
+        .icon-infor-circle-default{
+            display: block;
+        }
+    }
+    .profile-no-data{
+        height: 66px;
+        width: 332px;
+        margin: 8px;
+    }
+}
+    .empty-recent{
+        width: 100%;
+        font-weight: $font-weight-medium;
+        text-align: center;
+        line-height: 24px;
+        padding-top: 20px;
+        height: 60px;
+    }
+    .profile-item{
+        border-radius: 4px;
+        display: flex;
+        height: 66px;
+        width: 380px;
+        margin: 8px;
+        cursor: pointer;
+        .profile-img{
+            width: 40px;
+            height: 40px;
+            margin: 12px 12px 12px 8px;
+            border-radius: 50%;
+        }
+        .profile-info{
+            height: 42px;
+            margin: 12px 12px 12px 0px;
+            width: 260px;
+            .profile-employee{
+                display: flex;
+                white-space: nowrap;
+                .employee-name{
+                    margin-right: 8px;
+                    margin-bottom: 8px;
+                    font-weight: $font-weight-medium !important;
+                    // width: 130px;
+                    // text-overflow: ellipsis;
+                    // overflow: hidden;
+                }
+                .employee-code{
+                    width: calc(212px - 138px);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+            .no-job-title{
+                margin-top: 12px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+        .detail-profile-info{
+            margin: 16px 0px;
+            padding-top: 4px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: $white;
+            display: none;
+            justify-content: center;
+            box-shadow: 0px 2px 8px rgba(23, 27, 42, 0.16);
+            .icon-infor-circle-default{
+                display: none;
+            }
+        }
+
+    }
+    .icon-infor-circle-default:hover{
+        background-color: $highlight;
+        }
+

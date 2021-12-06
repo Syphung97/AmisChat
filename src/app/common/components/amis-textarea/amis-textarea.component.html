@@ -1,0 +1,4 @@
+<div class="content">
+    <dx-text-area (onChange)="raiseEventChanged($event)" [autoResizeEnabled]="autoResizeEnabled" [class.text-area-error]="errorMessage.length" [id]="id" [placeholder]="placeholder" [(ngModel)]="value"></dx-text-area>
+    <div class="text-message" *ngIf="errorMessage.length">{{errorMessage}}</div>
+</div>

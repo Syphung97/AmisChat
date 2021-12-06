@@ -1,0 +1,10 @@
+<div
+  *ngIf="_groupConfig?.GroupType == groupType.Field || _groupConfig?.ListGroupConfigChild[0]?.GroupType == groupType.Field">
+  <amis-amis-control-compare-group-row [dataSource]="_dataCompareGroupRows" [groupFieldConfigs]="_groupFieldConfigs"
+    [groupConfig]="_groupConfig"></amis-amis-control-compare-group-row>
+</div>
+<div
+  *ngIf="(_groupConfig?.GroupType == groupType.Grid || _groupConfig?.ListGroupConfigChild[0]?.GroupType == groupType.Grid) && isLoadGroupField">
+  <amis-amis-control-compare-group-grid [groupConfig]="_groupConfig" [layoutConfig]="_layoutConfig" [employeeSelfServiceData]="_updateData"
+    [currentData]="_dataCurrentGrid" [updateData]="_dataUpdateGrid" [masterIDValue]="_updateData.EmployeeID"></amis-amis-control-compare-group-grid>
+</div>

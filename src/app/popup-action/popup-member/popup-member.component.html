@@ -1,0 +1,76 @@
+<amis-popup [title]="'Thành viên'" [width]="'600px'" (onCancel)="closePopup($event)">
+  <div content class="popup-member">
+    <div class="arena-member">
+      <div class="member">
+        <nz-tabset>
+          <nz-tab nzTitle="Thành Viên">
+            <!-- Content of Tab Pane 1 -->
+            <div class="content-member">
+
+              <div class="member-detail" *ngFor="let user of users">
+                <div class="member-info">
+                  <div class="avatar m-r-16">
+                    <amis-avatar [size]="48" [stringeeUserID]="user?.userId"></amis-avatar>
+                    <div class="icon-user-online" *ngIf="user?.status == 1"></div>
+                  </div>
+                  <div class="info">
+                    <div class="name">{{user?.name}}</div>
+                    <!-- <div class="department">{{user.avatar}}</div> -->
+                  </div>
+                </div>
+                <div class="function-member" *ngIf="currentUser == admin?.userId ? true : false">
+                  <!-- <div class="btn-set-admin m-r-16">
+                                        <span class="btn-text-set-admin">Đặt làm quản trị viên</span>
+                                    </div> -->
+                  <div class="btn-delete-member" (click)="openDialogDeleteGroup(user)">
+                    <span class="btn-text-delete-member">{{"BUTTON.DELETE" | translate}}</span>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="Quản trị viên">
+            <!-- Content of Tab Pane 2 -->
+            <div class="content-member">
+              <div class="member-detail">
+                <div class="member-info">
+                  <div class="avatar m-r-16">
+                    <amis-avatar [size]="48" [stringeeUserID]="admin?.userId"></amis-avatar>
+                  </div>
+                  <div class="info">
+                    <div class="name">{{admin?.name}}</div>
+                    <!-- <div class="department">AMIS Core - Khối sản xuất</div> -->
+                  </div>
+                </div>
+                <div class="function-member">
+                  <div class="btn-set-admin m-r-16">
+                    <span class="btn-text-set-admin">{{"ADMIN" | translate}}</span>
+                  </div>
+                  <!-- <div class="btn-delete-member">
+                                    <span class="btn-text-delete-member">Xóa</span>
+                                </div> -->
+                </div>
+              </div>
+            </div>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+
+    </div>
+    <!-- <div class="btn-add-member">
+            <div class="icon-add-member"></div>
+            <span class="btn-text-add">Thêm</span>
+        </div> -->
+  </div>
+  <div footer class="footer-popup-member">
+    <div class="btn-close" (click)="closePopup($event)">
+      <span class="btn-text-close">{{"BUTTON.CLOSE" | translate}}</span>
+    </div>
+  </div>
+</amis-popup>
+<amis-popup-delete-member *ngIf="isPopupDeleteMember" [isVisible]="isPopupDeleteMember" [user]="user"
+  (isPopupDeleteMember)="onchangeVisiablePopupDelete($event)" [conversation]="_conversation"
+  (isMemberDelete)="reloadMember($event)"></amis-popup-delete-member>

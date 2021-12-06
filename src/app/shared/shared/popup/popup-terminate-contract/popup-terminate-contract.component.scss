@@ -1,0 +1,23 @@
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-cls.scss";
+@import "../../../../assets/scss/var-icon.scss";
+@import "../../../../assets/scss/var-styleguide.scss";
+
+::ng-deep {
+
+    .content-popup-terminate-contract {
+        .dx-radiobutton {
+            line-height: 38px;
+        }
+
+        .radio-group {
+            position: relative;
+            .date-box {
+                position: absolute;
+                top: 0;
+                left: 70px;
+            }
+        }
+    }
+}

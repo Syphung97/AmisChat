@@ -1,0 +1,511 @@
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+
+.import-popup {
+  padding: 0 !important;
+  hr {
+    margin-top: 8px !important;
+  }
+
+  .active-import {
+    color: $highlight !important;
+    font-weight: $font-weight-bold !important;
+    opacity: 1 !important;
+    // font-size: $font-size-strong;
+  }
+
+  .done{
+    color: $black !important;
+    font-weight: $font-weight-bold !important; 
+    opacity: 1 !important;
+  }
+
+  .active-bg-import {
+    background-color: $highlight;
+  }
+
+  .done-bg-import {
+    background-color: $black;
+  }
+
+
+  .step-import {
+    opacity: .6;
+    font-weight: 500;
+    // font-size: $font-size-strong;
+  }
+
+  .direct-popup {
+    padding: 0px 24px 0 24px;
+    display: flex;
+    align-items: center;
+    // height: 36px;
+    .search-setting-import {
+      width: 320px;
+    }
+  }
+
+  .content-import-popup {
+    height: calc(100% - 61px);
+    // height: 100%;
+    //  .sidebar-popup{
+    //    padding: 16px;
+    //    background-color: #f9f9f9;
+    //    width: 200px !important;
+    //    .sidebar-direct{
+    //      margin-bottom: 8px;
+    //      pointer-events: none;
+    //      display: flex;
+    //      align-items: center;
+    //      padding-left: 16px;
+    //    }
+    //  }
+    .right-content-popup {
+      padding: 0 5px;
+      //  width: calc(100% - 200px);
+      width: 100%;
+
+      .import-file {
+        position: relative;
+        padding: 0 50px;
+        width: 100%;
+        //  margin: 24px 0;
+        .mb-8 {
+          margin-bottom: 8px;
+        }
+
+        .import-cv {
+          cursor: pointer;
+          position: relative;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 274px;
+          border: 1px dashed #bcb3b3;
+          border-radius: 4px;
+          justify-content: center;
+          background-color: $bg-row;
+
+          .file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+            opacity: 0;
+
+            &:focus {
+              outline: none;
+            }
+          }
+
+          &.after-import {
+            justify-content: flex-start;
+            padding: 0 22px;
+            background-color: $bg-disable;
+          }
+
+          .wrap-file {
+            text-align: center;
+            font-size: $font-size-base !important;
+
+            .or-import {
+              color: $text-detail;
+            }
+          }
+
+          .file-name {
+            color: $selected;
+            font-size: $font-size-strong;
+          }
+
+          .file-msg {
+            font-size: $font-size-strong;
+          }
+
+          .infor-file {
+            display: flex;
+            align-items: center;
+            text-align: left
+          }
+
+          .result-file {
+            align-items: center;
+            justify-content: space-between;
+
+            .custom-icon-file {
+              flex-shrink: 0;
+              margin-right: 8px;
+            }
+
+            .hidden-input {
+              display: none;
+            }
+
+            .custom-flex {
+              flex-shrink: 0;
+            }
+          }
+          .over-capacity{
+            text-align: left;
+            margin-top: 12px;
+            color: $red;
+          }
+        }
+
+        .custom-data-excel {
+          padding-top: 24px;
+
+          .select-sheet {
+            display: flex;
+            margin-right: 17px;
+            align-items: center;
+            width: 69%;
+
+            .dx-select-sheet {
+              width: calc(100% - 128px);
+            }
+          }
+
+          .select-row-title {
+            display: flex;
+            align-items: center;
+            margin-left: 50px;
+
+            .dx-select-title {
+              width: calc(100% - 128px);
+            }
+            .dx-select-title {
+              ::ng-deep {
+
+                .dx-widget.dx-numberbox-spin-button.dx-numberbox-spin-up .dx-numberbox-spin-up-icon:hover,
+                .dx-widget.dx-numberbox-spin-button.dx-numberbox-spin-down .dx-numberbox-spin-up-icon:hover {
+                  background-color: $white;
+                }
+              }
+            }
+          }
+
+          .label-select {
+            color: $text-grey;
+          }
+
+          .error-validate {
+            position: absolute;
+            font-size: $font-size-small;
+            color: $red;
+          }
+
+          .alert-error {
+            border-color: $red !important;
+          }
+        }
+
+        .import-note {
+          padding-top: 24px;
+
+          .note-text {
+            font-weight: $font-weight-bold;
+          }
+        }
+      }
+
+      .custom-colums {
+        position: relative;
+
+        .map-colums-data {
+          border: 1px solid $border;
+          margin: 0 24px;
+          height: calc(100% - 52px);
+          border-radius: 8px;
+
+          .row-select-colums {
+            display: flex;
+            align-items: center;
+            height: 45px;
+            padding: 0 24px;
+          }
+
+          .title-info-step2 {
+            background-color: $header-footer-border;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 0 24px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            font-weight: $font-weight-bold;
+            // font-size: $font-size-strong;
+          }
+
+          .caption-column {
+            width: 400px;
+          }
+
+          .select-column-excel {
+            width: 400px;
+          }
+
+          .bg-row {
+            background-color: $bg-row;
+          }
+
+          .scroll-info-file {
+            // max-height: 279px;
+            // height: 279px;
+          }
+        }
+
+        .note-custom {
+          padding-left: 24px;
+          margin-top: 16px;
+
+          .row-note {
+            align-items: center;
+            margin-top: 24px !important;
+            margin-bottom: 0 !important;
+
+            .checkbox-action {
+              margin-left: 35px;
+
+              .custom-radio {
+                display: flex;
+                align-items: center;
+              }
+
+              .custom-radio:hover {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+
+      .result-import {
+        padding: 24px 40px;
+
+        .title-result {
+          margin-bottom: 16px;
+        }
+      }
+
+      .check-data {
+        //  width: 80% !important;
+        position: relative;
+        // height: 381px;
+        height: 100%;
+
+        .check-result {
+          padding: 0px 16px 12px 16px;
+          justify-content: space-between;
+
+          .valid-row {
+            color: $text-green;
+          }
+
+          .filter-validate {
+            border-radius: 17.5px;
+            border: 1px solid $white;
+            padding: 0 12px;
+            height: 35px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          }
+
+          .filter-validate-all {
+            border: 1px solid $border !important;
+          }
+
+          .filter-validate-valid {
+            border: 1px solid $text-green !important;
+          }
+
+          .filter-validate-invalid {
+            border: 1px solid $red !important;
+          }
+
+          .download-resesult {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: $bg-btn-blue-primary;
+
+            .icon-export {
+              background-color: $bg-btn-blue-primary !important;
+            }
+          }
+        }
+
+        .result-grid {
+          position: relative;
+          height: calc(100% - 35px);
+          margin: 0 15px;
+          border: 1px solid $border;
+
+          ::ng-deep {
+
+            .dx-row.dx-header-row,
+            .dx-row.dx-column-lines.dx-header-row {
+              background-color: $bg-row;
+            }
+
+            .dx-row.dx-data-row.dx-row-lines {
+              font-size: $font-size-base;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.setting-column-matching {
+  height: calc(100% - 24px);
+
+  .map-colums-data {
+    border: 1px solid $border;
+    margin-top: 24px;
+    height: calc(100% - 40px);
+    border-radius: 8px;
+    .row-select-colums {
+      display: flex;
+      align-items: center;
+      height: 45px;
+      padding-left: 24px;
+    }
+
+    .title-info-step2 {
+      background-color: $header-footer-border;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      padding: 0 24px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      font-weight: $font-weight-bold;
+      // font-size: $font-size-strong;
+    }
+
+    .caption-column {
+      width: 270px;
+    }
+
+    .select-column-excel {
+      width: calc(100% - 270px);
+    }
+
+    .bg-row {
+      background-color: $bg-row;
+    }
+
+    .scroll-info-file {
+      // max-height: 336px;
+    }
+  }
+
+  .search-setting-column-matching {
+    width: 320px;
+  }
+
+  .title-info-column-matching {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.no-data {
+  // height: 70px;
+  height: 279px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opacity {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.row-note {
+  margin: 10px 0;
+
+  .icon-dot-import {
+    margin-right: 8px;
+  }
+
+  .hightlight-download {
+    color: $highlight;
+    cursor: pointer;
+  }
+
+  .hightlight-download:hover {
+    text-decoration: none;
+  }
+}
+
+.border-red {
+  border: 1px solid $red !important;
+}
+
+.dx-popup-footer {
+  padding: 10px 24px !important;
+  border-top: 1px solid $border;
+  width: 100% !important;
+  height: 58px !important;
+}
+
+.h-214 {
+  height: 214px !important;
+}
+
+::ng-deep {
+
+  .popup-import {
+
+    //  .dx-toolbar-before{
+    //      width: 100%;
+    //  }
+    .content-popup-base {
+      padding: 0 !important;
+    }
+
+    .dx-popup-footer {
+      margin-top: 0 !important;
+    }
+
+    .paging {
+      background-color: $white;
+    }
+
+    
+  }
+  .custom-data-excel{
+    .dx-texteditor-input{
+      font-weight: $font-weight-bold !important;
+    }
+  }
+
+  .popup-import-content {
+    margin: 0 -16px !important;
+  }
+
+  .tooltip-popover-titleLine{
+    .tooltip-content{
+      padding: 16px 24px;
+    }
+    .text-tooltip-content{
+      font-weight: $font-weight-bold !important;
+    }
+    .icon-table-tooltip{
+      margin: 0 -12px;
+    }
+  }
+
+}
+
+.dis-none-imp {
+  display: none !important;
+}

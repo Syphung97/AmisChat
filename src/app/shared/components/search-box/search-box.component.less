@@ -1,0 +1,45 @@
+@import "mixin";
+
+.themeMixin({
+  :host {
+    @media only screen and (max-width: 992px) {
+      .search-conv {
+        width: auto !important;
+      }
+      .search-box {
+        padding: 12px !important;
+      }
+      .icon-search-chat{
+        display: none;
+      }
+    }
+
+    .search-box{
+      background-color: @backbround-searchbox;
+      height: 36px;
+      position: relative;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      padding: 12px 12px 12px 40px;
+      input{
+        border: none;
+        background: unset;
+        outline: none;
+        width: 100%;
+      }
+    }
+    .icon-search-chat{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 8px;
+    }
+
+
+    .search-conv {
+      width: 202px;
+    }
+
+  }
+});

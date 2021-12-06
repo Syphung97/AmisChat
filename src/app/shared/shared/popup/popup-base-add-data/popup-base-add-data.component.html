@@ -1,0 +1,19 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" [height]="height" [width]="width" [offsetY]="'0 150px'"
+    (closePopup)="onClosePopup()" class="popup-base-add-data" (shownPopup)="onShownPopup($event)">
+    <div contentPopup #formGroup>
+        
+        <amis-amis-form-field [isDisplayHeader]="false" [groupConfig]="groupBox" [isDisplayHeader]="false" [labelWidth]="labelWidth"
+            [labelClass]="labelClass" [inputAfterSubmit]="objectAfterSubmit" [DependentDatas]="dependentDatas"
+            [formMode]="formMode" (afterValidatedForm)="afterValidated($event)" [isSubmit]="isSubmit"
+            [typeShow]="typeShow"> </amis-amis-form-field>
+    </div>
+    <div buttonsPopup>
+        <amis-button [color]="buttonColor.Normal" name="{{'CANCEL2' | translate}}" (clickButton)="onClosePopup()">
+        </amis-button>
+        <amis-button *ngIf="formMode == FormMode.Insert" [color]="buttonColor.BlueSecondary"
+            name="{{'SAVE_AND_AND' | translate}}" (clickButton)="onClickAdd($event)">
+        </amis-button>
+        <amis-button [color]="buttonColor.BluePrimary" name="{{'SAVE' | translate}}" (clickButton)="onClickAdd()">
+        </amis-button>
+    </div>
+</amis-popup-base>

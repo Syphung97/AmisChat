@@ -1,0 +1,86 @@
+<div *ngIf="visibleDiaryProfile" class="hrm-diary-edit-profile" [style]="positionLoad" id="id-hrm-diary">
+    <div class="diary-edit-profile-toolbar">
+        <div class="toolbar-left dis-flex dis-align-items-center">
+            <amis-icon [classIcon]="'icon-arrow-left'" class="mr-2" (click)="onBack()"
+                [tooltipContent]="'BACK_2'|translate">
+            </amis-icon>
+            <div class="dis-flex dis-align-items-baseline">
+                <div class="header-title-big">{{title}}</div>
+                <!-- <div class="title-name-profile ml-2 mr-2">-</div> -->
+                <div class="title-name-profile ml-2"> - {{employee?.FullName}}</div>
+            </div>
+        </div>
+        <div class="toolbar-right dis-flex dis-align-items-center">
+            <!-- <dx-text-box mode="search" class="toolbar-search-content m-r-10" placeholder="Tìm kiếm nội dung"
+                mode="search" (onValueChanged)="onSearchControl($event)" (onKeyUp)="onKeyupSearchBox($event)"
+                [(value)]="ngModelfilterValue">
+            </dx-text-box> -->
+            <dx-select-box [dataSource]="listData" valueExpr="Key" displayExpr="IntervalText" [(value)]="currentDataKey"
+                (onValueChanged)="onValueChanged($event)">
+            </dx-select-box>
+        </div>
+    </div>
+    <!-- <amis-loading *ngIf="isLoading" [text]="textLoading" [position]="positionLoad"></amis-loading> -->
+    <div class="diary-edit-profile-content">
+        <dx-scroll-view #scrollContent (onScroll)="scrollEmployee($event)">
+            <div class="scroll-profile-content">
+                <div class="profile-content-history">
+                    <div class="content-group"></div>
+                    <div *ngFor="let k of groupAuditLog">
+                        <div class="title-time-content">
+                            {{k.Date}}
+                        </div>
+
+                        <div *ngFor="let item of k?.Log">
+                            <div class="content-item">
+                                <div class="content-item-time mr-3">{{item.CreatedDate | date:"hh:mm a"}}</div>
+                                <!-- <ng-container *ngIf="item.Reference == null;else elses"> -->
+                                    <div class="content-icon"
+                                        [ngClass]="{'content-icon-reload' : item.ActionType == actionAuditType.Restore , 'content-icon-insert' : item.ActionType == actionAuditType.Insert, 'content-icon-update' : item.ActionType == actionAuditType.Update, 'content-icon-delete' : item.ActionType == actionAuditType.Delete}">
+                                        <div
+                                            [ngClass]="{'icon-restore-white' : item.ActionType == actionAuditType.Restore , 'icon-plus-white' : item.ActionType == actionAuditType.Insert, 'icon-edit-white' : item.ActionType == actionAuditType.Update, 'icon-delete-white' : item.ActionType == actionAuditType.Delete}">
+                                        </div>
+                                    </div>
+                                <!-- </ng-container>
+                                <ng-template #elses>
+                                    <div class="content-icon content-icon-update">
+                                        <div class="icon-edit-white"></div>
+                                    </div>
+                                </ng-template> -->
+
+                                <div class="ml-3 content-item-change">
+                                    <div *ngFor="let detail of item.RawData;let index=index">
+                                        <div class="content-detail"
+                                            [ngClass]="{'invisible': !item.IsShow && index>4, 'first-child':index==0}"
+                                            [innerHTML]="detail">
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="item?.RawData?.length > 5">
+                                        <div class="dis-flex dis-align-items-center cursor expand"
+                                            (click)="expandContentLog(!item.IsShow, item, $event)">
+                                            <div *ngIf="!item.IsShow" class="cursor expand-data">
+                                                {{'AUDIT_LOG_EXPAND'|translate}}</div>
+                                            <div *ngIf="!item.IsShow" class="icon-caret-down-blue"></div>
+                                            <div *ngIf="item.IsShow" class="cursor expand-data">
+                                                {{'AUDIT_LOG_COLLAPSE'|translate}}</div>
+                                            <div *ngIf="item.IsShow" class="icon-caret-up-blue"></div>
+
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="content-item-createby" title="{{item.CreatedBy}} ({{item.UserName}})">
+                                        bởi
+                                        {{item.CreatedBy}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="height: 60px;"></div>
+            </div>
+        </dx-scroll-view>
+    </div>
+</div>

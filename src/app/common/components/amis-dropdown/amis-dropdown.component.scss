@@ -1,0 +1,34 @@
+@import '../../../assets/scss/var-color.scss';
+@import '../../../assets/scss/var-mixin.scss';
+
+.box-drop-temp {
+  line-height: 36px;
+  .name-select{
+    max-width: calc(100% - 24px);
+  }
+  .ic-drop{
+    margin: auto 0;
+  }
+  .custom-drop {
+    padding: 8px;
+    @include border-radius();
+    position: absolute;
+    z-index: 999;
+    background-color: $white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    .selected{
+      color: $bd-btn-blue-secondary;
+    }
+    .app-dropdown-item {
+      padding: 6px 34px 6px 8px !important;
+      .filter-name {
+        line-height: 16px;
+        margin: auto;
+      }
+    }
+    .icon-selected{
+      position: absolute;
+      right: 12px;
+    }
+  }
+}

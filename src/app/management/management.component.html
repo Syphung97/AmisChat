@@ -1,0 +1,16 @@
+<nz-layout class="app-layout">
+  <nz-header>
+    <amis-navbar></amis-navbar>
+
+  </nz-header>
+  <nz-layout>
+    <nz-sider [nzBreakpoint]="'lg'" nzWidth="340px">
+      <amis-sidebar></amis-sidebar>
+    </nz-sider>
+
+    <nz-content>
+      <router-outlet></router-outlet>
+      <audio id="callNotify" #audio ></audio>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

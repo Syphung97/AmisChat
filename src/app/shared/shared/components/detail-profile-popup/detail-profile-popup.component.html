@@ -1,0 +1,101 @@
+<amis-popup-base [(width)]="width" [(visiblePopup)]="visiblePopup" (closePopup)="onClose()"
+  [closeOnOutsideClick]="true">
+  <div contentPopup class="see-more-profile-popup">
+    <div class="profile-jd dis-flex">
+      <img class="see-more-profile-img" src="{{employee.Avatar}}">
+      <div class="see-more-profile-employee text-overflow">
+        <div class="see-more-employee-name text-overflow">
+          <strong>{{employee.FullName}}</strong> ({{employee.EmployeeCode}})
+        </div>
+        <div class="see-more-employee-job text-overflow">{{employee.JobPositionName}}</div>
+        <div class="see-more-employee-department text-overflow" [title]="employee.OrganizationUnitName">
+          {{employee.OrganizationUnitName}}
+        </div>
+      </div>
+    </div>
+    <div style="border: 0.5px solid #e0e0e0; margin: 0px 16px;"></div>
+    <div class="see-more-employee-info">
+      <div *ngFor="let item of mainInfo"
+        [ngClass]="{'employee-email' : item.FieldName.includes('Email') || item.FieldName.includes('Facebook') || item.FieldName.includes('Skype')}"
+        class="see-more-info-item">
+        <div class="label">{{item.Caption}}</div>
+
+        <ng-container *ngIf="employee[item?.FieldName] && employee[item?.FieldName] != '--';else emptyData">
+          <ng-container [ngSwitch]="item.TypeControl">
+            <ng-container *ngSwitchCase="typeControl.Date">
+              <div class="text"> {{ employee[item?.FieldName] | date:'dd/MM/yyyy'}} </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="typeControl.Currency">
+              <div class="text text-overflow">
+                {{ employee[item?.FieldName] | AMISCurrency:'VND':'code':'1.0-0'}} </div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="typeControl.DateTime" class="text">
+              <div class="text"> {{ employee[item?.FieldName] | date:'dd/MM/yyyy HH:mm'}} </div>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <ng-container>
+                <div class="text">{{employee[item.FieldName]}}</div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #emptyData>
+          <div class="text">--</div>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+  <div buttonsPopup class="flex">
+    <amis-button name="{{'PROFILE_SEE_DETAIL_INFO'|translate}}" (click)="seeDetail()" class="left">
+    </amis-button>
+    <amis-button [color]="buttonColor.Normal" [iconLeft]="'icon-edit'" class="right" name="{{'EDIT2'|translate}}"
+      (click)="editEmployeeDetail()">
+    </amis-button>
+  </div>
+
+
+  <div class="p-context-menu">
+    <div class="list-sub-button dis-flex dis-flex-column">
+      <ng-container *ngFor="let item of contextMenuList; let idx=index">
+        <div *ngIf="item.Submenu?.length > 0; else elses">
+          <div class="sub-menu hover-pointer">
+            <div class="wrapper-export">
+              <div class="export dis-flex dis-justify-content-between dis-align-items-center">
+                <div (click)="toobarExecuteAction(item.Key)">{{item.Text}}</div>
+                <div class="icon-big-caret-right"></div>
+              </div>
+
+              <div class="app-dropdown menu-column">
+                <div class="dis-flex dis-flex-column columns-export">
+                  <ng-container *ngFor="let subMenu of item.Submenu">
+                    <div class="sub-menu hover-pointer dis-flex dis-align-items-center">
+                      <div class="{{subMenu.Icon}}"></div>
+                      <div class="type-export" (click)="toobarExecuteAction(subMenu.Key)">{{subMenu.Text}}</div>
+                    </div>
+                  </ng-container>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <ng-template #elses>
+          <ng-container *ngIf="idx==4">
+            <div>
+              <hr style="margin:8px;">
+            </div>
+          </ng-container>
+          <div class="sub-menu hover-pointer {{item.Class}}" (click)="toobarExecuteAction(item.Key)">{{item.Text}}
+          </div>
+        </ng-template>
+
+      </ng-container>
+
+    </div>
+
+  </div>
+</amis-popup-base>

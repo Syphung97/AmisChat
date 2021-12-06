@@ -1,0 +1,25 @@
+<div m class="dis-flex align-items-center ml-3" (click)="visiblePopover = !visiblePopover;">
+  <div id="amis-popover-select" class="dis-flex align-items-center cursor-pointer">
+    <div *ngIf="selectedItem" class="medium mr-1">{{selectedItem[display]}}</div>
+    <div id="amis-popover-select-icon" class="icon-carret-down"></div>
+  </div>
+</div>
+
+<!-- Popover danh sách -->
+<dx-popover *ngIf="visiblePopover" [visible]="visiblePopover" class="popover-content-select"
+  target="#amis-popover-select" width="auto" height="auto" [maxWidth]="500"
+  [position]="{my: 'center top', at: 'center bottom', of: '#amis-popover-select-icon'}">
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view>
+      <div class="pb-2 pt-2">
+        <div *ngFor="let item of listItem"
+          class="app-dropdown-item dis-flex-cen align-items-center justify-content-between"
+          (click)="onSelectItem(item)" [class.active-item]="selectedItem && selectedItem[key] == item[key]">
+          <div class="text-overflow">{{item[display]}}</div>
+          <div *ngIf="selectedItem && selectedItem[key] == item[key]" class="ml-3 ic-svg icon-tick-blue"></div>
+
+        </div>
+      </div>
+    </dx-scroll-view>
+  </div>
+</dx-popover>

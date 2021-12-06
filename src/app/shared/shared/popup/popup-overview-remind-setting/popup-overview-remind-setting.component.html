@@ -1,0 +1,24 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" title="{{'HRM_OVERVIEW_SETTING_REMIND'| translate}}" [width]="690"
+    [height]="460" [offsetY]="'50px 100px'" (closePopup)="onClosePopup()">
+    <div contentPopup class="popup-overview-remind-setting">
+        <div *ngFor="let item of items" class="dis-flex dis-align-items-center mb-2">
+            <div class="checkbox-item dis-flex">
+                <dx-check-box [value]="item.IsShow" [hint]="item.HintText | translate"
+                    text="{{item.PriText | translate}}" (onValueChanged)="valueChanged($event, item)"></dx-check-box>
+            </div>
+            <div class="dis-flex dis-align-items-center">
+                <dx-number-box class="day-numberbox" width="80" min="0" [showSpinButtons]="true" [(value)]="item.Value"
+                    (onFocusOut)="onFocusOut(item)"></dx-number-box>
+                <div class="m-l-16"> {{item.SubText | translate}} </div>
+            </div>
+        </div>
+    </div>
+    <div buttonsPopup class="d-flex dis-align-items-center">
+        <div class="button-deduct-income">
+            <amis-button (clickButton)="onClosePopup()" class="m-r-12" name="{{'CANCEL2'|translate}}"
+                [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+            <amis-button name="{{'SAVE'|translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary"
+                (clickButton)="onClickSave()"></amis-button>
+        </div>
+    </div>
+</amis-popup-base>

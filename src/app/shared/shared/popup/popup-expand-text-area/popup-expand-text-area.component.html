@@ -1,0 +1,16 @@
+<!-- màn hình tùy chỉnh tóm tắt -->
+<amis-popup-base *ngIf="visiblePopup" [visiblePopup]="visiblePopup" [width]="700" [resizeEnabled]="true"
+    [title]="labelText" [offsetY]="'0 150px'" (closePopup)="onClosePopup()" [closeOnOutsideClick]="true"
+    [isHaveScrollView]="false" (shownPopup)="onShowPopup()">
+    <div contentPopupNoScroll class="h-100 popup-content">
+        <dx-text-area #textArea placeholder="{{'POPUP_EXPAND_TEXT_AREA'|translate}}" class="h-100 w-100"
+            [(value)]="_value">
+        </dx-text-area>
+    </div>
+    <div buttonsPopup>
+        <amis-button [color]="buttonColor.Normal" name="{{'CANCEL'| translate}}" (clickButton)="onClosePopup()">
+        </amis-button>
+        <amis-button name="{{'ACCEPT'| translate}}" (clickButton)="save()">
+        </amis-button>
+    </div>
+</amis-popup-base>

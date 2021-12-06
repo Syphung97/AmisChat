@@ -1,0 +1,32 @@
+@import "../../../assets/scss/var-color.scss";
+@import "../../../assets/scss/var-styleguide.scss";
+:host {
+  // @include host();
+  .group-box {
+    // max-width: 1120px;
+    // margin-top: 24px;
+    // box-shadow: 0.1px 0.5px 0px 0px rgba(0,0,0,.1);
+    border-radius:  $border-radius-8;
+    padding: 24px;
+
+    .wrap-group-box{
+      // overflow-x: auto;
+      // overflow-y: inherit;
+    }
+  }
+  .group-box:not(:first-child) {
+    margin-top: 16px;
+  }
+  .group-box-child {
+    margin-top: 24px;
+  }
+  .expand-class {
+    margin-left: -7px;
+  }
+  .group-box-header {
+    // margin-bottom: 20px;
+  }
+  .group-box-footer {
+    // margin-top: 12px;
+  }
+}

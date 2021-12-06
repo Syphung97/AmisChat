@@ -1,0 +1,38 @@
+<dx-popover [target]="target" [width]="width" [height]="height" [minHeight]="minHeight" #dxPopover [class]="classPopover"
+    [showEvent]="showEvent" [visible]="visiblePopover" [position]="position" (onShowing)="onShowing($event)"
+    (onHidden)="onHidden($event)">
+    <div *dxTemplate="let data of 'content'" class="popover-wrapper">
+        <div class="dis-flex align-items-center justify-content-between popover-title" [class.title-wrapper]="title"
+            [class.untitle-wrapper]="!title">
+            <div class="title-content">{{title}}</div>
+            <div class="dis-flex hover-icon-close">
+                <!-- <div *ngIf="_isResizePopup" class="mr-2">
+                            <div *ngIf="!isZoomOut" class="dx-icon icon-zoom-out cursor-pointer" (click)="zoomOut()"></div>
+                            <div *ngIf="isZoomOut" class="dx-icon icon-zoom-in cursor-pointer" (click)="zoomIn()"></div>
+                        </div> -->
+                <div class="dx-icon icon-close-popup cursor-pointer" (click)="closePopoverAction()"></div>
+            </div>
+        </div>
+        <div class="content-popup-base">
+            <ng-content select=[contentPopup]>
+            </ng-content>
+        </div>
+        <!-- <dx-scroll-view *ngIf="isHaveScrollView" class="wrap-scroll-view">
+            <div class="content-popup-base" [ngStyle]="{'max-height': maxHeightContent }">
+                <ng-content select=[contentPopup]>
+                </ng-content>
+            </div>
+        </dx-scroll-view>
+        <div *ngIf="!isHaveScrollView" class="content-no-scroll" [class.h-100]="!isHaveFooterBtn">
+            <div class="content-popup-base" [ngStyle]="{'max-height': maxHeightContent }">
+                <ng-content select=[contentPopupNoScroll]>
+                </ng-content>
+            </div>
+        </div> -->
+        <div class="dx-popup-footer">
+            <div class="dis-flex pos-relative buttons">
+                <ng-content select="[buttonsPopup]"></ng-content>
+            </div>
+        </div>
+    </div>
+</dx-popover>

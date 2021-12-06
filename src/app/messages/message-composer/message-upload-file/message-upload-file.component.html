@@ -1,0 +1,10 @@
+<nz-modal [nzFooter]="null" [nzTitle]="" [nzClassName]="'uploader'" [nzWidth]="'100%'"
+  [nzWrapClassName]="'wrap-uploader'" [nzCloseIcon]="''" [(nzVisible)]="_isVisible" (nzOnCancel)="handleCancel()">
+  <ng-container *nzModalContent>
+    <div class="h-full flex-col-c-m" misaDragDropToUpload (fileDropped)="onFileDropped($event)">
+      <div class="fs-24 text-white hov-pointer" (click)="importFile()">Kéo thả file để tải lên</div>
+      <input #importTemplateDoc #fileDropRef multiple accept="{{_typeAccept}}"
+        (change)="onFileChange($event);importTemplateDoc.value=''" class="input-import" type="file">
+    </div>
+  </ng-container>
+</nz-modal>

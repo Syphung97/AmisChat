@@ -1,0 +1,99 @@
+<amis-form-control [labelFontWeight]="_labelFontWeight" [labelClass]="_labelClass" [isShowLabel]="_isShowLabel"
+  [labelText]="_labelText" [isRequired]="_isRequiredLabel  && !_isViewOnly" [labelPositon]="_labelPositon"
+  [labelWidth]="_labelWidth" [tooltipContent]="_tooltipContent" [isShowTooltip]="_isShowTooltip"
+  [fieldName]="_fieldName" [labelColor]="labelColor">
+  <div #control class="wrap-control dis-flex dis-align-items-center amis-control-tree-box-tag text-overflow">
+    <div *ngIf="!_isViewOnly || (_isEditable && !_isViewEditable)" class="w-100 dis-flex-grow">
+      <div class="w-100 dis-flex dis-flex-grow">
+        <div [class.control-dynamic-selectbox]="isDynamicCombobox"
+          [class.disabled-control]="_readonly || isNotPermissionUpdate"
+          class="w-100 amis-wrap-organization-tree dis-flex-grow">
+          <div class="amis-control-tag-tree">
+            <div #treetag class="box-show-content tree-tag-element {{isFocus ? 'border-highlight' : ''}}"
+              #formControl="ngModel" [(ngModel)]="value" (click)="showPopTree($event)"
+              [class.border-error]="_isSubmit && _isShowError && (formControl.errors || _isErrorCustom || _isError)"
+              ngDefaultControl>
+              <dx-scroll-view>
+                <div class="item-value" *ngFor="let item of selectedItem">
+                  <div class="flex dis-value">{{item[displayExpr]}}</div>
+                  <div class="icon action-remove-tree icon-close-small" (click)="removeItemSelect(item)"></div>
+                </div>
+              </dx-scroll-view>
+            </div>
+            <input type="text" class="input-hidden" #input (focus)="isFocus = true" (focusout)="isFocus = false"
+              (keydown)="onKeyDownFn($event)">
+            <div [class.hide]="!isOpenTree" class="box-tree-tag">
+              <dx-popover [(visible)]="isOpenTree" [(position)]="positionOver" class="popover-tag-tree"
+                [target]="targetTree" width="auto">
+                <div popover-content class="box-tree-tag-content" style="max-width: {{maxWidthPop}}">
+                  <dx-tree-view #treeview [(dataSource)]="dataSource" [height]="300" dataStructure="plain"
+                    expandedExpr="IsExpanded" [keyExpr]="valueExpr" class="dropdown-tree-custom" [searchEnabled]="true"
+                    [searchExpr]="[displayExpr ,'ValueSearch']" rootValue="00000000-0000-0000-0000-000000000000"
+                    parentIdExpr="ParentID" [selectionMode]="selectionMode" [showCheckBoxesMode]="checkBoxMode"
+                    [selectNodesRecursive]="true" [displayExpr]="displayExpr" [selectByClick]="true"
+                    (onItemSelectionChanged)="onValueChanged($event)" (onContentReady)="dataBoundTreeView($event)">
+                  </dx-tree-view>
+                </div>
+              </dx-popover>
+            </div>
+          </div>
+          <div *ngIf="isDynamicCombobox && isShowCustomMore" (click)="loadPopupByType()"
+            class="more-option-icon dis-flex dis-align-items-center cursor-pointer">
+            <div class="icon-optional-more ic-control">
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="_isEditable && !_isViewEditable" class="dis-flex dis-align-items-center option-icons pl-2">
+          <amis-icon [classIcon]="'icon-tick-circle-green'" (click)="onClickDone()"
+            tooltipContent="{{'SAVE' | translate}}">
+          </amis-icon>
+
+          <amis-icon [classIcon]="'icon-error-circle'" (click)="onClickCancel()"
+            tooltipContent="{{'CANCEL' | translate}}">
+          </amis-icon>
+        </div>
+      </div>
+      <div *ngIf="_isSubmit && _isShowError && !_readonly" class="white-space-initial">
+        <div class="text-error" *ngIf="formControl.errors && !_isErrorCustom && !_isError"
+          [innerHTML]="formControl.errors?.message">
+          <!-- {{formControl.errors?.message}} -->
+        </div>
+        <div class="text-error" *ngIf="_isErrorCustom || _isError" [innerHTML]="_errorMessage">
+          <!-- {{ _errorMessage }} -->
+        </div>
+      </div>
+    </div>
+    <div *ngIf="_isViewOnly || (_isEditable && _isViewEditable)" class="dis-flex-grow  value-display text-overflow">
+      <div class="dis-flex-grow dis-flex dis-flex-row field-value text-overflow"
+        [class.editable-field-value]="!_readonly && _isEditable && _isViewEditable">
+        <div *ngIf="value" class="text-overflow">{{displayValue}}</div>
+        <div *ngIf="!value">--</div>
+      </div>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && !_readonly" class="cursor-pointer option-icons">
+      <div class="ml-2" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCode}}"
+        actionCode="{{permissionCodeEntity.Edit}}" permissionObject="{{_permissionObject}}">
+        <amis-icon [classIcon]="'icon-edit '" (click)="onClickEdit()" tooltipContent="{{'EDIT2' | translate}}">
+        </amis-icon>
+      </div>
+      <amis-icon [classIcon]="'icon-duplicate '" (click)="onClickDuplicate()" tooltipContent="{{'COPY' | translate}}">
+      </amis-icon>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && _readonly" class="option-icons">
+      <div class="no-hover-icon ml-2" subSystemCode="{{_permissionSubSystemCode}}"
+        permissionCodeList="{{_permissionCode}}" actionCode="{{permissionCodeEntity.Edit}}"
+        permissionObject="{{_permissionObject}}">
+        <amis-icon [classIcon]="'icon-lock '" [isCursorPointer]="false" [isHoverState]="false" [isShowTooltip]="false">
+        </amis-icon>
+      </div>
+      <amis-icon [classIcon]="'icon-duplicate '" (click)="onClickDuplicate()" tooltipContent="{{'COPY' | translate}}">
+      </amis-icon>
+
+    </div>
+  </div>
+</amis-form-control>
+
+<ng-container #popupSelectData>
+
+</ng-container>

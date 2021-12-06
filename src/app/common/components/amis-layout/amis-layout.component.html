@@ -1,0 +1,74 @@
+<amis-amis-form-components id="amis-f-layout" class="amis-form-layout">
+    <div formTitle>
+        <ng-content select=[amisLayoutTitle]></ng-content>
+    </div>
+    <div formHeaderButton>
+        <ng-content select=[amisLayoutCustomButton]></ng-content>
+        <amis-button
+            *ngIf="(_formMode == formModeEntity.Insert || _formMode == formModeEntity.Update || _formMode == formModeEntity.Duplicate) && !isLoading"
+            class="m-r-12" name="{{'CANCEL' | translate}}" [color]="buttonColor.White" (clickButton)="cancel()">
+        </amis-button>
+        <amis-button permissionCode="{{_permissionCode}}" subSystemCode="{{_permissionSystemCode}}" class="mr-2"
+            name="{{'SAVE_AND_AND' | translate}}" [color]="buttonColor.BlueWhiteSecondary"
+            (passPermissionClick)="submit(formModeEntity.SaveAndInsert,actionSaveDataEntity.Save)"
+            *ngIf="(_formMode == formModeEntity.Insert || _formMode == formModeEntity.Duplicate) && !isLoading && isShowBtnSaveAndInsert">
+        </amis-button>
+        <amis-button permissionCode="{{_permissionCode}}" subSystemCode="{{_permissionSystemCode}}"
+            name="{{'SAVE' | translate}}" [color]="buttonColor.BluePrimary"
+            (passPermissionClick)="submit(formModeEntity.Insert,actionSaveDataEntity.Save)"
+            *ngIf="(_formMode == formModeEntity.Insert || _formMode == formModeEntity.Duplicate)  && !isLoading">
+        </amis-button>
+        <amis-button permissionCode="{{_permissionCode}}" subSystemCode="{{_permissionSystemCode}}"
+            name="{{'SAVE' | translate}}" [color]="buttonColor.BluePrimary"
+            (passPermissionClick)="submit(formModeEntity.Update,actionSaveDataEntity.Save)"
+            *ngIf="_formMode == formModeEntity.Update  && !isLoading"></amis-button>
+    </div>
+    <div formContent class="w-100 h-100">
+        <dx-scroll-view>
+            <div class="amis-form-layout-container" style="padding-right: 16px;">
+                <ng-content select=[amisLayoutContainerHeader]></ng-content>
+                <div class="amis-form-group-container" *ngIf="!isLoading">
+                    <amis-amis-control-form-group #formgroup [listGroupbox]="listGroupConfigs" [isSubmit]="submitObject"
+                        [positionFormDataGrid]="'amis-f-layout'" [inputAfterSubmit]="objectAfterSubmit"
+                        [DependentClones]="listDependentClones" [formMode]="_formMode" [MasterData]="objectData"
+                        [DependentDatas]="listDependentData" [isShowButtonGrid]="_isShowButtonGrid"
+                        [ConfigValidates]="listConfigValidates" [isShowNodataGrid]="_isShowNodataGrid"
+                        [isViewOnly]="isViewOnly" [DependentDictionaries]="listDependentDictionaries"
+                        [isUseMasterData]="isUseMasterData" [masterIDValue]="objectID"
+                        (valueFieldChanged)="changedFieldValue($event)" (afterValidatedForm)="afterValidated($event)"
+                        [typeShow]="typeShowControl" [validateInfos]="validateInfos" [isConfirmNotify]="isConfirmNotify"
+                        (focusOutField)="focusOutItem($event)" (onClickNoEvent)="onClickNo($event)"
+                        (onClickYesEvent)="onClickYes($event)" (afterChangeDataGrid)="afterChangedDataGrid($event)">
+                    </amis-amis-control-form-group>
+                </div>
+                <div class="m-t-24" [style.display]="isLoading ? '' : 'none' ">
+                    <ng-content select=[amislayoutCustomLoading]></ng-content>
+                </div>
+            </div>
+        </dx-scroll-view>
+    </div>
+</amis-amis-form-components>
+
+<!-- popup thông báo confirm hủy bỏ -->
+<amis-popup-notify *ngIf="visiblePopupNotify" [(visiblePopup)]="visiblePopupNotify" title="Thông báo"
+    (closePopup)="closePopupNotify()">
+    <div textContentPopupConfirm>
+        <div [innerHTML]="popupNotifyContent">
+        </div>
+    </div>
+    <div amisButtons>
+        <amis-button name="{{'CANCEL2'|translate}}" [color]="buttonColor.Normal" (clickButton)="closePopupNotify()">
+        </amis-button>
+        <amis-button name="{{'Không lưu'|translate}}" [color]="buttonColor.BlueSecondary" (clickButton)="onConfirm()">
+        </amis-button>
+        <amis-button permissionCode="{{_permissionCode}}" subSystemCode="{{_permissionSystemCode}}"
+            *ngIf="(_formMode == formModeEntity.Insert || _formMode == formModeEntity.Duplicate)"
+            name="{{'SAVE' | translate}}" [color]="buttonColor.BluePrimary"
+            (passPermissionClick)="closePopupNotify();submit(formModeEntity.Insert,actionSaveDataEntity.Cancel)">
+        </amis-button>
+        <amis-button permissionCode="{{_permissionCode}}" subSystemCode="{{_permissionSystemCode}}"
+            *ngIf="_formMode == formModeEntity.Update" name="{{'SAVE' | translate}}" [color]="buttonColor.BluePrimary"
+            (passPermissionClick)="closePopupNotify();submit(formModeEntity.Update,actionSaveDataEntity.Cancel)">
+        </amis-button>
+    </div>
+</amis-popup-notify>

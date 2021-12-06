@@ -1,0 +1,31 @@
+<div id="list-demo">
+  <div class="widget-container">
+    <dx-list #list [items]="items" [dataSource]="items" [showSelectionControls]="showSelectionControls"
+      [searchEnabled]="true" [searchExpr]="['Caption', 'CaptionSearch']" searchMode="contains" itemTemplate="data"
+      [selectionMode]="selectionModeValue" [selectedItems]="selectedItems" (onSelectionChanged)="selectItem($event)"
+      [class.max-selection]="isMax" pageLoadMode="any" (onContentReady)="readySearchList($event)" noDataText="{{'NOT_FOUND_COLUMNS'| translate}}"
+      nextButtonText="{{'SHOW_MORE' | translate}}" accessKey="null">
+      <div *dxTemplate="let it of 'data'" (mouseenter)="showToolTip(contentTooltip, it)">
+        <div #contentTooltip>{{it.Caption}}</div>
+      </div>
+      <dxo-search-editor-options focusStateEnabled="true"  placeholder="{{'SEARCH'| translate}}">
+
+      </dxo-search-editor-options>
+      <dxo-item-dragging [data]="cloneItems" [allowReordering]="isReordering" [onDragStart]="onDragStart" [onAdd]="onAdd"
+        [onRemove]="onRemove" [onDragEnd]="onDragEnd" >
+      </dxo-item-dragging>
+    </dx-list>
+  </div>
+</div>
+
+<!-- popover tooltip -->
+<dx-popover *ngIf="visiblePopover" [(visible)]="visiblePopover" showEvent="dxhoverstart" hideEvent="dxhoverend"
+    [target]="tooltipTarget" class="tooltip-popover">
+    <div *dxTemplate="let data of 'content'">
+        <ng-container>
+            <div class="tooltip-content">
+                {{tooltipContent | translate}}
+            </div>
+        </ng-container>
+    </div>
+</dx-popover>

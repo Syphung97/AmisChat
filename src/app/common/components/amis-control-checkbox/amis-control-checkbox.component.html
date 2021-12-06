@@ -1,0 +1,65 @@
+<amis-form-control [labelFontWeight]="_labelFontWeight" [labelClass]="_labelClass" [isShowLabel]="_isShowLabel"
+    [labelWidth]="_labelWidth" [labelText]="_labelText" [isRequired]="_isRequiredLabel" [labelPositon]="_labelPositon"
+    [fieldName]="_fieldName" [tooltipContent]="_tooltipContent" [isShowTooltip]="_isShowTooltip" [labelColor]="labelColor">
+    <div class="wrap-control wrap-control-checkbox dis-flex h-100 dis-align-items-center">
+        <div *ngIf="!_isViewOnly || (_isEditable && !_isViewEditable)" class="dis-flex-grow dis-flex">
+            <div class="dis-flex-grow dis-flex dis-align-items-center dis-flex-row">
+                <div class="dis-flex dis-align-items-center flex" [class.disable-btn]="_readonly">
+                    <div class="hover-icon">
+                        <!-- <div [class.icon-square-active]="value" [class.icon-square]="!value"
+                            class="icon-square cursor-pointer" (click)="value = !value">
+                        </div> -->
+                        <dx-check-box #input [(ngModel)]="value" #formControl="ngModel"
+                            [disabled]="_readonly || isNotPermissionUpdate" (keydown)="onKeyDown.emit($event)"
+                            (onValueChanged)="onValueChanged($event)"></dx-check-box>
+                    </div>
+                </div>
+                <div *ngIf="_isEditable && !_isViewEditable" class="dis-flex dis-align-items-center option-icons pl-2">
+                    <amis-icon [classIcon]="'icon-tick-circle-green'" (click)="onClickDone()"
+                      tooltipContent="{{'SAVE' | translate}}">
+                    </amis-icon>
+                    
+                    <amis-icon [classIcon]="'icon-error-circle'" (click)="onClickCancel()"
+                      tooltipContent="{{'CANCEL' | translate}}">
+                    </amis-icon>
+                  </div>
+            </div>
+            <div *ngIf="_isShowError && !_readonly && _isSubmit">
+                <div class="text-error" *ngIf="_isError || _isErrorCustom">{{_errorMessage}}</div>
+                <div class="text-error" *ngIf="!_isError && !_isErrorCustom && formControl.errors">
+                    {{formControl.errors?.message}}</div>
+            </div>
+        </div>
+        <div *ngIf="_isViewOnly || (_isEditable && _isViewEditable)" class="dis-flex-grow  value-display">
+            <div class="dis-flex-grow dis-flex dis-flex-row field-value"
+                [class.editable-field-value]="!_readonly && _isEditable && _isViewEditable">
+                <div class="h-100  dis-flex dis-align-items-center">
+                    <div *ngIf="value">
+                        {{'YES' | translate}}
+                    </div>
+                    <div *ngIf="!value">
+                        {{'NO' | translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="(_isEditable && _isViewEditable) && !_readonly" class="cursor-pointer option-icons">
+            <div class="ml-2" subSystemCode="{{_permissionSubSystemCode}}"
+                permissionCodeList="{{_permissionCode}}" actionCode="{{permissionCodeEntity.Edit}}"
+                permissionObject="{{_permissionObject}}">
+                <amis-icon [classIcon]="'icon-edit '" (click)="onClickEdit()" tooltipContent="{{'EDIT2' | translate}}">
+                </amis-icon>
+
+            </div>
+        </div>
+        <div *ngIf="(_isEditable && _isViewEditable) && _readonly" class="option-icons">
+            <div class="ml-2">
+                <amis-icon [classIcon]="'icon-lock '" [isCursorPointer]="false" [isShowTooltip]="false" [isHoverState]="false">
+                </amis-icon>
+                <!-- <div class="icon-lock"></div> -->
+            </div>
+        </div>
+    </div>
+
+</amis-form-control>

@@ -1,0 +1,30 @@
+<div class="div-wrap-organization-dropbox dis-flex dis-align-items-center">
+    <dx-drop-down-box #dropdown [(value)]="treeBoxValueOrga" [width]="width" class="organization-dropdown"
+        valueExpr="OrganizationUnitID" displayExpr="OrganizationUnitName"
+        placeholder="{{'MAIN_SIDEBAR_CHOOSE_ORGANIZATION' | translate}}" [dataSource]="listOrganizationShow"
+        (onOpened)="onOpened()">
+        <div *dxTemplate="let data of 'content'" class="customer-organiza customer-organiza-toolbar">
+            <dx-tree-view [dataSource]="listOrganizationShow" [searchEnabled]="true"
+                [searchExpr]="['OrganizationUnitName' ,'OrganizationUnitNameSearch']"
+                class="dropdown-tree-custom dx-scrollable dx-scrollview dx-visibility-change-handler dx-scrollable-vertical dx-scrollable-simulated dx-scrollable-customizable-scrollbars"
+                dataStructure="plain" (onContentReady)="readyTreeBox($event)" expandedExpr="IsExpanded"
+                keyExpr="OrganizationUnitID" rootValue="00000000-0000-0000-0000-000000000000" parentIdExpr="ParentID"
+                selectionMode="single" displayExpr="OrganizationUnitName" [selectByClick]="true"
+                (onItemClick)="treeView_itemSelectionChanged($event)" itemTemplate="itemTemplate">
+                <div *dxTemplate="let itemOU of 'itemTemplate'">
+                    <div class="text-ou" [class.oug-inactive]="itemOU.Inactive">
+                        {{itemOU.OrganizationUnitName}}
+                    </div>
+                </div>
+            </dx-tree-view>
+            <div class="box-show-ou-inactive dis-flex cursor-pointer" (click)="changerGetOUStatus()" >
+                <div class="dis-flex inactive">
+                    <div class="btn-check" [class.icon-square]="!isShowOUInactive"
+                        [class.icon-square-active]="isShowOUInactive">
+                    </div>
+                    <div class="text-overflow">{{'HRM_ALLOW_SHOW_OU_INACTIVE' | translate}}</div>
+                </div>
+            </div>
+        </div>
+    </dx-drop-down-box>
+</div>

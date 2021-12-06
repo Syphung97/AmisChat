@@ -1,0 +1,55 @@
+@media only screen and (min-width: 400px) {
+  ::ng-deep {
+    .chart-area {
+      .text-vartical {
+        font-size: 13px !important;
+        // padding-top: 25px !important;
+      }
+      g.dxc-arg-elements text,
+      g.dxc-val-elements text {
+        font-family: GoogleSans, Helvetica, Arial, sans-serif !important;
+        fill: #686C7B !important;
+        font-size: 13px !important;
+      }
+    }
+  }
+}
+::ng-deep {
+  #amis-area-chart {
+    // .dxc-grids-group {
+    //   path {
+    //     &:first-child {
+    //       opacity: 1;
+    //     }
+    //     opacity: 0.2;
+    //   }
+    // }
+    //width: 150px;
+    .dxc-arg-line {
+      display: none;
+    }
+    .dxc-val-line {
+      display: none;
+    }
+    .dxc-legend {
+      transform: translateY(7px);
+    }
+    //Kẻ ngang của chart
+    .dxc-val-grid {
+      stroke-opacity: 0.2 !important;
+      path:first-child {
+        stroke-opacity: 0.4 !important;
+      }
+    }
+    .dxc-markers {
+      rect {
+        fill: inherit !important;
+      }
+    }
+    .dxc-markers {
+      rect {
+        fill: inherit !important;
+      }
+    }
+  }
+}

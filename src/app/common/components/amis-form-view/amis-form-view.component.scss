@@ -1,0 +1,57 @@
+@import "./../../../assets/scss/var-mixin.scss";
+@import "./../../../assets/scss/var-color.scss";
+
+:host {
+    /* #region Scrollbar*/
+    ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    opacity: 0.3;
+    cursor: pointer;
+  }
+  
+  ::-webkit-scrollbar-track {
+    // box-shadow: 0 0 0 0px $line;
+    border-radius: 15px;
+    // border-color: $line;
+    background-color: transparent;
+    cursor: pointer;
+    opacity: 0.3;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #807474;
+    border-radius: 15px;
+    cursor: pointer;
+    opacity: 0.3;
+  }
+  /* #endregion */
+
+  .amis-formview-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.amis-formview {
+    overflow: auto;
+    .amis-formview-overlay-content {
+        display:  flex;
+        justify-content: center;
+        vertical-align: middle;
+        align-items: center;
+        .amis-formview-content {
+            margin-top: 80px;
+            @include border-radius();
+            background-color: #ffffff;       
+            margin-bottom: 80px;
+        }
+    }
+}
+}
+
+
+

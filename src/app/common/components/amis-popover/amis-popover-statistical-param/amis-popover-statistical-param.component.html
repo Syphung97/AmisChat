@@ -1,0 +1,53 @@
+<amis-amis-popover-base classPopover="popover-statistical" [title]="'Tham số'" [visiblePopover]="visiblePopover"
+    [target]="target" [positionAt]="'right bottom'" [positionMy]="'right top'" (hidePopover)="cancelPopover()" 
+    [width]="454">
+    <div contentPopup class="form-param">
+        <div class="organization flex-m mt-2">
+            <div class="popover-label">
+                Cơ cấu tổ chức
+            </div>
+            <amis-select-organization-unit [(OrganizationUnit)]="dataBind" [width]="300" [isChangerOpenFirst]="false" [isLoadedOninit]="true">
+            </amis-select-organization-unit>
+        </div>
+        <div class="mt-3">
+            <amis-amis-control-combobox [labelText]="'Thống kê theo'" [labelPositon]="'left'"
+                [labelClass]="'non-flex-grow popover-label'" [setDataSource]="statisticTypeOption"
+                [displayExpr]="'StatisticTypeName'" [valueExpr]="'StatisticTypeID'" [labelWidth]="'120px'"
+                (onItemClick)="getDefaultValue()" [(ngModel)]="dataBind.StatisticType">
+            </amis-amis-control-combobox>
+        </div>
+        <div *ngIf="_popoverType == popoverTypeItem.TypeOne" class="mt-3">
+            <amis-amis-control-numberbox *ngIf="dataBind.StatisticType != 3" [labelText]="'Năm'" [labelPositon]="'left'"
+                [labelClass]="'non-flex-grow popover-label'" [(ngModel)]="dataBind.StatisticValue"
+                [labelWidth]="'120px'">
+            </amis-amis-control-numberbox>
+            <amis-amis-control-numberbox *ngIf="dataBind.StatisticType == 3" [labelText]="'Số năm hiển thị'"
+                [labelPositon]="'left'" [maxValue]="15" [minValue]="1" [labelClass]="'non-flex-grow popover-label'"
+                [(ngModel)]="dataBind.StatisticValue" [labelWidth]="'120px'">
+            </amis-amis-control-numberbox>
+        </div>
+        <div *ngIf="_popoverType == popoverTypeItem.TypeTwo" class="mt-3">
+            <amis-amis-control-datebox [labelText]="'Đến ngày'" [labelPositon]="'left'"
+                [labelClass]="'non-flex-grow popover-label'" [(ngModel)]="dataBind.StatisticValue">
+            </amis-amis-control-datebox>
+            <div class="dis-flex mt-3">
+                <amis-amis-control-combobox [labelText]="'Hiển thị'" [labelClass]="'non-flex-grow popover-label'"
+                    [labelPositon]="'left'" [tooltipContent]="tooltipContent" [isShowTooltip]="true"
+                    [setDataSource]="displayTypeOption" [displayExpr]="'DisplayTypeName'" [valueExpr]="'DisplayTypeID'"
+                    [(ngModel)]="dataBind.DisplayType">
+                </amis-amis-control-combobox>
+                <div class="day-numberbox ml-2">
+                    <dx-number-box [showSpinButtons]="true" #formControl="ngModel" [min]="0" [max]="100"
+                        [(ngModel)]="dataBind.DisplayValue" [class.border-error]="false" [width]="65">
+                    </dx-number-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div buttonsPopup>
+        <amis-button (clickButton)="cancelPopover()" class="m-r-12" name="{{'CANCEL2' |translate}}"
+            [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+        <amis-button name="{{'SAVE'|translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary"
+            (clickButton)="savePopover()"></amis-button>
+    </div>
+</amis-amis-popover-base>

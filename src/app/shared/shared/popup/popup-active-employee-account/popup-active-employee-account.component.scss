@@ -1,0 +1,63 @@
+::ng-deep {
+  .employee-active {
+    .search-on-tab-can {
+      width: 100%;
+    }
+  }
+}
+
+.employee-active {
+  margin-top: 16px;
+  .label-input {
+    margin-right: 16px;
+  }
+}
+
+.is-error-email {
+  &.search-on-tab-can {
+    ::ng-deep {
+      .dx-texteditor-input {
+        border: solid 1px red;
+        border-radius: 3px;
+      }
+      &.dx-texteditor.dx-editor-outlined.dx-state-focused{
+        border-color: red !important;
+        box-shadow: none;
+      }
+    }
+    &:hover {
+      border: solid 1px red !important;
+      border-radius: 3px !important;
+      box-shadow: none !important;
+      ::ng-deep {
+        .dx-texteditor.dx-editor-outlined.dx-state-focused{
+          border-color: red !important;
+          box-shadow: none;
+        }
+        .dx-texteditor-input {
+          border: none;
+          border-radius: 3px;
+        }
+      }
+    }
+
+    &:focus {
+      border: solid 1px red !important;
+      border-radius: 3px !important;
+      box-shadow: none !important;
+      ::ng-deep {
+        .dx-texteditor-input {
+          border: none;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+  .code-error {
+    display: block !important;
+    margin-left: 56px;
+  }
+}
+.text-error {
+  display: none;
+}

@@ -1,0 +1,17 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" width="750px" height="auto" [offsetY]="'50px 200px'"
+  (closePopup)="closePopup()">
+  <div contentPopup class="amis-pop-edit-user">
+    <amis-amis-control-form-group [listGroupbox]="fieldListConfig" [labelWidth]="'0px'" [labelClass]="labelClass" [isSubmit]="isSubmit"
+      [typeShow]="typeShow" [isDisplayHeader]="false" (afterValidatedForm)="afterValidated($event)">
+    </amis-amis-control-form-group>
+  </div>
+
+  <div buttonsPopup>
+    <div class="button-deduct-income">
+      <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}" [type]="buttonType.OnlyText"
+        [color]="buttonColor.Normal"></amis-button>
+      <amis-button name="{{'SAVE'|translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary"
+        (clickButton)="save()"></amis-button>
+    </div>
+  </div>
+</amis-popup-base>

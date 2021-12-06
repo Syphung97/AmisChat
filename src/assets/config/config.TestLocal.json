@@ -1,0 +1,12 @@
+{
+  "apiServer": "/APIS/MessengerAPI/api",
+  "stickerCDN": "https://cdnapps.amispdc.misa.local/apps/messenger/assets/sticker/img/",
+  "host": "https://apps.amispdc.misa.local/",
+  "maxSizeFile": 10,
+  "cdnUrl": "https://cdnapps.amispdc.misa.local/apps/messenger",
+  "newsfeedURL": "https://apps.amispdc.misa.local/newsfeed/",
+  "cdnAudioNewMessage": "",
+  "cdnAudioNewCall": "",
+  "cdnDomain":"https://cdnapps.amispdc.misa.local"
+  
+}

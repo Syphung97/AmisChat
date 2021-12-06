@@ -1,0 +1,18 @@
+<amis-amis-control-popup [position]="positionFormDataGrid" [isVisible]="visibleForm">
+    <div amisPopupContent class="w-100 h-100">
+        <ng-container #formBindingData></ng-container>
+        <ng-container *ngIf="typeForm === typeFormGrid.UseGroupFieldConfig">
+            <amis-amis-layout-group [controller]="_controller" [subSystemCode]="_subSystemCode"
+                [inputParam]="paramInput" (afterCancel)="cancel($event)" (afterSaveSuccess)="saveSucces($event)">
+                <div amisLayoutTitle>
+                    <div class="dis-flex">
+                        <amis-icon [classIcon]="'icon-arrow-left'" class="mr-2" (click)="closeForm()"
+                            [tooltipContent]="'BACK_2'|translate">
+                        </amis-icon>
+                        {{titleForm}}
+                    </div>
+                </div>
+            </amis-amis-layout-group>
+        </ng-container>
+    </div>
+</amis-amis-control-popup>

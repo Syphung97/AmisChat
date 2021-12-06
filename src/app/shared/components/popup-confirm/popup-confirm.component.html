@@ -1,0 +1,17 @@
+<nz-modal [(nzVisible)]="isVisible" [nzStyle]="style" [nzTitle]="title" [nzWidth]="width" (nzOnCancel)="cancel($event)" nzMaskClosable="false">
+    <div *nzModalTitle>
+      <ng-content select="[title]"></ng-content>
+    </div>
+    <div *nzModalContent>
+      <ng-content select="[content]"></ng-content>
+    </div>
+    <div *nzModalFooter class="footer flex-m">
+      <!-- <div class="btn btn-cancel m-r-8 flex-m" (click)="close()">
+          <span>{{"BUTTON.CANCEL_2" | translate}}</span>
+      </div>
+      <div class="btn btn-confirm flex-m">
+          <span>{{"BUTTON.ANGREE" | translate}}</span>
+      </div> -->
+      <ng-content select="[footer]"></ng-content>
+    </div>
+  </nz-modal>

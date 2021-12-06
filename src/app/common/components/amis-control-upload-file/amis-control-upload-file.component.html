@@ -1,0 +1,66 @@
+<amis-form-control [labelFontWeight]="_labelFontWeight" [labelClass]="_labelClass" [isShowLabel]="_isShowLabel"
+  [labelText]="_labelText" [isRequired]="_isRequiredLabel && !_isViewOnly" [labelPositon]="_labelPositon"
+  [labelWidth]="_labelWidth" [tooltipContent]="_tooltipContent" [isShowTooltip]="_isShowTooltip"
+  [fieldName]="_fieldName" [labelColor]="labelColor">
+  <div #control class="wrap-control dis-flex amis-upload-control dis-align-items-center text-overflow">
+    <div *ngIf="!_isViewOnly || (_isEditable && !_isViewEditable)" class="dis-flex-grow">
+      <div class="dis-flex-grow dis-align-items-center dis-flex dis-flex-row">
+        <div class="control-content dis-flex-grow dis-align-items-center dis-flex dis-flex-row"
+          [class.disabled-control]="_readonly  || isNotPermissionUpdate">
+          <input class="flex-1 field-row-input" #formControl="ngModel" (keydown)="onKeyDown.emit($event)"
+            [class.border-error]="_isSubmit && _isShowError && (_isError || _isErrorCustom || formControl.errors)"
+            [(ngModel)]="data.ValueText" readonly="true" (input)="onValueChanged()" #input>
+          <div *ngIf="!!value" class="cursor remove-file icon-clear" (click)="removeFile()"></div>
+          <div class="btn-upload" misaLoadingButton [finishCall]="!isLoadingUpload" [startCall]="isLoadingUpload"
+            (click)="uploadFile()">
+            <div [class.icon-upload]="!isLoadingUpload" class="cursor ic-up ic-control"></div>
+          </div>
+          <input #fileInput hidden type="file" accept="{{_acceptFileExtension}}" class="file-input"
+            (change)="onFileChanged($event)" id="file-upload-input">
+        </div>
+        <!-- Icon -->
+        <div *ngIf="_isEditable && !_isViewEditable" class="dis-flex dis-align-items-center option-icons pl-2">
+          <amis-icon [classIcon]="'icon-tick-circle-green'" (click)="onClickDone()"
+            tooltipContent="{{'SAVE' | translate}}">
+          </amis-icon>
+
+          <amis-icon [classIcon]="'icon-error-circle'" (click)="onClickCancel()"
+            tooltipContent="{{'CANCEL' | translate}}">
+          </amis-icon>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="_isSubmit && _isShowError && !_readonly" class="white-space-initial">
+      <div class="text-error" *ngIf="formControl.errors && !_isErrorCustom && !_isError"
+        [innerHTML]="formControl.errors?.message">
+        <!-- {{formControl.errors?.message}} -->
+      </div>
+      <div class="text-error" *ngIf="_isErrorCustom || _isError" [innerHTML]="_errorMessage">
+        <!-- {{ _errorMessage }} -->
+      </div>
+    </div>
+
+    <div *ngIf="_isViewOnly || (_isEditable && _isViewEditable)" class="dis-flex-grow value-display text-overflow">
+      <div [title]="value ? value : ''" class="dis-flex-grow dis-flex dis-flex-row field-value text-overflow"
+        [class.editable-field-value]="!_readonly && _isEditable && _isViewEditable">
+        <div *ngIf="displayValue" class="text-overflow" [class.link]="!isCallFromEmployeeApp"
+          (click)="downLoadAttachment(value)">{{displayValue}}
+        </div>
+        <div *ngIf="!displayValue">--</div>
+      </div>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && !_readonly" class="cursor-pointer option-icons">
+      <div class="ml-2" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCode}}"
+        actionCode="{{permissionCodeEntity.Edit}}" permissionObject="{{_permissionObject}}">
+        <div class="icon-edit " (click)="onClickEdit();">
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && _readonly" class="option-icons">
+      <div class="ml-2" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCode}}"
+        actionCode="{{permissionCodeEntity.Edit}}" permissionObject="{{_permissionObject}}">
+        <div class="icon-lock"></div>
+      </div>
+    </div>
+  </div>
+</amis-form-control>

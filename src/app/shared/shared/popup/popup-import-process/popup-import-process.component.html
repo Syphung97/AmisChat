@@ -1,0 +1,20 @@
+<!-- tiến trình upload -->
+<div class="notify-process" *ngIf="visibleStatusImport">
+    <div class="title-process">
+        <div class="flex-1 title-content">{{title}}</div>
+        <amis-icon [classIcon]="'icon-close'" (click)="hidePopup()"
+            [isShowTooltip]='false'>
+        </amis-icon>
+    </div>
+    <div class="d-flex align-items-center content-notify-process">
+        <div class="mr-3">
+            <svg class="spinner-big" width="48px" height="48px" viewBox="0 0 66 66">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+             </svg>
+        </div>
+        <div>
+            <div>{{contentNotify}}</div>
+            <div class="file-name-import" *ngIf="isDisplayFileName">{{fileNameClient}}</div>
+        </div>
+    </div>
+</div>

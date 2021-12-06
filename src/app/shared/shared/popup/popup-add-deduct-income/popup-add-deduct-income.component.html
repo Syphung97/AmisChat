@@ -1,0 +1,76 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" width="600" height="auto" (closePopup)="closePopup()" >
+    <div contentPopup>
+        <div class="name-deduct-income d-flex align-items-center mt-3">
+            <div class="text-cloumn">Thêm khoản thu nhập <span class="ic-svg "></span></div>
+            <div class="cloumn-input">
+                <dx-select-box [dataSource]="listData" [(value)]="currentAllowance.PayrollItemName" placeholder="Nhập tên khoản thu nhập" valueExpr="PayrollItemID" displayExpr="PayrollItemName"></dx-select-box>
+            </div>
+        </div>
+        <div *ngIf="typePopup===1" class="tax-able d-flex align-items-center mt-3">
+            <div class="name-tax-able text-cloumn ">
+                Chịu thuế
+            </div>
+            <div class="cloumn-input">
+                <input [(ngModel)]="currentAllowance.IncomeTypeName" type="text" class="w-100" placeholder="" disabled>
+            </div>
+            
+        </div>
+        <div *ngIf="typePopup===2" class="tax-able d-flex align-items-center mt-3">
+            <div class="name-tax-able text-cloumn "></div>
+            <div class="cloumn-input">
+                <dx-check-box class="w-100"  [(ngModel)]="currentAllowance.IsDeduction"  text="Giảm trừ khi tính thuế" value="false">
+                </dx-check-box>
+            </div>
+            
+        </div>
+        <div class="quota d-flex align-items-center mt-3">
+            <div class="name-quota text-cloumn">
+                Định mức
+            </div>
+            <div class="d-flex align-items-center cloumn-input">
+                <input [(ngModel)]="currentAllowance.Formula" type="text" class="w-100" placeholder="Nhập định mức">
+                <amis-button class="ml-2" 
+                [type]="buttonType.OnlyIcon" [icon]="'icon-calculator'" [color]="buttonColor.Normal"></amis-button>
+            </div>
+        </div>
+        <div class="money-recipe d-flex align-items-center mt-3">
+            <div class="name-money-recipe text-cloumn">Số tiền / Công thức</div>
+            <div class="d-flex align-items-center cloumn-input" style="    width: calc(100% - 84px);">
+                <input  [(ngModel)]="currentAllowance.FormulaFunction" type="text" class="w-100" placeholder="Nhập số tiền hoặc công thức">
+                <amis-button class="ml-2" 
+                [type]="buttonType.OnlyIcon" [icon]="'icon-calculator'" [color]="buttonColor.Normal"></amis-button>
+            </div>
+        </div>
+        <div class="pay-period d-flex align-items-center mt-3">
+            <div class="name-pay-period text-cloumn">
+                Kỳ lương
+            </div>
+            <div   class=" cloumn-input">
+                <input type="text" [(ngModel)]="currentAllowance.PayInPeriod" class="w-100" placeholder="Nhập kỳ lương">
+            </div>
+        </div>
+        <div *ngIf="typePopup===2" class=" d-flex align-items-center mt-3">
+            <div class=" text-cloumn">
+                Ghi chú
+            </div>
+            <div  class=" cloumn-input">
+                <input type="text" [(ngModel)]="currentAllowance.Description"  class="w-100" placeholder="Nhập ghi chú">
+            </div>
+        </div>
+    </div>
+
+    <!-- <div contentPopup class="content-deduct-income">
+        <amis-amis-control-group [isShowNodataGrid]="false" [isShowButtonGrid]="true" [listGroupbox]="listGroupConfigs"
+            [isSubmit]="isSubmit" [typeShow]="typeShow" [isDisplayHeader]="true"
+            (afterValidatedForm)="afterValidated($event)" ></amis-amis-control-group>
+    </div> -->
+
+    <div buttonsPopup>
+        <div class="button-deduct-income">
+            <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}"
+                [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+            <amis-button name="{{'SAVE'|translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary"
+                (clickButton)="save()"></amis-button>
+        </div>
+    </div>
+</amis-popup-base>

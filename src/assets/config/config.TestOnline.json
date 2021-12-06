@@ -1,0 +1,11 @@
+{
+  "apiServer": "/APIS/MessengerAPI/api",
+  "stickerCDN": "https://testcndamisapp.misa.vn/apps/messenger/assets/sticker/img/",
+  "maxSizeFile": 10,
+  "cdnUrl": "https://testcdnamisapp.misa.vn/apps/messenger",
+  "newsfeedURL": "https://testamisapp.misa.vn/newsfeed/",
+  "cdnAudioNewMessage": "https://testcdnamisapp.misa.vn/apjs/apchat/assets/audio-notification-message.wav",
+  "cdnAudioNewCall": "https://testcdnamisapp.misa.vn/apjs/apchat/assets/audio-notification-call.wav",
+  "cdnDomain":"https://testcdnamisapp.misa.vn"
+
+}

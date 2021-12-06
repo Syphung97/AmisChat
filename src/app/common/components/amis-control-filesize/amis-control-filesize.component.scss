@@ -1,0 +1,11 @@
+@import "../../../assets/scss/var-color.scss";
+.control-file-size{
+  .disabled-control {
+    height: 36px;
+    border: solid 1px$border;
+    .box-content-file-size {
+      line-height: 36px;
+      margin: auto 16px;
+  }
+  }
+}

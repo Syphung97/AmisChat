@@ -1,0 +1,42 @@
+<dx-chart id="chartNew" [dataSource]="dataSource" pointSelectionMode="multiple" [rotated]="true"
+  (onPointClick)="pointClick($event)">
+  <dxo-size [height]="height"></dxo-size>
+  <dxi-series *ngFor="let item of configDataChart" [valueField]="item.valueField" [name]="item.valueField"
+    [color]="item.color" [barWidth]="25">
+    <dxo-label [visible]="true"  [customizeText]="customizeLabel">
+    </dxo-label>
+  </dxi-series>
+
+  <!-- tắt dọc kẻ 2 bên  -->
+  <dxo-common-axis-settings>
+    <!-- <dxo-grid [visible]="false"></dxo-grid> -->
+    <dxo-tick [visible]="false"></dxo-tick>
+    <!-- <dxo-minor-tick visible= "false"></dxo-minor-tick> -->
+  </dxo-common-axis-settings>
+
+  <!-- custom cho thanh ox -->
+  <!-- <dxo-argument-axis allowDecimals="false" opacity="0.1">
+  </dxo-argument-axis> -->
+  <dxi-value-axis [allowDecimals]="false" opacity="0.2">
+  </dxi-value-axis>
+
+  <dxo-common-series-settings [argumentField]="argumentField" type="stackedbar">
+    <dxo-selection-style>
+      <dxo-hatching direction="left"></dxo-hatching>
+    </dxo-selection-style>
+  </dxo-common-series-settings>
+  <dxo-legend [visible]="legend" horizontalAlignment="center" verticalAlignment="bottom" position="outside"
+    orientation="horizontal"></dxo-legend>
+</dx-chart>
+<!-- chú thích -->
+<div class="lenged-chart-col">
+  <div class="dis-flex justify-content-center m-b-10 textbottom">
+    <p class="m-b-0">{{labelBottom}}</p>
+  </div>
+  <div class="dis-flex justify-content-center legend">
+    <div class="dis-flex legend1 m-r-30" *ngFor="let item of Arraylenged">
+      <div class="icon  mt-1" [ngStyle]="{'background-color': item.color}"></div>
+      <p class="text-legend-1" [innerHTML]="item.valueField | safeHtml"></p>
+    </div>
+  </div>
+</div>

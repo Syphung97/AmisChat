@@ -1,0 +1,28 @@
+<amis-popup-notify *ngIf="visiblePopupNotify" [(visiblePopup)]="visiblePopupNotify" title="Thông báo"
+    (closePopup)="closePopupNotify()">
+    <div textContentPopupConfirm>
+        <div [innerHTML]="popupNotifyContent">
+        </div>
+    </div>
+    <div amisButtons>
+        <div *ngIf="!isUnknowError" class="dis-flex">
+            <div *ngIf="!isConfirmNotify">
+                <amis-button name="{{'NO'|translate}}" [color]="buttonColor.BlueSecondary" (clickButton)="onClickNo()">
+                </amis-button>
+                <amis-button name="{{'YES'|translate}}" (clickButton)="onClickYes()">
+                </amis-button>
+            </div>
+            <div *ngIf="isConfirmNotify">
+                <amis-button name="{{'CANCEL2'|translate}}" [color]="buttonColor.Normal"
+                    (clickButton)="closePopupNotify()">
+                </amis-button>
+                <amis-button name="{{'ACCEPT'|translate}}" (clickButton)="onClickYes()">
+                </amis-button>
+            </div>
+        </div>
+        <div *ngIf="isUnknowError">
+            <amis-button name="{{'CLOSE'|translate}}" [color]="buttonColor.BlueSecondary" (clickButton)="closePopupNotify()">
+            </amis-button>
+        </div>
+    </div>
+</amis-popup-notify>

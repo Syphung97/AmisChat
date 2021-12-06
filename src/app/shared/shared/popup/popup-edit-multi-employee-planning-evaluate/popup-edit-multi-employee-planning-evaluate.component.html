@@ -1,0 +1,56 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" title="{{'HRM_EMPLOYEE_PLANNING_CRITERIA_EDIT_TITLE'|translate}}"
+    width="900px" height="auto" (closePopup)="closePopup()" [maxHeightContent]="620">
+    <div contentPopup>
+        <div class="content-wrapper">
+            <div class="header dis-flex dis-justify-content-between">
+                <dx-text-box [(value)]="filterValue" mode="search" class="mr-2" width="250"
+                    placeholder="{{'SEARCH'|translate}}" (onValueChanged)="onValueTextboxChange($event)"
+                    (onKeyUp)="onSearchControl($event)"></dx-text-box>
+
+                <div class="dis-flex">
+                    <amis-button [isDisable]="!dataSource?.length" (clickButton)="onDeleteItems()" class="mr-2"
+                        name="{{'DELETE_ALL'|translate}}" [color]="buttonColor.RedWhiteSecondary"></amis-button>
+
+                    <amis-button (clickButton)="isVisiblePopupSelect = true" name="{{'SELECT_MORE'|translate}}"
+                        [iconLeft]="'icon-plus-blue'" [color]="buttonColor.BlueWhiteSecondary"
+                        (clickButton)="onShowPopupChoosePlanningCriteria()">
+                    </amis-button>
+                </div>
+
+            </div>
+            <div class="grid-template m-t-17">
+                <amis-paging-grid #grid [dataSource]="dataFilter" [columns]="columns" showBorders=false
+                    [gridHeight]="400" [isPageSizeEditable]="false" [wordWrapEnabled]="false"
+                    [showNavigationButtons]="false" [allowColumnResizing]="true" [contextMenuList]="listOption"
+                    [showInfo]="false" [showPageSizeSelector]="false" [isBorderGrid]="true" [isShowMoreOption]="true"
+                    (clickViewMoreRow)="contextMenuExecuteAction($event)" (chooseRecord)="chooseRecord($event)"
+                    [clearSelection]="false" [isEdit]="true" [isShowCustomColumn]="false" [isShowSelection]="false"
+                    [isGridOnPopup]="true" [isShowPaging]="false" [isSubmit]="isSubmit"
+                    (outputDataSource)="outputDataSource($event)" (saveData)="submitSaveData($event)">
+                </amis-paging-grid>
+            </div>
+        </div>
+    </div>
+
+    <div buttonsPopup>
+        <div class="button-action">
+            <amis-button (clickButton)="closePopup()" class="mr-2" name="{{'CANCEL2'|translate}}"
+                [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+            <amis-button name="{{'SAVE'|translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary"
+                (clickButton)="save()"></amis-button>
+        </div>
+    </div>
+</amis-popup-base>
+
+<!-- popup chọn tiêu chí đánh giá -->
+<amis-popup-employee-planning-evaluate [selectedEmployeeEvaluations]="dataSource"
+    [currentJobPositionPhase]="currentJobPositionPhase" [visiblePopup]="isVisiblePopupSelect"
+    *ngIf="isVisiblePopupSelect" (onClosePopup)="isVisiblePopupSelect = false"
+    (onSelectPlanCriteria)="onSelectPlanCriteria($event)">
+</amis-popup-employee-planning-evaluate>
+
+<!-- popup cảnh báo xóa tiêu chí đánh giá -->
+<amis-popup-delete *ngIf="popupDelete.VisiblePopupDelete" [title]="popupDelete.TitlePopupDelete"
+    [visiblePopup]="popupDelete.VisiblePopupDelete" [content]="popupDelete.ContentPopupDelete"
+    (eventDelete)="confirmPopupDelete($event)" (eventHiddenPopup)="popupDelete.VisiblePopupDelete = false">
+</amis-popup-delete>

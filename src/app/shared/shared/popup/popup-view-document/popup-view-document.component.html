@@ -1,0 +1,53 @@
+<!-- <dx-popup class="view-document" [title]="title" [width]="1200" [height]="680" [(visible)]="visiblePopup"
+  (onHidden)="closePopup()">
+  <ngx-extended-pdf-viewer [src]="_src" useBrowserLocale="true" height="80vh"></ngx-extended-pdf-viewer>
+
+  <dx-scroll-view [height]="598">
+  <amis-loading *ngIf="isLoading"></amis-loading>
+    <pdf-viewer [src]="_src" [(page)]="page" [(pageSize)]="pagesize" [stick-to-page]="true" [zoom]="zoom"
+      (after-load-complete)="loadComplete()" (error)="loadFailPdf()"></pdf-viewer>
+  <embed type="application/x-google-chrome-pdf" style="width: 100%; height: 820px" [src]="_src" />
+    
+  <embed type="application/pdf" [src]="_src"
+headers="Access-Control-Allow-Headers: Content-Type,SOAPAction,Authorization
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD
+Access-Control-Allow-Origin: *
+Cache-Control: private
+Content-Disposition: inline; filename=Ho-so-nhan-vien.pdf
+Content-Security-Policy: frame-ancestors *.amis.misa.local;
+Content-Type: application/pdf
+Date: Wed, 29 Jul 2020 04:37:06 GMT
+Server: Microsoft-IIS/10.0
+Strict-Transport-Security: max-age=16070400; includeSubDomains
+Transfer-Encoding: chunked
+X-AspNet-Version: 4.0.30319
+X-Content-Type-Options: nosniff
+X-Xss-Protection: 1; mode=block
+" background-color="0xFF525659" top-toolbar-height="56" javascript="allow" top-level-url="undefined">
+
+  </dx-scroll-view>
+</dx-popup> -->
+
+<amis-popup-base #popupPreview [(visiblePopup)]="visiblePopup" [title]="title" [height]="height" [width]="1200" [offsetY]="'0 50'"
+  (closePopup)="closePopup()" [isResizePopup]="true" [isHaveScrollView]="false"
+  [isHaveFooterBtn]="isHaveFooterBtn" (shownPopup)="showPopup()">
+  <div contentPopupNoScroll id="preview-pdf-popup" class="preview-pdf-popup h-100">
+
+    <amis-loading *ngIf="isLoading" [text]="''" [position]="'preview-pdf-popup'"></amis-loading>
+
+      <iframe #iFrame type="application/pdf" style="width: 100%; height: 100%;"></iframe>
+
+    <!-- <embed type="application/x-google-chrome-pdf" style="width: 100%; height: 820px" [src]="_src" /> -->
+
+    <!-- <ngx-extended-pdf-viewer #pdfViewer *ngIf="!isLoading" [src]="_src" useBrowserLocale="true" height="80vh"
+      [showOpenFileButton]="false" (pdfLoaded)="pdfLoaded()"></ngx-extended-pdf-viewer> -->
+  </div>
+  <div buttonsPopup *ngIf="isHaveFooterBtn">
+    <amis-button [color]="buttonColor.Normal" (clickButton)="closePopup()" name="{{'CLOSE'|translate}}">
+    </amis-button>
+    <amis-button [color]="buttonColor.BlueSecondary" (clickButton)="exportFile()" name="{{'EXPORT'|translate}}">
+    </amis-button>
+    <!-- <amis-button [color]="buttonColor.BluePrimary" (clickButton)="printFile()" name="{{'In'|translate}}">
+    </amis-button> -->
+  </div>
+</amis-popup-base>

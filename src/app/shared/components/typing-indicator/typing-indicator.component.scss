@@ -1,0 +1,51 @@
+.typing {
+    color: rgb(34, 32, 32);
+}
+
+.t-one, .t-three {
+    -webkit-animation-delay: -.5s;
+    animation-delay: -.5s;
+
+    width: 8px;
+    height: 8px;
+    margin: 4px;
+    border-radius: 100%;
+    -webkit-animation: ball-beat .7s linear -.15s infinite;
+    animation: ball-beat .7s linear -.15s infinite;
+
+    display: inline-block;
+    float: none;
+    background-color: currentColor;
+    border: 0 solid;
+
+    position: relative;
+    box-sizing: border-box;
+}
+
+.t-two {
+    width: 8px;
+    height: 8px;
+    margin: 4px;
+    border-radius: 100%;
+    -webkit-animation: ball-beat .6s linear -.10s infinite;
+    animation: ball-beat .6s linear -.10s infinite;
+
+    display: inline-block;
+    float: none;
+    background-color: currentColor;
+    border: 0 solid;
+
+    position: relative;
+    box-sizing: border-box;
+}
+
+@keyframes ball-beat {
+    50% {
+        opacity: .2;
+        transform: scale(.75);
+    }
+    100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+} 

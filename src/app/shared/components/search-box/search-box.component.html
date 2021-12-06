@@ -1,0 +1,5 @@
+<div class="search-box {{class}}">
+  <span class="icon-search-chat"></span>
+  <input class="search-input" [(ngModel)]="valueSearch" type="text" (focus)="onfocus()" (blur)="onblur()"
+    placeholder="{{'Search' | translate}}" (keyup)="handleSearchAction($event)">
+</div>

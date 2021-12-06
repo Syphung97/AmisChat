@@ -1,0 +1,35 @@
+<nz-layout>
+  <nz-content>
+    <nz-layout>
+      <!-- Header -->
+      <nz-header>
+        <ng-container class="w-full" #headerContainer></ng-container>
+      </nz-header>
+      <!-- Content -->
+
+      <nz-content class="flex-col">
+        <div class="box-display flex-1">
+          <div class="arena-chat pos-relative">
+            <amis-message-list [messageComing]="messageComing" [listMessage]="listMessage" [conv]="conversation"
+              (actionGenerate)="handleActionMessage($event)" (onReachTop)="onReachTop()"></amis-message-list>
+
+
+          </div>
+        </div>
+        <!-- <div  class="flex-m text-grey typing-indicator p-l-12"> -->
+        <amis-typing-indicator *ngIf="typingIndicatorObject"></amis-typing-indicator>
+        <!-- </div> -->
+        <amis-message-composer #messageComposer [conv]="conversation" [replyObject]="actionObject" (onSendMessage)="onSendMessage($event)">
+        </amis-message-composer>
+
+      </nz-content>
+    </nz-layout>
+  </nz-content>
+
+  <!-- Tab bên phải -->
+  <nz-sider style="min-width: 264px;" [nzWidth]="'calc(100vw / 4)'" [nzTrigger]="null" [nzCollapsedWidth]="0"
+    [nzCollapsible]="true">
+    <!-- Sider -->
+    <amis-conversation-sider [conversation]="conversation"></amis-conversation-sider>
+  </nz-sider>
+</nz-layout>

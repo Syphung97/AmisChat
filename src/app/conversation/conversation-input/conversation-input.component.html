@@ -1,0 +1,19 @@
+<div class="flex flex-col" style="height: 80px;">
+
+  <input placeholder="{{'SendMessage_Placeholder' | translate}}" (keyup)="onKeyup($event)" [(ngModel)]="inputValue" (focus)="checkUserTyping($event)" />
+
+
+  <div class="flex-sb-m flex-1 p-l-8 p-r-8">
+    <div class="flex-m">
+      <amis-icon [classIcon]="'icon-mess-icon'"></amis-icon>
+      <amis-icon class="m-l-8" [classIcon]="'icon-mess-sticky'"></amis-icon>
+      <amis-icon class="m-l-8" [classIcon]="'icon-mess-image'"></amis-icon>
+      <amis-icon class="m-l-8" [classIcon]="'icon-mess-attach'"></amis-icon>
+      <amis-icon class="m-l-8" [classIcon]="'icon-mess-gif'"></amis-icon>
+    </div>
+    <div class="flex" (click)="sendMessage()">
+      <amis-icon class="m-l-8" [classIcon]="'icon-mess-send-action'"></amis-icon>
+    </div>
+
+  </div>
+</div>

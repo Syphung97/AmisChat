@@ -1,0 +1,64 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font-family.scss";
+@import "../../../../assets/scss/var-dx-styles.scss";
+
+.popover-wrapper {
+    .popover-title {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-title;
+        padding: 0px;
+
+        .title-content {
+            margin-top: 4px;
+        }
+
+        .dx-icon-close {
+            font: 20px/1 DXIcons;
+            cursor: pointer;
+        }
+    }
+
+    .title-wrapper {
+        padding: 16px 16px 12px 16px;
+    }
+
+    .untitle-wrapper {
+        padding: 16px 16px 0px 16px;
+    }
+
+    .content-popup-base {
+        font-size: $font-size-base;
+        padding: 0 16px;
+    }
+
+    .dx-popup-footer {
+        padding: 20px 16px;
+        .buttons {
+            justify-content: flex-end;
+            padding: 0;
+
+            amis-button {
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                margin-right: 8px;
+            }
+        }
+    }
+
+    .hover-icon-close{
+        border-radius: 50%;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover{
+            background-color: $bg-icon-hover;;
+        }
+        &:active{
+            background-color: $bg-icon-press;
+        }
+    }
+}

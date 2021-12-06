@@ -1,0 +1,101 @@
+<div class="wrapper-sidebar h-100 amis-sidebar-report" *ngIf="isExpand">
+    <div class="container-param dis-flex dis-flex-column dis-justify-content-between h-100">
+        <div class="dis-flex dis-flex-column">
+            <div class="header-sidebar dis-flex dis-align-items-center dis-justify-content-between cursor-pointer"
+                (click)="collapseSidebar()">
+                <div class="title-param">{{'Tham số báo cáo'|translate}}</div>
+                <amis-icon *ngIf="isExpand" [classIcon]="'icon-big-caret-left-light-2'"
+                    tooltipContent="{{'COLLAPSE_SIDEBAR' | translate}}" [isHoverState]="false">
+                </amis-icon>
+            </div>
+            <dx-scroll-view>
+                <div class="content-sidebar">
+                    <div *ngFor="let item of listControl">
+                        <ng-container [ngSwitch]="item.Type">
+                            <ng-container *ngSwitchCase="typeControlSidebar.DateRange" class="date-range">
+                                <amis-amis-date-range #dateRange [inputPeriodReport]="reportParam"
+                                    [statisticTypeOption]="item.dataSource?.length ? item.dataSource : statisticTypeOption"
+                                    (activeButtonApply)="applyButton($event)">
+                                </amis-amis-date-range>
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="typeControlSidebar.TagBox" class="tagbox">
+                                <div class="choose-org">
+                                    <div class="jobtitle">
+                                        <amis-amis-control-tagbox [labelPositon]="'top'" labelText="{{item.Text}}"
+                                            [isRequiredLabel]="false">
+                                        </amis-amis-control-tagbox>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="typeControlSidebar.TreeBox" class="tree-box">
+                                <div class="choose-org">
+                                    <div class="organization mt-8">
+                                        <div class="popover-label">
+                                            {{item.Text}}
+                                        </div>
+                                        <amis-select-organization-unit #organizationUnit [(OrganizationUnit)]="dataBind"
+                                            (changeOrganizationUnit)="onChangeOrganizationUnit($event)"
+                                            [isChangerOpenFirst]="false">
+                                        </amis-select-organization-unit>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="typeControlSidebar.TextBox" class="text-control">
+                                <div class="text-control-report dis-flex dis-flex-column">
+                                    <!-- <div class="quantity mt-8">
+                                        <amis-amis-control-textbox [(ngModel)]="quantityShowChart" [isRequiredLabel]="true"
+                                            labelText="{{item.Text}}" [isShowError]="true" [isSubmit]="true"
+                                            [isError]="_isError" errorMessage="{{'REQUIRE_DATA_CONTENT'|translate}}"
+                                            (valueChanged)="changeQuantity($event)">
+                                        </amis-amis-control-textbox>
+                                    </div> -->
+
+                                    <amis-amis-control-combobox class="m-b-8" labelText="{{item.Text}}"
+                                        [labelClass]="'non-flex-grow popover-label'" [labelPositon]="'top'"
+                                        [tooltipContent]="tooltipContent" [isShowTooltip]="true"
+                                        [setDataSource]="displayTypeOption" [displayExpr]="'DisplayTypeName'"
+                                        [valueExpr]="'DisplayTypeID'" (onItemClick)="changerValueSelect($event)"
+                                        [(ngModel)]="dataBind.DisplayType" [isRequiredLabel]="false"
+                                        [searchEnabled]="false">
+                                    </amis-amis-control-combobox>
+                                    <div class="day-numberbox dis-align-items-end dis-flex">
+                                        <!-- <dx-number-box [showSpinButtons]="true" #formControl="ngModel" [min]="1" [max]="15"
+                                            [(ngModel)]="quantityShowChart" [class.border-error]="false"
+                                            (valueChange)="changeQuantity($event)">
+                                        </dx-number-box> -->
+
+                                        <amis-amis-control-numberbox [(ngModel)]="quantityShowChart"
+                                            [isShowError]="true" [isSubmit]="true" [minValue]="1" [maxValue]="maxValue"
+                                            [isError]="_isError" errorMessage="{{'CAN_NOT_EMPTY'|translate}}"
+                                            (valueChanged)="changeQuantity($event)">
+                                        </amis-amis-control-numberbox>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+            </dx-scroll-view>
+        </div>
+        <div class="footer-sidebar dis-flex dis-justify-content-between">
+            <amis-button name="{{'Mặc định'|translate}}" [color]="buttonColor.Normal"
+                (clickButton)="defaultParamReport()" class="button-custom">
+            </amis-button>
+            <amis-button name="{{'Áp dụng'|translate}}" (clickButton)="applyParamReport()"
+                [ngClass]="{'disable-apply': !isDisable}" class="button-custom">
+            </amis-button>
+        </div>
+    </div>
+</div>
+<div class="small-sidebar dis-justify-content-center dis-flex h-100" *ngIf="!isExpand">
+    <div class="collapse-sidebar">
+
+        <amis-icon *ngIf="!isExpand" [classIcon]="'icon-big-caret-right-light-2'"
+            tooltipContent="{{'EXPAND_SIDEBAR' | translate}}"
+            (click)="collapseSidebar()" [isSquareBG]="true">
+        </amis-icon>
+    </div>
+</div>

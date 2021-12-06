@@ -1,0 +1,115 @@
+@import "mixin";
+
+.themeMixin({
+  :host {
+    .sidebar-logo {
+      background: @primary-1;
+      h1 {
+        color: @text-color;
+      }
+    }
+
+    .app-header {
+      background: @layout-header-background;
+    }
+
+    .header-trigger {
+      color: @text-color;
+    }
+
+    .inner-content {
+      background: @layout-trigger-background;
+    }
+
+    .trigger:hover {
+      color: #1890ff;
+    }
+
+    .active{
+      background-color: #0077ff !important;
+      color: @white !important;
+      z-index: 10 !important;
+    }
+    .tab-item{
+      color: @text-color;
+      height: 32px;
+      width: 126px;
+      border-radius: 4px;
+      background-color: #E0E0E0;
+      padding: 8px 16px;
+      line-height: 15px;
+      cursor: pointer;
+      z-index: 0;
+      font-size: 13px;
+      // &:hover{
+      //   background-color: #0077ff;
+      //   color: @white;
+      //   z-index: 10;
+      // }
+    }
+
+    .conversation-item{
+      height: 64px;
+      padding: 8px 16px;
+      cursor: pointer;
+      &:hover{
+        background-color: @item-bg-hover;
+      }
+
+      .last-mess{
+        color: @text-grey;
+      }
+
+
+    }
+  }
+});
+
+.menu-sidebar {
+  position: relative;
+  // z-index: 10;
+  box-shadow: 0px 0 3px rgba(0, 21, 41, 0.35);
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  ::ng-deep .ant-menu-inline {
+    border-right: none;
+  }
+  .head-sidebar {
+    height: 72px;
+    width: 100%;
+  }
+  .list-conv {
+    overflow-y: auto;
+  }
+  .tab {
+    height: 64px;
+    width: 100%;
+  }
+  .tab-small {
+    display: none;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .avatar-cur-user {
+    display: none;
+  }
+  .icon-create {
+    display: none;
+  }
+  .search-box {
+    margin: 0;
+  }
+  .tab {
+    display: none !important;
+  }
+  .tab-small {
+    display: block !important;
+  }
+  ::-webkit-scrollbar {
+    width: 0 !important;
+  }
+  ::-moz-scrollbar {
+    width: 0 !;
+  }
+}

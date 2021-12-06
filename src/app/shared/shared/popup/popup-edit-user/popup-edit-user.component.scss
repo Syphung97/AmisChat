@@ -1,0 +1,43 @@
+
+@import "../../../../assets/scss/var-cls.scss";
+@import "../../../../assets/scss/var-icon.scss";
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    @include border-radius(50%);
+    color: $white;
+  }
+  .user-information {
+    line-height: 24px;
+    .user-name{
+      font-size: 20px;
+    }
+    .user-status-success{
+      color: #48bb56;
+    }
+    .user-status-warning{
+      color: #fc8a15;
+    }
+  }
+.application-select-box {
+  width: 300px;
+}
+.application-tag-box {
+  width: 300px;
+}
+.warning-label {
+  margin-left: 100px;
+  margin-top: -8px;
+}
+::ng-deep{
+  .amis-pop-edit-user{
+    .group-box{
+      .dis-flex:first-child{
+        width: 100%;
+      }
+    }
+  }
+}

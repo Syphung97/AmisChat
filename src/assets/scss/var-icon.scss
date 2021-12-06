@@ -1,0 +1,156 @@
+@import "./link-icon.scss";
+@import "./var-mixin.scss";
+
+
+.ic-svg {
+  display: inline-block;
+  vertical-align: middle;
+  border-style: none;
+  margin: auto;
+}
+
+.ic-action {
+  cursor: pointer;
+}
+
+@mixin setIcon($icon-name, $icon-width, $icon-height, $icon-color, $icon-posX, $icon-posY, $icon-link) {
+  .#{$icon-name} {
+    width: $icon-width;
+    height: $icon-height;
+    //không dùng được link chung vì lúc build sẽ bị lỗi
+    // -webkit-mask-image: $link-icon;
+    @include make-property(mask-image, $icon-link);
+    @include make-property(mask-position, $icon-posX $icon-posY);
+    @include make-property(mask-repeat, no-repeat);
+    // mask-image: $link-icon;
+    // mask-position: $icon-posX $icon-posY;
+    background-color: $icon-color;
+    // mask-repeat: no-repeat;
+  }
+}
+
+;
+
+// set icon mà không quan tâm đến màu
+@mixin setIconWithoutColor($icon-name, $icon-width, $icon-height, $icon-posX, $icon-posY, $icon-link) {
+  .#{$icon-name} {
+    width: $icon-width;
+    height: $icon-height;
+    //không dùng được link chung vì lúc build sẽ bị lỗi
+    @include make-property(mask-image, $icon-link);
+    // -webkit-mask-image: $link-icon;
+    // mask-image: $link-icon;
+    // mask-position: $icon-posX $icon-posY;
+    @include make-property(mask-position, $icon-posX $icon-posY);
+    @include make-property(mask-repeat, no-repeat);
+    // mask-repeat: no-repeat;
+  }
+}
+
+;
+
+
+// set icon lấy màu mặc định
+@mixin setIconWithDefaultColor($icon-name, $icon-width, $icon-height, $icon-posX, $icon-posY, $icon-link) {
+  .#{$icon-name} {
+    width: $icon-width;
+    height: $icon-height;
+    //không dùng được link chung vì lúc build sẽ bị lỗi
+    background: $icon-link $icon-posX $icon-posY no-repeat;
+  }
+}
+
+;
+
+@mixin makeIconByRotate ($icon-name, $icon-width, $icon-height, $icon-color, $icon-posX, $icon-posY, $icon-link, $rotate, $dir) {
+  .#{$icon-name} {
+    width: $icon-width;
+    height: $icon-height;
+    //không dùng được link chung vì lúc build sẽ bị lỗi
+    // -webkit-mask-image: $link-icon;
+    @include make-property(mask-image, $icon-link);
+    @include make-property(mask-position, $icon-posX $icon-posY);
+    @include make-property(mask-repeat, no-repeat);
+    // mask-image: $link-icon;
+    // mask-position: $icon-posX $icon-posY;
+    background-color: $icon-color;
+    @if $dir == 'X' {
+      transform: rotateX($rotate)
+    }
+    @if $dir == 'Y' {
+      transform: rotateY($rotate)
+    }
+    @if $dir == 'Z' {
+      transform: rotateZ($rotate)
+    }
+
+    // mask-repeat: no-repeat;
+  }
+}
+
+
+@include setIconWithDefaultColor("icon-logo", 32px, 32px, 0, 0, $link-icon);
+@include setIconWithDefaultColor("icon-create-conversation", 32px, 32px, -64px, 0, $link-icon);
+@include setIconWithDefaultColor("icon-phone", 32px, 32px, -96px, 0, $link-icon);
+@include setIconWithDefaultColor("icon-camera", 32px, 32px, -160px, 0, $link-icon);
+@include setIconWithDefaultColor("icon-info", 32px, 32px, -128px, 0, $link-icon);
+@include setIconWithDefaultColor("icon-close-small", 32px, 32px, -448px, 0, $link-icon);
+@include setIconWithDefaultColor("icon-leave-mess", 32px, 32px, -96px, -32px, $link-icon);
+
+@include setIconWithDefaultColor("icon-mess-send-action", 32px, 32px, -32px, 0, $link-icon);
+@include setIconWithDefaultColor("icon-image", 32px, 32px, -224px, -32px, $link-icon);
+@include setIconWithDefaultColor("icon-option", 32px, 32px, -256px, -32px, $link-icon);
+@include setIconWithDefaultColor("icon-notification", 32px, 32px, -192px, -32px, $link-icon);
+
+@include setIconWithDefaultColor("icon-add-member", 32px, 32px, -160px, -32px, $link-icon);
+@include setIconWithDefaultColor("icon-member", 32px, 32px, -128px, -32px, $link-icon);
+@include setIconWithDefaultColor("icon-search-message", 32px, 32px, -64px, -32px, $link-icon);
+@include setIconWithDefaultColor("icon-delete-mess", 32px, 32px, -192px, 0, $link-icon);
+@include setIconWithDefaultColor("icon-leave-mess", 32px, 32px, -96px, -32px, $link-icon);
+@include setIcon("icon-launcher", 32px, 32px, #ffffff, 0, -64px, $link-icon);
+@include setIcon("icon-search-chat", 32px, 32px, #999999, -32px, -32px, $link-icon);
+@include setIcon("icon-back-gray", 32px, 32px,#999999, -320px, -32px, $link-icon);
+
+// DÒng 3
+@include setIcon("icon-edit-groupname", 32px, 32px, #999999, -64px, -64px, $link-icon);
+@include setIconWithDefaultColor("icon-ppt", 32px, 32px, -192px, -64px, $link-icon);
+@include setIconWithDefaultColor("icon-excel", 32px, 32px, -128px, -64px, $link-icon);
+@include setIconWithDefaultColor("icon-doc", 32px, 32px, -160px, -64px, $link-icon);
+@include setIconWithDefaultColor("icon-remove-attachment", 32px, 32px, -320px, -64px, $link-icon);
+// Dòng 4
+@include setIconWithDefaultColor("icon-mess-icon", 32px, 32px, -64px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-sticky", 32px, 32px, -96px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-image", 32px, 32px, -128px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-attach", 32px, 32px, -160px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-gif", 32px, 32px, -192px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-file", 32px, 32px, -32px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-link", 32px, 32px, 0px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-close", 32px, 32px, -288px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-pdf", 32px, 32px, -352px, -96px, $link-icon);
+@include setIconWithDefaultColor("icon-file-other", 32px, 32px, -384px, -96px, $link-icon);
+
+// Dong 5
+@include setIconWithDefaultColor("icon-mess-sent", 32px, 32px, -32px, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-delivered", 32px, 32px, 0, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-send", 32px, 32px, -64px, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-reaction", 32px, 32px, -96px, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-action", 32px, 32px, -128px, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-reply", 32px, 32px, -160px, -128px, $link-icon);
+@include makeIconByRotate("icon-mess-reply-roltate", 32px, 32px,#999999, -160px, -128px, $link-icon, 180deg, 'Y');
+
+@include setIconWithDefaultColor("icon-mess-forward", 32px, 32px, -192px, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-delete", 32px, 32px, -224px, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-revoke", 32px, 32px, -256px, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-mess-copy", 32px, 32px, -320px, -128px, $link-icon);
+@include setIconWithDefaultColor("icon-user-online", 32px, 32px, -288px, -128px, $link-icon);
+
+
+// Dòng icon 64
+@include setIconWithDefaultColor("icon-accept-call", 64px, 64px, -64px, -224px, $link-icon);
+@include setIconWithDefaultColor("icon-accept-video", 64px, 64px, -128px, -224px, $link-icon);
+@include setIconWithDefaultColor("icon-reject-call", 64px, 64px, 0, -224px, $link-icon);
+
+@include setIconWithDefaultColor("icon-disable-call", 64px, 64px, -64px, -160px, $link-icon);
+@include setIconWithDefaultColor("icon-enable-call", 64px, 64px, -192px, -160px, $link-icon);
+@include setIconWithDefaultColor("icon-disable-video", 64px, 64px, 0, -160px, $link-icon);
+@include setIconWithDefaultColor("icon-enable-video", 64px, 64px, -128px, -160px, $link-icon);

@@ -1,0 +1,55 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" [width]="400" [height]="height" [offsetY]="offsetY"
+  (closePopup)="closePopup()">
+  <div contentPopup>
+    <div class="export-type d-flex dis-align-items-center align-content-between mb-3">
+      {{'POPUP_ADVANCE_EXPORT_OPTION' | translate}}
+      <div class="excel-type d-flex dis-align-items-center align-content-between ml-3">
+        <div class="mr-1" [class.checked-icon]="checkExcel" [class.uncheck-icon]="!checkExcel"
+          (click)="changeTypeExport(2)" title="Xuất khẩu excel"></div>
+        {{'CONTEXT_MENU_EPORT_EXCEL' | translate}}
+      </div>
+      <div class="pdf-type d-flex dis-align-items-center align-content-between ml-3">
+        <div class="mr-1" [class.checked-icon]="!checkExcel" [class.uncheck-icon]="checkExcel"
+          (click)="changeTypeExport(1)" title="Xuất khẩu pdf"></div>
+        {{'CONTEXT_MENU_EPORT_PDF' | translate}}
+      </div>
+    </div>
+    <div id="list-column-export">
+      <div class="widget-container">
+        <dx-list #list [items]="items" [dataSource]="items" [showSelectionControls]="true" [searchEnabled]="true"
+          [searchExpr]="['Caption', 'CaptionSearch']" searchMode="contains" itemTemplate="data" [height]="'410px'"
+          [selectionMode]="selectionModeValue" [selectedItems]="selectedItems" (onSelectionChanged)="selectItem($event)"
+          [class.max-selection]="isMax" pageLoadMode="any" (onContentReady)="readySearchList($event)"
+          noDataText="{{'NOT_FOUND_COLUMNS'| translate}}" nextButtonText="{{'SHOW_MORE' | translate}}">
+          <div *dxTemplate="let it of 'data'" (mouseenter)="showToolTip($event, it)">
+            <div>{{it.Caption}}</div>
+          </div>
+          <dxo-search-editor-options focusStateEnabled="true"
+            placeholder="{{'POPUP_ADVANCE_EXPORT_SEARCH_PLACEHOLDER'| translate}}">
+          </dxo-search-editor-options>
+          <dxo-item-dragging [data]="cloneItems" [allowReordering]="isReordering" [onDragStart]="onDragStart"
+            [onAdd]="onAdd" [onRemove]="onRemove" [onDragEnd]="onDragEnd">
+          </dxo-item-dragging>
+        </dx-list>
+      </div>
+    </div>
+  </div>
+
+  <div buttonsPopup class="d-flex dis-align-items-center">
+    <div class="pos-absolute all-columns d-flex dis-align-content-center align-content-between" style="left: 0;">
+      <div class="dis-flex cursor-pointer" (click)="chooseTotalEvent()">
+        <div class="mr-1" [class.checked-square-icon]="chooseTotal" [class.icon-uncheckbox]="!chooseTotal"
+          title="Chọn tất cả cột"></div>
+        <div class="pt-1">
+          Tất cả cột
+        </div>
+      </div>
+    </div>
+    <div class="button-deduct-income">
+      <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}" [type]="buttonType.OnlyText"
+        [color]="buttonColor.Normal"></amis-button>
+      <amis-button name="{{'CONTEXT_MENU_EXPORT'|translate}}" [class.disabled]="listSelectedItems?.length == 0"
+        [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary" (clickButton)="save()"></amis-button>
+    </div>
+  </div>
+</amis-popup-base>

@@ -1,0 +1,107 @@
+<div class="w-100 pos-relative">
+  <div *ngIf="_currentData?.length" class="menu-options flex-m m-b-24" style="height: 32px">
+    <div class="title m-r-24">{{_title}}<span style='font-size: 16px;font-weight: normal'> -
+        {{'CURRENT' | translate}}</span>
+    </div>
+
+  </div>
+  <amis-paging-grid *ngIf="_currentData?.length" [columns]="gridColumns" [dataSource]="_currentData"
+    [contextMenuList]="contextMenuList" [isShowMoreOption]="false" [isShowPaging]="false" [isShowCustomColumn]="false"
+    [isShowSelection]="false" [isBorderGrid]="false">
+
+  </amis-paging-grid>
+
+  <div class="menu-options flex-m m-b-24 pos-relative" [class.m-t-40]="_currentData?.length" style="height: 32px">
+    <div class="title m-r-24">{{_title}}<span style='font-size: 16px;font-weight: normal'> -
+        {{'UPDATE' | translate}}</span></div>
+    <div *ngIf="selectedData?.length" class="d-flex align-items-center ml-1">
+      <div>{{'GRID_SELECTED'|translate}} <span class="count-record bold">{{selectedData?.length}}</span></div>
+      <div class="ml-4 mr-4 text-red cursor-pointer" (click)="removeSelectedRecord()">
+        {{'GRID_UNSELECT'|translate}}</div>
+      <amis-button [type]="buttonType.Link" [customClass]="'color-red'" name="Từ chối" iconLeft="icon-reject-red"
+        (click)="rejectUpdateEmployeeInGrid()">
+      </amis-button>
+      <amis-button [type]="buttonType.Link" name="Duyệt" [customClass]="'color-green'" iconLeft="icon-accept-green"
+        (click)="approveUpdateEmployeeInGrid()">
+      </amis-button>
+    </div>
+
+    <div style="right:4px; top: 4px" id="info" class="flex-m pos-absolute cursor-pointer" (click)="visiblePopoverInstruc = !visiblePopoverInstruc">
+      <div class="icon-infor-circle-default m-r-8">
+
+      </div>
+      <div class="text-gray">
+         Chú thích
+      </div>
+    </div>
+  </div>
+
+  <amis-paging-grid class="grid-update" #pagingGrid [columns]="gridColumns" [dataSource]="_updateData"
+    [contextMenuList]="contextMenuList" [isShowMoreOption]="true" [isShowPaging]="false" [isShowCustomColumn]="false"
+    [isShowSelection]="true" (clickViewMoreRow)="onShowContextMenu($event)" [isBorderGrid]="false"
+    (contextMenuAction)="contextMenuAction($event)" [selectedItems]="selectedData"
+    (chooseRecord)="chooseRecord($event)">
+
+  </amis-paging-grid>
+
+  <ng-container #formGrid></ng-container>
+</div>
+
+<amis-popup-base [width]="432" *ngIf="visibleRejectReason" [(visiblePopup)]="visibleRejectReason" [height]="232"
+  [title]="'REJECT_EMPLOYEE_UPDATE' | translate" (closePopup)="onHidden()">
+  <div contentPopup>
+    <div class="flex">
+      <amis-amis-control-textarea amisFirstFocus [value]="rejectReason" (valueChanged)="focusOutFieldReject($event)"
+        [labelText]="'REJECT_REASON' | translate" [labelClass]="'normal flex-grow-03 text-gray'"
+        [labelPositon]="'left'"></amis-amis-control-textarea>
+    </div>
+  </div>
+  <div buttonsPopup>
+    <amis-button #btnClose [color]="buttonColor.Normal" name="{{'CANCEL2' | translate}}" (click)="onHidden()">
+    </amis-button>
+    <amis-button name="{{'REJECT' | translate}}" [color]="buttonColor.RedPrimary" (click)="onClickReject()">
+    </amis-button>
+  </div>
+</amis-popup-base>
+
+<amis-popup-base [width]="432" *ngIf="visibleApproveReason" [(visiblePopup)]="visibleApproveReason"
+  [title]="'APPROVE2' | translate" (closePopup)="onHiddenPopupAprove()">
+  <div contentPopup>
+    <div class="flex-m">
+      {{"APPROVE_UPDATE_CONFIRM" | translate}}
+    </div>
+  </div>
+  <div buttonsPopup>
+    <amis-button #btnClose [color]="buttonColor.Normal" name="{{'CANCEL2' | translate}}" (click)="onHiddenPopupAprove()">
+    </amis-button>
+    <amis-button name="{{'APPROVE' | translate}}" [color]="buttonColor.BluePrimary" (click)="onClickApprove()">
+    </amis-button>
+  </div>
+</amis-popup-base>
+
+<dx-popover class="popover-avatar" [(visible)]="visiblePopoverInstruc" [target]="'#info'"
+  [position]="{my: 'center bottom ', at: 'center top', of: '#info'}" [width]="160"  showEvent="dxhoverstart"
+  hideEvent="dxhoverend">
+  <div *dxTemplate="let data of 'content'">
+    <div class="tooltip-content">
+      <div class="flex-m m-t-4 m-b-4">
+        <div class="circle circle-none"></div>
+        <div class="">Không thay đổi</div>
+      </div>
+      <div class="flex-m m-t-4 m-b-4">
+        <div class="circle circle-insert"></div>
+        <div class="approve-text-insert">Thêm</div>
+      </div>
+      <div class="flex-m m-t-4 m-b-4">
+        <div class="circle circle-edit"></div>
+        <div class="approve-text-edit">Sửa</div>
+      </div>
+      <div class="flex-m m-t-4 m-b-4">
+        <div class="circle circle-delete"></div>
+        <div class="approve-text-delete">Xóa</div>
+      </div>
+    </div>
+
+  </div>
+
+</dx-popover>

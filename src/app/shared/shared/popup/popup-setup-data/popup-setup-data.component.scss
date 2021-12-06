@@ -1,0 +1,96 @@
+@import "../../../../assets/scss/var-color.scss";
+
+::ng-deep {
+  .content-popup-base{
+    // padding: 0 !important;
+    .text-box-search{
+      padding: 0 8px;
+    }
+
+  }
+  .setup-data-popup{
+    .data-setup-list {
+        .widget-container {
+          margin: 8px 0;
+          dx-list{
+            padding-right: 4px;
+            overflow: hidden;
+            .list-data-item{
+              cursor: auto;
+            }
+          }          
+        }
+      
+        .widget-container > * {
+          width: 100%;
+          padding: 8px 0;
+        }
+
+        .dx-item.dx-list-item
+        {
+          margin: 8px 0;
+          &:hover{
+            background-color: unset !important;
+          }
+        }
+       
+        .dx-item.dx-list-item.dx-state-focused{
+          background-color: unset !important;
+       
+        }
+
+
+        .dx-item.dx-list-item.dx-list-item-selected{
+          color: $text;
+        
+        }
+
+        .dx-item.dx-list-item.dx-list-item-selected:hover{
+          color: $text;
+        }
+
+
+        .dx-checkbox-icon {
+          width: 16px;
+          height: 16px;
+          font-size: 10px !important;
+        }
+
+
+        .dx-list .dx-empty-message,
+        .dx-list-item {
+          border-top: none;
+        }
+
+        .dx-list-item-content{
+          padding: 4px;
+        }
+        .dx-scrollable-scrollbar.dx-widget.dx-scrollbar-vertical.dx-scrollbar-hoverable {
+          width: 10px !important;
+        }
+  
+        .dx-list-item-before-bag .dx-list-select-checkbox, .dx-list-item-before-bag .dx-list-select-radiobutton{
+          margin-bottom: 0 !important;
+        }
+  
+        .item{
+            border: 1px solid $border;
+            border-radius: 4px;
+            padding: 8px 12px;
+        }
+
+        .hidden-item{
+          visibility: hidden;
+        }
+      }
+      .loading-content {
+        max-width: 1120px;
+        .loading-sidebar-item {
+          background-color: #f1f1f1;
+          border-radius: 4px;  
+          height: 36px;
+          margin: 14px 16px;
+        }
+      }
+    }
+  }

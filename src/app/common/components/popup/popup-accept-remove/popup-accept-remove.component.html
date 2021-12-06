@@ -1,0 +1,21 @@
+<dx-popup *ngIf="isVisible" class="popup amis-popup-delete" width="400" height="auto" (onContentReady)="readyPopDelete($event)" [visible]="isVisible" (onHidden)="hidePopup()"
+  [title]="title">
+  <div *dxTemplate="let data of 'title'">
+    <div class="dis-flex dis-align-items-start dis-justify-content-between">
+      <div class="title-content">{{title}}</div>
+      <div class="dx-icon icon-close cursor-pointer" (click)="hidePopup()"></div>
+    </div>
+  </div>
+  <div class="amis-popup-container-delete" [innerHTML]="textRemove">
+  </div>
+  <div class="amis-footer-delete dis-flex m-row">
+    <div class="flex"></div>
+    <div *ngIf="!isShowError" class="box-btn">
+      <amis-button class="mr-2" name="{{'CANCEL2' | translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.Normal" (clickButton)="hidePopup()"></amis-button>
+      <amis-button name="{{'DELETE' | translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.RedPrimary" (clickButton)="confirmRemove()"></amis-button>
+    </div>
+    <div *ngIf="isShowError" class="box-btn">
+      <amis-button name="{{'CLOSE' | translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BlueSecondary" (clickButton)="hidePopup()"></amis-button>
+    </div>
+  </div>
+</dx-popup>

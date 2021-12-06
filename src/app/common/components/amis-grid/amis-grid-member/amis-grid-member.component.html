@@ -1,0 +1,29 @@
+<div class="custom-header-grid">
+  <div *ngIf="isSelectionMode == true" [class.visible-count-selection-mode-grid]="countSelected == 0" class="dis-flex grid-selection mb-1">
+    <div class="count-selected mr-2">{{countSelected}}<span class="text-selected">
+        Đang chọn</span></div>
+    <div class="link dis-align-self-center">
+      <a class="unselect pointer" (click)="unSelectedAll($event)">Bỏ chọn</a>
+    </div>
+  </div>
+
+  <dx-data-grid datagrid class="grid-content user-data-grid" #grid [dataSource]="dataSource"
+    (selectedRowKeysChange)="selectedRowKeysChange($event)" [showColumnLines]="showColumnLines"
+    [showRowLines]="showRowLines" (onRowPrepared)="onRowPrepared($event)" [showBorders]="false"
+    (onSelectionChanged)="selectRow($event)" [height]="245" [wordWrapEnabled]="false" noDataText="Không có dữ liệu"
+    showSrollbar="true">
+
+    <dxo-scrolling *ngIf="showScollbar" columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+    <dxo-selection *ngIf="isSelectionMode" mode="multiple" [showCheckBoxesMode]="'always'"></dxo-selection>
+
+
+    <dxi-column *ngFor="let item of dataField" [visible]="true" alignment="left" [dataField]='item.dataFieldName'
+      [caption]="item.captionColumn" [width]="item.widthColumn" [cellTemplate]="item.cellTemplate">
+      <div *dxTemplate="let data of item.cellTemplate" class="dis-flex">
+        <div title="{{data.value}}">{{data.value}}</div>
+      </div>
+    </dxi-column>
+  </dx-data-grid>
+</div>
+<amis-paging-grid (onPagingChanged)="onPagingChanged($event)" [setTotalRow]="totalRecord"></amis-paging-grid>

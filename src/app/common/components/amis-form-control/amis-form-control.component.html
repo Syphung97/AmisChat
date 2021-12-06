@@ -1,0 +1,29 @@
+<div class="dis-flex-grow dis-flex text-overflow"
+    [ngClass]="{'dis-flex-row':_labelPositon === 'left','dis-flex-column':_labelPositon !== 'left'}">
+    <div class="dis-flex-grow"
+        [ngClass]="{'dis-flex':_labelPositon === 'left','dis-align-items-center ':_labelPositon === 'left', 'label-text':_labelPositon !== 'left'}"
+        *ngIf="_isShowLabel && _labelText?.length != 0" [style.width]="_labelWidth"
+        [class.height-horizontal]="_labelPositon === 'left'" class="font-weight-{{_labelFontWeight}} {{_labelClass}}">
+        <div [class.required]="_isRequired" class="dis-flex dis-align-items-center"
+            style="overflow: hidden; text-overflow: ellipsis;white-space: normal;" [ngStyle]="{ 'color': _labelColor}">
+            {{_labelText}}
+        </div>
+        <div *ngIf="_isShowTooltip" id="{{tooltipID}}" [ngStyle]="{ 'background-color': _labelColor}"
+            class="icon-infor-circle-default ml-2"> </div>
+    </div>
+    <div class="dis-flex-grow text-overflow">
+        <ng-content></ng-content>
+    </div>
+</div>
+
+<!-- popover tooltip -->
+<dx-popover *ngIf="_isShowTooltip" showEvent="dxhoverstart" hideEvent="dxhoverend" target="#{{tooltipID}}"
+    class="tooltip-popover">
+    <div *dxTemplate="let data of 'content'">
+        <ng-container>
+            <div class="tooltip-content">
+                {{_tooltipContent}}
+            </div>
+        </ng-container>
+    </div>
+</dx-popover>

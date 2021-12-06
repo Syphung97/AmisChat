@@ -1,0 +1,89 @@
+@import "mixin";
+
+.themeMixin({
+  :host {
+    .wrap-composer{
+
+    }
+    input{
+      outline: none;
+      border: none;
+      width: 100%;
+      padding: 8px 16px
+    }
+    .composer{
+      border: none;
+      outline: none;
+      padding: 8px;
+      padding-left: 16px;
+    }
+
+    textarea{
+      resize: none;
+    }
+    .editor{
+      max-height: 120px;
+      overflow: auto;
+      min-height: 40px;
+      border-top: 1px solid @border-color;
+    }
+    .list-attachment{
+      padding: 8px 46px 12px 0;
+      width: 100%;
+      background-color: #F5F5F5;
+      overflow: auto;
+      .attachment{
+        height: 64px;
+        padding: 0 16px;
+        border-radius: 4px;
+        background: @white;
+        margin-left: 12px;
+        margin-bottom: -4px;
+      }
+      .attachment-name{
+        max-width: 160px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .icon-remove-attachment{
+        top: -10px;
+        right: -10px;
+      }
+
+      .image{
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+        margin-left: 12px;
+        margin-bottom: -4px;
+      }
+    }
+
+    .reply-info{
+      position: absolute;
+      bottom: calc(100% + 8px);
+      border-radius: 4px;
+      left: 16px;
+      right: 16px;
+      box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.16);
+      background-color: @white;
+      .user-name{
+
+      }
+      .user-message{
+
+      }
+    }
+
+
+    [placeholder]:empty::before {
+    content: attr(placeholder);
+    color: #555;
+    }
+
+    [placeholder]:empty:focus::before {
+        content: "";
+    }
+  }
+});

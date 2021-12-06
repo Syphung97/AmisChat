@@ -1,0 +1,9 @@
+@import '../../../assets/scss/var-color.scss';
+
+.amis-icon.active-icon{
+    background-color: $bg-icon-active;
+    border-radius: 50%;
+    .inner-icon{
+        background-color: $icon-color-active;
+    }
+}

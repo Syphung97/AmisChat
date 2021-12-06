@@ -1,0 +1,140 @@
+<div class="flex flex-col p-b-8 wrap-composer pos-relative">
+  <div
+    *ngIf="listFileUpload.length || listImageUpload.length"
+    class="list-attachment flex-m pos-relative"
+  >
+    <div
+      class="attachment flex-m pos-relative"
+      *ngFor="let item of listFileUpload; let i = index"
+    >
+      <div class="icon-{{ item.Type }}"></div>
+      <div class="attachment-name m-l-8" title="{{ item.FileName }}">
+        {{ item.FileName }}
+      </div>
+      <div
+        class="icon-remove-attachment ab-t-r hov-pointer"
+        (click)="removeAttachment(i)"
+      ></div>
+    </div>
+    <nz-image-group class="flex">
+      <div
+        class="image flex-m pos-relative"
+        *ngFor="let item of listImageUpload; let i = index"
+      >
+        <div
+          style="border-radius: 4px; overflow: hidden"
+          class="overflow-hidden w-full h-full"
+        >
+          <img
+            #imageRef
+            class="hov-pointer"
+            nz-image
+            width="60"
+            height="60"
+            nzSrc="{{ item.PreviewUrl }}"
+            [nzFallback]="fallback"
+            alt=""
+          />
+        </div>
+
+        <div
+          style="z-index: 1"
+          class="icon-remove-attachment ab-t-r hov-pointer"
+          (click)="removeAttachment(i, true)"
+        ></div>
+      </div>
+    </nz-image-group>
+  </div>
+  <!-- <textarea #composer class="composer" placeholder="{{'SendMessage_Placeholder' | translate}}" (keyup)="onKeyup($event)"
+    [(ngModel)]="inputValue"></textarea> -->
+  <div class="reply-info" *ngIf="_replyObject?.payload">
+    <div class="w-full h-full pos-relative p-b-8 p-t-8 p-l-8 p-r-32">
+      <div>
+        <div class="user-name fs-12">Đang trả lời <b>{{_replyObject?.payload?.senderName}}</b></div>
+        <ng-container [ngSwitch]="_replyObject?.payload?.type">
+          <div *ngSwitchCase="messageType.Text" class="user-message text-gray fs-12" [innerHTML]="_replyObject?.payload?.content?.content">
+          </div>
+          <div *ngSwitchCase="messageType.Photo" class="user-message text-gray fs-12">
+            Hình ảnh
+          </div>
+          <div *ngSwitchCase="messageType.File" class="user-message text-gray fs-12">
+            Tệp
+          </div>
+        </ng-container>
+
+      </div>
+      <div class="icon-close-small ab-r-m hov-pointer" style="top: 16px;" (click)="cancelReply()"></div>
+    </div>
+  </div>
+  <div
+    class="editor composer"
+    #composer
+    contenteditable="true"
+    (keyup)="removeWhiteSpace($event)"
+    (focus)="handleFocusInput()"
+    (keydown)="inputHandler($event)"
+    (paste)="onPaste($event)"
+    placeholder="Nhập tin nhắn và nhấn enter để gửi..."
+  ></div>
+
+  <div class="flex-sb-m flex-1 p-l-8 p-r-8">
+    <div class="flex-m">
+      <emoji-mart
+        #emojiContainer
+        [style.display]="emojiToggled ? 'block' : 'none'"
+        (emojiSelect)="addEmoji($event)"
+        [emojiTooltip]="true"
+        [isNative]="false"
+        [showPreview]="false"
+        [enableSearch]="false"
+        [style]="{ position: 'absolute', bottom: '84px', left: '306px' }"
+        [i18n]="{
+          search: 'Tìm kiếm',
+          categories: { search: 'Tìm kiếm', recent: 'Gần đây' }
+        }"
+        >>
+      </emoji-mart>
+      <!-- <ngx-emoji [emoji]="':santa:'"></ngx-emoji> -->
+
+      <amis-icon
+        (click)="toggleEmoji()"
+        [classIcon]="'icon-mess-icon'"
+      ></amis-icon>
+      <amis-icon
+        (click)="showSticker($event)"
+        class="m-l-8"
+        [classIcon]="'icon-mess-sticky'"
+      ></amis-icon>
+      <amis-icon
+        (click)="showControlUpload()"
+        class="m-l-8"
+        [classIcon]="'icon-mess-attach'"
+      ></amis-icon>
+      <amis-icon
+        (click)="showUploadImage()"
+        class="m-l-8"
+        [classIcon]="'icon-mess-image'"
+      ></amis-icon>
+
+      <!-- <amis-icon class="m-l-8" [classIcon]="'icon-mess-gif'"></amis-icon> -->
+    </div>
+    <div class="flex hov-pointer" (click)="sendMessage()">
+      <amis-icon
+        class="m-l-8"
+        [classIcon]="'icon-mess-send-action'"
+        [isHoverState]="false"
+      ></amis-icon>
+    </div>
+  </div>
+</div>
+<amis-message-upload-file
+  [isVisible]="isVisibleUploadfile"
+  (onUploadDone)="handleAfterUpload($event)"
+  (onCancle)="hideControlUpload()"
+></amis-message-upload-file>
+
+<amis-message-upload-image
+  [isVisible]="isVisibleUploadImage"
+  (onUploadDone)="handleAfterUploadImage($event)"
+>
+</amis-message-upload-image>

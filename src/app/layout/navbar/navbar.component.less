@@ -1,0 +1,42 @@
+@import "mixin";
+
+.themeMixin({
+  :host {
+
+    .app-header {
+      background: @layout-header-background;
+    }
+
+    .icon-trgger{
+      background-color: @text-color !important;
+    }
+
+    .header-trigger {
+      color: @text-color;
+    }
+
+    .inner-content {
+      background: @layout-trigger-background;
+    }
+
+    .trigger:hover {
+      color: #1890ff;
+    }
+  }
+});
+
+.app-header {
+  position: relative;
+  height: 56px;
+  padding: 0;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  display: flex;
+  align-items: center;
+  padding:0 12px;
+  .header-trigger {
+    height: 56px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s, padding 0s;
+  }
+}

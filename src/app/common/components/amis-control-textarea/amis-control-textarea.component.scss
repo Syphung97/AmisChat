@@ -1,0 +1,27 @@
+@import "../../../assets/scss/var-color.scss";
+
+
+:host{
+    ::ng-deep .form-textarea.dx-texteditor.dx-editor-outlined{
+        height: 85px;
+    }
+    .wrapper-text-box{
+        height: 85px;
+        position: relative;
+        dx-text-area{
+            position: absolute;            
+        }
+        .text-area-zoom-icon{
+            display: none;
+            position: absolute;
+            margin: 4px;
+            right: 0;
+        }
+    }
+
+    .wrapper-text-box:hover{
+        .text-area-zoom-icon{
+            display: block;
+        }
+    }
+}

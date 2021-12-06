@@ -1,0 +1,113 @@
+<button *ngIf="!_isMultiOption" misaLoadingButton [finishCall]="finishCall" [startCall]="startCall" id="{{tooltipID}}"
+  class="btn {{customClass}} pos-relative"
+  [class.btn-green-primary]="color == buttonColor.GreenPrimary && type != buttonType.Link"
+  [class.btn-blue-primary]="color == buttonColor.BluePrimary && type != buttonType.Link"
+  [class.btn-blue-secondary]="color == buttonColor.BlueSecondary && type != buttonType.Link"
+  [class.btn-blue-white-secondary]="color == buttonColor.BlueWhiteSecondary && type != buttonType.Link"
+  [class.btn-red-primary]="color == buttonColor.RedPrimary && type != buttonType.Link"
+  [class.btn-red-secondary]="color == buttonColor.RedSecondary && type != buttonType.Link"
+  [class.btn-red-white-secondary]="color == buttonColor.RedWhiteSecondary && type != buttonType.Link"
+  [class.btn-normal]="color == buttonColor.Normal && type != buttonType.Link"
+  [class.btn-white]="color == buttonColor.White && type != buttonType.Link" [class.is-show-more]="isShowMore"
+  [class.active-btn]="_isActive" [class.btn-no-bg]="type == buttonType.Link"
+  [class.btn-transparent-bg-white-bd]="color == buttonColor.Transparent" permissionCode="{{permissionCode}}"
+  subSystemCode="{{subSystemCode}}" [isIgnorePermission]="isIgnorePermission"
+  (passPermissionClick)="onClickButton($event)" [class.disable-btn]="isDisable"
+  [class.btn-only-icon]="type == buttonType.OnlyIcon && name == '' && _icon != ''">
+
+  <div class="dis-flex-content-center h-100 btn-main-content"
+    [class.btn-only-text]="type == buttonType.OnlyText && iconLeft == '' && iconRight == '' && name != ''"
+    [class.btn-icon-left]="iconLeft != ''" [class.btn-icon-right]="iconRight != ''">
+    <div class="icon-left ic-btn {{iconLeft}}" *ngIf="iconLeft != ''"></div>
+    <div *ngIf="type == buttonType.OnlyIcon && _icon" class="ic-btn {{_icon}}"> </div>
+    <div *ngIf="name">{{ name }}</div>
+    <div class="icon-right ic-btn {{iconRight}}" *ngIf="iconRight != ''"></div>
+  </div>
+
+</button>
+
+<button *ngIf="_isMultiOption" misaLoadingButton [finishCall]="finishCall" [startCall]="startCall"
+  class="btn {{customClass}} pos-relative" [class.multi-option-btn]="_isMultiOption"
+  [class.btn-green-primary]="color == buttonColor.GreenPrimary && type != buttonType.Link"
+  [class.btn-blue-primary]="color == buttonColor.BluePrimary"
+  [class.btn-blue-secondary]="color == buttonColor.BlueSecondary"
+  [class.btn-red-primary]="color == buttonColor.RedPrimary"
+  [class.btn-red-secondary]="color == buttonColor.RedSecondary" [class.btn-normal]="color == buttonColor.Normal"
+  [class.btn-white]="color == buttonColor.White" [class.disable-btn]="isDisable"
+  [class.btn-red-white-secondary]="color == buttonColor.RedWhiteSecondary && type != buttonType.Link"
+  [class.btn-blue-white-secondary]="color == buttonColor.BlueWhiteSecondary && type != buttonType.Link">
+  <div class="dis-flex-content-center h-100">
+    <div class="dis-flex-content-center h-100 flex btn-main-content" [class.btn-icon-left]="iconLeft != ''"
+      [class.btn-only-text]="type == buttonType.OnlyText && iconLeft == ''" permissionCode="{{permissionCode}}"
+      subSystemCode="{{subSystemCode}}" [isIgnorePermission]="isIgnorePermission"
+      (passPermissionClick)="onClickButton($event)">
+      <div class="icon-left ic-btn {{iconLeft}}" *ngIf="iconLeft != ''"></div>
+      <div>{{ name }}</div>
+    </div>
+    <div *ngIf="requireVerticalLine" class="vertical-line">
+    </div>
+    <!-- <div tabindex="1" class="icon-right-more dis-flex-content-center" (click)="onClickMoreButton($event)">
+      <div class="ic-btn" [ngClass]="{'icon-caret-down': iconRight == '', iconRight : iconRight != '' }"></div>
+    </div> -->
+
+
+    <!-- <dx-drop-down-box class="btn-dropdown-custom">
+      <div *dxTemplate="let data of 'content'" class="dropdown-content">
+        <ng-content select="[dropdownContent]"
+        ></ng-content>
+      </div>
+    </dx-drop-down-box> -->
+    <!-- <dx-drop-down-button *ngIf="viewMoreMenu.length > 1 || oneOptionDropdowm" #dropdownBtn
+      dropDownContentTemplate="fieldTemplate" class="custom-dropdown-btn">
+      <div *dxTemplate="let data of 'fieldTemplate'" style="width: 230px;">
+        <div class="app-dropdown custom-dropdown-btn">
+          <div *ngFor="let item of viewMoreMenu" class="app-dropdown-item dis-flex" (click)="onItemViewMoreClick(item)">
+            <div class="{{item.Icon}}"></div>
+            <div class="dis-flex dis-align-items-center m-l-8">{{item.Text}}</div>
+          </div>
+        </div>
+        <ng-content select="[dropdownContent]"> </ng-content>
+      </div>
+    </dx-drop-down-button> -->
+
+    <div class="btn-dropdown-menu">
+      <dx-menu class="amis-btn-dropdown-menu" [dataSource]="listOptions" submenuDirection="auto"
+        [hideSubmenuOnMouseLeave]="false" itemTemplate="items" (onSubmenuShowing)="onShowMenu($event)">
+        <div *dxTemplate="let item of 'items'">
+          <div permissionCode="{{item.PermissionCode}}" subSystemCode="{{item.SubSystemCode}}"
+            [isIgnorePermission]="item.IsIgnorePermission" (passPermissionClick)="itemClick(item)"
+            class="menu-dropdown-list dis-align-items-center dis-flex dis-justify-content-between" id="{{tooltipID}}">
+            <div class="dis-flex dis-align-items-center">
+              <div class="{{item.Icon}} menu-icon" [class.btn-more-icon]="_isShowTooltip"></div>
+              <div *ngIf="!_isShowTooltip" class="dis-flex dis-align-items-center menu-item">{{item.Text}}</div>
+            </div>
+            <div *ngIf="item.items?.length" class="icon-big-caret-right">
+            </div>
+          </div>
+        </div>
+      </dx-menu>
+    </div>
+
+
+    <!-- <button *ngIf="viewMoreMenu.length < 2 && !oneOptionDropdowm"
+      class="app-dropdown custom-dropdown-btn btn pos-relative " style="min-width: 36px">
+      <div class="dis-flex-content-center h-100 flex" (click)="onItemViewMoreClick(viewMoreMenu[0])">
+        <div class="ic-btn {{viewMoreMenu[0].Icon}}"></div>
+      </div>
+    </button> -->
+
+  </div>
+</button>
+
+
+<!-- popover tooltip -->
+<dx-popover *ngIf="_isShowTooltip" [showEvent]="{delay: 500, name: 'dxhoverstart'}" hideEvent="dxhoverend" target="#{{tooltipID}}"
+  class="tooltip-popover">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container>
+      <div class="tooltip-content">
+        {{_tooltipContent}}
+      </div>
+    </ng-container>
+  </div>
+</dx-popover>

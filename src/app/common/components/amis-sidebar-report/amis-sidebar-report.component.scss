@@ -1,0 +1,126 @@
+@import "../../../assets/scss/var-font.scss";
+@import "../../../assets/scss/var-color.scss";
+@import "../../../assets/scss/var-font-family.scss";
+@import "../../../assets/scss/var-dx-styles.scss";
+@import "../../../assets/scss/var-styleguide.scss";
+@import "../../../assets/scss/link-icon.scss";
+
+:host {
+  .wrapper-sidebar {
+    -webkit-transition: all 0.35s ease;
+    -moz-transition: all 0.35s ease;
+    -ms-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+    width: 240px;
+    background-color: $white;
+    margin-left: 24px;
+    border-radius: 8px;
+    .container-param {
+      // margin: 0 8px 0 8px;
+      .header-sidebar {
+        padding: 16px 16px 8px 16px;
+        font-weight: $font-weight-medium;
+        letter-spacing: 0.196px;
+        color: $title-report;
+        .title-param {
+          text-transform: uppercase;
+        }
+      }
+      .content-sidebar {
+        margin: 0 8px 0 8px;
+        .choose-org {
+          padding: 0 8px;
+          margin-bottom: 16px;
+        }
+        .jobtitle {
+          margin-top: 8px;
+        }
+        .organization {
+          margin-top: 8px;
+          .popover-label {
+            padding-bottom: 8px;
+            font-weight: $font-weight-medium;
+          }
+        }
+
+        .text-control-report {
+          padding: 0 8px;
+          .quantity {
+            .label {
+              font-weight: $font-weight-medium;
+            }
+          }
+          ::ng-deep {
+            .dis-flex-grow.font-weight-medium.non-flex-grow.popover-label.label-text {
+              display: flex !important;
+            }
+          }
+        }
+      }
+      @media only screen and (max-width: 1268px) {
+        .content-sidebar {
+          height: 400px;
+          // overflow: auto;
+        }
+      }
+
+      @media only screen and (max-height: 768px) {
+        .content-sidebar {
+          height: 400px;
+          // overflow: auto;
+        }
+      }
+
+      .footer-sidebar {
+        padding: 12px 16px;
+        border-top: 1px solid $border;
+        ::ng-deep {
+          .button-custom {
+            button {
+              width: 98px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .small-sidebar {
+    width: 56px;
+    background-color: $white;
+    margin-left: 24px;
+    border-radius: 4px;
+
+    -webkit-transition: all 0.35s ease;
+    -moz-transition: all 0.35s ease;
+    -ms-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+
+    .collapse-sidebar {
+      padding: 16px;
+    }
+  }
+
+  .disable-apply {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.56;
+  }
+  .day-numberbox {
+    // margin-top: 8px;
+  }
+
+}
+
+::ng-deep{
+    .amis-sidebar-report{
+        .dis-flex-grow.font-weight-medium.label-text{
+          font-weight: 300 !important;
+          color: $text-grey !important;
+        }
+        .choose-org .popover-label{
+          font-weight: 300 !important;
+          color: $text-grey !important;
+        }
+    }
+}

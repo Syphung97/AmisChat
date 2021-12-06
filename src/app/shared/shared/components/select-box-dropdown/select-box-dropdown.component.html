@@ -1,0 +1,68 @@
+<div style="position: relative;">
+  <div class="icon-search-hrm">
+  </div>
+  <input #searchKey type="text" placeholder="{{'MAIN_NAVBAR_SEARCHBOX_PLACEHOLDER'|translate}}" id="input-search"
+    (click)="searchProfile(searchKey)" (keyup)="onKeyUp(searchKey, $event)">
+  <dx-popover class="search-profile" *ngIf="visiblePopover" [(visible)]="visiblePopover" target="#input-search"
+    [(position)]="position" (onShowing)="onKeyUp(searchKey, $event)" (onHiding)="closePopover(searchKey)">
+    <div *ngIf="isGetRecent && listProfile.length !== 0" class="profile-popover-title">
+      <div class="title-text">
+        {{'MAIN_NAVBAR_SEARCHBOX_RECENT_SEARCH'|translate}}
+      </div>
+      <div style="flex: 1;"></div>
+      <div *ngIf="hasRecentlySearching" class="title-action" (click)="deleteRecent()">
+        {{'MAIN_NAVBAR_SEARCHBOX_CLEAR_ALL'|translate}}</div>
+    </div>
+    <dx-scroll-view #scrollContent style="max-height: 700px;">
+      <div #searchResult *ngFor="let item of listProfile" [subSystemCode]="subSystemCodeEntity.Profile"
+        [permissionCode]="permissionCodeEntity.View" class="profile-item" (passPermissionClick)="seeDetail(item)"
+        (mouseleave)="onMouseLeave(searchResult)" (mouseenter)="onMouseEnter(searchResult)">
+        <img class="profile-img" src="{{item?.Avatar}}">
+        <div class="profile-info">
+          <div class="profile-employee" [ngClass]="{'no-job-title' : !item?.JobPositionName }">
+            <div class="employee-name">{{item?.FullName}} ({{item?.EmployeeCode}})</div>
+            <!-- <div class="employee-code">({{item.EmployeeCode}})</div> -->
+          </div>
+          <div *ngIf="item?.JobPositionName" class="profile-employee-job-title text-ellipsis"
+            title="{{item?.JobPositionName}}">
+            {{item.JobPositionName}}
+          </div>
+        </div>
+        <div class="detail-profile-info" [subSystemCode]="subSystemCodeEntity.Profile"
+          [permissionCode]="permissionCodeEntity.View" (passPermissionClick)="seeMoreInfo($event, item)">
+          <div class="icon-infor-circle-default">
+          </div>
+        </div>
+      </div>
+    </dx-scroll-view>
+    <div *ngIf="listProfile.length === 0 && !isGetRecent" class="profile-no-data">
+      <div class="empty-recent">
+        {{'NOT_FOUND_COLUMNS'|translate}}
+      </div>
+    </div>
+    <amis-detail-profile-popup [width]="400" [employee]="employee" [mainInfo]="mainInfo" *ngIf="popupVisible"
+      [visiblePopup]="popupVisible" (closed)="onPopupClose(searchKey)" (see)="seeDetail(employee)"
+      (editEmployee)="editEmployee($event)">
+    </amis-detail-profile-popup>
+  </dx-popover>
+</div>
+
+<!-- poup thông báo xóa vai trò -->
+<amis-popup-notify title="{{'HRM_SETTING_JOB_ROLE_NOTIFY'|translate}}" [visiblePopup]="visibleNotify"
+  *ngIf="visibleNotify" (closePopup)="cancelDelete()">
+  <div textContentPopupConfirm>
+    {{'DELETE_RECENT_SEARCH'|translate}}
+  </div>
+  <div amisButtons>
+    <div *ngIf="isDelete">
+      <amis-button (clickButton)="cancelDelete()" class="mr-2" [color]="buttonColor.White" [type]="buttonType.OnlyText"
+        name="{{'CANCEL2'|translate}}"></amis-button>
+      <amis-button (clickButton)="deleteFilterItem()" [color]="buttonColor.RedPrimary" [type]="buttonType.OnlyText"
+        name="{{'DELETE'|translate}}"></amis-button>
+    </div>
+    <div *ngIf="!isDelete">
+      <amis-button (clickButton)="cancelDelete()" [color]="buttonColor.BluePrimary" [type]="buttonType.OnlyText"
+        name="{{'CLOSE'|translate}}"></amis-button>
+    </div>
+  </div>
+</amis-popup-notify>

@@ -1,0 +1,134 @@
+<div reportToolbar class="dis-flex dis-align-items-center dis-justify-content-between toolbar-report" (mouseenter)="showRefresh()" (mouseleave)="hideRefresh()">
+  <div class="left dis-flex dis-align-items-center  m-8">
+    <amis-icon [classIcon]="'icon-arrow-left'" class="m-r-8 icon-report-hover" (click)="back()" [isHoverState]="false"
+        [tooltipContent]="'BACK_2'|translate">
+    </amis-icon>
+    <div class="dropdown-more-option dis-flex dis-align-items-center" ngbDropdown placement="bottom-right">
+      <div ngbDropdownToggle class="title-report cursor-pointer" placement="bottom-right">{{titleReport}}</div>
+
+      <div>
+        <div class="icon-arrow-turn-down m-l-8 cursor-pointer dropdown-more-option"
+          ngbDropdownToggle placement="bottom-right" title="{{'CHOOSE_REPORT_QUICKLY'|translate}}">
+          <div ngbDropdownMenu class="app-dropdown-optionMore popup-title-report">
+            <div *ngFor="let item of listReport; let index=index">
+              <div class="cursor-pointer item-report-title" [ngClass]="{'active':item.IsActive}"
+                (click)="chooseReport(item)">
+                {{item.ReportTitle}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <amis-icon *ngIf="isShowReload" [classIcon]="'icon-refresh'" class="m-l-16 icon-report-hover" (click)="toobarExecuteAction(contextMenuItem.RefreshData)"
+        [tooltipContent]="'RELOAD'|translate" [isHoverState]="false">
+    </amis-icon>
+
+  </div>
+  <div class="right dis-flex dis-align-items-center">
+    <amis-button name="{{'REPORT_HIDE_CHART'|translate}}" iconLeft="icon-eyes-hidden" [color]="buttonColor.White"
+      (clickButton)="onHideChart()" *ngIf="showChart && isShowChart">
+    </amis-button>
+
+    <amis-button name="{{'REPORT_SHOW_CHART'|translate}}" iconLeft="icon-eye" [color]="buttonColor.White"
+      (clickButton)="onHideChart()" *ngIf="!showChart && isShowChart">
+    </amis-button>
+
+    <div ngbDropdown placement="bottom-right" class="btn-dropdown-grid m-l-12" (openChange)="toggle($event)">
+      <div ngbDropdownToggle>
+        <amis-button [type]="buttonType.OnlyIcon" [color]="buttonColor.White" icon="icon-optional-more"
+          isShowMore="true"></amis-button>
+      </div>
+      <div ngbDropdownMenu class="app-dropdown menu-column" *ngIf="isShowCustomColumn" (mouseenter)="hideRefresh()">
+        <div class="list-sub-button dis-flex dis-flex-column">
+          <ng-container *ngFor="let item of contextMenuListRight">
+            <div *ngIf="item.Submenu?.length > 0; else elses">
+              <div class="item-normal hover-pointer">
+                <div class="wrapper-export item-hover">
+                  <div class="export dis-flex dis-justify-content-between dis-align-items-center"
+                    (click)="toobarExecuteAction(item.Key)">
+                    <div class="dis-flex dis-align-items-center">
+                      <div class="{{item.Icon}} m-r-8"></div>
+                      <div>{{item.Text}}</div>
+                    </div>
+                    <div class="icon-big-caret-right"></div>
+                  </div>
+
+                  <div class="app-dropdown menu-column">
+                    <div class="dis-flex dis-flex-column columns-export">
+                      <ng-container *ngFor="let subMenu of item.Submenu">
+                        <div class="item-normal"
+                        permissionCode="{{subMenu.PermissionCode}}" subSystemCode="{{subMenu.SubSystemCode}}"
+                          (passPermissionClick)="toobarExecuteAction(subMenu.Key)" style="margin: 0;">
+                          <div class="item-hover hover-pointer dis-flex dis-align-items-center">
+                            <div class="{{subMenu.Icon}}"></div>
+                            <div class="type-export">{{subMenu.Text}}</div>
+                          </div>
+                        </div>
+                      </ng-container>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <ng-template #elses>
+
+              <!-- <div class="sub-menu hover-pointer {{item.Class}}" (click)="toobarExecuteAction(item.Key)">{{item.Text}}
+                            </div> -->
+
+              <div class="item-normal" 
+                (click)="toobarExecuteAction(item.Key)">
+                  <div class="item-hover dis-flex dis-align-items-center cursor-pointer hover-pointer menu-item">
+                    <div class="{{item.Icon}} m-r-8"></div>
+                    <div class="list-candidate">
+                      <div class="{{item.Class}}">{{item.Text}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- </div> -->
+            </ng-template>
+
+          </ng-container>
+
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Tùy chỉnh cột -->
+    <div class="custom-column-report" *ngIf="!isShowCustomColumn" (mouseenter)="hideRefresh()">
+      <div class="drop-header dis-flex dis-justify-content-between dis-j">
+        <div class="title">{{'REPORT_CONTEXT_MENU_CUSTOM_COLUMN'|translate}}</div>
+        <div class="cursor-pointer icon-close" (click)="closeCustomColumn($event)"></div>
+      </div>
+
+      <div class="drop-content">
+        <div class="dis-flex dis-flex-column group-by-field">
+          <amis-amis-control-combobox labelText="{{'Gom nhóm theo'|translate}}" [(ngModel)]="groupDefaultID"
+            [displayExpr]="'Caption'" [valueExpr]="'ID'" [setDataSource]="_groupFields"
+            (onItemClick)="valueChanged($event)" [labelClass]="'non-flex-grow popover-label'" [labelPositon]="'top'" [searchEnabled]="false">
+          </amis-amis-control-combobox>
+        </div>
+        <div class="title-label">{{'REPORT_SHOW_CUSTOM_COLUMN'|translate}}</div>
+        <amis-list-drag-drop #customColumn [items]="listFieldMergeRow" [selectedItems]="selectedColumns"
+          (saveCustomColumn)="customSettingColumn($event)" [scrollBottom]="" [isReordering]="true">
+        </amis-list-drag-drop>
+      </div>
+
+      <div class="align-items-center dis-flex dis-justify-content-center drop-footer">
+        <amis-button name="{{'DEFAULT'|translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.Normal" class="hov-pointer m-r-8"
+          (clickButton)="setDefaultSettingColumn($event)"></amis-button>
+        <amis-button name="Lưu" [class.disable-btn]="!isCustomed" [type]="buttonType.OnlyText"
+          [color]="buttonColor.BluePrimary" (clickButton)="saveOptionColumn()">
+        </amis-button>
+      </div>
+      <!-- [class.disable-btn]="!isCustomed" -->
+
+    </div>
+  </div>
+</div>

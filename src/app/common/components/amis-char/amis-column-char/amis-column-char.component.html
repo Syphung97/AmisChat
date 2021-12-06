@@ -1,0 +1,60 @@
+<div [ngStyle]="{'height': height+'px'}" [class.padding-chart]="type == chartType.Spline">
+  <div *ngIf="isHaveData" class="h-100">
+    <dx-chart *ngIf="isShow" #dxChart [valueAxis]="{grid:{opacity: 0.2}}" id="column-char"
+      (onPointHoverChanged)="hoverShowTooltip($event)" [dataSource]="dataChart" [barGroupWidth]="barGroupWidth"
+      [palette]="palette" [tooltip]="{location: 'edge'}" [redrawOnResize]="true" [size]="{height: chartHeight}">
+      <dxo-size *ngIf="width" [width]="width">
+      </dxo-size>
+      <dxo-argument-axis>
+        <dxo-label [customizeHint]="customizeHint" visible="true" overlappingBehavior="rotate" [rotationAngle]="-45">
+        </dxo-label>
+      </dxo-argument-axis>
+      <dxi-value-axis [max]="maxValueAxis" [allowDecimals]="false">
+        <dxo-title [font]="{family: 'Roboto, Helvetica, Arial, sans-serif', size: 13}" [text]="valueAxisTitle">
+        </dxo-title>
+        <dxo-label [visible]="true" [customizeText]="customizeTextValueAxisLabel">
+        </dxo-label>
+      </dxi-value-axis>
+      <dxi-series *ngFor="let item of listFieldInput" valueField="{{item.valueField}}" name="{{item.nameValue}}"
+        color="{{item.color}}">
+        <dxo-label [position]="'outside'">
+          <!-- or "inside" | "outside" -->
+        </dxo-label>
+      </dxi-series>
+      <dxo-common-series-settings cornerRadius="2" argumentField="{{fieldColumnName}}" type="{{type}}"
+        [point]="{size: 8}">
+        <dxo-label *ngIf="type == chartType.Bar" [position]="'outside'" [visible]="true" [font]="{color:'#1f1f1f'}"
+          [customizeText]="customizeTextLabel" [backgroundColor]="'transparent'">
+        </dxo-label>
+      </dxo-common-series-settings>
+      <dxo-tooltip [cornerRadius]="7.5" [paddingTopBottom]="4" [color]="'transparent'" [border]="false" [enabled]="true"
+        [shared]="true" [customizeTooltip]="customizeTooltip">
+      </dxo-tooltip>
+
+      <dxo-legend [visible]="false"></dxo-legend>
+    </dx-chart>
+    <div *ngIf="type == chartType.Spline" class="dis-flex mt-2">
+      <div class="dis-flex legendary-bar margin-auto">
+        <div *ngFor="let item of listFieldInput" class="dis-flex dis-align-items-center mr-3">
+          <div class="circle-legendary mr-2" [ngStyle]="{'background-color' : item.color}">
+          </div>
+          <div>
+            {{item.nameValue }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isHaveData" class="h-100 dis-flex dis-align-items-center">
+    <div class="margin-auto">
+      <div *ngIf="type == chartType.Bar" class="icon-empty-bar-chart margin-auto">
+      </div>
+      <div *ngIf="type == chartType.Spline" class="icon-empty-line-chart margin-auto">
+      </div>
+      <div class="empty-text">
+        {{'NO_DATA'|translate}}
+      </div>
+    </div>
+  </div>
+</div>

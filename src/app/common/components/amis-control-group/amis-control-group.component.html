@@ -1,0 +1,167 @@
+<div #form amisFirstFocus class="w-100">
+  <div isInorgeSubSuystem="{{true}}" actionCode="{{permissionCodeEntity.View}}"
+    [isInorgePermission]="isCallFromEmployeeApp"
+    permissionObject="{{isCallFromEmployeeApp ? '' :groupbox.PermissionConfig}}" *ngFor="let groupbox of listGroupbox"
+    class="group-box" [style.display]=" groupbox.IsVisible && !groupbox.IsChild ? '' : 'none'">
+      <div  class="wrap-group-box" id="groupbox-{{groupbox.GroupConfigID}}" #groupbox [ngStyle]="{'padding': padding}">
+        <div *ngIf="(groupbox.IsVisible && !groupbox.IsChild) && _isDisplayHeader" (click)="changeShowExpand(groupbox)"
+          class="dis-flex dis-flex-row cursor-pointer dis-justify-content-between group-box-header">
+          <div class="dis-align-self-center dis-flex">
+            <div class="dis-flex dis-align-items-center {{_headerType}}" [innerHTML]="groupbox.GroupConfigName">
+            </div>
+
+            <amis-icon *ngIf="groupbox.IsShowTooltip" [classIcon]="'icon-infor-circle-default'" class="ml-2"
+              [tooltipContent]="groupbox.Tooltip">
+            </amis-icon>
+            <div class="hover-icon ml-2" *ngIf="_headerBtnPosition === 'rightOfText'">
+              <div class="{{headerIconClass}}"></div>
+            </div>
+          </div>
+          <div *ngIf="_headerBtnPosition === 'right'"
+            class="right-item dis-flex dis-align-items-center dis-justify-content-end">
+            <div class="hover-icon">
+              <div class="{{headerIconClass}}"></div>
+            </div>
+          </div>
+          <div class="flex-m">
+
+            <div
+              *ngIf="!isViewOnly && _isShowButtonGrid && !groupbox.IsNotAddable && groupbox.GroupType == groupType.Grid && (!_isShowNodataGrid || groupbox.DataGroupConfig?.length) && (groupbox.IsShowExpand ||groupbox.IsExpand === null || groupbox.IsExpand === undefined)"
+              class="dis-flex">
+              <amis-button [type]="buttonType.Link" name="Thêm" iconLeft="icon-plus"
+                isInorgeSubSuystem="{{_typeShow.IsInorgeSubSuystem}}" subSystemCode="{{_typeShow.SubSystemCode}}"
+                permissionCodeList="{{_typeShow.PermissionCode}}" actionCode="{{permissionCodeEntity.Insert}}"
+                permissionObject="{{groupbox.PermissionConfig}}" (clickButton)="addItemIntoGrid(groupbox, $event)">
+              </amis-button>
+            </div>
+            <div *ngIf="groupbox.IsExpand != null && groupbox.IsExpand != undefined "
+              class="dis-flex dis-align-items-center cursor-pointer m-l-16">
+              <div class="dis-align-self-center dis-flex expand-class">
+                <div class="icon-arrow-turn-down" *ngIf="!groupbox.IsShowExpand"></div>
+                <div class="icon-arrow-turn-up" *ngIf="groupbox.IsShowExpand"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div [ngStyle]="{'padding': padding}" [ngClass]="{'group-box-footer': _isDisplayHeader}"
+          class="dis-flex-grow dis-flex dis-flex-column m-t-8" [ngSwitch]="groupbox.GroupType"
+          *ngIf="groupbox.GroupFieldConfigs?.length && (groupbox.IsVisible && !groupbox.IsChild) && (groupbox.IsShowExpand || groupbox.IsExpand === null || groupbox.IsExpand === undefined) && groupbox.GroupConfigCode != 'BasicInfo'">
+          <div *ngSwitchCase="groupType.Field">
+            <amis-amis-control-group-row [labelClass]="labelClass" #groupRow class="w-100" [groupbox]="groupbox"
+              [isSubmit]="_isSubmit" [typeShow]="_typeShow" [labelWidth]="_labelWidth"
+              [isCallFromEmployeeApp]="isCallFromEmployeeApp" (valueChanged)="valueChangedData($event)"
+              [labelClass]="_labelClass" (afterUpdateField)="updatedField($event)"
+              (afterUpdateFieldView)="updatedFieldView($event)" (focusOutField)="focusOut($event)"
+              [isViewOnly]="isViewOnly" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)"
+              (onTab)="handleTabGroupRow($event)">
+            </amis-amis-control-group-row>
+          </div>
+          <div *ngSwitchCase="groupType.Grid" class="dis-flex-grow dis-flex dis-flex-row">
+            <amis-amis-control-group-grid class="w-100" [groupbox]="groupbox" [dataSource]="groupbox.DataGroupConfig"
+              [columns]="groupbox.GroupFieldConfigs" [noDataText]="'Không có dữ liệu'" [formMode]="_formMode"
+              [typeShow]="_typeShow" [isDisplayHeader]="_isDisplayHeader" [isShowButtonGrid]="_isShowButtonGrid"
+              [isShowNodataGrid]="_isShowNodataGrid" [ConfigValidates]="ConfigValidates"
+              [positionFormDataGrid]="positionFormDataGrid" [masterIDValue]="masterIDValue"
+              [DependentClones]="DependentClones" [DependentDatas]="DependentDatas" [isViewOnly]="isViewOnly"
+              [DependentDictionaries]="DependentDictionaries" [ListFieldAndData]="listGroupFieldConfig"
+              [MasterData]="MasterData" [actionInGrid]="actionInGrid" [subCode]="groupbox.SubsystemCode"
+              [isCallFromEmployeeApp]="isCallFromEmployeeApp" (clickActionInRow)="eventInGrid($event)"
+              [configGridTable]="groupbox.TableName" (addItemGrid)="onAddItemGrid($event)"
+              (clickRow)="onClickRow($event)" (afterChangeDataGrid)="afterChangedDataGrid($event)">
+            </amis-amis-control-group-grid>
+          </div>
+        </div>
+        <div class="w-100"
+          *ngIf="groupbox.ListGroupConfigChild?.length && (groupbox.IsExpand == null || groupbox.IsExpand === undefined || groupbox.IsShowExpand)">
+          <div isInorgeSubSuystem="{{true}}" actionCode="{{permissionCodeEntity.View}}"
+            permissionObject="{{groupboxChild.PermissionConfig}}"
+            *ngFor="let groupboxChild of groupbox.ListGroupConfigChild">
+            <div [style.display]=" groupboxChild.IsVisible && groupboxChild.IsChild ? '' : 'none'">
+              <div id="groupbox-{{groupboxChild.GroupConfigID}}" #groupboxChild [ngStyle]="{'padding': padding}"
+                class="group-box-child">
+                <header class="dis-flex dis-flex-row dis-justify-content-between group-box-header group-header-child">
+                  <div class="dis-align-self-center dis-flex">
+                    <div class="dis-flex dis-align-items-center title-child"
+                      [innerHTML]="groupboxChild.GroupConfigName">
+                    </div>
+                    <div class="hover-icon ml-2" *ngIf="_headerBtnPosition === 'rightOfText'">
+                      <div class="{{headerIconClass}}"></div>
+                    </div>
+                  </div>
+                  <div *ngIf="_headerBtnPosition === 'right'"
+                    class="right-item dis-flex dis-align-items-center dis-justify-content-end">
+                    <div class="{{headerIconClass}}"></div>
+                  </div>
+                  <div
+                    *ngIf="!isViewOnly && _isShowButtonGrid && !groupboxChild.IsNotAddable && groupboxChild.GroupType == groupType.Grid && (!_isShowNodataGrid || groupboxChild.DataGroupConfig?.length) && (groupboxChild.IsExpand || groupboxChild.IsShowExpand ||groupboxChild.IsExpand === null || groupboxChild.IsExpand === undefined)"
+                    class="dis-flex">
+                    <amis-button [type]="buttonType.Link" name="Thêm" iconLeft="icon-plus"
+                      isInorgeSubSuystem="{{_typeShow.IsInorgeSubSuystem}}" subSystemCode="{{_typeShow.SubSystemCode}}"
+                      permissionCodeList="{{_typeShow.PermissionCode}}" actionCode="{{permissionCodeEntity.Insert}}"
+                      permissionObject="{{groupbox.PermissionConfig}}"
+                      (clickButton)="addItemIntoGrid(groupboxChild, $event)">
+                    </amis-button>
+                  </div>
+                </header>
+                <footer *ngIf="groupboxChild.GroupFieldConfigs?.length" [ngStyle]="{'padding': padding}"
+                  class="dis-flex-grow dis-flex dis-flex-column" [ngSwitch]="groupboxChild.GroupType">
+                  <section *ngSwitchCase="groupType.Field"
+                    class="dis-flex-grow dis-flex dis-flex-row group-box-footer m-t-12">
+                    <amis-amis-control-group-row #groupRow class="w-100" [groupbox]="groupboxChild"
+                      [isSubmit]="_isSubmit" [typeShow]="_typeShow" [labelClass]="_labelClass"
+                      (valueChanged)="valueChangedData($event)" [labelWidth]="_labelWidth"
+                      [isCallFromEmployeeApp]="isCallFromEmployeeApp" (afterUpdateField)="updatedField($event)"
+                      (afterUpdateFieldView)="updatedFieldView($event)" (focusOutField)="focusOut($event)"
+                      (onTab)="handleTabGroupRow($event)" [isViewOnly]="isViewOnly"
+                      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+                    </amis-amis-control-group-row>
+
+                  </section>
+                  <section *ngSwitchCase="groupType.Grid" class="dis-flex-grow dis-flex dis-flex-row group-box-footer">
+
+                    <amis-amis-control-group-grid class="w-100" [groupbox]="groupboxChild"
+                      [dataSource]="groupboxChild.DataGroupConfig" [typeShow]="_typeShow"
+                      [columns]="groupboxChild.GroupFieldConfigs" [noDataText]="'Không có dữ liệu'"
+                      [formMode]="_formMode" [isShowButtonGrid]="_isShowButtonGrid" [isViewOnly]="isViewOnly"
+                      [isShowNodataGrid]="_isShowNodataGrid" [isDisplayHeader]="_isDisplayHeader"
+                      [DependentClones]="DependentClones" [DependentDatas]="DependentDatas"
+                      [isCallFromEmployeeApp]="isCallFromEmployeeApp" [ConfigValidates]="ConfigValidates"
+                      [DependentDictionaries]="DependentDictionaries" [positionFormDataGrid]="positionFormDataGrid"
+                      [ListFieldAndData]="listGroupFieldConfig" [MasterData]="MasterData"
+                      [masterIDValue]="masterIDValue" [actionInGrid]="actionInGrid"
+                      (addItemGrid)="onAddItemGrid($event)" [subCode]="groupboxChild.SubsystemCode"
+                      (clickActionInRow)="eventInGrid($event)" [configGridTable]="groupbox.TableName"
+                      (clickRow)="onClickRow($event)">
+                    </amis-amis-control-group-grid>
+                  </section>
+                </footer>
+                <div *ngIf="groupboxChild.ListGroupConfigChild?.length">
+                  <amis-amis-control-group [listGroupbox]="groupboxChild.ListGroupConfigChild">
+                  </amis-amis-control-group>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- xử lý lỗi trên group config -->
+<amis-handle-group-configs-validation [listGroupConfig]="listGroupbox" [validateInfos]="validateInfos"
+  [isConfirmNotify]="isConfirmNotify" (onError)="onError($event)" (clickNoEvent)="onClickNo($event)"
+  (clickYesEvent)="onClickYes($event)">
+</amis-handle-group-configs-validation>
+
+<!-- popover tooltip -->
+<dx-popover [(visible)]="isShowTooltip" *ngIf="isShowTooltip" [target]="targerTooltip" class="tooltip-popover">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container>
+      <div class="tooltip-content">
+        {{tooltipContent}}
+      </div>
+    </ng-container>
+  </div>
+</dx-popover>

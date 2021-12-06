@@ -1,0 +1,14 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" [height]="height" [width]="width" [offsetY]="'0 150px'"
+    (closePopup)="onClosePopup()" class="popup-base-add-data">
+    <div contentPopup>
+        <amis-amis-control-group [listGroupbox]="listGroupConfigs" [labelClass]="labelClass" [isSubmit]="isSubmit"
+            [typeShow]="typeShow" [isDisplayHeader]="false" (afterValidatedForm)="afterValidated($event)">
+        </amis-amis-control-group>
+    </div>
+    <div buttonsPopup>
+        <amis-button [color]="buttonColor.Normal" name="Hủy" (clickButton)="onClosePopup()"></amis-button>
+        <amis-button [color]="buttonColor.BlueSecondary" *ngIf="formMode == FormMode.Insert" name="Lưu và thêm" (clickButton)="onClickAdd($event)">
+        </amis-button>
+        <amis-button [color]="buttonColor.BluePrimary" name="Lưu" (clickButton)="onClickAdd()"></amis-button>
+    </div>
+</amis-popup-base>

@@ -1,0 +1,15 @@
+@import "../../../../assets/scss/var-color.scss";
+::ng-deep {
+  .popup-warning {
+    .dx-popup-content {
+      .amis-popup-container-warning {
+        // padding: 16px 20px;
+        padding: 0 24px 16px 24px;
+      }
+      .amis-footer-warning {
+        padding: 12px 16px;
+        border-top: solid 1px $border;
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" [width]="popupWidth" [offsetY]="offsetY"
+  (closePopup)="closePopup()">
+  <div contentPopup>
+    <div *ngIf="isShowAddPopup">
+      <div class="dis-flex dis-align-items-center mb-3">
+        <dx-text-box mode="search" class="search-on-tab-can"
+          placeholder="{{'SETTING_USER_SEARCH_PLACEHOLDER' | translate}}" (onValueChanged)="changeTextBoxValue($event)"
+          (onKeyUp)="onKeyupSearchBox($event)" [(value)]="searchName">
+        </dx-text-box>
+        <div *ngIf="selectedData.length>0" class=" d-flex align-items-center ml-3">
+          <div>{{'GRID_SELECTED'|translate}} <span class="count-record"><strong>{{selectedData.length}}</strong></span></div>
+          <div class="ml-4 mr-4 text-red cursor-pointer" (click)="removeSelectedRecord()">
+            {{'GRID_UNSELECT'|translate}}</div>
+        </div>
+      </div>
+      <div class="setting-user-list-content">
+        <amis-paging-grid #pagingGrid (chooseRecord)="chooseRecord($event)" (loadDataPaging)="getUsersPaging($event)"
+          (clickRow)="chooseRecord($event)" [totalRecord]="totalRecord" [isSelectionOnly]="true" [isGridOnPopup]="true"
+          [valueExpr]="'UserID'" [isSelectOnRowClick]="true" [isBorderGrid]="true" [dataSource]="dataSource"
+          [columns]="columns" [pageSize]="currentPageSize" [selectedItems]="selectedData" [gridHeight]="gridHeight"
+          [showNavigationButtons]="true" [layoutGridType]="layoutGridType" [isShowCustomColumn]="false"
+          [isShowMoreOption]="false" showBorders=false [isShowAvatar]="true" [isShowLink]="false">
+        </amis-paging-grid>
+      </div>
+    </div>
+
+    <div class="setting-user-list-content" *ngIf="!isShowAddPopup">
+      <amis-paging-grid #pagingGrid *ngIf="isLoadGrid" (clickViewMoreRow)="viewMoreRow($event)"
+        (loadDataPaging)="getUsersPaging($event)" [isShowSelection]="false" [totalRecord]="totalRecord"
+        [isGridOnPopup]="true" [dataSource]="selectedData" [isBorderGrid]="true" [columns]="columns"
+        [showNavigationButtons]="true" [isShowCustomColumn]="false" [isShowMoreOption]="true"
+        [layoutGridType]="layoutGridType" showBorders=false [gridHeight]="gridHeightPopupPermission"
+        [contextMenuList]="listOptionPermission" (contextMenuAction)="contextMenuExecuteAction($event)"
+        [isShowPaging]="false" [isShowLink]="false">
+      </amis-paging-grid>
+
+      <amis-amis-control-form-group [listGroupbox]="fieldListConfig" [labelClass]="labelClass" [isSubmit]="isSubmit"
+        [typeShow]="typeShow" [isDisplayHeader]="false" (afterValidatedForm)="afterValidated($event)">
+      </amis-amis-control-form-group>
+    </div>
+  </div>
+
+  <div buttonsPopup *ngIf="isShowAddPopup">
+    <div class="button-deduct-income">
+      <amis-button (clickButton)="closePopup()" class="mr-2" name="{{'CANCEL2'|translate}}" [type]="buttonType.OnlyText"
+        [color]="buttonColor.Normal"></amis-button>
+      <amis-button [class.disable-btn]="selectedData.length === 0" name="{{'CONTINUE'|translate}}" [type]="buttonType.OnlyText"
+        [color]="buttonColor.BluePrimary" (clickButton)="save()"></amis-button>
+    </div>
+  </div>
+  <div buttonsPopup *ngIf="!isShowAddPopup" class="btn-permission">
+    <div class="button-deduct-income dis-flex">
+      <amis-button (clickButton)="back()" class="mr-2" [iconLeft]="'icon-arrow-left'" name="{{'BACK'|translate}}"
+        [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+      <amis-button name="{{'ACCEPT'|translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary"
+        (clickButton)="submit()"></amis-button>
+    </div>
+  </div>
+</amis-popup-base>

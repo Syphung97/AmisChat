@@ -1,0 +1,13 @@
+<div class="amis-report-layout-components h-100">
+    <div class="amis-report-header">
+        <ng-content select=[reportToolbar]></ng-content>
+    </div>
+    <div class="dis-flex amis-report-content-wrapper">
+        <div class="amis-report-sidebar m-r-16">
+            <ng-content select=[reportSidebar]></ng-content>
+        </div>
+        <div class="amis-report-content w-100">
+            <ng-content select=[reportContent]></ng-content>
+        </div>
+    </div>
+</div>

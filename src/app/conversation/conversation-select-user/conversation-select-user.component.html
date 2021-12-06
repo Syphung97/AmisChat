@@ -1,0 +1,22 @@
+<div class="w-full flex-m">
+  <div class="m-r-8">
+    {{ "To" | translate }}
+  </div>
+  <div class="" style="width: 100%;">
+    <nz-select amisAutoFocus [autofocus]="true" nzServerSearch="true" nzDropdownClassName="selectUserToConversation"
+      nzShowSearch nzAllowClear nzPlaceHolder="Nhập tên một hoặc nhiều người để tham gia cuộc trò chuyện"
+      [(ngModel)]="selectedUser" (nzOnSearch)="onSearch($event)" nzMode="multiple" (ngModelChange)="selectUser($event) " [nzNotFoundContent]="notData"
+      [nzMaxTagCount]="8">
+
+      <div *ngFor="let contact of listDirectory">
+        <nz-option nzCustomContent nzLabel="{{contact.FullName}}" nzValue="{{contact.StringeeUserID}}">
+          <div class="flex-m ">
+            <amis-avatar [size]="24" [src]="contact.Avatar"></amis-avatar> <span
+              class="m-l-8">{{contact.FullName}}</span>
+          </div>
+        </nz-option>
+      </div>
+    </nz-select>
+  </div>
+
+</div>

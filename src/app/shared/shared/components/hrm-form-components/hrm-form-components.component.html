@@ -1,0 +1,13 @@
+<div class="hrm-form-components" [ngClass]="cls">
+    <div class="hrm-form-components-header d-flex">
+        <div class="header-title-big flex-1">
+            <ng-content select=[formTitle]></ng-content>
+        </div>
+        <div class="header-button">
+            <ng-content select=[formHeaderButton]></ng-content>
+        </div>
+    </div>
+    <div class="hrm-form-components-content mt-3">
+        <ng-content select=[formContent]></ng-content>
+    </div>
+</div>

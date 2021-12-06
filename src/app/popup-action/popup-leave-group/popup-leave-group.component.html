@@ -1,0 +1,13 @@
+<amis-popup-confirm [title]="'Rời khỏi nhóm'" [width]="'475px'" [isVisible]="isVisible" (onCancel)="closePopup($event)">
+    <div content class="content">
+        <div>{{"CONFIRM_LEAVE_GROUP" | translate}}</div>
+    </div>
+    <div footer style="display: flex;">
+        <div class="btn btn-cancel m-r-8 flex-m" (click)="closePopup($event)">
+            <span>{{"BUTTON.CANCEL_2" | translate}}</span>
+        </div>
+        <div class="btn btn-confirm flex-m" (click)="leaveGroup()">
+            <span>{{"BUTTON.ANGREE" | translate}}</span>
+        </div>
+    </div>
+</amis-popup-confirm>

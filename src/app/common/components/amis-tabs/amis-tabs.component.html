@@ -1,0 +1,62 @@
+<div #divListTab class="list-tab list-tab-{{typeListTab}}"
+    [ngStyle]="{ 'background-color': background , 'height':height, 'width': (isDisplayColumn && typeListTab==3) ? '100%' : ''}">
+
+    <!-- <div *ngIf="isDisplayColumn" class="button-left ml-2 mr-2 icon-arrow-left-big ic-svg"></div> -->
+    <amis-button *ngIf="isDisplayColumn && isDisplayButton" class="ml-2 mr-2 amis-tab-button"
+        [color]="buttonColor.Normal" [class.event-none]="!isDisplayBtnArrowLeft" [icon]="'icon-big-caret-left'"
+        (clickButton)="clickTabArrow(-150)"></amis-button>
+    <dx-scroll-view #dxScrollTab direction="horizontal" (onScroll)="onScroll($event)"
+        [ngStyle]="{'width': isDisplayColumn && isDisplayButton ? 'calc(100% - 150px)': ''}">
+        <div class="d-flex" [ngStyle]="{ 'height':height, 'align-items': 'center'}">
+            <div #itemTab *ngFor="let item of listTab; let index=index" class="item-tab item-tab-{{typeListTab}} pos-relative"
+                [ngClass]="getClass(item[Key])" isInorgeSubSuystem="{{_isInorgeSubSuystem}}" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCodeList}}" actionCode="{{permissionCodeEntity.View}}" permissionObject="{{item.PermissionConfig}}"
+                [ngStyle]="{ 'height':height , 'color': tabActive==item[Key] ? colorActive : color, 'font-size': fontSize, 'font-weight': tabActive==item[Key] ? fontWeight : '', 'background-color': tabActive==item[Key] ? bgActive : ''}"
+                (click)="clickTab(item[Key])">{{item[Text]}}
+                <div *ngIf="item.CustomQuantity" class="remind flex-c-m">
+                  {{item.CustomQuantity}}
+                </div>
+            </div>
+        </div>
+    </dx-scroll-view>
+
+    <div class="">
+        <!-- <div *ngIf="isDisplayColumn" class="ml-2 mr-2 icon-arrow-right-big ic-svg"></div> -->
+        <amis-button *ngIf="isDisplayColumn && isDisplayButton" class="ml-2 amis-tab-button"
+            [color]="buttonColor.Normal" [class.event-none]="!isDisplayBtnArrowRight" [type]="buttonType.OnlyIcon"
+            [icon]="'icon-big-caret-right'" (clickButton)="clickTabArrow(150)">
+        </amis-button>
+        <div *ngIf="isDisplayColumn">
+            <!-- <amis-button (clickButton)="clickMoreColumn()" id="moreColumn" *ngIf="isDisplayColumn" [isShowMore]="true"
+                class="icon-collapse-column amis-tab-button"
+                [color]="tabActive > countCoulumDisplay ? buttonColor.Normal : ''" name="Khác"
+                [iconRight]="'icon-caret-down'"></amis-button> -->
+            <div class="item-tab more-column pos-relative" id="moreColumn"
+                [ngStyle]="{'height':height , 'color': !isTabActiveDisplay ? colorActive : color, 'font-size': fontSize, 'font-weight': !isTabActiveDisplay ? fontWeight : '', 'background-color': !isTabActiveDisplay ? bgActive : ''}"
+                (click)="clickMoreColumn()">
+                <div>Khác</div>
+                <div class="icon-caret-down ml-2"></div>
+                <div *ngIf="quantityOther" class="remind flex-c-m">
+                  {{quantityOther}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<dx-popover [(visible)]="visiblePopover" class="popover-more-column" target="#moreColumn" [width]="width"
+    [position]="{my: 'right top ', at: 'right bottom', of: '#moreColumn'}">
+    <div popover-content class="content-more-column dis-flex dis-flex-column">
+        <dx-text-box #textBox mode="search" [(value)]="searchText" class="input-search m-r-10" placeholder="Tìm kiếm"
+            (onKeyUp)="onSearchControl($event)" (onValueChanged)="onSearchValueChanged($event)" [(ngModel)]="searchText"></dx-text-box>
+        <dx-scroll-view>
+            <div class="scroll-data-listTab" [class.two-cloumn]="this.width > 300">
+                <div *ngFor="let item of listTabClone; let index=index" class="item-tab-popover dis-flex" isInorgeSubSuystem="{{_isInorgeSubSuystem}}" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCodeList}}" actionCode="{{permissionCodeEntity.View}}" permissionObject="{{item.PermissionConfig}}"
+                    [class.item-tab-active]="item[Key]==tabActive" (click)="clickTab(item[Key])">
+                    <div>{{item[Text]}}</div>
+                    <div *ngIf="item[Key]==tabActive" class="icon-tick-16"></div>
+                </div>
+            </div>
+        </dx-scroll-view>
+        <div class="amis-tab-search-no-data" *ngIf="!listTabClone.length">{{ 'NO_DATA' | translate }}</div>
+    </div>
+</dx-popover>

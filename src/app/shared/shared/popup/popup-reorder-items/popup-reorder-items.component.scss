@@ -1,0 +1,10 @@
+::ng-deep{
+    .reorder-item-list{
+        .dx-item.dx-list-item {
+            pointer-events: none;
+            .dx-list-reorder-handle-container{
+                pointer-events: all;
+            }
+        }
+    }
+}

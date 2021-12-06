@@ -1,0 +1,66 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" width="1000px" height="auto"
+    (closePopup)="closePopup()" [maxHeightContent]="620">
+    <div contentPopup>
+        <div class="popup-import-doc-sample content-wrapper" id="import-document-same">
+            <div amisDragDropToUpload (fileDropped)="onFileDropped($event)" class="import-file flex-c-m dis-flex-column"
+                *ngIf="visibleImport">
+                <div class="item-middle">{{'IMPORT_TEMPLATE_IMPORT_TUTORIAL'|translate}}</div>
+                <div class="item-middle gray">{{'OR'|translate}}</div>
+                <div class="item-middle">
+                    <amis-button (clickButton)="importFile()" iconLeft="icon-upload" class="btn-choose-item"
+                        name="{{'IMPORT_TEMPLATE_PICK_FILE'|translate}}" [type]="buttonType.OnlyText"
+                        [color]="buttonColor.BlueWhiteSecondary">
+                    </amis-button>
+                    <input #importTemplateDoc #fileDropRef multiple accept="{{_typeAccept}}"
+                        (change)="onFileChange($event);importTemplateDoc.value=null" class="input-import" type="file">
+                </div>
+                <div class="item-middle gray" *ngIf="_typeAccept">{{notifyFileAccept}}</div>
+            </div>
+            <div class="manage-file" *ngIf="!visibleImport">
+                <div class="header flex-sb-m">
+                    <dx-text-box [(value)]="filterValue" mode="search" class="search-file-import"
+                        placeholder="{{'SEARCH'|translate}}" (onValueChanged)="onValueChangedSearch($event)"
+                        (onKeyUp)="onSearchControl($event)"></dx-text-box>
+                    <amis-button (clickButton)="importFile()" iconLeft="icon-upload" class="btn-choose-item"
+                        name="{{'IMPORT_TEMPLATE_PICK_FILE'|translate}}" [type]="buttonType.OnlyText"
+                        [color]="buttonColor.BlueSecondary"></amis-button>
+                    <input #importTemplateDoc multiple accept="{{_typeAccept}}" (change)="onFileChange($event);importTemplateDoc.value=null"
+                        class="input-import" type="file">
+                </div>
+                <div class="grid-template m-t-17">
+                    <amis-paging-grid #grid [dataSource]="dataFilter" [columns]="columns" showBorders=false
+                        [contextMenuList]="listOption" [isPageSizeEditable]="false" [wordWrapEnabled]="false"
+                        [showNavigationButtons]="false" [allowColumnResizing]="false" [showInfo]="false"
+                        [showPageSizeSelector]="false" [clearSelection]="false" [isShowCustomColumn]="false"
+                        [isShowSelection]="false" [isShowPaging]="false" [isEdit]="true" [isSubmit]="isSubmit"
+                        [isSaveGrid]="isSaveGrid" (saveData)="submitSaveData($event)"
+                        (outputDataSource)="outputDataSource($event)" 
+                        (clickViewMoreRow)="onClickViewMoreRow($event)" (clickRow)="onClickRow($event)">
+                    </amis-paging-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div buttonsPopup>
+        <div class="button-action">
+            <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}"
+                [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+            <amis-button name="{{btnSave}}" [isDisable]="isDisableBtnSave" [type]="buttonType.OnlyText"
+                [color]="buttonColor.BluePrimary" (clickButton)="save()"></amis-button>
+        </div>
+    </div>
+</amis-popup-base>
+<!-- poup thông báo xóa mẫu văn bản -->
+<amis-popup-notify title="{{'HRM_SETTING_JOB_ROLE_NOTIFY'|translate}}" [visiblePopup]="visibleNotify"
+    *ngIf="visibleNotify" (closePopup)="cancelPopupNotify()">
+    <div textContentPopupConfirm>
+        <div [innerHTML]="contentNotify"></div>
+    </div>
+    <div amisButtons>
+        <amis-button (clickButton)="cancelPopupNotify()" [color]="buttonColor.BluePrimary" [type]="buttonType.OnlyText"
+            name="{{'CLOSE'|translate}}"></amis-button>
+    </div>
+</amis-popup-notify>
+<!-- <amis-popup-edit-document-sample *ngIf="visiblePopupEdit" [dataSource]="dataOfChild" [visiblePopup]="visiblePopupEdit"
+    (outputCancel)="cancelPopupEdit()" (templateEdit)="updateTemplate($event)"></amis-popup-edit-document-sample> -->

@@ -1,0 +1,23 @@
+<amis-amis-report-layout>
+    <div reportToolbar>
+        <amis-amis-toolbar-report [titleReport]="titleReport" [subSystemCode]="subSystemCode"
+            (processShowHideChart)="processShowHideChart($event)" [notGroupFields]="notGroupFields"
+            [isShowChart]="isShowChart" [typeReport]="typeReport" (renderGridAgain)="renderGridAgain($event)">
+        </amis-amis-toolbar-report>
+    </div>
+
+    <div reportSidebar class="h-100">
+        <amis-amis-sidebar-report [inputReportParam]="reportParam" [typeReport]="typeReport"
+            [statisticTypeOption]="statisticTypeOption" [listControl]="listControl"
+            (submitReportParam)="submitReportParam($event)" [defaultParam]="defaultParam"
+            [subSystemCode]="subSystemCode">
+
+        </amis-amis-sidebar-report>
+    </div>
+
+    <div reportContent class="h-100">
+        <amis-amis-report-content [paramFromSidebar]="reportParam" [apiUrl]="apiUrl" [subSystemCode]="subSystemCode"
+            [isShowChart]="isShowChart" [typeReport]="typeReport" [showHideAction]="showHideAction" [renderGridWhenCustomColum]="hasCustomColumn">
+        </amis-amis-report-content>
+    </div>
+</amis-amis-report-layout>

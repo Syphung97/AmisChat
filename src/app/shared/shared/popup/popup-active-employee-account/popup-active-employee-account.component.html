@@ -1,0 +1,33 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" [width]="400" [height]="220" [offsetY]="'50px 100px'"
+    (closePopup)="cancel()" (shownPopup)="onShown($event)">
+    <div contentPopup>
+        <!-- <div class="description-popup">
+            <span>Email tài khoản của nhân viên đang để trống. Vui lòng nhập Email để thực hiện kích hoạt tài
+                khoản.</span>
+        </div> -->
+        <div class="dis-flex dis-flex-row employee-active">
+            <div class="label-input text-secondary dis-flex dis-align-items-center">{{'Email' | translate}}
+                <span class="color-red m-l-4">*</span>
+            </div>
+            <dx-text-box #textBox [ngClass]="{'is-error-email' : isSubmit || isDuplicate}" class="search-on-tab-can w-100"
+                [(value)]="_value" (onOptionChanged)="onValueChanged($event)">
+            </dx-text-box>
+        </div>
+        <div [ngClass]="{'is-error-email' : isSubmit}">
+            <div class="text-error code-error">{{'HUMAN_TAGBOX_INVALID_EMAIL' | translate}}</div>
+        </div>
+        <div [ngClass]="{'is-error-email' : isDuplicate}">
+            <div class="text-error code-error">{{'EMAIL_HAS_BEEN_EXISTED_IN_PROFILE' | translate}}</div>
+        </div>
+    </div>
+
+    <div buttonsPopup class="d-flex dis-align-items-center">
+        <div class="button-deduct-income">
+            <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}"
+                [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+            <amis-button name="{{'Kích hoạt'|translate}}" [class.disabled]="!_value" [type]="buttonType.OnlyText"
+                [color]="buttonColor.BluePrimary" (clickButton)="activeProfile()">
+            </amis-button>
+        </div>
+    </div>
+</amis-popup-base>

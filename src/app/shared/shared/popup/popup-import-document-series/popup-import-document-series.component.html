@@ -1,0 +1,127 @@
+<amis-popup-base *ngIf="!visibleImportSuccess" [(visiblePopup)]="visiblePopup" [title]="title" [height]="462"
+    [width]="1000" (closePopup)="closePopup()" [isResizePopup]="true" [isHaveScrollView]="false">
+    <div contentPopupNoScroll class="h-100">
+        <div class="popup-import-doc-series content-wrapper h-100" id="import-document-series">
+            <div amisDragDropToUpload (fileDropped)="onFileDropped($event)"
+                class="import-file flex-c-m dis-flex-column h-100" *ngIf="visibleImport">
+                <div class="item-middle">{{'IMPORT_TEMPLATE_IMPORT_TUTORIAL'|translate}}</div>
+                <div class="item-middle gray">{{'OR'|translate}}</div>
+                <div class="item-middle">
+                    <amis-button (clickButton)="importFile()" iconLeft="icon-import" class="btn-choose-item"
+                        name="{{'IMPORT_TEMPLATE_PICK_FILE'|translate}}" [type]="buttonType.OnlyText"
+                        [color]="buttonColor.BlueSecondary">
+                    </amis-button>
+                    <input #importTemplateDoc #fileDropRef multiple accept="{{_acceptFileExtension}}"
+                        (change)="onFileChange($event)" class="input-import" type="file">
+                </div>
+                <div class="item-middle gray">{{notifyFormat}}</div>
+            </div>
+            <div class="manage-file h-100" *ngIf="!visibleImport">
+                <div class="header flex-sb-m">
+                    <div class="d-flex align-items-center">
+                        <dx-text-box [(value)]="filterValue" mode="search" class="search-file-import"
+                            placeholder="{{'SEARCH'|translate}}" (onValueChanged)="onValueChangedSearch($event)"
+                            (onKeyUp)="onSearchControl($event)"></dx-text-box>
+                        <div class="ml-3 d-flex align-items-center">
+                            <div class="ic-svg icon-infor-circle-default mr-2"></div>
+                            <div>{{notifyFormat}}</div>
+                        </div>
+                    </div>
+                    <amis-button (clickButton)="importFile()" iconLeft="icon-import" class="btn-choose-item"
+                        name="{{'IMPORT_TEMPLATE_PICK_FILE'|translate}}" [type]="buttonType.OnlyText"
+                        [color]="buttonColor.BlueSecondary"></amis-button>
+                    <input #importTemplateDoc multiple accept="{{_acceptFileExtension}}" (change)="onFileChange($event);importTemplateDoc.value=null"
+                        class="input-import" type="file">
+                </div>
+                <div class="grid-template m-t-17" id="grid-template-loading">
+                    <amis-paging-grid #grid [dataSource]="dataFilter" [columns]="columns" showBorders=false
+                        [contextMenuList]="listOption" [isPageSizeEditable]="false" [wordWrapEnabled]="false"
+                        [showNavigationButtons]="false" [allowColumnResizing]="false" [showInfo]="false"
+                        [showPageSizeSelector]="false" [clearSelection]="false" [isShowCustomColumn]="false"
+                        [isShowSelection]="false" [isShowPaging]="false" [isEdit]="true" [isSubmit]="isSubmit"
+                        [isSaveGrid]="isSaveGrid" (saveData)="submitSaveData($event)"
+                        (clickViewMoreRow)="onClickViewMoreRow($event)" (outputDataSource)="outputDataSource($event)">
+                    </amis-paging-grid>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div buttonsPopup class="w-100 popup-import-doc-series-footer">
+        <!-- popup import  -->
+        <div class="dx-popup-footer-import">
+            <div class="float-left">
+                <amis-button (clickButton)="isImport = false" [iconLeft]="'icon-setting'"
+                    name="{{'POPUP_IMPORT_ATTACHMENT_AUTO_MAPPING_ATTACHMENT' | translate}}"
+                    [color]="buttonColor.Normal">
+                </amis-button>
+            </div>
+            <div class="float-right">
+                <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}"
+                    [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+                <amis-button name="{{btnSave}}" [isDisable]="isDisableBtnSave" [type]="buttonType.OnlyText"
+                    [color]="buttonColor.BluePrimary" (clickButton)="save()"></amis-button>
+            </div>
+        </div>
+
+    </div>
+</amis-popup-base>
+
+<!-- poup thông báo xóa mẫu văn bản -->
+<amis-popup-notify title="{{'HRM_SETTING_JOB_ROLE_NOTIFY'|translate}}" [visiblePopup]="visibleNotify"
+    *ngIf="visibleNotify" (closePopup)="cancelPopupNotify()">
+    <div textContentPopupConfirm>
+        <div [innerHTML]="contentNotify"></div>
+    </div>
+    <div amisButtons>
+        <amis-button (clickButton)="cancelPopupNotify()" [color]="buttonColor.BluePrimary" [type]="buttonType.OnlyText"
+            name="{{'CLOSE'|translate}}"></amis-button>
+    </div>
+</amis-popup-notify>
+
+<!-- popup mapping tài liệu -->
+<amis-import-document-mapping *ngIf="!isImport" [visiblePopup]="!isImport" [inputTypeSeparate]="typeSeparate"
+    (outputCancel)="isImport = true" (typeSeparate)="outputTypeSeparate($event)">
+</amis-import-document-mapping>
+
+<!-- popup thông báo tải thành công -->
+<amis-popup-base [(visiblePopup)]="visibleImportSuccess" [title]="'Tài liệu tải thành công'" height="auto" [width]="600"
+    (closePopup)="closePopup()" [isHaveScrollView]="false">
+    <div contentPopupNoScroll class="h-100" class="popup-notify-import-success">
+        <dx-scroll-view>
+            <div class="sroll-view-attach">
+                <div *ngFor="let item of listResult" class="mt-3">
+                    <div class="info-employee dis-flex dis-align-items-center">
+                        <div>
+                            <img class="avatar-employee" src="{{item.Employee?.srcAvatar}}">
+                        </div>
+                        <div class="info ml-2" (click)="viewEmployeeDetail(item.Employee?.EmployeeID)"><span
+                                class="user-name">{{item.Employee?.FullName}}</span> <span
+                                class="user-code ml-1">({{item.Employee?.EmployeeCode}})</span></div>
+                    </div>
+                    <div class="content-attachment mt-2">
+                        <div *ngFor="let attach of item.Attactments; let index=index">
+                            <div class="dis-flex dis-align-items-center item-attachment">
+                                <div class="item-attachment-name">{{index+1}}. {{attach.AttachmentTypeName}}</div>
+                                <div class="item-attachment-file" (click)="downloadAttach(attach.AttachmentID)">
+                                    {{attach.AttachmentName}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dx-scroll-view>
+
+    </div>
+
+    <div buttonsPopup class="w-100 popup-import-doc-series-footer">
+        <div class="dx-popup-footer-import">
+            <div class="float-right">
+                <amis-button (clickButton)="closePopup()" [color]="buttonColor.Normal" [type]="buttonType.OnlyText"
+                    name="{{'CLOSE'|translate}}"></amis-button>
+            </div>
+        </div>
+
+    </div>
+</amis-popup-base>

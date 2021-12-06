@@ -1,0 +1,21 @@
+<dx-popup class="popup-delete-base" [width]="400" [height]="'auto'" [title]="title" showTitle="false"
+  [(visible)]="visiblePopup" (onHidden)="onHidden()">
+  <div *dxTemplate="let data of 'title'">
+    <div class="dis-flex dis-align-items-start dis-justify-content-between">
+      <div class="title-content">{{title}}</div>
+      <div class="dx-icon icon-close cursor-pointer" (click)="onHidden()"></div>
+    </div>
+  </div>
+  <div *dxTemplate="let data of 'content'">
+    <div class="content-popup-base">
+      <div [innerHTML]="content"></div>
+    </div>
+    <div class="dx-popup-footer">
+      <div class="dis-flex buttons">
+        <amis-button #btnClose [color]="buttonColor.Normal" name="{{'CANCEL' | translate}}" (click)="onHidden()"></amis-button>
+        <amis-button name="{{'DELETE' | translate}}" [color]="buttonColor.RedPrimary" (click)="onClickDel()">
+        </amis-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>

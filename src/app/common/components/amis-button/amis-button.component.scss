@@ -1,0 +1,193 @@
+@import "../../../assets/scss/var-color.scss";
+:host {
+  .icon-left {
+    margin-right: 4px;
+  }
+  .icon-right {
+    margin-left: 4px;
+  }
+  .btn-no-bg {
+    .icon-left {
+      margin-right: 8px;
+    }
+    .icon-right {
+      margin-left: 8px;
+    }
+  }
+  .icon-right-more {
+    padding: 0 8px;
+    height: 100%;
+  }
+  .btn-only-icon {
+    min-width: unset;
+  }
+  ::ng-deep {
+    .btn-dropdown-custom {
+      position: relative;
+      .dropdown-content {
+        position: absolute;
+        width: 230px;
+        background-color: $white;
+        top: 36px;
+        right: 0;
+        z-index: 999;
+        border-radius: 4px;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 8px;
+        .dropdown-item {
+          padding: 8px;
+          cursor: pointer;
+        }
+        .dropdown-item:hover {
+          background-color: $hover;
+        }
+        .dropdown-item {
+          color: $text;
+        }
+      }
+    }
+
+    .btn-dropdown-custom {
+      // width: 36px;
+      background-color: transparent;
+      border: none;
+      overflow: hidden;
+      height: 100%;
+      input {
+        display: none;
+      }
+      .dx-dropdowneditor-icon {
+        background-color: transparent;
+      }
+      .dx-dropdowneditor-icon:before {
+        background-color: $white;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .custom-dropdown-btn {
+      width: 36px;
+      height: 100%;
+      .dx-buttongroup-item.dx-dropdownbutton-action {
+        border: none;
+        .dx-icon:before {
+          background-color: $white;
+        }
+      }
+    }
+    // .btn-blue-secondary{
+    //   .dx-buttongroup-item.dx-dropdownbutton-action{
+    //     .dx-icon:before{
+    //       background-color: $bd-btn-blue-secondary;
+    //     }
+    //   }
+    // }
+
+    .btn-blue-primary {
+      .dx-item.dx-menu-item.dx-menu-item-expanded {
+        background-color: $bg-btn-blue-primary-press;
+      }
+      dx-menu.amis-btn-dropdown-menu {
+        .icon-caret-down {
+          background-color: $white;
+        }
+        .btn-more-icon {
+          background-color: $bg-svg-btn-blue-primary;
+        }
+      }
+    }
+
+    .btn-blue-secondary,
+    .btn-blue-white-secondary {
+      .dx-item.dx-menu-item.dx-menu-item-expanded {
+        background-color: $bg-btn-blue-secondary-press;
+      }
+      dx-menu.amis-btn-dropdown-menu {
+        .icon-caret-down {
+          background-color: $bd-btn-blue-secondary;
+        }
+        .btn-more-icon {
+          background-color: $bd-btn-blue-secondary;
+        }
+      }
+    }
+
+    .btn-red-secondary,
+    .btn-red-white-secondary {
+      dx-menu.amis-btn-dropdown-menu {
+        .icon-caret-down {
+          background-color: $bd-btn-red-secondary;
+        }
+      }
+    }
+
+    dx-menu.amis-btn-dropdown-menu {
+      height: 36px;
+      .dx-item.dx-menu-item {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      .dx-context-menu-container-border {
+        border: 1px solid transparent;
+        border-color: transparent;
+      }
+      .menu-dropdown-list {
+        height: 36px;
+        padding: 0px 8px;
+        .menu-item {
+          display: none;
+        }
+        .icon-big-caret-right {
+          display: none;
+        }
+      }
+      ul,
+      li {
+        display: unset;
+      }
+      .dx-item-content.dx-menu-item-content {
+        padding: 0;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .amis-btn-dropdown-menu.dx-context-menu.dx-menu-base {
+    .dx-submenu {
+      border-radius: 4px;
+      border: none;
+      .dx-menu-items-container {
+        margin: 8px;
+        .dx-item.dx-menu-item {
+          .dx-menu-item-content {
+            padding: 0;
+            .menu-dropdown-list {
+              padding: 0px 8px;
+              border-radius: 4px;
+              min-height: 36px;
+              .menu-icon {
+                margin-right: 8px;
+              }
+              .menu-item {
+                padding-right: 24px;
+              }
+            }
+            .menu-dropdown-list:hover {
+              background-color: $hover;
+            }
+          }
+        }
+        .dx-item.dx-menu-item.dx-state-hover {
+          background-color: $white;
+        }
+      }
+    }
+    .dx-context-menu-content-delimiter {
+      height: 1px;
+      background-color: $bg-btn-blue-primary-press;
+      display: none !important;
+    }
+  }
+}

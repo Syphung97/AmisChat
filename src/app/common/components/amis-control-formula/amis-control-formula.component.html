@@ -1,0 +1,106 @@
+<amis-form-control [labelFontWeight]="_labelFontWeight" [labelClass]="_labelClass" [isShowLabel]="_isShowLabel"
+  [labelWidth]="_labelWidth" [labelText]="_labelText" [isRequired]="_isRequiredLabel  && !_isViewOnly"
+  [labelPositon]="_labelPositon" [fieldName]="_fieldName" [tooltipContent]="_tooltipContent"
+  [isShowTooltip]="_isShowTooltip" [labelColor]="labelColor">
+  <div #control class="wrap-control dis-flex dis-align-items-center text-overflow"
+    title="{{value && (_readonly || isNotPermissionUpdate) ? value : ''}}">
+    <div *ngIf="!_isViewOnly || (_isEditable && !_isViewEditable)" class="dis-flex-grow text-overflow">
+      <div class="dis-flex dis-flex-grow">
+        <div class="dis-flex dis-flex-grow">
+          <input class="flex-1 field-row-input text-overflow" #formControl="ngModel" (keydown)="onKeyDown.emit($event)"
+            [class.border-error]="_isSubmit && _isShowError && (_isError || _isErrorCustom || formControl.errors)"
+            [class.disabled-control]="_readonly || isNotPermissionUpdate" [placeholder]="_placeholder"
+            [(ngModel)]="value" maxlength="{{_maxLength}}" minlength="{{_minLength}}" [disabled]="_readonly"
+            (input)="onValueChanged()" #input (focus)="input.select()">
+          <div class="more-option-icon dis-flex dis-align-items-center cursor-pointer" (click)="showPopup()"
+            *ngIf="!_readonly">
+            <div class=" icon-calculator">
+            </div>
+          </div>
+        </div>
+        <div *ngIf="_isEditable && !_isViewEditable" class="dis-flex dis-align-items-center option-icons pl-2">
+          <amis-icon [classIcon]="'icon-tick-circle-green'" (click)="onClickDone()"
+            tooltipContent="{{'SAVE' | translate}}">
+          </amis-icon>
+
+          <amis-icon [classIcon]="'icon-error-circle'" (click)="onClickCancel()"
+            tooltipContent="{{'CANCEL' | translate}}">
+          </amis-icon>
+        </div>
+      </div>
+      <div *ngIf="_isSubmit && _isShowError && !_readonly" class="white-space-initial">
+        <div class="text-error" *ngIf="formControl.errors && !_isErrorCustom && !_isError">
+          {{formControl.errors?.message}}
+        </div>
+        <div class="text-error" *ngIf="_isErrorCustom || _isError">{{ _errorMessage }}</div>
+      </div>
+    </div>
+    <div *ngIf="_isViewOnly || (_isEditable && _isViewEditable)" class="dis-flex-grow value-display text-overflow">
+      <div [title]="value" class="dis-flex-grow dis-flex dis-flex-row field-value text-overflow"
+        [class.editable-field-value]="_isViewEditable">
+        <div *ngIf="value" class="text-overflow">{{value}}</div>
+        <div *ngIf="!value">-</div>
+      </div>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && !_readonly" class="cursor-pointer option-icons">
+      <div class="ml-2" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCode}}"
+        actionCode="{{permissionCodeEntity.Edit}}" permissionObject="{{_permissionObject}}">
+        <amis-icon [classIcon]="'icon-edit '" (click)="onClickEdit()" tooltipContent="{{'EDIT2' | translate}}">
+        </amis-icon>
+      </div>
+      <amis-icon [classIcon]="'icon-duplicate '" (click)="onClickDuplicate()" tooltipContent="{{'COPY' | translate}}">
+      </amis-icon>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && _readonly" class="option-icons">
+      <div class="no-hover-icon ml-2" subSystemCode="{{_permissionSubSystemCode}}"
+        permissionCodeList="{{_permissionCode}}" actionCode="{{permissionCodeEntity.Edit}}"
+        permissionObject="{{_permissionObject}}">
+        <amis-icon [classIcon]="'icon-lock '" [isCursorPointer]="false" [isHoverState]="false" [isShowTooltip]="false">
+        </amis-icon>
+      </div>
+      <amis-icon [classIcon]="'icon-duplicate '" (click)="onClickDuplicate()" tooltipContent="{{'COPY' | translate}}">
+      </amis-icon>
+    </div>
+  </div>
+</amis-form-control>
+
+<!-- Popup nhập công thức -->
+<amis-popup-base title="Công thức" [(visiblePopup)]="isShowPopup" (closePopup)="hidePopup()">
+  <div contentPopup>
+    <div class="formula-popup-content">
+      <amis-form-control [labelFontWeight]="'normal'" [labelClass]="_labelClass" [isShowLabel]="true"
+        [labelText]="'Tên mục'" [isRequired]="false" [labelPositon]="'top'">
+        <div class="formula-menu formula-field-menu">
+          <dx-scroll-view></dx-scroll-view>
+        </div>
+      </amis-form-control>
+      <amis-form-control class="ml-3" [labelFontWeight]="'normal'" [labelClass]="_labelClass" [isShowLabel]="true"
+        [labelText]="'Tên công thức'" [isRequired]="false" [labelPositon]="'top'">
+        <dx-scroll-view class="formula-menu">
+          <div class="p-2">
+            <div *ngFor="let item of listFx" class="fx-item" (click)="addFx(item)">
+              {{item.Text}}
+            </div>
+          </div>
+        </dx-scroll-view>
+      </amis-form-control>
+    </div>
+    <div class="mt-3">
+      <amis-amis-control-textarea class="mt-3" [labelFontWeight]="'normal'" [labelClass]="_labelClass"
+        [isShowLabel]="true" [isShowError]="true" [labelText]="'Công thức'" [isSubmit]="isSubmitFx"
+        [isRequiredLabel]="true" [labelPositon]="'top'" [validateMethods]="'required'" [(ngModel)]="valueFx"
+        [isErrorCustom]="isErrorFx" [errorMessage]="errorMessageFx">
+      </amis-amis-control-textarea>
+    </div>
+    <div class="dis-flex mt-3">
+      <amis-button class="mr-2" name="Kiểm tra công thức" [color]="buttonColor.Normal" (clickButton)="testFx()">
+      </amis-button>
+      <amis-button name="Xóa công thức" [color]="buttonColor.RedSecondary" (clickButton)="deleteAllFx()">
+      </amis-button>
+    </div>
+  </div>
+  <div buttonsPopup>
+    <amis-button class="mr-2" name="Hủy" [color]="buttonColor.Normal" (clickButton)="hidePopup()"></amis-button>
+    <amis-button name="Lưu" [color]="buttonColor.BluePrimary" (clickButton)="saveFX()"></amis-button>
+  </div>
+</amis-popup-base>

@@ -1,0 +1,45 @@
+/* #region Font chữ */
+
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto"), url("~assets/font/Roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-weight: 700;
+  src: local("Roboto-Bold"),
+    url("~assets/font/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-weight: 500;
+  src: local("Roboto-Medium"),
+    url("~assets/font/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-weight: bold;
+  src: local("Roboto-Bold"),
+    url("~assets/font/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: local("Roboto-Bold"),
+    url("~assets/font/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: local("Roboto-Medium"),
+    url("~assets/font/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Italic";
+  src: url("~assets/font/Roboto-Italic.ttf") format("truetype");
+}
+/* #endregion */

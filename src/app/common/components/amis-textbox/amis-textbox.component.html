@@ -1,0 +1,21 @@
+<div class="dis-flex-grow text-overflow">
+    <div class="dis-flex-grow dis-flex dis-flex-row text-overflow">
+            <input class="flex1 field-row-input"
+            [class.border-error]="_isError || _isErrorCustom"
+            [class.disable]="_readonly"
+            [type]="_type"
+            [placeholder]="_placeholder"
+            [(ngModel)]="value"
+            maxlength="{{_maxLength}}"
+            minlength="{{_minLength}}"
+            [disabled]="_readonly"
+            (input)="onValueChanged()" #input>
+
+            <!-- Icon -->
+
+
+    </div>
+    <div *ngIf="_isShowError && !_readonly">
+        <div class="text-error" *ngIf="_isError || _isErrorCustom">{{_errorMessage}}</div>
+    </div>
+</div>

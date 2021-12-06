@@ -1,0 +1,228 @@
+@import "../../../assets/scss/var-font.scss";
+@import "../../../assets/scss/var-color.scss";
+@import "../../../assets/scss/var-font-family.scss";
+@import "../../../assets/scss/var-dx-styles.scss";
+@import "../../../assets/scss/var-styleguide.scss";
+@import "../../../assets/scss/link-icon.scss";
+
+:host {
+  .toolbar-report {
+    margin: 16px 24px;
+    position: relative;
+
+    .title-report {
+      font-size: $font-size-title;
+      font-weight: $font-weight-bold;
+      letter-spacing: 0.36px;
+
+      color: $title-report;
+      line-height: 24px;
+    }
+    .custom-column-report {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: $white;
+      @include box-shadow(0 6px 12px rgba(0, 0, 0, 0.175));
+      border-radius: 4px;
+      margin-top: 2px;
+      z-index: 111;
+      width: 240px !important;
+      .drop-header {
+        margin: 0 8px;
+        padding: 16px 8px 8px 8px;
+      }
+      .drop-content {
+        margin: 0 8px;
+        .group-by-field {
+          padding: 8px;
+        }
+        .title-label {
+          margin: 8px;
+          font-weight: $font-weight-medium;
+        }
+      }
+
+      .drop-footer {
+        border-top: 1px solid $border;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        ::ng-deep {
+          amis-button {
+            button {
+              width: 98px;
+            }
+          }
+        }
+      }
+
+      ::ng-deep {
+        #list-demo {
+          ::ng-deep {
+            .dx-list-with-search {
+              .dx-searchbox {
+                width: 208px !important;
+                margin: 0 8px !important;
+              }
+            }
+          }
+          .widget-container > * {
+            padding: 0 !important;
+          }
+
+          .dx-scrollable-wrapper {
+            .dx-scrollable-content {
+              max-height: 312px !important;
+            }
+          }
+          @media only screen and (max-width: 1366px) {
+            .dx-scrollable-wrapper {
+              .dx-scrollable-content {
+                max-height: 232px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .btn-dropdown-grid {
+      .dropdown-menu{
+        padding: 8px 0;
+        width: 167px;
+      }
+      .list-sub-button {
+        width: 100%;
+
+        .sub-menu { 
+          padding: 0 8px;
+          font-size: $font-size-base;
+
+          .menu-column {
+            box-shadow: none !important;
+          }
+
+          .list-candidate {
+            position: relative;
+            .count-candidate {
+              position: absolute;
+              top: 0px;
+              right: -20px;
+              background: $color-audit-delete;
+              width: 17px;
+              height: 17px;
+              border-radius: 50%;
+              color: $white;
+              text-align: center;
+              font-size: 12px;
+            }
+          }
+        }
+        .item-normal{
+          padding: 0 8px;
+          .item-hover{
+            padding: 6px 8px;
+            font-size: $font-size-base;
+            @include border-radius(4px);
+            cursor: pointer;
+            &:hover {
+              background-color: $hover;
+            }
+          }
+        }
+      }
+      .app-dropdown {
+        width: 100%;
+        border: none;
+        position: absolute;
+        left: -91%;
+        top: -10px;
+        // box-shadow: 0 6px 12px rgba(0,0,0,.175);
+      }
+      .columns-export {
+        width: 100%;
+        background: $white;
+        // border: 1px solid $border;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        padding: 8px;
+        @include border-radius(4px);
+        .type-export {
+          margin-left: 8px;
+        }
+      }
+    }
+
+    .wrapper-export {
+      position: relative;
+
+      .app-dropdown.menu-column {
+        position: absolute;
+        left: -145px;
+        top: -8px;
+        display: none;
+        padding: 0 8px !important;
+      }
+
+      .columns-export {
+        width: 100%;
+        background: $white;
+        // border: 1px solid $border;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        padding: 8px 0;
+        @include border-radius(4px);
+        .type-export {
+          margin-left: 8px;
+        }
+      }
+
+      &:hover {
+        .app-dropdown.menu-column {
+          display: block;
+        }
+      }
+    }
+
+    .item-report-title {
+      margin: 0 8px;
+      padding: 8px 8px;
+      font-size: $font-size-sidebar;
+      border-radius: 4px;
+      &:hover {
+        background-color: $hover;
+      }
+    }
+
+    .active {
+      margin: 0 8px;
+      border-radius: 4px;
+      background-color: $row-selected;
+    }
+
+    .popup-title-report {
+      width: 400px;
+      border: none;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      transform: translate(-24px, 24px) !important;
+    }
+  }
+}
+.icon-report-hover{
+  display: flex;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50px;
+  padding: 0px 5px;
+  &:hover{
+    background-color: $bg-btn-normal-hover !important;
+  }
+  &:active{
+    background-color: $bg-btn-normal-press !important;
+  }
+}
+
+.dropdown-more-option{
+  .dropdown-menu{
+    padding: 8px 0;
+  }
+}

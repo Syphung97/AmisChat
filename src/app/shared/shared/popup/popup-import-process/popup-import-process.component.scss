@@ -1,0 +1,133 @@
+
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+
+:host{
+    .notify-process{
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        max-width: 400px;
+        min-width: 300px;
+        height: 140px;
+        z-index: 9999;
+        background-color: $white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .16);
+        border-radius: 4px;
+        .title-process{
+          display: flex;
+          align-items: center;
+          padding: 16px 16px 20px;
+          .title-content{
+            font-size: $font-size-title;
+            font-weight: $font-weight-bold;
+          }
+        }
+        .content-notify-process{
+          padding: 0 16px 16px;
+          .file-name-import{
+            color: $text-grey;
+          }
+          .spinner-big {
+            -webkit-animation: rotatorbig 1.4s linear infinite;
+                    animation: rotatorbig 1.4s linear infinite;
+          }
+        }
+    }
+  }
+  
+  @-webkit-keyframes rotatorbig {
+    0% {
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(270deg);
+              transform: rotate(270deg);
+    }
+  }
+
+  @keyframes rotatorbig {
+    0% {
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(270deg);
+              transform: rotate(270deg);
+    }
+  }
+  .path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    -webkit-transform-origin: center;
+            transform-origin: center;
+    -webkit-animation: dashbig 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+            animation: dashbig 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+  }
+
+  @-webkit-keyframes colors {
+    0% {
+      stroke: #008DF2;
+    }
+    25% {
+      stroke: #FA3D3F;
+    }
+    50% {
+      stroke: #F6BB02;
+    }
+    75% {
+      stroke: #1AC70E;
+    }
+    100% {
+      stroke: #008DF2;
+    }
+  }
+
+  @keyframes colors {
+    0% {
+      stroke: #008DF2;
+    }
+    25% {
+      stroke: #FA3D3F;
+    }
+    50% {
+      stroke: #F6BB02;
+    }
+    75% {
+      stroke: #1AC70E;
+    }
+    100% {
+      stroke: #008DF2;
+    }
+  }
+  @-webkit-keyframes dashbig {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      -webkit-transform: rotate(135deg);
+              transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      -webkit-transform: rotate(450deg);
+              transform: rotate(450deg);
+    }
+  }
+  @keyframes dashbig {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      -webkit-transform: rotate(135deg);
+              transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      -webkit-transform: rotate(450deg);
+              transform: rotate(450deg);
+    }
+  }

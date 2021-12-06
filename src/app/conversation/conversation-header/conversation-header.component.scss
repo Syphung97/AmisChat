@@ -1,0 +1,26 @@
+.active-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #13bc27;
+}
+.user-name {
+  color: #212121;
+  max-width: 300px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+:host {
+  .loading {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.16);
+  }
+}

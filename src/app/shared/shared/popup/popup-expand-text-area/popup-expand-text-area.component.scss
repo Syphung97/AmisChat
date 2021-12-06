@@ -1,0 +1,11 @@
+::ng-deep{
+    .popup-content{
+        min-height: 300px;
+        dx-text-area{
+            min-height: 300px;
+            .dx-texteditor-input{
+                min-height: 300px;
+            }
+        }
+    }
+}

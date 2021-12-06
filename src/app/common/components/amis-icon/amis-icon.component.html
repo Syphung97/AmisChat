@@ -1,0 +1,19 @@
+<div class="amis-icon flex-c-m" (mouseenter)="showTooltip()" (mouseleave)="hideTooltip()" [class.cursor-pointer]="_isCursorPointer" [class.disabled]="isDisable"
+    [class.hover-icon]="_isHoverState" [class.active-icon]="_isActive" [class.square-bg]="isSquareBG"
+    [class.bg-eff1f6]="_backgroundType == backgroundType.LightGrey"
+    [class.bg-e8eaef]="_backgroundType == backgroundType.Grey" id="{{tooltipID}}">
+    <div class="{{classIcon}} inner-icon">
+    </div>
+</div>
+
+<!-- popover tooltip -->
+<dx-popover *ngIf="_isShowTooltip && isHovering" [(visible)]="isHovering" [showEvent]="{delay: 500, name: 'dxhoverstart'}" hideEvent="dxhoverend"
+    target="#{{tooltipID}}" class="tooltip-popover">
+    <div *dxTemplate="let data of 'content'">
+        <ng-container>
+            <div class="tooltip-content">
+                {{_tooltipContent}}
+            </div>
+        </ng-container>
+    </div>
+</dx-popover>

@@ -1,0 +1,31 @@
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+
+::ng-deep{
+    .form-param{
+        .non-flex-grow{
+            flex-grow: 0;
+        }
+        .popover-label{
+            width: 120px;
+            color: $text-grey;
+            font-weight: $font-weight-regular;
+        }
+        .day-numberbox{
+            .dx-numberbox-spin-container{
+                width: 27px;
+            }
+            .dx-texteditor-input{
+                padding-right: 8px !important;
+                padding-left: 8px;
+            }
+        }
+    }
+    .popover-statistical{
+        .dx-overlay-content{
+            .dx-popover-arrow{
+            display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+@import "../../../assets/scss/var-color.scss";
+:host{
+    .amis-form-components{
+        width: 100%;
+        height: 100%;
+        padding: 16px 24px;
+        .amis-form-components-header{
+            justify-content: space-between;
+        }
+        .amis-form-components-content{
+            margin-right: -16px;
+
+            height: calc(100% - 52px);
+            background-color: transparent;
+            border-radius: 4px;
+        }
+    }
+
+}

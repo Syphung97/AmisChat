@@ -1,0 +1,32 @@
+@import "../../../../assets/scss/var-color.scss";
+
+.uncheck-square-icon {
+  &:hover {
+    cursor: pointer;
+  }
+  width: 24px;
+  height: 24px;
+  background: url(/assets/images/Icon.svg) -24px -48px no-repeat;
+}
+.checked-square-icon {
+  &:hover {
+    cursor: pointer;
+  }
+  width: 24px;
+  height: 24px;
+  background: url(/assets/images/Icon.svg) -240px -48px no-repeat;
+}
+
+.wrapper-container {
+  flex-wrap: wrap;
+  .custom-checkbox {
+    height: 44px;
+  }
+}
+
+::ng-deep{
+  .select-all-option{
+    left: 0;
+    margin-left: 37px;
+  }
+}

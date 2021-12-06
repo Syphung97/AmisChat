@@ -1,0 +1,35 @@
+<amis-popup-base *ngIf="isLoading" [(visiblePopup)]="visiblePopup" [title]="title" [width]="width" [offsetY]="offset"
+  (closePopup)="onClosePopup()" [isHaveScrollView]="true" class="popup-base-add-data">
+  <div contentPopup>
+    <amis-amis-control-form-group [isShowNodataGrid]="false" [isShowButtonGrid]="false"
+      [DependentDictionaries]="listDependancy" [isDisplayHeader]="isDisplayHeader" [listGroupbox]="listGroupConfigs"
+      [isSubmit]="isSubmit" [typeShow]="typeShow" [headerType]="'title fs-16'"
+      (afterValidatedForm)="afterValidated($event)" (afterUpdateField)="afterUpdateField($event)"
+      (valueFieldChanged)="valueFieldChanged($event)">
+    </amis-amis-control-form-group>
+  </div>
+  <div buttonsPopup>
+    <amis-button [color]="buttonColor.Normal" (clickButton)="onClosePopup()" name="{{'CANCEL2'|translate}}">
+    </amis-button>
+    <amis-button (clickButton)="updateProfile()" name="{{'UPDATE'|translate}}">
+    </amis-button>
+  </div>
+</amis-popup-base>
+
+<amis-popup-base [(visiblePopup)]="visibleNotify" title="{{'HRM_SETTING_JOB_ROLE_NOTIFY'|translate}}" [width]="400"
+  [offsetY]="'0 150px'" (closePopup)="cancelPopupNotify()" [isHaveScrollView]="true" class="popup-base-add-data"
+  *ngIf="visibleNotify">
+  <div contentPopup>
+    <div [innerHTML]="contentNotify"></div>
+  </div>
+  <div buttonsPopup *ngIf="!isDeletedEmployee">
+    <amis-button [color]="buttonColor.Normal" (clickButton)="cancelPopupNotify()" name="{{'CANCEL2'|translate}}">
+    </amis-button>
+    <amis-button (clickButton)="updateEmployeeProfile()" name="{{titleButton}}">
+    </amis-button>
+  </div>
+  <div buttonsPopup *ngIf="isDeletedEmployee">
+    <amis-button [color]="buttonColor.Normal" (clickButton)="closeALl()" name="{{'CLOSE'|translate}}">
+    </amis-button>
+  </div>
+</amis-popup-base>

@@ -1,0 +1,651 @@
+<div *ngIf="isLoaded" class="dis-flex flex-column hrm-container-grid" [class.small-grid]="isGridOnPopup"
+  [class.border-grid]="isBorderGrid" [class.edit-grid]="isEdit" [class.validate-grid]="!isValidateGrid">
+  <div class="dis-flex h-100 amis-custom-grid" [ngClass]="{'report-border':isReport}">
+
+    <!-- Phần lọc phía trên bên trái grid -->
+    <div *ngIf="isShowCustomColumn" ngbDropdown placement="bottom-left" #myDrop="ngbDropdown" autoClose="false"
+      (openChange)="toggle($event)">
+      <div ngbDropdownToggle >
+        <div class="column-chooser" >
+          <amis-icon [classIcon]="'icon-colunm-option'" [isActive]="isShowDrop"
+            tooltipContent="{{'CONTEXT_MENU_CUSTOM_COLUMN' | translate}}">
+          </amis-icon>
+        </div>
+      </div>
+      <div ngbDropdownMenu class="app-dropdown menu-column" id="misa-grid-custom-colum-dropdown">
+        <div class="drop-header dis-flex dis-justify-content-between align-items-center">
+          <div class="title">{{'CONTEXT_MENU_CUSTOM_COLUMN' | translate}}</div>
+          <amis-icon [classIcon]="'icon-close'" (click)="closeCustomColumn($event)" [isShowTooltip]="false"
+            [isHoverState]="true">
+          </amis-icon>
+        </div>
+
+        <ng-container>
+          <div class="drop-content" *ngIf="isShowDrop">
+            <amis-list-drag-drop #customColumn [items]="columns" [selectedItems]="selectedColumns"
+              (saveCustomColumn)="customSettingColumn($event)" [scrollBottom]="" [isReordering]="true">
+            </amis-list-drag-drop>
+          </div>
+        </ng-container>
+
+        <div class="dis-flex dis-justify-content-end align-items-center drop-footer">
+          <amis-button name="Mặc định" [type]="buttonType.OnlyText" [color]="buttonColor.Normal"
+            class="hov-pointer m-r-8" (clickButton)="setDefaultSettingColumn($event)"></amis-button>
+          <amis-button [class.disable-btn]="!isCustomed" name="Lưu" [type]="buttonType.OnlyText"
+            [color]="buttonColor.BluePrimary" (clickButton)="saveOptionColumn()">
+          </amis-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RENDER NỘI DUNG GRID -->
+    <div class="hrm-grid" class="{{isSelectionOnly ? 'is-selection-only' : 'not-selection-only'}}">
+
+      <dx-data-grid class="grid-container" #grid [dataSource]="dataSource" [showColumnLines]="showColumnLines"
+        [class.single-selection-grid]="isSingleSelection" [height]="gridHeight" [allowColumnReordering]="true"
+        (allowColumnReorderingChange)="allowColumnReorderingChange($event)" [autoNavigateToFocusedRow]=true
+        [showRowLines]="showRowLines" [showBorders]="showBorders" [wordWrapEnabled]="false" columnResizingMode="widget"
+        [allowColumnResizing]="allowColumnResizing" noDataText="{{'NO_DATA'|translate}}"
+        (onOptionChanged)="saveWidthColumn($event)" (onRowClick)="onRowClick($event)"
+        (onRowDblClick)="onRowDblClick($event)" [showRowLines]="true" [renderAsync]="true"
+        (onSelectionChanged)="selectedRowKeysChange($event)" [hoverStateEnabled]="true" (click)="click($event)"
+        [columnAutoWidth]="columnAutoWidth" (onCellClick)="onCellClick($event)" (onKeyDown)="onKeyDown($event)">
+
+        <ng-container *ngIf="contextMenuList.length == 0 || !isShowMoreOption; else elses">
+          <dxi-column *ngIf="isShowMoreOption" type="buttons" [fixed]="true" [fixedPosition]="0" [width]="56">
+
+          </dxi-column>
+        </ng-container>
+        <ng-template #elses>
+          <ng-container *ngIf="contextMenuList.length < 2; else secondCondition">
+            <dxi-column type="buttons" [fixed]="true" [fixedPosition]="0" cellTemplate="menuTemplate"
+              [width]="columnWidth" [minWidth]="columnWidth">
+
+              <div *dxTemplate="let param of 'menuTemplate'">
+                <div class="wrapper-button">
+
+                  <div class="dis-flex dis-justify-content-around">
+                    <ng-container *ngFor="let item of contextMenuList">
+                      <div isIgnorePermission="{{item.PermissionCode ? item.IsIgnorePermission: true}}"
+                        permissionCode="{{item.PermissionCode}}" subSystemCode="{{item.SubSystemCode}}"
+                        class="{{item.Icon}} pointer icon-action"
+                        (passPermissionClick)="clickContextMenu($event, item, param)">
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </dxi-column>
+          </ng-container>
+        </ng-template>
+
+        <ng-template #secondCondition>
+          <dxi-column type="buttons" [fixed]="true" [fixedPosition]="0" cellTemplate="moreTemplate" [width]="48">
+
+            <div *dxTemplate="let param of 'moreTemplate'">
+              <amis-icon [classIcon]="'icon-optional-more viewmore'" tooltipContent="{{'VIEW_MORE_OPTION' | translate}}"
+                (click)="onShowContextMenu($event, param)" [isHoverState]="false"
+                [popoverStatus]="isContextMenuVisible">
+              </amis-icon>
+              <div *ngIf="param.value">
+                {{ param.value }}
+              </div>
+            </div>
+          </dxi-column>
+        </ng-template>
+
+        <ng-container *ngIf="isShowSelection">
+          <dxo-selection [mode]="isSingleSelection?'single':'multiple'" [allowSelectAll]="!isSingleSelection"
+            [showCheckBoxesMode]="'always'"></dxo-selection>
+
+          <dxi-column type="selection" [allowFixing]="true" [width]="isSelectionOnly ? 45 : 24"></dxi-column>
+        </ng-container>
+
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+        <dxo-load-panel [enabled]="true">
+        </dxo-load-panel>
+
+        <dxo-editing *ngIf="isEdit" mode="row">
+        </dxo-editing>
+        <dxo-scrolling [useNative]="true" showScrollbar="always">
+        </dxo-scrolling>
+
+
+        <dxi-column *ngIf="isCheckFinished" [fixed]="true" [fixedPosition]="0" type="buttons" [width]="45"
+          cellTemplate="more1Template">
+          <div *dxTemplate="let param of 'more1Template'" (click)="changeStatusGrid($event, param)"
+            [ngClass]="{'icon-finished': param.data['ConfigStatus']==jobStatus.HasFinished, 'icon-not-finished': param.data['ConfigStatus']==jobStatus.HasNotFinished}">
+          </div>
+
+
+        </dxi-column>
+        <dxi-column *ngIf="isCheckRejected" [fixed]="true" [fixedPosition]="0" type="buttons" [width]="45"
+          cellTemplate="more1Template">
+          <div *dxTemplate="let param of 'more1Template'" style="min-width: 24px !important;"
+            [class.dis-none]="param.data['CustomConfig']?.SelfService_Status == !selfServiceStatus.Reject" [class.dis-none]="!param.data['CustomConfig']">
+            <amis-icon [classIcon]="'icon-infor-circle-yellow'" [isHoverState]="false"
+              [tooltipContent]="param.data['CustomConfig']?.SelfService_Reason  ? param.data['CustomConfig']?.SelfService_Reason : 'Từ chối phê duyệt' ">
+            </amis-icon>
+          </div>
+
+
+        </dxi-column>
+
+
+        <!-- Bổ sung cột số thứ tự nếu là Báo cáo -->
+        <dxi-column *ngIf="isReport" cellTemplate="moreTemplate" headerCellTemplate="titleHeaderTemplate" caption="STT"
+          [width]="50" [fixed]="true" [fixedPosition]="0">
+          <div *dxTemplate="let param of 'moreTemplate'" class="dis-flex dis-justify-content-center">
+            {{param?.row?.dataIndex + 1}}
+          </div>
+
+          <div *dxTemplate="let info of 'titleHeaderTemplate'">
+            <div class="dis-flex dis-justify-content-center custom-title">{{info.column.caption}}</div>
+          </div>
+        </dxi-column>
+
+        <ng-container #container *ngFor="let cellTemplate of columns; let i=index" class="abc">
+
+          <dxi-column dataField="{{cellTemplate.FieldName}}" [allowFiltering]="true" caption="{{cellTemplate.Caption}}"
+            cellTemplate="cellTemplate" dataType="{{cellTemplate.TypeControl}}" [(visible)]=cellTemplate.IsVisible
+            headerCellTemplate="captionTemplate" alignment="left" [fixed]="i<numberFix && isFixed" [minWidth]="100"
+            [width]="allowColumnResizing ? cellTemplate.Width : 'auto'" [name]="cellTemplate.TmpFieldName"
+            [lookup]="cellTemplate.Lookup" [allowEditing]="!!cellTemplate.isEditting"
+            [groupIndex]="cellTemplate.GroupIndex? cellTemplate.GroupIndex : -1" groupCellTemplate="totalsTemplate">
+            <!--  -->
+            <!-- width="{{cellTemplate.Width}}" [minWidth]="cellTemplate.MinWidth" -->
+
+            <dxi-validation-rule *ngIf="cellTemplate.IsRequire" type="required" [pattern]="pattern"
+              message="{{cellTemplate.Caption | cutCaptionRequire}} không được để trống"></dxi-validation-rule>
+            <div *dxTemplate="let param of 'cellTemplate'" class="dis-flex">
+              <!-- Nếu là trường FullName hoặc kiểu dữ liệu dạng người dùng thì show avatar -->
+              <div
+                *ngIf="(param.column.dataField=='FullName' || param.column.dataField=='EmployeeName') && isShowAvatar;else emptyContent"
+                class="dis-flex w-100">
+                <div class="pos-relative" (mouseenter)="showToolTipAvatar($event, param)">
+                  <div
+                    *ngIf="(param.key.UserID && param.key.UserID !== '' ) || (param.key.EmployeeID && param.key.EmployeeID !== '') || (param.key.CandidateID && param.key.CandidateID !== '')">
+                    <img class="avatar" [src]="param.key.Avatar">
+                  </div>
+                  <div class="{{signalAvatar.Icon}}"
+                    *ngIf="signalAvatar?.IsShowSignalAvatar && param?.data[signalAvatar?.FieldKey]"></div>
+
+                  <!-- Nếu không có thì hiển thị avatar default -->
+                  <!-- <div *ngIf="!param.key.UserID && !param.key.EmployeeID" [style.border-color]="param.key.AvatarColor"
+              [style.background-color]="param.key.AvatarColor" class="flex-c-m avatar">
+              {{param.value | shortName}}
+            </div> -->
+                </div>
+
+                <!-- Show text họ và tên và xử lý khi click -->
+                <div class="box-name-can dis-flex dis-align-self-center">
+                  <div class="name m-l-8 overflow-text underline text-overflow" [ngClass]="{'cursor': isShowLink}"
+                    title="{{param.value}}">
+                    <div class="custom-cell  {{param.key.ColorConfig[param.column.name]}} link-name" *ngIf="isShowLink"
+                      (click)="onEmployeeNameClick($event, param.key)">
+                      {{param.value}}
+                    </div>
+                    <div class="custom-cell  {{param.key.ColorConfig[param.column.name]}}" *ngIf="!isShowLink">
+                      {{param.value}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <ng-template #emptyContent>
+                <!-- format kiểu dữ liệu cho cột -->
+                <div class="w-100" [ngSwitch]="param.column.dataType">
+                  <div *ngIf="param.value;else notdata" [title]="param.value">
+
+                    <!-- Kiểu dữ liệu checkbox -->
+                    <div *ngSwitchCase="typeControl.Checkbox">
+                      <!-- Nếu là tải file thì căn giữa và hiển thị icon tải. còn lại hiển thị icon check và căn phải -->
+                      <ng-container *ngIf="param.column.dataField=='AllowDownload'; else other">
+                        <div
+                          class="dis-flex dis-justify-content-center {{param.key}} {{param.key.ColorConfig[param.column.name]}}">
+                          <div class="icon-export cursor-pointer" (click)="download($event, param)"></div>
+                        </div>
+                      </ng-container>
+                      <ng-template #other>
+                        <div class="dis-flex dis-justify-content-end">
+                          <div class="{{param.key[param.column.name + 'CustomClass']}}">✓</div>
+                        </div>
+                      </ng-template>
+                    </div>
+
+                    <!-- Kiểu Combobox -->
+                    <div *ngSwitchCase="typeControl.Combobox">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{param.text}}">
+                        {{param.text}}
+                      </div>
+
+                    </div>
+
+                    <!-- Kiểu ngày -->
+                    <div *ngSwitchCase="typeControl.Date">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{ param.value | AMISDate:'dd/MM/yyyy' }}"
+                        [ngClass]="{'dis-justify-content-center':isReport}">
+                        {{ param.value | AMISDate:"dd/MM/yyyy"}}
+                        <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'dd/MM/yyyy')}}"> -->
+                        <!-- {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"dd/MM/yyyy")}} -->
+                      </div>
+                    </div>
+
+                    <!-- Kiểu ngày giờ  {{param.key.ColorConfig[param.column.name]}}-->
+                    <div *ngSwitchCase="typeControl.DateTime">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{ param.value | AMISDate:'dd/MM/yyyy HH:mm:ss' }}"
+                        [ngClass]="{'dis-justify-content-center':isReport}">
+                        {{ param.value | AMISDate:"dd/MM/yyyy HH:mm:ss"}}
+                        <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'dd/MM/yyyy')}}"> -->
+                        <!-- {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"dd/MM/yyyy HH:mm:ss")}} -->
+                      </div>
+                    </div>
+
+                    <!-- Kiểu năm -->
+                    <div *ngSwitchCase="typeControl.Year">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{ param.value }}">
+                        {{ param.value }}
+                        <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'yyyy')}}">
+                        {{ param.data?.Success == false ? param.value : (param.value | AMISDate:'yyyy')}} -->
+                      </div>
+                    </div>
+
+                    <!-- Kiểu tháng năm -->
+                    <div *ngSwitchCase="typeControl.MonthYear">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{ param.value | AMISDate:'MM/yyyy'}}">
+                        {{ param.value | AMISDate:"MM/yyyy"}}
+                        <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'MM/yyyy')}}">
+                        {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"MM/yyyy")}} -->
+                      </div>
+                    </div>
+
+                    <!-- Dạng link -->
+                    <div *ngSwitchCase="typeControl.Hyperlink">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}} cursor-pointer"
+                        [class.attachment]="isActionWithFile" title="{{param.value}}">{{param.value}}</div>
+                    </div>
+
+                    <!-- Tải file -->
+                    <div class="flex-m" *ngSwitchCase="typeControl.UploadDocument">
+                      <div style="width: 32px;">
+                        <div class="icon-eye viewmore" *ngIf="param.data.AllowPreview && isActionWithFile"
+                          (click)="openPreview($event, param)">
+                        </div>
+                      </div>
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}} cursor-pointer"
+                        [class.attachment]="isActionWithFile" title="{{param.value}}"><span
+                          (click)="downloadAttachment($event, param)">{{param.value}}</span>
+                      </div>
+                    </div>
+
+
+                    <!-- Tải ảnh -->
+                    <div *ngSwitchCase="typeControl.UploadImage">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}} cursor-pointer"
+                        [class.attachment]="isActionWithFile" title="{{param.value}}"><span
+                          (click)="downloadAttachment($event, param)">{{param.value}}</span>
+                      </div>
+                    </div>
+
+                    <!-- Số -->
+                    <div *ngSwitchCase="typeControl.Number" class="dis-flex dis-justify-content-end">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{param.value | AMISDecimal}}">{{param.value | AMISDecimal}}</div>
+                    </div>
+
+                    <!-- Số thập phân -->
+                    <div *ngSwitchCase="typeControl.Decimal" class="dis-flex dis-justify-content-end">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{param.value | number}}">{{param.value | number:'1.1-2'}}</div>
+                    </div>
+
+                    <!-- Phần trăm -->
+                    <div *ngSwitchCase="typeControl.Percent" class="dis-flex dis-justify-content-end">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{param.value | number}}">
+                        {{param.value / 100 | percent:'1.1-2':'vi-VN'}}
+                      </div>
+                    </div>
+
+                    <!-- Tiền tệ -->
+                    <div *ngSwitchCase="typeControl.Currency" class="dis-flex dis-justify-content-end">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{param.value | AMISCurrency:'VND':'code':'1.0-0'}}">
+                        {{param.value | AMISCurrency:'VND':'code':'1.0-0'}}
+                      </div>
+                    </div>
+
+                    <!-- Format định dạng email -->
+                    <div *ngSwitchCase="typeControl.Email" class="dis-flex dis-justify-content-start">
+                      <div
+                        class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{param.value}}">
+                        <a class="email-link {{param.key[param.column.name + 'CustomClass']}}" href="mailto:{{param.value}}">{{param.value}}</a>
+                      </div>
+                    </div>
+
+                    <!-- Dạng người dùng -->
+                    <div *ngSwitchCase="typeControl.SelectHuman" class="dis-flex dis-justify-content-end">
+                      <div>
+                        <img class="avatar"
+                          [src]="param?.key?.AvatarUser ? param?.key?.AvatarUser[param?.column?.name] : null">
+                      </div>
+
+                      <!-- Show text họ và tên và xử lý khi click -->
+                      <div class="box-name-can dis-flex dis-align-self-center">
+                        <div class="name m-l-8 overflow-text underline text-overflow" [ngClass]="{'cursor': isShowLink}"
+                          title="{{param.value}}">
+                          <div
+                            class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                            [ngClass]="{'link-name': isShowLink}" *ngIf="isShowLink"
+                            (click)="onEmployeeNameClick($event, param.key[param.column.name])">
+                            {{param.value}}
+                          </div>
+                          <div
+                            class="custom-cell  {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                            *ngIf="!isShowLink">
+                            {{param.value}}
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngSwitchCase="typeControl.EnumType" class="dis-flex dis-justify-content-start">
+                      <div
+                        class="custom-cell dis-flex {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{param.value}}">
+                        <div class="{{param.key.ColorConfig['Icon']}}"></div>
+                        <div class="m-l-8 custom-cell">{{param.value}}</div>
+                      </div>
+                    </div>
+
+                    <div *ngSwitchCase="typeControl.FileSize" class="dis-flex dis-justify-content-start">
+                      <div class="custom-cell dis-flex" title="{{param.key[param.column.name]}}">
+                        <div class="m-l-8 custom-cell">{{param.key[param.column.name]}}</div>
+                      </div>
+                    </div>
+
+                    <!-- Ngầm định -->
+                    <div *ngSwitchDefault>
+
+                      <div
+                        class="custom-cell dis-flex {{param.key[param.column.name + 'CustomClass']}} {{param.key.ColorConfig[param.column.name]}}"
+                        title="{{param.value}}">
+                        <div class="custom-cell">{{param.value}}</div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- Không có dữ liệu sẽ hiển thị -- và căn nội dung theo Type Control-->
+                  <ng-template #notdata>
+                    <div [ngSwitch]="param.column.dataType">
+                      <div *ngSwitchCase="typeControl.Checkbox">
+                        <ng-container *ngIf="param.column.dataField=='AllowDownload'; else other1">
+                          <div class="custom-cell dis-flex dis-justify-content-center">-</div>
+                        </ng-container>
+                        <ng-template #other1>
+                          <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                        </ng-template>
+                      </div>
+                      <div *ngSwitchCase="typeControl.Currency">
+                        <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                      </div>
+                      <div *ngSwitchCase="typeControl.Decimal">
+                        <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                      </div>
+                      <div *ngSwitchCase="typeControl.Number">
+                        <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                      </div>
+                      <div *ngSwitchCase="typeControl.DateTime">
+                        <div class="custom-cell dis-flex" [ngClass]="{'dis-justify-content-center':isReport}">-</div>
+                      </div>
+                      <div *ngSwitchCase="typeControl.Percent">
+                        <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                      </div>
+                      <div *ngSwitchCase="typeControl.Combobox">
+                        <div
+                          class="custom-cell {{param.key.ColorConfig ? param.key.ColorConfig[param.column.name] : ''}}">
+                          -</div>
+                      </div>
+                      <div *ngSwitchDefault>
+                        <div
+                          class="custom-cell {{param.key.ColorConfig ? param.key.ColorConfig[param.column.name] : ''}}">
+                          -</div>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <!-- End xử lý căn text --  theo type control -->
+
+                </div>
+              </ng-template>
+            </div>
+
+            <!-- Start Custom header của grid -->
+            <div *dxTemplate="let info of 'captionTemplate'" class="dis-flex w-100">
+              <ng-container *ngIf="!isReport;else iReport">
+                <div [ngSwitch]="info.column.dataType" class="w-100">
+                  <!-- Xử lý căn text của nội dung theo TypeControl : checkbox , số , tiền tệ, phần trăm thì căn phải còn lại căn trái -->
+                  <div *ngSwitchCase="typeControl.Checkbox">
+                    <ng-container *ngIf="info.column.dataField=='AllowDownload'; else other">
+                      <div class="custom-title dis-justify-content-center" title="{{info.column.caption}}">
+                        {{info.column.caption}}
+                      </div>
+                    </ng-container>
+                    <ng-template #other>
+                      <div class="custom-title  dis-justify-content-end" title="{{info.column.caption}}">
+                        {{info.column.caption}}
+                      </div>
+                    </ng-template>
+                  </div>
+
+                  <div *ngSwitchCase="typeControl.Currency">
+                    <div class="custom-title  dis-justify-content-end" title="{{info.column.caption}}">
+                      {{info.column.caption}}
+                    </div>
+                  </div>
+
+                  <div *ngSwitchCase="typeControl.Decimal">
+                    <div class="custom-title  dis-justify-content-end" title="{{info.column.caption}}">
+                      {{info.column.caption}}
+                    </div>
+                  </div>
+
+                  <div *ngSwitchCase="typeControl.Number">
+                    <div class="custom-title  dis-justify-content-end" title="{{info.column.caption}}">
+                      {{info.column.caption}}
+                    </div>
+                  </div>
+
+                  <div *ngSwitchCase="typeControl.Percent">
+                    <div class="custom-title  dis-justify-content-end" title="{{info.column.caption}}">
+                      {{info.column.caption}}
+                    </div>
+                  </div>
+
+
+                  <div *ngSwitchCase="typeControl.UploadDocument">
+                    <div class="custom-title  dis-justify-content-start p-l-32" title="{{info.column.caption}}">
+                      {{info.column.caption}}
+                    </div>
+                  </div>
+
+                  <div *ngSwitchDefault>
+
+                    <div class="custom-title " title="{{info.column.caption}}">{{info.column.caption}}</div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #iReport>
+                <div class="w-100">
+                  <div class="custom-title  dis-justify-content-center" title="{{info.column.caption}}">
+                    {{info.column.caption}}</div>
+                </div>
+              </ng-template>
+            </div>
+
+            <!-- End custom header -->.
+            <div *dxTemplate="let data of 'totalsTemplate'">
+              <div class="dis-flex dis-align-items-center custom-title-report">
+                <ng-container *ngIf="data?.data?.key;else notDifined">
+                  <div class="caption">
+                    {{data?.column?.caption}}<span>: &nbsp;</span>
+                  </div>
+                  <div>
+                    <ng-container [ngSwitch]="data?.column?.dataType">
+                      <ng-container *ngSwitchCase="typeControl.Date">
+                        {{data?.data?.key | AMISDate:"dd/MM/yyyy"}}
+                      </ng-container>
+
+                      <ng-container *ngSwitchDefault>
+                        {{data?.data?.key}}
+                      </ng-container>
+
+                    </ng-container>
+
+                    ({{data?.data?.items?.length > 0 ? data?.data?.items?.length : data?.data?.collapsedItems.length}})
+                  </div>
+                </ng-container>
+                <ng-template #notDifined>
+                  {{data?.column?.caption}}<span>: &nbsp;</span> {{'NOTDEFINED'|translate}}
+                  <!-- ({{data?.data?.items?.length}}) -->
+                  ({{data?.data?.items?.length > 0 ? data?.data?.items?.length : data?.data?.collapsedItems.length}})
+                </ng-template>
+              </div>
+            </div>
+          </dxi-column>
+
+        </ng-container>
+        <dxo-summary>
+          <!-- <dxi-group-item column="Age" summaryType="avg" name="Average Age Group Summary">
+          </dxi-group-item> -->
+          <dxi-group-item [column]="groupFieldName" summaryType="count" displayFormat="{0}"
+            name="Average Age Group Summary">
+          </dxi-group-item>
+
+        </dxo-summary>
+        <ng-container *ngIf="isReport">
+          <dxo-grouping #expand [autoExpandAll]="isExpandAll"></dxo-grouping>
+        </ng-container>
+        <dxi-sort-by-group-summary-info summaryItem="Average Age Group Summary" sortOrder="desc">
+        </dxi-sort-by-group-summary-info>
+
+        <dxo-paging [pageSize]="pageSize" [enabled]="false"></dxo-paging>
+        <dxo-pager [showInfo]="showInfo" [showNavigationButtons]="showNavigationButtons"
+          [showPageSizeSelector]="showPageSizeSelector" [allowedPageSizes]="allowedPageSizes" infoText="infoText">
+        </dxo-pager>
+      </dx-data-grid>
+
+    </div>
+  </div>
+
+  <!-- CHÂN TRANG -->
+
+  <amis-paging *ngIf="isShowPaging" #paging [pageSize]="pageSize" [isPageSizeEditable]="isPageSizeEditable"
+    class="amis-paging" defaultPageSize="30" [totalShowRows]="totalRecord" [isReport]="isReport"
+    (onPagingChanged)="onLoadPagingChanged($event)" [setTotalRow]="totalRecord" [isShowPaging]="isShowToolPaging"
+    [isExpandAll]="isExpandAll" (expandGridGroup)="expandGridGroup($event)" [typeReport]="typeReport">
+  </amis-paging>
+</div>
+
+<dx-popover *ngIf="isContextMenuVisible" [(visible)]="isContextMenuVisible" class="fix-sub-menu"
+  [target]="popoverTarget">
+  <dxo-position my="right top" at="right bottom"></dxo-position>
+  <div class="list-sub-button dis-flex dis-flex-column" [class.disabled]="isSystem">
+    <!-- <ng-content select="[popovergrid]"></ng-content> -->
+    <ng-container *ngFor="let item of contextMenuList; let idx=index">
+      <div *ngIf="item.Submenu?.length > 0; else elses">
+        <div class="sub-menu hover-pointer">
+          <div class="wrapper-export">
+            <div class="export dis-flex dis-justify-content-between dis-align-items-center w-100">
+              <div class="item-hover">
+                <div class="dis-flex dis-align-items-center">
+                  <div class="{{item.Icon}} m-r-8"></div>
+                  <div (click)="contextMenuExecuteAction($event, item.Key)">{{item.Text | translate}}</div>
+                </div>
+                <div class="icon-big-caret-right"></div>
+              </div>
+            </div>
+
+            <div class="app-dropdown menu-column">
+              <div class="dis-flex dis-flex-column columns-export">
+                <ng-container *ngFor="let subMenu of item.Submenu">
+                  <div class="item-child hover-pointer dis-flex dis-align-items-center"
+                    isIgnorePermission="{{subMenu.PermissionCode ? subMenu.IsIgnorePermission : true}}"
+                    permissionCode="{{subMenu.PermissionCode}}" subSystemCode="{{subMenu.SubSystemCode}}"
+                    (passPermissionClick)="contextMenuExecuteAction($event,subMenu.Key)">
+                    <div class="{{subMenu.Icon}}"></div>
+                    <div class="type-export">{{subMenu.Text | translate}}
+                    </div>
+                  </div>
+                </ng-container>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #elses>
+
+        <div isIgnorePermission="{{item.PermissionCode ? item.IsIgnorePermission : true}}"
+          permissionCode="{{item.PermissionCode}}" subSystemCode="{{item.SubSystemCode}}"
+          class="dis-flex dis-align-items-center cursor-pointer hover-pointer menu-item {{item.ClassDisable}} {{item.ClassVisible}}"
+          (passPermissionClick)="contextMenuExecuteAction($event, item.Key)">
+          <div class="{{item.Icon}}"></div>
+          <div class="{{item.Class}} sub-menu">{{item.Text | translate}}
+
+          </div>
+        </div>
+
+        <ng-container *ngIf="item.IsSeperator">
+          <div>
+            <hr style="margin:8px;">
+          </div>
+        </ng-container>
+      </ng-template>
+
+    </ng-container>
+  </div>
+</dx-popover>
+
+<!-- tooltip avatar -->
+<dx-popover *ngIf="visibleTooltip" [(visible)]="visibleTooltip" showEvent="dxhoverstart" hideEvent="dxhoverend"
+  [target]="targetTooltip" class="tooltip-popover">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container>
+      <div class="tooltip-content">
+        {{contentTooltip | translate}}
+      </div>
+    </ng-container>
+  </div>
+</dx-popover>
+
+<amis-popup-preview-multiple-attachment *ngIf="visiblePopupPreview" (close)="onClosePopupPreview()"
+  [dataSources]="_dataSource" [selectedRowItem]="selectedRowItem" (deleteItem)="deleteItem($event)">
+</amis-popup-preview-multiple-attachment>
+
+<!-- Chi tiết hồ sơ -->
+<amis-employee-view-detail *ngIf="isVisibleEmployeeDetail" [inputParam]="inputEmployee"
+  [position]="positionEmpoyeeDetail" (afterCancel)="afterCancelEmployeeDetail($event)"
+  (afterSaveSuccess)="afterSaveSuccessEmployeeDetail($event)" (afterClose)="afterCloseEmployeeDetail($event)"
+  (afterDeleteSuccess)="afterDeleteEmployeeDetail($event)">
+</amis-employee-view-detail>

@@ -1,0 +1,36 @@
+<amis-popup-base [width]="750" *ngIf="visiblePopup" [visiblePopup]="visiblePopup" [offsetY]="offsetY" [title]="title"
+    (closePopup)="onClosePopup()">
+    <div contentPopup class="setup-data-popup mt-2">
+        <dx-scroll-view>
+            <div class="wrapper">
+                <div class="dis-flex dis-align-self-center success">
+                    <div class="icon-tick-circle-green"></div>
+                    <div class="dis-align-self-center m-l-8">{{listSuccess}}</div>
+                </div>
+                <div>
+                    <div class="dis-flex dis-align-self-center fail">
+                        <div class="icon-error-circle"></div>
+                        <div class="dis-align-self-center m-l-8">{{listFail}}</div>
+                    </div>
+
+                    <div class="candidates-error">
+                        <amis-paging-grid [isShowCustomColumn]="false" [isShowSelection]="false"
+                            [dataSource]="dataSource" [columns]="columns" [showBorders]="true" [isBorderGrid]="true"
+                            [isShowMoreOption]="false" [isShowPaging]="false" [columnAutoWidth]="true">
+                        </amis-paging-grid>
+                    </div>
+
+                    <div class="warning">
+                        Với những ứng viên thêm không thành công, vui lòng kiểm tra thông tin và thêm lại hồ sơ cho từng
+                        ứng viên.
+                    </div>
+                </div>
+            </div>
+        </dx-scroll-view>
+
+    </div>
+    <div buttonsPopup>
+        <amis-button [color]="buttonColor.Normal" name="{{'CLOSE'| translate}}" (clickButton)="onClosePopup()">
+        </amis-button>
+    </div>
+</amis-popup-base>

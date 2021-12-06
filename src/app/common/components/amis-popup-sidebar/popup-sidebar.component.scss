@@ -1,0 +1,27 @@
+// Style cho Popup bên phải
+.popup-sidebar{
+    position: fixed;
+    top: 0;
+    right: -50%;
+    width: 50%;
+    height: 100%;
+    z-index: 9999;
+    background-color: #FFF;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    &.active-popup{
+      right: 0;
+    }
+    .btn-close-popup{
+      position: absolute;
+      top: 8px;
+      right: 16px;
+      .ic-svg {
+        background-color: #6a6a6a!important;
+      }
+      cursor: pointer;
+    }
+  }

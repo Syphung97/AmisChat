@@ -1,0 +1,14 @@
+{
+    "apiServer": "http://localhost:64905/api",
+  
+    "stickerCDN": "http://localhost:4200/assets/sticker/img/",
+  
+    "host": "http://localhost:64905/api",
+    "maxSizeFile": 10,
+    "newsfeedURL": "https://apps.amispdc.misa.local/newsfeed/",
+    "cdnAudioNewMessage": "https://cdnapps.amispdc.misa.local/apjs/apchat/audio-notification-message.wav",
+    "cdnAudioNewCall": "https://cdnapps.amispdc.misa.local/apjs/apchat/audio-notification-call.wav",
+    "cdnDomain":"https://cdnapps.amispdc.misa.local",
+    "fileExtension": ".txt, .doc, .docx, .odt, .rtf, .xls, .xlsx, .ods, .csv, .ppt, .pptx, .odp, .pdf, .xmind, .mmap, .zip, .7z, .rar, .png, .jpg, .jpeg, .gif, .html, .htm, .dwg, .dwf, .edb, .e2k, .msg, .svg, .webm, .mpg, .mp2, .mpeg, .mpe, .mpv, .ogg, .mp4, .m4p, .m4v, .avi, .wmv, .mov, .qt, .flv, .swf"
+  }
+  

@@ -1,0 +1,309 @@
+<!-- Popup nhập khẩu -->
+
+<amis-popup-base class="popup popup-import" [isResizePopup]="true" *ngIf="visiblePopupImport" [isHaveScrollView]="false"
+  [(visiblePopup)]="visiblePopupImport" [title]="title" [height]="height" [width]="width" (closePopup)="popupHidden()">
+  <div contentPopupNoScroll class="popup-import-content h-100">
+    <!-- popup import  -->
+    <div *ngIf="isImport" class="popup-container import-popup h-100">
+      <div class="direct-popup">
+        <div class="d-flex align-items-center flex-1">
+          <div [class.active-import]="showPopupImport == popupMultiScreen.FirstPage"
+            [class.done]="showPopupImport > popupMultiScreen.FirstPage">{{'IMPORT_TITLE_STEP1' | translate}}</div>
+          <div [class.done-bg-import]="showPopupImport > popupMultiScreen.FirstPage"
+            [class.active-bg-import]="showPopupImport == popupMultiScreen.FirstPage" class=" ic-btn
+            icon-big-caret-right"></div>
+          <div class="step-import" [class.active-import]="showPopupImport == popupMultiScreen.SecondPage"
+            [class.done]="showPopupImport > popupMultiScreen.SecondPage">
+            {{'IMPORT_TITLE_STEP2' | translate}}</div>
+          <div [class.done-bg-import]="showPopupImport > popupMultiScreen.SecondPage"
+            [class.active-bg-import]="showPopupImport == popupMultiScreen.SecondPage"
+            class="ic-btn icon-big-caret-right"></div>
+          <div class="step-import" [class.active-import]="showPopupImport >= popupMultiScreen.ThirdPage">
+            {{'IMPORT_TITLE_STEP3' | translate}}
+          </div>
+        </div>
+        <dx-text-box *ngIf="showPopupImport == popupMultiScreen.SecondPage" mode="search"
+          class="search-setting-import m-r-10" [(value)]="ngModelfilterValue"
+          placeholder="{{'IMPORT_SEARCH' | translate}}" (onKeyUp)="onKeyupSearchBox($event)"
+          (onValueChanged)="onSearchControl($event)"></dx-text-box>
+      </div>
+      <hr />
+      <div class="content-import-popup dis-flex">
+        <div class="right-content-popup h-100">
+
+          <div class="import-file" *ngIf="showPopupImport == popupMultiScreen.FirstPage">
+            <div amisDragDropToUpload (fileDropped)="onFileChange({target:{files:$event},currentTarget:{files:$event}})"
+              (click)="fileInput.click()" class="import-cv" [class.h-214]="isImportFile"
+              [ngClass]="{'after-import': isImportFile == true}">
+              <amis-loading *ngIf="isLoading" [text]="textLoading" [position]="positionLoad"></amis-loading>
+              <div class="wrap-file w-100">
+                <div class="file-infor w-100">
+                  <div *ngIf="!isImportFile">
+                    <div class="file-msg">{{'IMPORT_TEMPLATE_IMPORT_TUTORIAL' | translate}}</div>
+                    <div class="mt-3 or-import">{{'OR' | translate}}</div>
+                    <div class="mt-3">
+                      <amis-button name="{{'IMPORT_TEMPLATE_PICK_FILE' | translate}}"
+                        [color]="buttonColor.BlueWhiteSecondary" [iconLeft]="'icon-upload'">
+                      </amis-button>
+                    </div>
+                    <div class="file-msg2 text-gray empty-text">{{'IMPORT_ACCEPT_FILE' | translate}}</div>
+                  </div>
+                  <div *ngIf="isImportFile" class="result-file w-100 dis-flex dis-flex-row">
+                    <div class="infor-file">
+                      <div class="ic-svg icon-excel-big custom-icon-file">
+                      </div>
+                      <div>
+                        <div class="file-name">{{fileNameImport}}</div>
+                        <div class="file-size">{{fileSize}}</div>
+                      </div>
+                    </div>
+                    <amis-button name="{{'IMPORT_OTHER_FILE' | translate}}" [color]="buttonColor.BlueWhiteSecondary"
+                      [iconLeft]="'icon-upload'">
+                    </amis-button>
+                    <!-- <div class="btn btn-white custom-flex" (click)="fileInput.click()">{{'IMPORT_OTHER_FILE' | translate}}</div> -->
+                    <input type="file" accept=".xlsx, .xls, .csv, .ods" (change)="onFileChange($event)"
+                      class="hidden-input">
+                  </div>
+                  <div *ngIf="isOverCapacity" class="over-capacity">
+                    {{'IMPORT_OVER_CAPACITY' | translate}}
+                  </div>
+                </div>
+              </div>
+              <input #fileInput type="file" class="file-input" [ngClass]="{'hidden-input': isImportFile== true}"
+                accept=".xlsx, .xls, .csv, .ods" (change)="onFileChange($event)">
+            </div>
+            <div *ngIf="isImportFile" class="custom-data-excel dis-flex">
+              <div class="select-sheet">
+                <div class="label-select mr-4">
+                  {{'IMPORT_SHEET_SELECT' | translate}}
+                </div>
+                <div class="dx-select-sheet">
+                  <dx-select-box displayExpr="Name" [dataSource]="listSheetName" [(value)]="selectedSheet"
+                    placeholder=" " noDataText="{{'IMPORT_NO_DATA' | translate}}">
+                  </dx-select-box>
+                </div>
+              </div>
+              <div class="select-row-title">
+                <div class="label-select mr-2">
+                  {{'IMPORT_TITLE_SHEET' | translate}}
+                </div>
+                <div id="tooltipTitleLine" (mouseenter)="visiblePopover = true" (mouseleave)="visiblePopover = false"
+                  class="icon-infor-circle-default mr-3 cursor"></div>
+                <div class="dx-select-title">
+                  <dx-number-box [class.alert-error]="!isSelectTitleValid" #selectTitle [(value)]="titleLine"
+                    [showSpinButtons]="true" [min]="1" (onValueChanged)="onChangeTitleLine()"
+                    (onKeyUp)="onKeyupTitleLine($event)"></dx-number-box>
+                  <div *ngIf="!isSelectTitleValid" class="error-validate p-t-4">
+                    {{'IMPORT_TITLE_ERROR_EMPTY' | translate}}</div>
+                  <!-- <input type="number" class="custom-input btn" [(ngModel)]="titleLine"> -->
+                </div>
+              </div>
+            </div>
+            <div class="import-note">
+              <span class="note-text">{{'IMPORT_NOTE' | translate}}</span>
+              <div class="row-note dis-flex">
+                <div class="ic-btn icon-dot-gray mr-2"></div>
+                {{'IMPORT_TAB1_NOTE1' | translate}} <span href="" (click)="downloadFileModel()"
+                  class="hightlight-download ml-1">{{'IMPORT_DOWNLOAD_FILE_MODEL' | translate}}</span>
+              </div>
+              <div class="row-note dis-flex">
+                <div class="ic-btn icon-dot-gray mr-2"></div>
+                {{'IMPORT_TAB1_NOTE2' | translate}}
+              </div>
+            </div>
+          </div>
+          <div class="custom-colums h-100" *ngIf="showPopupImport == popupMultiScreen.SecondPage">
+            <div class="map-colums-data" [class.h-100]="!isShowNoteCustom">
+              <amis-loading *ngIf="isLoading" [text]="textLoading" [position]="positionLoad"></amis-loading>
+              <div class="d-flex title-info-step2">
+                <div class="caption-column">{{'IMPORT_COLUMN_DATA_ON_SOFTWARE' | translate}}</div>
+                <div>{{'IMPORT_COLUMN_DATA_ON_FILE' | translate}}</div>
+              </div>
+
+              <div style="height: calc(100% - 44px);">
+                <dx-scroll-view>
+                  <div class="scroll-info-file" *ngIf="!isNodataMapping">
+                    <div class="row-select-colums row-title-colums"
+                      *ngFor="let item of listHeaderObject; let index=index" [class.dis-none-imp]="!item.isDisplay"
+                      [ngClass]="{'bg-row': item.isBgRow}">
+                      <div class="caption-column">
+                        <!-- {{item.DatabaseFieldCaption}}<span *ngIf="item.IsRequired" class="color-red">*</span> pqmai-->
+                        {{item.DatabaseFieldCaption}}<span *ngIf="item.IsRequired" class="text-red"> *</span>
+                      </div>
+
+                      <div class="select-column-excel">
+                        <dx-select-box [(dataSource)]="listHeader" class="w-100" displayExpr="Caption"
+                          [searchEnabled]="true" placeholder="" noDataText="{{'NO_DATA' | translate}}"
+                          (onValueChanged)="valueChangeMapping(item)" [(value)]="item.objectBinding"
+                          [class.border-red]="item.IsDuplicate"></dx-select-box>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="no-data" *ngIf="isNodataMapping">
+                    {{'NO_DATA_MATCH' | translate}}
+                  </div>
+                </dx-scroll-view>
+              </div>
+            </div>
+            <div class="note-custom" *ngIf="isShowNoteCustom">
+              <div class="row-note dis-flex mb-0">
+                <span class="mb-2">{{ notifyMapping }}</span>
+                <div class="checkbox-action">
+                  <label class="custom-radio radio-popup" (click)="changeCheckPass(isPassOrUpdate)">
+                    <div class="mr-1 icon-svg"
+                      [ngClass]="{'icon-circle':!isPassOrUpdate, 'icon-circle-checked':isPassOrUpdate}"></div>
+                    {{'IMPORT_UPDATE' | translate}}
+                  </label>
+                </div>
+                <div class="checkbox-action">
+                  <label class="custom-radio radio-popup" (click)="changeCheckPass(!isPassOrUpdate)">
+                    <div class="mr-1 icon-svg"
+                      [ngClass]="{'icon-circle':isPassOrUpdate, 'icon-circle-checked':!isPassOrUpdate}"></div>
+                    {{'IMPORT_PASS' | translate}}
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="check-data " *ngIf="showPopupImport == popupMultiScreen.ThirdPage">
+            <div class="check-result dis-flex ">
+              <div class="dis-flex">
+                <div class="medium filter-validate"
+                  [class.filter-validate-all]="filterValidate==importFilterValidate.ALL"
+                  (click)="filterValidateImport(importFilterValidate.ALL)">
+                  {{'ALL' | translate}}
+                </div>
+                <div class="valid-row medium filter-validate"
+                  [class.filter-validate-valid]="filterValidate==importFilterValidate.VALID"
+                  (click)="filterValidateImport(importFilterValidate.VALID)">
+                  {{'IMPORT_VALID_TEXT' | translate}} ({{validLine}})
+                </div>
+                <div class="invalid-row text-red filter-validate medium flex-1"
+                  [class.filter-validate-invalid]="filterValidate==importFilterValidate.INVALID"
+                  (click)="filterValidateImport(importFilterValidate.INVALID)">
+                  {{'IMPORT_INVALID_TEXT' | translate}} ({{inValidLine}})
+                </div>
+              </div>
+              <div class="download-resesult " [class.opacity]="isLoading" (click)="downloadFileResult()">
+                <div class="ic-svg icon-export mr-1"></div>
+                <div>{{'IMPORT_DOWNLOAD_RESULT_FILE' | translate}}</div>
+              </div>
+            </div>
+            <div class="result-grid">
+              <amis-loading *ngIf="isLoading" [text]="textLoading" [position]="positionLoad"></amis-loading>
+              <amis-paging-grid [isShowCustomColumn]="false" [isShowSelection]="false" [totalRecord]="totalImport"
+                [currentPageSize]="currentPageSize" [pageSize]="currentPageSize" [currentPageIndex]="currentPageIndex"
+                [dataSource]="objectJson" (loadDataPaging)="getImportPaging($event)" [columns]="listColumnMappingClone"
+                [clearSelection]="false" [isShowMoreOption]="false" [showNavigationButtons]="true" showBorders=false
+                [layoutGridType]="'Employee'">
+              </amis-paging-grid>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Thiết lập từ điển ghép cột -->
+    <div *ngIf="!isImport" class="popup-container setting-column-matching">
+      <div class="title-info-column-matching">
+        <dx-text-box mode="search" class="search-setting-column-matching m-r-10" [(value)]="ngModelColummMatching"
+          (onKeyUp)="onKeyupColumnMapping($event)" (onValueChanged)="onChangeColumnMapping($event)"
+          placeholder="{{'IMPORT_SEARCH' | translate}}">
+        </dx-text-box>
+        <div class="d-flex align-items-center">
+          <div class="ic-svg icon-infor-circle-default mr-2"></div>
+          <div>{{'IMPORT_TOOLTIP_SETTING_MAPPING' | translate}}</div>
+        </div>
+      </div>
+      <div class="map-colums-data">
+        <div class="d-flex title-info-step2">
+          <div class="caption-column">{{'IMPORT_COLUMN_NAME_ON_SOFTWARE' | translate}}</div>
+          <div>{{'IMPORT_COLUMN_AUTO_MAPPING_ON_SOFTWARE' | translate}}</div>
+        </div>
+        <div style="    height: calc(100% - 44px);">
+          <dx-scroll-view>
+            <div class="scroll-info-file" *ngIf="!isNodataSetting">
+              <div class="row-select-colums dis-flex dis-flex-row row-title-colums"
+                *ngFor="let item of listMappingKeyword; let index=index" [class.dis-none-imp]="!item.isDisplay"
+                [ngClass]="{'bg-row': item.isBgRow}">
+                <div class="caption-column">
+                  {{item.Caption}}
+                </div>
+                <div class="select-column-excel ">
+                  <div><input type="text" class="w-100" [(ngModel)]="item.MappingKeyword"></div>
+                </div>
+              </div>
+            </div>
+            <div class="no-data" *ngIf="isNodataSetting">
+              {{'NO_DATA_MATCH' | translate}}
+            </div>
+          </dx-scroll-view>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div buttonsPopup class="w-100 popup-import-footer">
+    <!-- popup import  -->
+    <div *ngIf="isImport" class="dx-popup-footer-import">
+      <div class="float-left">
+        <amis-button (clickButton)="openColumnMatching()" name="{{'IMPORT_SETTING_AUTO_MAPPING' | translate}}"
+          *ngIf="showPopupImport != popupMultiScreen.ThirdPage" [color]="buttonColor.Normal" iconLeft="icon-setting">
+        </amis-button>
+        <div *ngIf="showPopupImport == popupMultiScreen.ThirdPage">
+          <amis-button name="{{'Tải lại tệp' | translate}}" (clickButton)="importFile.click()"
+            [color]="buttonColor.BlueSecondary" [iconLeft]="'icon-upload'">
+          </amis-button>
+          <input #importFile type="file" class="file-input" style="display: none;" accept=".xlsx, .xls, .csv, .ods"
+            (change)="onFileChangeStep3($event); importFile.value=null">
+        </div>
+      </div>
+      <div class="float-right">
+        <amis-button class="mr-2" (clickButton)="visiblePopupImport = false; popupHidden()"
+          name="{{'CANCEL2' | translate}}" [color]="buttonColor.Normal">
+        </amis-button>
+
+        <amis-button (clickButton)="onBack()" class="mr-2" *ngIf="showPopupImport != popupMultiScreen.FirstPage"
+          name="{{'IMPORT_BACK' | translate}}" [color]="buttonColor.BlueSecondary">
+        </amis-button>
+
+        <amis-button [isDisable]="!isSelectTitleValid" (clickButton)="onContinue()"
+          [class.opacity]="!readfile || !validateMapping || isLoading || isOverCapacity"
+          *ngIf="showPopupImport == popupMultiScreen.SecondPage || showPopupImport == popupMultiScreen.FirstPage"
+          name="{{'IMPORT_CONTINUE' | translate}}" [color]="buttonColor.BluePrimary">
+        </amis-button>
+        <amis-button [class.opacity]="!validLine" (clickButton)="importData()"
+          *ngIf="showPopupImport == popupMultiScreen.ThirdPage " name="{{'IMPORT' | translate}}"
+          [color]="buttonColor.BluePrimary">
+        </amis-button>
+      </div>
+    </div>
+    <!-- Thiết lập từ điển ghép cột -->
+    <div *ngIf="!isImport" class="dx-popup-footer-column-matching">
+      <div class="float-right">
+        <amis-button class="mr-2" (clickButton)="closeColumnMatching()" name="{{'CANCEL2' | translate}}"
+          [color]="buttonColor.Normal">
+        </amis-button>
+        <amis-button (clickButton)="saveColumnMatching()" name="{{'SAVE' | translate}}"
+          [color]="buttonColor.BluePrimary">
+        </amis-button>
+      </div>
+    </div>
+  </div>
+</amis-popup-base>
+
+<!-- tooltip thông báo -->
+<dx-popover *ngIf="visiblePopover" [(visible)]="visiblePopover" showEvent="dxhoverstart" hideEvent="dxhoverend"
+  [width]="458" target="#tooltipTitleLine" class="tooltip-popover-titleLine"
+  [position]="{my: 'center bottom', at: 'center top', of: '#tooltipTitleLine'}">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container>
+      <div class="tooltip-content">
+        <div class="text-tooltip-content">{{'STATUS_TOOLTIP_TITLE' | translate}}</div>
+        <div class="icon-table-tooltip mt-3">
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</dx-popover>

@@ -1,0 +1,18 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" width="1000px" height="303px" (closePopup)="closePopup()"
+    >
+    <div contentPopup>
+        <amis-amis-control-form-group *ngIf="visibleForm" masterField="JobPositionID" [masterIDValue]="currentJobPosition.JobPositionID"
+            [isShowNodataGrid]="false" [isShowButtonGrid]="true" [listGroupbox]="listGroupConfigs" [isSubmit]="isSubmit"
+            [typeShow]="typeShow" [isDisplayHeader]="false" [formMode]="viewJobPosition"
+            (afterValidatedForm)="afterValidated($event)"></amis-amis-control-form-group>
+    </div>
+
+    <div buttonsPopup>
+        <div class="button-action">
+            <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}"
+                [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+            <amis-button name="{{'SAVE'|translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary"
+                (clickButton)="submit(formModeEntity.Update)"></amis-button>
+        </div>
+    </div>
+</amis-popup-base>

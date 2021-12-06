@@ -1,0 +1,16 @@
+::ng-deep {
+  #list-chart {
+    margin-top: 16px;
+    .dxc-val-axis {
+      display: none;
+    }
+    .dxc-arg-axis {
+      display: none;
+    }
+    .dxc-trackers {
+      path {
+        fill: inherit !important;
+      }
+    }
+  }
+}

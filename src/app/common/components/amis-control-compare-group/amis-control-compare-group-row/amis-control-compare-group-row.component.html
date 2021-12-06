@@ -1,0 +1,632 @@
+<div class="amis-custom-grid">
+
+  <div class="menu-options flex-m m-b-24" style="height: 32px">
+    <div class="title m-r-24  ">{{_title}}</div>
+    <div *ngIf="selectedData?.length" class="d-flex align-items-center ml-1">
+      <div>{{'GRID_SELECTED'|translate}} <span class="count-record bold">{{selectedData?.length}}</span></div>
+      <div class="ml-4 mr-4 text-red cursor-pointer" (click)="removeSelectedRecord()">
+        {{'GRID_UNSELECT'|translate}}</div>
+      <amis-button [type]="buttonType.Link" [customClass]="'color-red'" name="Từ chối" iconLeft="icon-reject-red"
+        (click)="rejectUpdateEmployeeInGrid()">
+      </amis-button>
+      <amis-button [type]="buttonType.Link" name="Phê duyệt" [customClass]="'color-green'" iconLeft="icon-accept-green"
+        (click)="approveUpdateEmployeeInGrid()">
+      </amis-button>
+    </div>
+  </div>
+
+  <div class="hrm-grid">
+
+    <dx-data-grid style="max-height: 519px;" class="grid-container" #grid [dataSource]="_dataSourceGrid"
+      [showColumnLines]="true" [allowColumnReordering]="false" [autoNavigateToFocusedRow]="false" [showRowLines]="true"
+      [showBorders]="true" [showColumnLines]="false" [wordWrapEnabled]="false" columnResizingMode="widget"
+      [allowColumnResizing]="false" noDataText="{{'NO_DATA'|translate}}"
+      (onSelectionChanged)="selectedRowKeysChange($event)" (onRowClick)="onClickRow($event)" [showRowLines]="true"
+      [hoverStateEnabled]="true" [columnAutoWidth]="false" (onCellClick)="onCellClick($event)">
+
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxo-pager [visible]="false"></dxo-pager>
+      <dxi-column type="buttons" [fixed]="true" [width]="52" [fixedPosition]="0" cellTemplate="moreTemplate">
+
+        <div *dxTemplate="let param of 'moreTemplate'">
+          <amis-icon [classIcon]="'icon-optional-more viewmore'" tooltipContent="{{'VIEW_MORE_OPTION' | translate}}"
+            (click)="onShowContextMenu($event, param)" [isHoverState]="false" [popoverStatus]="isContextMenuVisible">
+          </amis-icon>
+          <div *ngIf="param.value">
+            {{ param.value }}
+          </div>
+        </div>
+      </dxi-column>
+
+      <dxo-selection mode="multiple" [showCheckBoxesMode]="'always'"></dxo-selection>
+      <dxi-column type="selection" [allowFixing]="true" [width]="24"></dxi-column>
+
+
+      <dxo-load-panel [enabled]="true">
+      </dxo-load-panel>
+
+      <dxo-scrolling [useNative]="true" showScrollbar="always">
+      </dxo-scrolling>
+
+      <dxi-column dataField="Caption" cellTemplate="captionTemplate" alignment="left" [minWidth]="100"
+        caption="Tên thông tin ">
+
+        <div *dxTemplate="let param of 'captionTemplate'" class="dis-flex">
+          {{param.value}}
+        </div>
+
+      </dxi-column>
+
+      <dxi-column dataField="CurrentValue" caption="{{'EMPLOYEE_CURRENT_VALUE' | translate}}"
+        cellTemplate="currentTemplate" alignment="left">
+
+        <div *dxTemplate="let param of 'currentTemplate'" class="dis-flex">
+          <!-- Nếu là trường FullName hoặc kiểu dữ liệu dạng người dùng thì show avatar -->
+          <div *ngIf="(param.column.dataField=='FullName' || param.column.dataField=='EmployeeName') ;else emptyContent"
+            class="dis-flex w-100">
+            <div>
+              <div
+                *ngIf="(param.key.UserID && param.key.UserID !== '' ) || (param.key.EmployeeID && param.key.EmployeeID !== '') || (param.key.CandidateID && param.key.CandidateID !== '')">
+                <img class="avatar" [src]="param.key.Avatar">
+              </div>
+            </div>
+
+            <!-- Show text họ và tên và xử lý khi click -->
+            <div class="box-name-can dis-flex dis-align-self-center">
+              <div class="name m-l-8 overflow-text underline text-overflow">
+                <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}">
+                  {{param.value}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #emptyContent>
+            <!-- format kiểu dữ liệu cho cột -->
+            <div class="w-100" [ngSwitch]="param.key.TypeControl">
+              <div *ngIf="param.value;else notdata">
+
+                <!-- Kiểu dữ liệu checkbox -->
+                <div *ngSwitchCase="typeControl.Checkbox">
+                  <!-- Nếu là tải file thì căn giữa và hiển thị icon tải. còn lại hiển thị icon check và căn phải -->
+                  <ng-container *ngIf="param.column.dataField=='AllowDownload'; else other">
+                    <div class="dis-flex dis-justify-content-center {{param.key.ColorConfig?.CurrentValue}}">
+                      <div class="icon-export cursor-pointer">
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #other>
+                    <div class="dis-flex dis-justify-content-start">
+                      <div *ngIf="param.value.Value" class="">✓</div>
+                    </div>
+                  </ng-template>
+                </div>
+
+                <!-- Kiểu Combobox -->
+                <div *ngSwitchCase="typeControl.Combobox">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{param.value.ValueText}}">
+                    {{param.value.ValueText}}
+                  </div>
+
+                </div>
+
+                <!-- Kiểu ngày -->
+                <div *ngSwitchCase="typeControl.Date">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{ param.value.Value | AMISDate:'dd/MM/yyyy' }}">
+                    {{ param.value.Value | AMISDate:"dd/MM/yyyy"}}
+                    <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'dd/MM/yyyy')}}"> -->
+                    <!-- {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"dd/MM/yyyy")}} -->
+                  </div>
+                </div>
+
+                <!-- Kiểu ngày giờ  {{param.key.ColorConfig?.UpdateValue}}-->
+                <div *ngSwitchCase="typeControl.DateTime">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{ param.value.Value | AMISDate:'dd/MM/yyyy HH:mm:ss' }}">
+                    {{ param.value.Value | AMISDate:"dd/MM/yyyy HH:mm:ss"}}
+                    <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'dd/MM/yyyy')}}"> -->
+                    <!-- {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"dd/MM/yyyy HH:mm:ss")}} -->
+                  </div>
+                </div>
+
+                <!-- Kiểu năm -->
+                <div *ngSwitchCase="typeControl.Year">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{ param.value.Value }}">
+                    {{ param.value.Value }}
+                    <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'yyyy')}}">
+                          {{ param.data?.Success == false ? param.value : (param.value | AMISDate:'yyyy')}} -->
+                  </div>
+                </div>
+
+                <!-- Kiểu tháng năm -->
+                <div *ngSwitchCase="typeControl.MonthYear">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{ param.value.Value | AMISDate:'MM/yyyy'}}">
+                    {{ param.value.Value | AMISDate:"MM/yyyy"}}
+                    <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'MM/yyyy')}}">
+                          {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"MM/yyyy")}} -->
+                  </div>
+                </div>
+
+                <!-- Dạng link -->
+                <div *ngSwitchCase="typeControl.Hyperlink">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}} cursor-pointer attachment"
+                    title="{{param.value.Value}}">{{param.value.Value}}</div>
+                </div>
+
+                <!-- Tải file -->
+                <div class="flex-m" [class.p-l-32]="!param.data.AllowPreview"
+                  *ngSwitchCase="typeControl.UploadDocument">
+                  <div class="icon-eye m-r-8" *ngIf="param.data.AllowPreview">
+                  </div>
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}} cursor-pointer attachment"
+                    title="{{param.value.Value}}"><span>{{param.value.Value}}</span>
+                  </div>
+                </div>
+
+
+                <!-- Tải ảnh -->
+                <div *ngSwitchCase="typeControl.UploadImage">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}} cursor-pointer attachment">
+                    <img class="avatar-32" src="{{param.value.Value}}" (mouseover)="hoverAvatar(param)"
+                      (mouseleave)="leaveAvatar()">
+                  </div>
+                </div>
+
+                <!-- Số -->
+                <div *ngSwitchCase="typeControl.Number" class="dis-flex dis-justify-content-end">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{param.value.Value | AMISDecimal}}">{{param.value.Value | AMISDecimal}}</div>
+                </div>
+
+                <!-- Số thập phân -->
+                <div *ngSwitchCase="typeControl.Decimal" class="dis-flex dis-justify-content-end">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{param.value.Value | number:'1.0-2' : 'vi-VN'}}">
+                    {{param.value.Value | number:'1.0-2' : 'vi-VN'}}</div>
+                </div>
+
+                <!-- Phần trăm -->
+                <div *ngSwitchCase="typeControl.Percent" class="dis-flex dis-justify-content-end">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{param.value.Value | number}}">
+                    {{param.value.Value / 100 | percent:'1.1-2':'vi-VN'}}
+                  </div>
+                </div>
+
+                <!-- Tiền tệ -->
+                <div *ngSwitchCase="typeControl.Currency" class="dis-flex dis-justify-content-end">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{param.value.Value | AMISCurrency:'VND':'code':'1.0-0'}}">
+                    {{param.value.Value | AMISCurrency:'VND':'code':'1.0-0'}}
+                  </div>
+                </div>
+
+                <!-- Format định dạng email -->
+                <div *ngSwitchCase="typeControl.Email" class="dis-flex dis-justify-content-start">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}" title="{{param.value}}">
+                    <a class="email-link" href="mailto:{{param.value.Value}}">{{param.value.Value}}</a>
+                  </div>
+                </div>
+
+                <!-- Dạng người dùng -->
+                <div *ngSwitchCase="typeControl.SelectHuman" class="dis-flex dis-justify-content-start">
+                  <div>
+                    <img class="avatar-32" src="{{param.value.Value}}">
+                  </div>
+
+                  <!-- Show text họ và tên và xử lý khi click -->
+                  <div class="box-name-can dis-flex dis-align-self-center">
+                    <div class="name m-l-8 overflow-text underline text-overflow" title="{{param.value.Value}}">
+                      <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}">
+                        {{param.value.ValueText}}
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngSwitchCase="typeControl.EnumType" class="dis-flex dis-justify-content-start">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{param.value.Value}}">
+                    <div class="{{param.key.ColorConfig['Icon']}}"></div>
+                    <div class="m-l-8">{{param.value.Value}}</div>
+                  </div>
+                </div>
+
+                <div *ngSwitchCase="typeControl.FileSize" class="dis-flex dis-justify-content-start">
+                  <div class="custom-cell dis-flex" title="{{param.key.CurrentValue}}">
+                    <div class="m-l-8">{{param.key.CurrentValue}}</div>
+                  </div>
+                </div>
+
+                <!-- Ngầm định -->
+                <div *ngSwitchDefault>
+
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.CurrentValue}}"
+                    title="{{param.value.Value}}">
+                    <div class="">{{param.value.Value}}</div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Không có dữ liệu sẽ hiển thị -- và căn nội dung theo Type Control-->
+              <ng-template #notdata>
+                <div [ngSwitch]="param.column.dataType">
+                  <div *ngSwitchCase="typeControl.Checkbox">
+                    <ng-container *ngIf="param.column.dataField=='AllowDownload'; else other1">
+                      <div class="custom-cell dis-flex dis-justify-content-center">-</div>
+                    </ng-container>
+                    <ng-template #other1>
+                      <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                    </ng-template>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Currency">
+                    <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Decimal">
+                    <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Number">
+                    <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.DateTime">
+                    <div class="custom-cell dis-flex">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Percent">
+                    <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Combobox">
+                    <div class="custom-cell {{param.key.ColorConfig ? param.key.ColorConfig?.CurrentValue : ''}}">
+                      -</div>
+                  </div>
+                  <div *ngSwitchDefault>
+                    <div class="custom-cell {{param.key.ColorConfig ? param.key.ColorConfig?.CurrentValue : ''}}">
+                      -</div>
+                  </div>
+                </div>
+              </ng-template>
+              <!-- End xử lý căn text --  theo type control -->
+
+            </div>
+          </ng-template>
+        </div>
+
+      </dxi-column>
+
+      <dxi-column dataField="UpdateValue" caption="{{'EMPLOYEE_UPDATE_VALUE' | translate}}"
+        cellTemplate="updateTemplate" alignment="left">
+
+        <div *dxTemplate="let param of 'updateTemplate'" class="dis-flex">
+          <!-- Nếu là trường FullName hoặc kiểu dữ liệu dạng người dùng thì show avatar -->
+          <div *ngIf="(param.column.dataField=='FullName' || param.column.dataField=='EmployeeName') ;else emptyContent"
+            class="dis-flex w-100">
+            <div>
+              <div
+                *ngIf="(param.key.UserID && param.key.UserID !== '' ) || (param.key.EmployeeID && param.key.EmployeeID !== '') || (param.key.CandidateID && param.key.CandidateID !== '')">
+                <img class="avatar" [src]="param.key.Avatar">
+              </div>
+            </div>
+
+            <!-- Show text họ và tên và xử lý khi click -->
+            <div class="box-name-can dis-flex dis-align-self-center">
+              <div class="name m-l-8 overflow-text underline text-overflow" title="{{param.value}}">
+                <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}">
+                  {{param.value}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #emptyContent>
+            <!-- format kiểu dữ liệu cho cột -->
+            <div class="w-100" [ngSwitch]="param.key.TypeControl">
+              <div *ngIf="param.value;else notdata">
+
+                <!-- Kiểu dữ liệu checkbox -->
+                <div *ngSwitchCase="typeControl.Checkbox">
+                  <!-- Nếu là tải file thì căn giữa và hiển thị icon tải. còn lại hiển thị icon check và căn phải -->
+                  <ng-container *ngIf="param.column.dataField=='AllowDownload'; else other">
+                    <div class="dis-flex dis-justify-content-center {{param.key.ColorConfig?.UpdateValue}}">
+                      <div class="icon-export cursor-pointer">
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #other>
+                    <div class="dis-flex dis-justify-content-start">
+                      <div *ngIf=" param.value.Value" class="">✓</div>
+                    </div>
+                  </ng-template>
+                </div>
+
+                <!-- Kiểu Combobox -->
+                <div *ngSwitchCase="typeControl.Combobox">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{param.value.ValueText}}">
+                    {{param.value.ValueText}}
+                  </div>
+
+                </div>
+
+                <!-- Kiểu ngày -->
+                <div *ngSwitchCase="typeControl.Date">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{ param.value.Value | AMISDate:'dd/MM/yyyy' }}">
+                    {{ param.value.Value | AMISDate:"dd/MM/yyyy"}}
+                    <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'dd/MM/yyyy')}}"> -->
+                    <!-- {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"dd/MM/yyyy")}} -->
+                  </div>
+                </div>
+
+                <!-- Kiểu ngày giờ  {{param.key.ColorConfig?.UpdateValue}}-->
+                <div *ngSwitchCase="typeControl.DateTime">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{ param.value.Value | AMISDate:'dd/MM/yyyy HH:mm:ss' }}">
+                    {{ param.value.Value | AMISDate:"dd/MM/yyyy HH:mm:ss"}}
+                    <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'dd/MM/yyyy')}}"> -->
+                    <!-- {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"dd/MM/yyyy HH:mm:ss")}} -->
+                  </div>
+                </div>
+
+                <!-- Kiểu năm -->
+                <div *ngSwitchCase="typeControl.Year">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{ param.value.Value }}">
+                    {{ param.value.Value }}
+                    <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'yyyy')}}">
+                      {{ param.data?.Success == false ? param.value : (param.value | AMISDate:'yyyy')}} -->
+                  </div>
+                </div>
+
+                <!-- Kiểu tháng năm -->
+                <div *ngSwitchCase="typeControl.MonthYear">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{ param.value.Value | AMISDate:'MM/yyyy'}}">
+                    {{ param.value.Value | AMISDate:"MM/yyyy"}}
+                    <!-- title="{{ param.data?.Success == false ? param.value : (param.value | AMISDate:'MM/yyyy')}}">
+                      {{ param.data?.Success == false ? param.value : (param.value | AMISDate:"MM/yyyy")}} -->
+                  </div>
+                </div>
+
+                <!-- Dạng link -->
+                <div *ngSwitchCase="typeControl.Hyperlink">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}} cursor-pointer attachment"
+                    title="{{param.value.Value}}">{{param.value.Value}}</div>
+                </div>
+
+                <!-- Tải file -->
+                <div class="flex-m" [class.p-l-32]="!param.data.AllowPreview"
+                  *ngSwitchCase="typeControl.UploadDocument">
+                  <div class="icon-eye m-r-8" *ngIf="param.data.AllowPreview">
+                  </div>
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}} cursor-pointer attachment"
+                    title="{{param.value.Value}}"><span>{{param.value.Value}}</span>
+                  </div>
+                </div>
+
+
+                <!-- Tải ảnh -->
+                <div *ngSwitchCase="typeControl.UploadImage">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}} cursor-pointer attachment">
+                    <img class="avatar-32" src="{{param.value.Value}}" (mouseover)="hoverAvatar(param)"
+                      (mouseleave)="leaveAvatar()">
+                  </div>
+                </div>
+
+                <!-- Số -->
+                <div *ngSwitchCase="typeControl.Number" class="dis-flex dis-justify-content-end">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{param.value.Value | AMISDecimal}}">{{param.value.Value | AMISDecimal}}</div>
+                </div>
+
+                <!-- Số thập phân -->
+                <div *ngSwitchCase="typeControl.Decimal" class="dis-flex dis-justify-content-end">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{param.value.Value | number:'1.0-2' : 'vi-VN'}}">
+                    {{param.value.Value | number:'1.0-2' : 'vi-VN'}}</div>
+                </div>
+
+                <!-- Phần trăm -->
+                <div *ngSwitchCase="typeControl.Percent" class="dis-flex dis-justify-content-end">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{param.value.Value | number}}">
+                    {{param.value.Value / 100 | percent:'1.1-2':'vi-VN'}}
+                  </div>
+                </div>
+
+                <!-- Tiền tệ -->
+                <div *ngSwitchCase="typeControl.Currency" class="dis-flex dis-justify-content-end">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{param.value.Value | AMISCurrency:'VND':'code':'1.0-0'}}">
+                    {{param.value.Value | AMISCurrency:'VND':'code':'1.0-0'}}
+                  </div>
+                </div>
+
+                <!-- Format định dạng email -->
+                <div *ngSwitchCase="typeControl.Email" class="dis-flex dis-justify-content-start">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}" title="{{param.value}}">
+                    <a class="email-link" href="mailto:{{param.value.Value}}">{{param.value.Value}}</a>
+                  </div>
+                </div>
+
+                <!-- Dạng người dùng -->
+                <div *ngSwitchCase="typeControl.SelectHuman" class="dis-flex dis-justify-content-start">
+                  <div>
+                    <img class="avatar-32" src="{{param.value.Value}}">
+                  </div>
+
+                  <!-- Show text họ và tên và xử lý khi click -->
+                  <div class="box-name-can dis-flex dis-align-self-center">
+                    <div class="name m-l-8 overflow-text underline text-overflow" title="{{param.value}}">
+                      <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}">
+                        {{param.value.ValueText}}
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngSwitchCase="typeControl.EnumType" class="dis-flex dis-justify-content-start">
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{param.value.Value}}">
+                    <div class="{{param.key.ColorConfig['Icon']}}"></div>
+                    <div class="m-l-8">{{param.value.Value}}</div>
+                  </div>
+                </div>
+
+                <div *ngSwitchCase="typeControl.FileSize" class="dis-flex dis-justify-content-start">
+                  <div class="custom-cell dis-flex" title="{{param.key.UpdateValue}}">
+                    <div class="m-l-8">{{param.key.UpdateValue}}</div>
+                  </div>
+                </div>
+
+                <!-- Ngầm định -->
+                <div *ngSwitchDefault>
+
+                  <div class="custom-cell dis-flex {{param.key.ColorConfig?.UpdateValue}}"
+                    title="{{param.value.Value}}">
+                    <div class="">{{param.value.Value}}</div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Không có dữ liệu sẽ hiển thị -- và căn nội dung theo Type Control-->
+              <ng-template #notdata>
+                <div [ngSwitch]="param.key.TypeControl">
+                  <div *ngSwitchCase="typeControl.Checkbox">
+                    <ng-container *ngIf="param.column.dataField=='AllowDownload'; else other1">
+                      <div class="custom-cell dis-flex dis-justify-content-center">-</div>
+                    </ng-container>
+                    <ng-template #other1>
+                      <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                    </ng-template>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Currency">
+                    <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Decimal">
+                    <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Number">
+                    <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.DateTime">
+                    <div class="custom-cell dis-flex">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Percent">
+                    <div class="custom-cell dis-flex dis-justify-content-end">-</div>
+                  </div>
+                  <div *ngSwitchCase="typeControl.Combobox">
+                    <div class="custom-cell {{param.key.ColorConfig ? param.key.ColorConfig?.UpdateValue : ''}}">
+                      -</div>
+                  </div>
+                  <div *ngSwitchDefault>
+                    <div class="custom-cell {{param.key.ColorConfig ? param.key.ColorConfig?.UpdateValue : ''}}">
+                      -</div>
+                  </div>
+                </div>
+              </ng-template>
+              <!-- End xử lý căn text --  theo type control -->
+
+            </div>
+          </ng-template>
+        </div>
+
+      </dxi-column>
+
+    </dx-data-grid>
+
+  </div>
+</div>
+
+<!-- Context menu -->
+<dx-popover *ngIf="isContextMenuVisible" [(visible)]="isContextMenuVisible" class="fix-sub-menu"
+  [target]="popoverTarget">
+  <dxo-position my="right top" at="right bottom"></dxo-position>
+  <div class="list-sub-button dis-flex dis-flex-column">
+    <ng-container *ngFor="let item of contextMenuList; let idx=index">
+
+      <div class="dis-flex dis-align-items-center cursor-pointer hover-pointer menu-item {{item.Class}}"
+        (click)="contextMenuExecuteAction($event, item.Key)">
+        <div class="{{item.Icon}}"></div>
+        <div class="{{item.Class}} sub-menu">{{item.Text | translate}}
+
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+</dx-popover>
+
+<!-- Context menu avatar-->
+<dx-popover *ngIf="isContextPopoverAvatar" [(visible)]="isContextPopoverAvatar" class="fix-sub-menu"
+  [target]="popoverAvatarTarget" [width]="">
+  <dxo-position my="center top" at="center bottom"></dxo-position>
+  <div popover-content class="popover-avatar-master dis-flex dis-flex-column">
+    <div class="popover-avatar-div"><img src="{{srcAvatar}}">
+    </div>
+  </div>
+</dx-popover>
+
+
+<amis-popup-compare-update-field (onClosePopup)="visiblePopupUpdate = false" *ngIf="visiblePopupUpdate"
+  [title]="_titlePopupEdit" [visiblePopup]="visiblePopupUpdate" [groupFieldConfig]="currentGroupFieldConfig"
+  [dependentGroupFieldConfig]="dependentGroupFieldConfig" [currentValue]="selectedRowItem.CurrentValue"
+  [updateValue]="selectedRowItem.UpdateValue" [selfData]="selectedRowItem.DataUpdate">
+</amis-popup-compare-update-field>
+
+<amis-popup-base [width]="432" *ngIf="visibleRejectReason" [(visiblePopup)]="visibleRejectReason" [height]="232"
+  [title]="'REJECT_EMPLOYEE_UPDATE' | translate" (closePopup)="onHidden()">
+  <div contentPopup>
+    <div class="flex">
+      <amis-amis-control-textarea amisFirstFocus [value]="rejectReason" (valueChanged)="focusOutFieldReject($event)"
+        [labelText]="'REJECT_REASON' | translate" [labelClass]="'normal flex-grow-03 text-gray'"
+        [labelPositon]="'left'"></amis-amis-control-textarea>
+    </div>
+  </div>
+  <div buttonsPopup>
+    <amis-button #btnClose [color]="buttonColor.Normal" name="{{'CANCEL2' | translate}}" (click)="onHidden()">
+    </amis-button>
+    <amis-button name="{{'REJECT' | translate}}" [color]="buttonColor.RedPrimary" (click)="onClickReject()">
+    </amis-button>
+  </div>
+</amis-popup-base>
+
+<amis-popup-base [width]="432" *ngIf="visibleApproveReason" [(visiblePopup)]="visibleApproveReason"
+  [title]="'APPROVE2' | translate" (closePopup)="onHiddenPopupAprove()">
+  <div contentPopup>
+    <div class="flex-m">
+      {{"APPROVE_UPDATE_CONFIRM" | translate}}
+    </div>
+  </div>
+  <div buttonsPopup>
+    <amis-button #btnClose [color]="buttonColor.Normal" name="{{'CANCEL2' | translate}}"
+      (click)="onHiddenPopupAprove()">
+    </amis-button>
+    <amis-button name="{{'APPROVE' | translate}}" [color]="buttonColor.BluePrimary" (click)="onClickApprove()">
+    </amis-button>
+  </div>
+</amis-popup-base>
+
+<amis-popup-base [width]="432" *ngIf="visiblePopupConflictDependent" [(visiblePopup)]="visiblePopupConflictDependent"
+  [title]="'Xác nhận' | translate" (closePopup)="onHiddenPopupAprove()">
+  <div contentPopup>
+    <div class="flex-m">
+      &nbsp; <span >{{"Dữ liệu" | translate}} <span class="bold">{{conflictFieldOnEditText}}</span> sẽ bị ảnh hưởng khi sửa trường dữ
+        liệu này. Bạn có muốn tiếp tục không?</span>
+    </div>
+  </div>
+  <div buttonsPopup>
+    <amis-button #btnClose [color]="buttonColor.Normal" name="{{'CANCEL2' | translate}}"
+      (click)="visiblePopupConflictDependent = false">
+    </amis-button>
+    <amis-button name="{{'Tiếp tục' | translate}}" [color]="buttonColor.BluePrimary"
+      (click)="visiblePopupConflictDependent = false;visiblePopupUpdate = true">
+    </amis-button>
+  </div>
+</amis-popup-base>

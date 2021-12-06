@@ -1,0 +1,28 @@
+<div id="amis-rangdate" class="range-date width-100">
+    <input class="input-rangedate width-100" [(value)]="value" />
+    <div class="icon-range content-center"  (click)="showPopup()">
+      <div class="icon icon-teesheet"></div>
+    </div>
+</div>
+
+<dx-popup class="popup-rangedate" [width]="'auto'" height="'auto'" [showTitle]="false" title="Thêm tiêu chí, kỹ năng đánh giá" [dragEnabled]="true"
+  [closeOnOutsideClick]="true" [(visible)]="isShowPopup" [position]="{my: 'right top ', at: 'right bottom', of: '#amis-rangdate'}">
+  <div *dxTemplate="let data of 'content'">
+    <div class="mt-3 ml-3 mr-3 mb-3 dis-flex">
+      <dx-calendar class="mr-3" [(value)]="fromDate" (onValueChanged)="valueChangedDate()"></dx-calendar>
+      <dx-calendar class="ml-3" [(value)]="toDate" (onValueChanged)="valueChangedDate()"></dx-calendar>
+    </div>
+    <div class="dx-popup-footer">
+      <div class="float-left hei-100 content-center">
+        <span class="text-note" *ngIf="showFromDate || showToDate">Thời gian:</span>
+        <span class="text-note ml-1" *ngIf="showFromDate">{{showFromDate | date:"dd/MM/yyyy"}}</span>
+        <span class="text-note ml-1" *ngIf="showToDate && showFromDate"> - </span>
+        <span class="text-note ml-1" *ngIf="showToDate">{{showToDate | date:"dd/MM/yyyy"}}</span>
+      </div>
+      <div class="float-right">
+        <button class="btn btn-close" type="button" (click)="isShowPopup = false">Hủy bỏ</button>
+        <button class="btn btn-primary" type="button" (click)="apply()">Áp dụng</button>
+      </div>
+    </div>
+  </div>
+</dx-popup>

@@ -1,0 +1,67 @@
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-cls.scss";
+@import "../../../../assets/scss/var-icon.scss";
+@import "../../../../assets/scss/var-styleguide.scss";
+
+::ng-deep {
+
+    .bg-identified-employee{
+        position: fixed;
+        background-color: $background-gray;
+        z-index: 50;
+    }
+    .popup-identified-employee {
+
+        // .amis-custom-grid .dx-datagrid-borders>.dx-datagrid-headers,
+        // .amis-custom-grid .dx-datagrid-borders>.dx-datagrid-rowsview,
+        // .amis-custom-grid .dx-datagrid-borders>.dx-datagrid-total-footer {
+        //     max-height: 354px;
+        // }
+        .dflex-justify-content{
+            display: flex;
+            justify-content: center;
+        }
+        .input-import {
+            display: none;
+        }
+
+        .import-file {
+            border: 1px $border dashed;
+            height: 262px !important;
+            width: 100%;
+            border-radius: $border-radius;
+            font-size: $font-size-base;
+
+            .item-middle {
+                margin-bottom: 12px;
+                display: flex;
+                justify-content: center;
+                &:first-child {
+                    font-size: $font-size-strong;
+                }
+            }
+
+            .gray {
+                color: $text-grey;
+            }
+            .file-name-import{
+                font-size: $font-size-strong;
+            }
+            .error-upload{
+                font-size: $font-size-base;
+            }
+        }
+
+        .manage-file {
+            .amis-custom-grid {
+                overflow-x: hidden !important;
+            }
+
+            .grid-template {
+                border-radius: $border-radius;
+                border: 1px solid $border;
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+<div id="amis-area-chart">
+  <dx-chart [dataSource]="dataSource" [valueAxis]="{grid:{opacity: 0.2}}">
+  <dxo-adaptive-layout [width]="150" [height]="100" ></dxo-adaptive-layout>
+  <dxo-size [height]="height" ></dxo-size>
+  <dxi-series valueField="data2"  color="#5B97E4"></dxi-series>
+  <dxi-series valueField="data1" color="#35BE45"></dxi-series>
+  <dxo-common-series-settings hoverMode="none" #commonSeries [argumentField]="argumentField" type="area">
+  </dxo-common-series-settings>
+  <dxo-common-axis-settings>
+    <!-- <dxo-grid [visible]="true"></dxo-grid> -->
+    <dxo-tick [visible]="false"></dxo-tick>
+  </dxo-common-axis-settings>
+  <dxi-value-axis [allowDecimals]="false"></dxi-value-axis>
+  <!-- <dxo-margin [bottom]="40" [left]="50"></dxo-margin> -->
+  <dxo-argument-axis [valueMarginsEnabled]="false">
+
+  </dxo-argument-axis>
+  <dxo-legend [visible]="false" verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="right" paddingTop=40 TopMargin="50">
+  </dxo-legend>
+  <dxo-tooltip [enabled]="true"></dxo-tooltip>
+</dx-chart>
+
+</div>

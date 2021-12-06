@@ -1,0 +1,22 @@
+export enum TypeFilter {
+    Contains = "contains",
+    Notcontains = "notcontains",
+    Startswith = "startswith",
+    Endswith = "endswith",
+    Isnullorempty = "isnullorempty",
+    Hasvalue = "hasvalue",
+    Between = "between",
+    ToDay = "today",
+    ThisWeek = "thisweek",
+    ThisMonth = "thismonth",
+    ThisYear = "thisyear",
+    Yesterday = "yesterday",
+    PrevWeek = "prevweek",
+    PrevYear = "prevyear",
+    Tomorrow = "tomorrow",
+    NextWeek = "nextweek",
+    NextMonth = "nextmonth",
+    NextYear = "nextyear",
+    PrevMonth = "prevmonth",
+  }
+  

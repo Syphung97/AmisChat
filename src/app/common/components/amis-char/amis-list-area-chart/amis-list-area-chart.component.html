@@ -1,0 +1,18 @@
+<dx-chart [dataSource]="dataSource" id="list-chart" [valueAxis]="valueAxis">
+  <dxo-adaptive-layout [width]="50"></dxo-adaptive-layout>
+  <dxo-size [height]="height" ></dxo-size>
+  <dxi-series valueField="data2" color="#7A6FF0"></dxi-series>
+  <dxo-common-series-settings hoverMode="none" #commonSeries [argumentField]="argumentField" type="area">
+  </dxo-common-series-settings>
+  <dxo-common-axis-settings>
+    <dxo-grid [visible]="false"></dxo-grid>
+    <dxo-tick [visible]="false"></dxo-tick>
+  </dxo-common-axis-settings>
+  <!-- <dxo-margin [top]="10" ></dxo-margin> -->
+  <!-- <dxo-padding></dxo-padding> -->
+  <dxo-argument-axis [valueMarginsEnabled]="false"></dxo-argument-axis>
+  <dxo-legend [visible]="false" verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="right"
+    TopMargin="50">
+  </dxo-legend>
+  <dxo-tooltip [enabled]="true"></dxo-tooltip>
+</dx-chart>

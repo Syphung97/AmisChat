@@ -1,0 +1,26 @@
+@import "mixin";
+
+.themeMixin({
+  :host {
+    .sender{
+    }
+    .receiver-text {
+      background-color: #eeeeee;
+      max-width: 75%;
+      border-top-right-radius: 18px;
+      border-bottom-right-radius: 18px;
+      padding: 8px;
+      word-break: break-all;
+    }
+    .last-mess{
+      border-bottom-left-radius: 18px !important;
+      border-bottom-right-radius: 18px !important;
+      border-top-right-radius: 18px;
+    }
+    .first-mess{
+      border-top-left-radius: 18px !important;
+      border-top-right-radius: 18px !important;
+      border-bottom-right-radius: 18px;
+    }
+  }
+});

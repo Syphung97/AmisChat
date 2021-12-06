@@ -1,0 +1,13 @@
+@import "../../../assets/scss/var-color.scss";
+:host{
+    .amis-form-layout{
+        .amis-form-layout-container{
+            // padding: 0px 40px;
+        }
+    }
+    ::ng-deep{
+      .group-box{
+        background-color: $white;
+      }
+    }
+}

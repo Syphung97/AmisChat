@@ -1,0 +1,51 @@
+<div class="group-box dis-flex dis-flex-row" [ngSwitch]="groupbox.ColumnGroup">
+    <div class="group-row" *ngSwitchDefault>
+        <div class="left-group dis-flex dis-flex-column text-overflow">
+            <ng-container *ngFor="let item of groupbox.ColOne;let index = index;">
+                <div class="row-item text-overflow" [ngStyle]="{'margin': rowMargin}" *ngIf="item.IsUse">
+                    <amis-amis-control-field [labelClass]="_labelClass" [labelWidth]="_labelWidth"
+                        [subSystemCode]="_subSystemCode" [permissionCode]="_permissionCode"
+                        [isCallFromEmployeeApp]="isCallFromEmployeeApp" (afterUpdateField)="updatedField($event)"
+                        (afterUpdateFieldView)="updatedFieldView($event)" (focusOutField)="focusOut($event)"
+                        [isShowCustomData]="isShowCustomData" (valueChanged)="valueChange($event)" #field [item]="item"
+                        [isSubmit]="_isSubmit" (modelValueChanged)="ngModelValueChanged($event)" [typeShow]="_typeShow"
+                        (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)"
+                        (onTab)="handleTabForm($event)">
+                    </amis-amis-control-field>
+                </div>
+            </ng-container>
+        </div>
+        <div class="right-group dis-flex dis-flex-column">
+            <ng-container *ngFor="let item of groupbox.ColTwo;let index = index;">
+                <div class="row-item" [ngStyle]="{'margin': rowMargin}" *ngIf="item.IsUse">
+                    <amis-amis-control-field [labelClass]="_labelClass" [labelWidth]="_labelWidth"
+                        [subSystemCode]="_subSystemCode" [permissionCode]="_permissionCode"
+                        [isCallFromEmployeeApp]="isCallFromEmployeeApp" (afterUpdateField)="updatedField($event)"
+                        (afterUpdateFieldView)="updatedFieldView($event)" (focusOutField)="focusOut($event)"
+                        [isShowCustomData]="isShowCustomData" (valueChanged)="valueChange($event)" #field [item]="item"
+                        [isSubmit]="_isSubmit" (modelValueChanged)="ngModelValueChanged($event)" [typeShow]="_typeShow"
+                        (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)"
+                        (onTab)="handleTabForm($event)">
+                    </amis-amis-control-field>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="dis-flex dis-flex-row flex" *ngSwitchCase="1">
+        <div class="group-one-column dis-flex dis-flex-column ">
+            <ng-container *ngFor="let item of groupbox.GroupFieldConfigs;let index = index;">
+                <div class="row-item" [ngStyle]="{'margin': rowMargin}" *ngIf="item.IsUse">
+                    <amis-amis-control-field [labelClass]="_labelClass" [labelWidth]="_labelWidth"
+                        [subSystemCode]="_subSystemCode" [permissionCode]="_permissionCode" [labelClass]="labelClass"
+                        (afterUpdateField)="updatedField($event)" [tabIndex]="item.SortOrder"
+                        [isCallFromEmployeeApp]="isCallFromEmployeeApp" (focusOutField)="focusOut($event)"
+                        (afterUpdateFieldView)="updatedFieldView($event)" (valueChanged)="valueChange($event)" #field
+                        [isShowCustomData]="isShowCustomData" [item]="item" [isSubmit]="_isSubmit"
+                        [typeShow]="_typeShow" (modelValueChanged)="ngModelValueChanged($event)"
+                        (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+                    </amis-amis-control-field>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

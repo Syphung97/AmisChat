@@ -1,0 +1,23 @@
+<amis-popup-base  [(visiblePopup)]="visible" [width]="'500px'" [title]="'Gửi thông báo tự cập nhật hồ sơ'"
+  (closePopup)="closePopup()">
+  <div contentPopup class="popup-request">
+    <!-- <div>
+      <amis-amis-control-field [item]="groupFieldText" [typeShow]="typeShowControlCurrent"></amis-amis-control-field>
+    </div>
+    <div class="m-t-16">
+      <amis-amis-control-field [item]="groupFieldTag" [typeShow]="typeShowControlCurrent"></amis-amis-control-field>
+    </div> -->
+
+    <amis-amis-control-form-group [listGroupbox]="groupConfig" [isSubmit]="isSubmit" [typeShow]="typeShowControlCurrent"
+      [masterField]="'JobPositionRoleID'"  [isDisplayHeader]="false"
+      [formMode]="formModeEntity.Insert" (afterValidatedForm)="afterValidated($event)" (afterUpdateField)="updatedField($event)"
+      (valueFieldChanged)="valueFieldChanged($event)">
+    </amis-amis-control-form-group>
+  </div>
+  <div buttonsPopup>
+    <amis-button (clickButton)="closePopup()" [color]="buttonColor.Normal" [type]="buttonType.OnlyText"
+      name="{{'CANCEL2'|translate}}"></amis-button>
+    <amis-button (clickButton)="sendRequest()" [color]="buttonColor.BluePrimary" [type]="buttonType.OnlyText"
+      name="{{'SEND'|translate}}"></amis-button>
+  </div>
+</amis-popup-base>

@@ -1,0 +1,188 @@
+/* #region basic */
+
+$black: #000000;
+$white: #ffffff;
+$menu: #052946;
+$highlight: #2196f3;
+$red: #e8384f;
+$orange: #fe7f01;
+$blue: #2196f3;
+$line: #d4d4d4; // Màu dòng kẻ
+$line-2: #a2a2a2; // Màu dòng kẻ
+$bg-scroll: #9e9e9e;
+$bg-scroll-hover: #757575;
+$bg-scroll-press: #666666;
+$bg-scroll-track: #ebebeb;
+$bg-select: #e1eeff;
+$bg-sidebar: #fafafa; //Màu bg side bar
+$bg-selected: #DEEEF9;
+$bg-hover: #bbd9fb;
+$bg-icon-default: #616161;
+// $bg-hover: #deeef9;
+$bg-hover: #e4f7ff;
+$bg-row: #f5f5f5;
+$bg-icon: #eeeeef;
+$bg-count: #ebebeb;
+
+$bg-dropdown-hover: #ebebeb;
+
+$bg-popover: #4c4c4c;
+/* #endregion */
+
+/* #region màu text*/
+
+// Màu text default
+$text: #1f1f1f;
+// Màu xám
+$text-grey: #666666;
+// Màu xám nhạt
+$text-grey-2: #597184;
+// Màu bạc
+$text-silver: #96a7b5;
+// Màu xanh dương
+$text-blue: #2196f3;
+// Màu xanh lá
+$text-green: #28aa37;
+// Màu placeholder
+$text-placeholder: #9e9e9e;
+// Màu text nhỏ
+$text-detail: #8d8d8d;
+
+/* #endregion */
+
+// #region
+$hover: #e8f2fe;
+$selected: #1c80f2;
+$bg-navbar-search: #F1F3F4;
+// #endregion
+
+// #region side bar
+$bd-main-sidebar: #e1e1e1;
+$bg-main-sidebar: #0a2747;
+$bg-main-sidebar-active: #003d80;
+$text-color-main-sidebar: #c5ccd5;
+
+// #endregion
+
+/* #region button */
+
+$btn-link: #1c80f2;
+$btn-link-hover: #2c8eff;
+
+$box-shadow-btn-1: 0px 2px 15px rgba(42, 126, 252, 0.25);
+$box-shadow-drd: 0 3px 6px rgba(0, 0, 0, .16);
+
+
+
+
+//button
+// $bg-primary: #2CB84B;
+// $bg-secondary: #07121a;
+// $bg-title-news: #EFEFEF;
+
+// #region button mới
+
+//button nền xanh chữ trắng
+
+//blue primary
+$bg-btn-blue-primary: #1c80f2;
+$bg-btn-blue-primary-hover: #2b8fff;
+$bg-btn-blue-primary-press: #1766c2;
+$bg-btn-blue-primary-active: #2d8eff;
+$bg-svg-btn-blue-primary: #ffffff;
+
+//blue secondary
+$bd-btn-blue-secondary: #1c80f2;
+$bg-btn-blue-secondary: #e8f2fe;
+$bg-btn-blue-secondary-hover: #d2e7fc;
+$bg-btn-blue-secondary-press: #bad0ff;
+$bg-btn-blue-secondary-active: #d2e6fc;
+$bg-svg-btn-blue-secondary: #2566e9;
+
+//button nền đỏ chữ trắng
+$bg-btn-red-primary: #e61d1d;
+$bg-btn-red-primary-hover: #d81010;
+$bg-btn-red-primary-press: #c40d0d;
+$bg-btn-red-primary-active: #d81010;
+$bg-svg-btn-red-primary: #ffffff;
+
+//button nền đỏ chữ trắng
+$bg-btn-red-secondary: #ffe2e2;
+$bg-btn-red-secondary-hover: #ffe2e2;
+$bg-btn-red-secondary-press: #fbb1b1;
+$bg-btn-red-secondary-active: #fec8c8;
+$bg-svg-btn-red-secondary: #e61d1d;
+
+
+//button màu xám
+$bg-btn-normal: #f2f2f2;
+$bg-btn-normal-hover: #ebebeb;
+$bg-btn-normal-press: #e0e0e0;
+$bg-btn-normal-active: #ebebeb;
+$bg-svg-btn-normal: #1f1f1f;
+
+//button màu trắng
+$bg-btn-white: #ffffff;
+$bg-btn-orange: #fe7f01;
+$bg-btn-white-hover: #e8f2fe;
+$bd-btn-white-hover: #2566e9;
+$bg-btn-white-press: #bbd9fb;
+$bg-btn-white-active: #e8f2fe;
+
+// #endgion
+
+// #region css màu icon
+$bg-icon-hover: #f2f2f2;
+$bg-icon-press: #ebebeb;
+
+// #endgion
+//button nền trắng chữ đỏ
+// $bg-btn-red-focus: #ffffff;
+$bg-svg-btn-red: #ff1d1d;
+$bg-svg-btn-red-hover: #ffffff;
+
+//button chữ xanh - không có background
+$cl-btn-text: #2196f3;
+
+/* #endregion */
+
+/* #region màu border */
+
+// border default
+$border: #e0e0e0;
+$border-2: #1f1f1f;
+
+/* #endregion */
+
+/* #region màu disable */
+
+// background disable
+$bg-disable: #f5f5f5;
+
+/* #endregion */
+
+
+/* #region màu icon */
+
+// default
+$default-icon: #666666;
+$sidebar-icon: #c5ccd5;
+$black-icon: #1f1f1f;
+$gray-icon: #969ca5;
+$icon-color-active: #2566E9;
+$bg-icon-active: #D1E0FF;
+
+/* #endregion */
+
+/* #region màu phụ */
+$importance-color: #fd612c;
+$instancy-color: #e8384f;
+/* #endregion */
+
+$background-gray: #eeeeee;
+
+$bg-approval: #f3faff;
+
+$text-highlight-not-found: #2193f3;
+
+$focus-row-grid: #FFF4E5;

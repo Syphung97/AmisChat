@@ -1,0 +1,36 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" (readyPopup)="readyPopup($event)" (shownPopup)="showPopup($event)" [height]="height" [width]="width" [offsetY]="'0 150px'"
+  (closePopup)="onClosePopup()" class="popup-base-add-data">
+  <div contentPopup>
+    <div class="custom-row popup-update-user-multiple control-validate dis-flex control-parentid">
+      <div class="flex control-content">
+        <dx-select-box tabindex="0" #select [(value)]="groupConfigID" class="m-b-10" [searchExpr]="['CaptionSearch','Caption']" [searchEnabled]="true" valueExpr="GroupFieldConfigID"
+          displayExpr="Caption" (onClosed)="closeBoxSelectControl($event)" (onOpened)="openBoxSelectControl($event)" (onItemClick)="slelectField($event)" (onValueChanged)="changeSelect($event)" placeholder="{{'SELECT_FIELD' | translate}}" [items]="listFieldUpdate">
+        </dx-select-box>
+      </div>
+      <div class="operater">=</div>
+      <div class="group-control-item">
+        <div *ngIf="!isNotControl">
+          <amis-amis-control-field tabindex="1" #field *ngIf="!!groupSelectItem" [labelWidth]="'0'" (valueChanged)="valueChange($event)" [item]="groupSelectItem"
+            [typeShow]="_typeShow" [isShowLable]="false" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+          </amis-amis-control-field>
+        </div>
+        <div *ngIf="isNotControl" class="flex control-item disable"></div>
+      </div>
+    </div>
+  </div>
+  <div buttonsPopup>
+    <amis-button [color]="buttonColor.Normal" tabindex="3" name="Hủy" (clickButton)="onClosePopup()"></amis-button>
+    <amis-button #btnsave tabindex="2" [isDisable]="isDisableSave" [color]="buttonColor.BluePrimary" name="Lưu" (clickButton)="saveUserMutiple()"></amis-button>
+  </div>
+</amis-popup-base>
+
+<!-- poup thông báo || xác nhận hủy -->
+<amis-popup-notify title="{{'HRM_SETTING_JOB_ROLE_NOTIFY'|translate}}" [visiblePopup]="visibleNotify" (onContentReady)="readyPopupNoti($event)" *ngIf="visibleNotify"
+  (closePopup)="cancelPopupNotify()">
+  <div textContentPopupConfirm>
+    <div [innerHTML]="contentNotify"></div>
+  </div>
+  <div amisButtons>
+    <amis-button (clickButton)="cancelPopupNotify()" [color]="buttonColor.Normal" [type]="buttonType.OnlyText" name="{{'CLOSE'|translate}}"></amis-button>
+  </div>
+</amis-popup-notify>

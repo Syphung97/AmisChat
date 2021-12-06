@@ -1,0 +1,36 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+
+::ng-deep {
+  body {
+    overflow: hidden;
+  }
+  .custom-legendary {
+    .square {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    .legendary-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .item {
+        margin-bottom: 12px;
+      }
+    }
+  }
+  .dxc.dxc-chart {
+    margin: auto;
+  }
+
+  .dxc-tooltip {
+    overflow: unset !important;
+
+    svg {
+      overflow: unset !important;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div class="empty-state-view" [class.non-margin-view]="isUseOuterMargin" [style.padding-top]="topSpace">
+    <div class="container">
+        <div class="{{emptyStateIcon}} empty-state-icon">
+        </div>
+        <div class="bold font-20">
+            {{emptyText}}
+        </div>
+        <div class="font-16 text-gray mt-2 mb-3">
+            {{guideText}}
+        </div>
+        <amis-button *ngIf="buttonName" [name]="buttonName" [iconLeft]="iconButton"
+            [isIgnorePermission]="isIgnorePermission" (passPermissionClick)="onClickButton($event)"
+            subSystemCode="{{subSystemCode}}" permissionCode="{{permissionCode}}"></amis-button>
+        <div class="empty-view-buttons">
+            <ng-content select=[buttons]></ng-content>
+        </div>
+    </div>
+</div>

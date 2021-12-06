@@ -1,0 +1,80 @@
+@import "../../../../../assets/scss/var-color.scss";
+@import "../../../../../assets/scss/var-icon.scss";
+
+:host {
+  ::ng-deep {
+    .dx-texteditor-input {
+      padding-right: 0 !important;
+    }
+  }
+
+  .report-paging {
+    background-color: $white !important;
+  }
+
+  .paging {
+    background-color: $white;
+    padding: 10px 16px;
+    border-top: 1px solid $header-footer-border;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    height: 56px;
+    .custom-flex {
+      flex-shrink: 0;
+      .wrap-button {
+        text-align: center;
+      }
+    }
+
+    .total {
+      font-weight: 700;
+    }
+
+    .control-paging {
+      align-items: center;
+      .start,
+      .end {
+        margin: 0;
+      }
+      .icon-left {
+        margin-left: 16px;
+      }
+      .icon-left:hover,
+      .icon-right:hover {
+        cursor: pointer;
+      }
+
+      .text-paging {
+        margin-top: 2px;
+      }
+    }
+
+    .app-dropdown {
+      top: -138px !important;
+      right: 0;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    }
+
+    .ic-svg {
+      cursor: pointer;
+      margin: 8px;
+    }
+
+    .custom-style {
+      letter-spacing: 0.196px;
+      color: $highlight;
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
+
+  .disabled-button {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  .paging-selection {
+    margin-right: 16px;
+  }
+}

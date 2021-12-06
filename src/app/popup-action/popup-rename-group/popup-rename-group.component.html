@@ -1,0 +1,16 @@
+<amis-popup [isVisible]="isVisible" [title]="'Đổi tên nhóm'" [width]="'475px'" (onCancel)="closePopup($event)">
+    <div content class="content-rename-group">
+        <input [(ngModel)]="_conversation.name" class="input-rename-group" amisAutoFocus [autofocus]="true"
+            placeholder="Nhập vào tên nhóm" (keyup)="enterChangeNameGroup($event)">
+    </div>
+    <div footer class="footer-rename-group">
+        <div class="btn-function">
+            <div class="btn-close m-r-16" (click)="close()">
+                <span class="btn-close-text">{{"BUTTON.CANCEL_2" | translate}}</span>
+            </div>
+            <div class="btn-rename-group" (click)="changeGroupName()" >
+                <span class="btn-rename-text">{{"BUTTON.SAVE" | translate}}</span>
+            </div>
+        </div>
+    </div>
+</amis-popup>

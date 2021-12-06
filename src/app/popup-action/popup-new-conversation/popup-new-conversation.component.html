@@ -1,0 +1,71 @@
+<!-- Tạo nhóm mới, cuộc trò chuyện mới -->
+<amis-popup [isVisible]="isVisible" (onCancel)="close()" [title]="'Tạo nhóm'" [width]="'732px'">
+    <div content class="content-created-group">
+        <div class="name-group m-b-16">
+            <span class="">Tên nhóm</span>
+            <nz-input-group   >
+                <input placeholder="Tên nhóm không bắt buộc" nz-input  />
+              </nz-input-group>
+
+        </div>
+        <div class="add-users m-b-16">
+            <div>Thêm thành viên</div>
+            <div class="flex">
+                <div class="search-user m-r-16">
+                    <nz-input-group nzSize="large"  [nzSuffix]="suffixIconSearch" >
+                        <input placeholder="Tìm kiếm" nz-input  />
+                      </nz-input-group>
+                      <ng-template #suffixIconSearch>
+                        <i nz-icon nzType="search" class="icon-search-chat"></i>
+                      </ng-template>
+                </div>
+                <div class="dropdown-company">
+                    <nz-input-group nzCompact>
+                        <nz-select [(ngModel)]="misa" class="select-company">
+                          <nz-option [nzLabel]="misa" [nzValue]="misa"></nz-option>
+
+                        </nz-select>
+                      </nz-input-group>
+                </div>
+            </div>
+        </div>
+        <div class="selected-user">
+
+            <div class="info-user-selected flex" *ngFor="let user of users" (click)="selectedItems(user)">
+                <input class="checked m-r-16 cur" [(ngModel)]="user.checked" type="checkbox"  value="{{user.userID}}" id="{{user.userID}}">
+                <label  class="label-user-info flex cur">
+                    <div class="m-r-16">
+                        <amis-avatar></amis-avatar>
+                    </div>
+                    <div>
+                        <div class="user-name m-r-16">{{user.name}}</div>
+                        <div class="user-department">{{user.avatar}}</div>
+                    </div>
+                </label>
+
+            </div>
+
+        </div>
+    </div>
+    <div footer class="footer-created-group">
+        <div class="flex">
+            <div class="select-all-user m-l-24 m-r-32 cur"  (change)="selectAll()">
+                <input class="checked m-r-16  cur" [(ngModel)]="allChecked" type="checkbox">
+                <div  class="cur">Chọn tất cả</div>
+
+            </div>
+            <div class="selected-users">
+                <span>Đã chọn: {{countUser}}</span>
+                <div class="amount-user"></div>
+            </div>
+        </div>
+        <div class="btn-function">
+            <div class="btn-close m-r-16" (click)="close()">
+                <span class="btn-close-text">Hủy</span>
+            </div>
+            <div class="btn-ceated-group">
+                <span class="btn-created-text">Tạo</span>
+            </div>
+        </div>
+    </div>
+</amis-popup>

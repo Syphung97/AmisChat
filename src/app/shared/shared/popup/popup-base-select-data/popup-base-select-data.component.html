@@ -1,0 +1,71 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" [height]="height" [width]="popupWidth?popupWidth:750"
+    [offsetY]="offsetY">
+    <div contentPopup class="popup-base-select-data">
+        <div class="dis-flex dis-align-items-center dis-justify-content-between mb-3">
+            <div class="dis-flex dis-align-items-center">
+                <div #searchTextBox>
+                    <dx-text-box mode="search" [(value)]="searchName" class="search-box"
+                        (onValueChanged)="changeTextBoxValue($event)" (onKeyUp)="onKeyupSearchBox($event)"
+                        placeholder="{{'SEARCH' | translate}}">
+                    </dx-text-box>
+                </div>
+                <div *ngIf="countRecord>0 && !isSingleSelection" class=" d-flex align-items-center ml-3">
+                    <div>{{'GRID_SELECTED'|translate}} <span class="count-record">{{countRecord}}</span></div>
+                    <div *ngIf="!isSingleSelection" class="ml-4 mr-4 text-red cursor-pointer"
+                        (click)="removeSelectedRecord()">
+                        {{'GRID_UNSELECT'|translate}}</div>
+                </div>
+                <div *ngIf="selectedData?.length && isSingleSelection" class="ml-3 selected-item">
+                    {{'GRID_SELECTED'|translate}} <span class="bold"> {{selectedData[0][displayExpr]}} </span>
+                </div>
+            </div>
+            <div *ngIf="isModifiable">
+                <amis-button [color]="buttonColor.BlueWhiteSecondary" iconLeft="icon-plus" name="{{'QUICK_ADD'|translate}} "
+                    (clickButton)="showPopupAdd()">
+                </amis-button>
+            </div>
+        </div>
+
+        <amis-paging-grid #pagingGrid *ngIf="isLoadGrid" [isPageSizeEditable]="false" [isShowPaging]="!isGetAllData"
+            (chooseRecord)="chooseRecord($event)" [totalRecord]="totalRecord" [gridHeight]="gridHeight"
+            [dataSource]="dataSource" [selectedItems]="selectedData" [columns]="columns"
+            [pageSize]="requestParams.PageSize" [valueExpr]="valueExpr" [showNavigationButtons]="true"
+            [allowColumnResizing]="false" [showBorders]="true" [isShowCustomColumn]="false"
+            [isShowMoreOption]="isModifiable" [isSingleSelection]="isSingleSelection" (loadDataPaging)="getData($event)"
+            [isBorderGrid]="true" [contextMenuList]="listOption"
+            (clickViewMoreRow)="viewMoreRow($event)" (contextMenuAction)="contextMenuExecuteAction($event)">
+            <!-- <div popovergrid>
+                <div *ngFor="let item of listOption; let index=index" class="item-option-popover" (click)="selectOption(item.Key)">
+                </div>
+            </div> -->
+        </amis-paging-grid>
+
+    </div>
+    <div buttonsPopup>
+        <amis-button [color]="buttonColor.Normal" name="{{'CANCEL2'|translate}}" (clickButton)="onClosePopup()">
+        </amis-button>
+        <amis-button name="{{'SELECT'|translate}}" (clickButton)="onSelectData()"></amis-button>
+    </div>
+</amis-popup-base>
+
+<amis-popup-base-add-data *ngIf="visiblePopupAdd" [visiblePopup]="visiblePopupAdd" [title]="titlePopup"
+    [formMode]="formMode" [groupConfig]="_groupConfig" (closePopup)="visiblePopupAdd = false"
+    [modelController]="_subSystemCode" [currentItem]="currentItem" [fieldName]="fieldName" [valueExpr]="valueExpr"
+    (onDataChange)="onDataChange($event)">
+</amis-popup-base-add-data>
+
+<amis-popup-delete *ngIf="popupDelete.VisiblePopupDelete" [title]="popupDelete.TitlePopupDelete"
+    [visiblePopup]="popupDelete.VisiblePopupDelete" [content]="popupDelete.ContentPopupDelete"
+    (eventDelete)="confirmPopupDelete($event)" (eventHiddenPopup)="cancelPopupDelete($event)"></amis-popup-delete>
+
+<!-- poup thông báo xóa vai trò -->
+<amis-popup-notify [title]="popupNotifyTitle" [visiblePopup]="visibleNotify" *ngIf="visibleNotify"
+    (closePopup)="visibleNotify = false">
+    <div textContentPopupConfirm>
+        {{popupNotifyContent}}
+    </div>
+    <div amisButtons>
+        <amis-button [color]="buttonColor.Normal" name="{{'CLOSE'|translate}}" (clickButton)="visibleNotify = false">
+        </amis-button>
+    </div>
+</amis-popup-notify>

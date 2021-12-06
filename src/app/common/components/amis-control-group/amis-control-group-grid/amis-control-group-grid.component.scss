@@ -1,0 +1,269 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font-family.scss";
+@import "../../../../assets/scss/var-dx-styles.scss";
+@import "../../../../assets/scss/var-cls.scss";
+@import "../../../../assets/scss/var-icon.scss";
+
+$radius: 4px;
+
+:host {
+  .menu-options{
+    height: 27px;
+  }
+  ::ng-deep .amis-control-group-grid {
+    .dx-icon-repeats {
+      &::before {
+        content: "";
+        width: 24px;
+        height: 24px;
+        // padding: 0 5px;
+        -webkit-mask-image: $link-icon;
+        -moz-mask-image: $link-icon;
+        -ms-mask-image: $link-icon;
+        -o-mask-image: $link-icon;
+        mask-image: $link-icon;
+        -webkit-mask-position: -192px 0px;
+        -moz-mask-position: -192px 0px;
+        -ms-mask-position: -192px 0px;
+        -o-mask-position: -192px 0px;
+        mask-position: -192px 0px;
+        -webkit-mask-repeat: no-repeat;
+        -moz-mask-repeat: no-repeat;
+        -ms-mask-repeat: no-repeat;
+        -o-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        background-color: #666666;
+      }
+    }
+    .dx-row.dx-header-row {
+      line-height: 30px;
+      background-color: #f1f1f1;
+    }
+
+    .dx-header-row > td > .dx-datagrid-text-content {
+      white-space: white-space !important;
+      vertical-align: middle !important;
+    }
+
+    .dx-datagrid-content .dx-datagrid-table .dx-row > td, .dx-datagrid-content .dx-datagrid-table .dx-row > tr > td {
+      vertical-align: middle !important;
+    }
+
+    .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+      &:nth-child(n + 3) {
+        // border-right: 1px solid $border;
+      }
+    }
+    .dx-row.dx-data-row {
+      line-height: 30px;
+      // &:hover{
+      //   background-color: $bg-select;
+      // }
+      &:nth-child(2n + 1) {
+        background-color: $bg-disable;
+      }
+
+      // .dx-command-select.dx-editor-cell.dx-editor-inline-block.dx-cell-focus-disabled {
+      //   padding-left: 48px;
+      // }
+
+      &:hover {
+        .dx-icon-repeats {
+          &::before {
+            content: "\f06c";
+            width: 24px;
+            height: 24px;
+            padding: 0 5px;
+            -webkit-mask-image: $link-icon;
+            -moz-mask-image: $link-icon;
+            -ms-mask-image: $link-icon;
+            -o-mask-image: $link-icon;
+            mask-image: $link-icon;
+            -webkit-mask-position: -192px 0px;
+            -moz-mask-position: -192px 0px;
+            -ms-mask-position: -192px 0px;
+            -o-mask-position: -192px 0px;
+            mask-position: -192px 0px;
+            -webkit-mask-repeat: no-repeat;
+            -moz-mask-repeat: no-repeat;
+            -ms-mask-repeat: no-repeat;
+            -o-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            background-color: #666666;
+          }
+        }
+        .viewmore {
+          display: block;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+        border-bottom: none;
+    }
+
+    .dx-datagrid-rowsview
+      .dx-selection.dx-row:not(.dx-row-focused):hover:not(.dx-row-lines)
+      > td,
+    .dx-datagrid-rowsview
+      .dx-selection.dx-row:not(.dx-row-focused):not(.dx-row-lines)
+      > td {
+      border-top: 1px solid $bg-btn-normal-press;
+      border-bottom: 1px solid $bg-btn-normal-press;
+    }
+
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td,
+    .dx-datagrid-rowsview
+      .dx-selection.dx-row:not(.dx-row-focused):hover
+      > tr
+      > td {
+      background-color: $focus-row-grid;
+      color: $border-2;
+    }
+    .dx-template-wrapper {
+      flex-wrap: wrap;
+      line-height: 16px;
+    }
+
+    .dx-command-select {
+      width: 88px !important;
+      min-width: 88px !important;
+      max-width: 88px !important;
+      text-align: left !important;
+      .dx-select-checkbox {
+        padding-left: 4px !important;
+        // width: 72px !important;
+      }
+
+      .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-select {
+        padding-left: 48px !important;
+      }
+    }
+    .search-column {
+      input {
+        border: none !important;
+        border-bottom: 1px solid $border !important;
+        @include border-radius($radius !important);
+      }
+    }
+    .checkbox-item {
+      .dx-checkbox-text {
+        white-space: nowrap !important;
+      }
+    }
+  }
+
+  .hrm-container-grid {
+    height: 100%;
+    @include border-radius($border-radius-8);
+    background: $white;
+
+    .custom-title {
+      font-weight: $font-weight-bold;
+      color: $black;
+      padding: 4px auto;
+    }
+    .custom-cell {
+      font-size: $font-size-small !important;
+    }
+
+    .hrm-grid {
+    //   overflow-x: auto;
+    }
+  }
+
+  .app-dropdown {
+    // padding: 16px !important;
+    top: 30px !important;
+    left: 0px !important;
+    width: 240px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+
+    .drop-header {
+      margin-bottom: 20px;
+      margin-top: 16px;
+      padding: 0 16px;
+    }
+
+    .search-column-custom {
+      margin: 12px 16px;
+      @include border-radius($radius);
+      border: 1px solid $border;
+
+      input {
+        width: 100%;
+        border: none;
+      }
+    }
+
+    .item {
+      height: 40px;
+      margin: 0 8px;
+      padding: 0 8px;
+      @include border-radius(4px);
+      &:hover {
+        background-color: $bg-count;
+        cursor: pointer;
+        .ic-sort-order {
+          display: inline-block;
+          min-width: 16px;
+          cursor: all-scroll;
+        }
+      }
+
+      .checkbox-item {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .ic-sort-order {
+    min-width: 16px;
+  }
+  .drop-content {
+    max-height: 400px;
+    min-height: 200px;
+  }
+
+  .drop-footer {
+    border-top: 1px solid $border;
+    padding: 12px 16px;
+    margin-top: 32px;
+  }
+
+  .search-input {
+    border-color: unset !important;
+  }
+
+  .column-chooser {
+    position: absolute;
+    top: 4px;
+    left: 10px;
+    z-index: 11;
+    cursor: pointer;
+  }
+  .viewmore {
+    margin: 0 auto;
+    display: none;
+    cursor: pointer;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    @include border-radius(50%);
+    color: $white;
+  }
+
+  .group-grid-nodata {
+    i{
+      color: $nodata-report;
+    }
+  }
+}

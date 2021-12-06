@@ -1,0 +1,37 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="title" [width]="800" [height]="450" [offsetY]="'50px 100px'"
+  (closePopup)="cancel()">
+  <div contentPopup>
+    <ng-container *ngIf="isLoading && groupConfigs?.length > 0">
+      <div class="dis-flex dis-flex-row dis-justify-content-between wrapper-container ml-4">
+        <div *ngFor="let item of groupConfigs;let idx = index">
+          <div class="custom-checkbox dis-flex dis-align-items-center">
+            <dx-check-box [value]="item.Value" [width]="230" text="{{item.GroupConfigName}}"
+              (onValueChanged)="valueChanged($event, item)"></dx-check-box>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <amis-loading *ngIf=" !isLoading" [text]="textLoading" [position]="positionLoad">
+    </amis-loading>
+  </div>
+
+  <div buttonsPopup class="d-flex dis-align-items-center">
+    <div class="pos-absolute d-flex dis-align-content-center align-content-between select-all-option">
+      <div class="dis-flex cursor-pointer" (click)="chooseTotalEvent()" *ngIf="isLoading && groupConfigs?.length > 0">
+        <div class="mr-1" 
+          [class.checked-square-icon]="groupConfigs?.length == listSelectedItems?.length"
+          [class.uncheck-square-icon]="groupConfigs?.length != listSelectedItems?.length"
+          title="Chọn tất cả các phân hệ"></div>
+        <div class="pt-1">
+          {{'ALL'|translate}}
+        </div>
+      </div>
+    </div>
+    <div class="button-deduct-income">
+      <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2'|translate}}" [type]="buttonType.OnlyText"
+        [color]="buttonColor.Normal"></amis-button>
+      <amis-button name="{{'CONTEXT_MENU_PRINT'|translate}}" [class.disabled]="listSelectedItems?.length == 0"
+        [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary" (clickButton)="printAction()"></amis-button>
+    </div>
+  </div>
+</amis-popup-base>

@@ -1,0 +1,60 @@
+<dx-chart id="amis-colhorizontal-chart" [dataSource]="dataSource" equalBarWidth="false" [barGroupPadding]="0.2"
+  [rotated]="true" [barGroupWidth]="30" >
+  <dxo-adaptive-layout [width]="150" [height]="60"></dxo-adaptive-layout>
+  <dxo-size [height]="height"></dxo-size>
+  <dxo-common-series-settings [argumentField]="argumentField" [valueField]="valueField" type="bar" [barWidth]="15">
+  </dxo-common-series-settings>
+  <dxi-value-axis [allowDecimals]="false">
+    <dxi-constant-line [width]="2" [value]="averageDone" color="#35be45" dashStyle="dash">
+      <dxo-label text=""></dxo-label>
+    </dxi-constant-line>
+    <dxi-constant-line [width]="2" [value]="averageUnDone" color="#8DA3A6" dashStyle="dash">
+      <dxo-label text=""></dxo-label>
+    </dxi-constant-line>
+    <!-- <dxo-label [customizeText]="customizeText"></dxo-label> -->
+  </dxi-value-axis>
+  <dxo-common-axis-settings>
+    <dxo-grid [visible]="false"></dxo-grid>
+    <dxo-tick [visible]="false"></dxo-tick>
+    <!-- <dxo-minor-tick visible= "false"></dxo-minor-tick> -->
+  </dxo-common-axis-settings>
+  <dxo-series-template nameField="textLegend" [customizeSeries]="customizeSeries"></dxo-series-template>
+
+
+  <dxo-legend [visible]="visibleLegend" horizontalAlignment="center" verticalAlignment="bottom" position="outside"
+    orientation="horizontal"></dxo-legend>
+
+  <dxo-tooltip [enabled]="true" location="edge" paddingTopBottom="5" paddingLeftRight="10" position='top'>
+  </dxo-tooltip>
+  <!-- <dxo-scroll-bar [visible]="true" [width]="5" color="#d6d6d6"></dxo-scroll-bar> -->
+</dx-chart>
+
+<div class="lenged-chart-col" >
+  <div class="dis-flex justify-content-center m-b-10 textbottom">
+    <p class="m-b-0" >{{labelBottom}}</p>
+  </div>
+  <div class="dis-flex justify-content-lg-between legend">
+    <div class="align-items-center dis-flex legend1 ">
+      <div class="icon"></div>
+      <p class="text-legend-1">{{Arraylenged[0]}}</p>
+    </div>
+    <div class="align-items-center dis-flex legend2">
+      <div class="icon-2"></div>
+      <p class="text-legend-2">{{Arraylenged[1]}}</p>
+    </div>
+    <div class="align-items-center dis-flex legend1">
+      <div class="align-items-center dis-flex icon-tb justify-content-center tb-blue">
+        <div class="line-1"></div>
+        <div class="line-2"></div>
+      </div>
+      <p class="text-legend-1">{{Arraylenged[2]}}</p>
+    </div>
+    <div class="align-items-center dis-flex legend2">
+      <div class="align-items-center dis-flex icon-tb justify-content-center tb-green">
+        <div class="line-1"></div>
+        <div class="line-2"></div>
+      </div>
+      <p class="text-legend-2">{{Arraylenged[3]}}</p>
+    </div>
+  </div>
+</div>

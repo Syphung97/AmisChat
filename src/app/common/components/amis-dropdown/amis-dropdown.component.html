@@ -1,0 +1,15 @@
+<div class="box-drop-temp w-100">
+  <div #dropdown class="w-100 dis-flex cursor">
+    <div class="m-r-4 name-select text-overflow" title="{{selectedItem[display]}}">{{selectedItem[display]}}</div>
+    <div class="ic-drop icon-caret-down"></div>
+  </div>
+  <div [hidden]="isShowDropdown" class="app-dropdown custom-drop">
+    <div *ngFor="let item of listItem" (click)="onSelectItem(item)"
+      class="app-dropdown-item dis-flex dis-align-items-center" [class.selected]="item[key] == selectedItem[key]">
+      <div *ngIf="!isNoWrap" class="flex m-r-10 filter-name "> {{item[display]}} </div>
+      <div *ngIf="isNoWrap" title="{{item[display]}}" class="text-overflow flex m-r-10 filter-name">{{item[display]}}
+      </div>
+      <div *ngIf="item[key] == selectedItem[key]" class="icon-tick-blue ml-2 icon-selected"></div>
+    </div>
+  </div>
+</div>

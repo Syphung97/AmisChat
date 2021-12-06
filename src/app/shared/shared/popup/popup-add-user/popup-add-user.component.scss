@@ -1,0 +1,85 @@
+@import "../../../../assets/scss/var-cls.scss";
+::ng-deep {
+  .setting-user-list-content {
+    .wrapper-button {
+      display: block !important;
+    }
+    .icon-dot {
+      &.active {
+        background-color: $active-content;
+      }
+    }
+    .active-status {
+      color: $active-content;
+    }
+
+    .icon-dot {
+      &.approved {
+        background-color: $importance-color !important;
+      }
+    }
+    .approved-status {
+      color: $importance-color;
+    }
+
+    .icon-dot {
+      &.not-active {
+        background-color: $default-icon;
+      }
+    }
+    .not-active-status {
+      color: $default-icon;
+    }
+
+    .icon-dot {
+      &.inactive {
+        background-color: $default-icon;
+      }
+    }
+    .inactive-status {
+      color: $default-icon;
+    }
+
+    .icon-dot {
+      &.delete {
+        background-color: $instancy-color;
+      }
+    }
+    .delete-status {
+      color: $instancy-color;
+    }
+
+    .dx-datagrid-content .dx-datagrid-table .dx-row.dx-data-row{
+      cursor: unset !important;
+    }
+  }
+}
+.item-filter {
+  width: 60%;
+}
+.setting-user-list-content {
+  // margin: 0 20px;
+  max-height: calc(100% - 68px);
+}
+.search-on-tab-can {
+  width: 40%;
+}
+.popup-base-select-data {
+  .search-box {
+    width: 250px;
+  }
+}
+
+.btn-permission {
+  width: 100%;
+  .button-deduct-income {
+    justify-content: space-between;
+  }
+}
+.application-select-box {
+  width: 300px;
+}
+.application-tag-box {
+  width: 300px;
+}
+

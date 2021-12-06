@@ -1,0 +1,15 @@
+@import "../../../../assets/scss/var-color.scss";
+:host {
+    .group-box:not(:first-child){
+        margin-top: 16px;
+    }
+    .group-box-child{
+        margin-top: 24px;
+    }
+    .expand-class {
+        margin-left: -7px;
+    }
+    .group-box-footer {
+        margin-top: 16px;
+    }
+  }

@@ -1,0 +1,71 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-cls.scss";
+
+:host {
+  ::ng-deep {
+    .icon-reject-red {
+      background-color: $bg-btn-red-primary;
+    }
+    .amis-custom-grid .dx-datagrid-content .dx-datagrid-table .dx-row.dx-data-row{
+      cursor: default !important;
+    }
+    .color-red {
+      color: $bg-btn-red-primary !important;
+      .icon-left {
+        background-color: $bg-btn-red-primary !important;
+      }
+    }
+    .color-green {
+      color: $active-content !important;
+      .icon-left {
+        background-color: $active-content !important;
+      }
+    }
+    .hrm-grid {
+      border: 1px solid $border;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .dx-header-row {
+      height: 44px;
+      background-color: $grid-line;
+    }
+
+    .amis-overlay-content {
+      background-color: $white;
+    }
+  }
+}
+::ng-deep {
+  .grid-update {
+  }
+  .approve-text-delete {
+    color: $red-status !important;
+    text-decoration: line-through !important;
+  }
+  .approve-text-insert {
+    color: $blue-status !important;
+  }
+  .approve-text-edit {
+    color: $text-warning !important;
+  }
+  .circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  .circle-delete {
+    background-color: $red-status !important;
+  }
+  .circle-insert {
+    background-color: $blue-status !important;
+  }
+  .circle-edit {
+    background-color: $text-warning !important;
+  }
+  .circle-none {
+    background-color: $black !important;
+  }
+}

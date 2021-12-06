@@ -1,0 +1,62 @@
+<div class="w-full">
+  <div class="m-l-32">
+
+    <amis-reply-message *ngIf="_msg?.content?.metadata?.Reference" [msg]="_msg" [type]="'sender'"></amis-reply-message>
+  </div>
+  <div class="w-full sender pos-relative flex-r-m">
+    <ng-template #actionOptionTemplate>
+      <div class="flex-m">
+        <amis-icon
+          (click)="actionOptionHandler()"
+          [classIcon]="'icon-mess-action'"
+          [(nzPopoverVisible)]="visibleActionPopover"
+          nz-popover
+          nzPopoverTrigger="focus"
+          [nzPopoverPlacement]="['bottomLeft', 'topLeft']"
+          [nzPopoverOverlayClassName]="'mess-action'"
+          [nzPopoverContent]="actionTemplate"
+        >
+        </amis-icon>
+        <amis-icon [classIcon]="'icon-mess-reaction'"></amis-icon>
+      </div>
+    </ng-template>
+
+    <ng-template #actionTemplate>
+      <amis-message-action
+        (actionGenerate)="handleAction($event)"
+        [msg]="_msg"
+        [isOwner]="true"
+      ></amis-message-action>
+    </ng-template>
+
+    <div
+      class=""
+      [class.fs-22]="_msg?.isOnlyEmoji"
+      [nzTooltipMouseEnterDelay]="0.5"
+      [nzTooltipTitle]="_msg?.createdAt | date: 'hh:mm'"
+      nzTooltipPlacement="top"
+      nz-tooltip
+      [(nzPopoverVisible)]="visibleOptionActionPopover"
+      nz-popover
+      nzPopoverTrigger="hover"
+      nzPopoverPlacement="left"
+      [nzPopoverOverlayClassName]="'mess-action-option'"
+      [nzPopoverContent]="actionOptionTemplate"
+      [nzPopoverOverlayClassName]="'mess-action-option'"
+      [nzPopoverMouseLeaveDelay]="2"
+      (click)="openAction()"
+    >
+      <div
+        class="attachment flex-m pos-relative hov-pointer"
+        *ngFor="let item of _msg?.content?.metadata?.ListFile; let i = index"
+        (click)="downloadFile(item)"
+      >
+        <div class="icon-{{ item?.Type }}"></div>
+        <div class="attachment-name m-l-8" title="{{ item?.FileName }}">
+          {{ item?.FileName }}
+        </div>
+      </div>
+    </div>
+    <!-- <amis-read-receipt [msg]="_msg" [conv]="_conv"></amis-read-receipt> -->
+  </div>
+</div>

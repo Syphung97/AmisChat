@@ -1,0 +1,44 @@
+<dx-popup class="amis-popup-base {{customClass}}" [width]="_width" [height]="_height" [title]="title" showTitle="false"
+  [visible]="visiblePopup" [position]="popupPosition" (onContentReady)="onReadyPopup($event)"
+  (onHidden)="closePopupAction()" (onShown)="onShown($event)" [closeOnOutsideClick]="closeOnOutsideClick"
+  [resizeEnabled]="resizeEnabled" [dragEnabled]="dragEnabled">
+  <div *dxTemplate="let data of 'title'">
+    <div class="dis-flex justify-content-between" [class.title-wrapper]="title"
+      [class.untitle-wrapper]="!title">
+      <div class="title-content" [innerHTML]="title | amisNoSanitize"></div>
+      <div class="dis-flex flex-m">
+        <div *ngIf="_isResizePopup" >
+          <amis-icon *ngIf="!isZoomOut"  [classIcon]="'icon-zoom-out'" class="dx-icon" (click)="zoomOut()"
+              [tooltipContent]="'ZOOM_IN'|translate">
+          </amis-icon>
+          <amis-icon *ngIf="isZoomOut" [classIcon]="'icon-zoom-in'" class="dx-icon" (click)="zoomIn()"
+              [tooltipContent]="'ZOOM_OUT'|translate">
+          </amis-icon>
+        </div>
+        <amis-icon [classIcon]="'icon-close-popup'" class="dx-icon" (click)="closePopupAction()"
+        [tooltipContent]="'CLOSE'|translate">
+        </amis-icon>
+      </div>
+    </div>
+  </div>
+  <div class="custom-template-wrapper" *dxTemplate="let data of 'content'">
+    <dx-scroll-view *ngIf="isHaveScrollView" class="wrap-scroll-view">
+      <div class="content-popup-base" [ngStyle]="{'max-height': maxHeightContent }">
+        <ng-content select=[contentPopup]>
+        </ng-content>
+      </div>
+    </dx-scroll-view>
+    <div *ngIf="!isHaveScrollView" class="content-no-scroll" [class.h-100]="!isHaveFooterBtn">
+      <div class="content-popup-base" [ngStyle]="{'max-height': maxHeightContent }">
+        <ng-content select=[contentPopupNoScroll]>
+        </ng-content>
+      </div>
+    </div>
+    <div *ngIf="_isHaveFooter" class="dx-popup-footer">
+      <div class="dis-flex pos-relative buttons">
+        <ng-content select="[buttonsPopup]"></ng-content>
+      </div>
+    </div>
+  </div>
+
+</dx-popup>

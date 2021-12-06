@@ -1,0 +1,22 @@
+<dx-popup class="popup-confirm-base" [width]="width" [height]="'auto'" [title]="title" showTitle="false"
+  [(visible)]="visiblePopup" (onHidden)="closePopupAction()"  [position]="popupPosition" >
+  <div *dxTemplate="let data of 'title'">
+    <div class="dis-flex dis-align-items-start dis-justify-content-between">
+      <div class="title-content">{{title}}</div>
+      <div class="dx-icon icon-close cursor-pointer" (click)="closePopupAction()"></div>
+    </div>
+  </div>
+  <div *dxTemplate="let data of 'content'">
+
+    <div class="content-popup-base">
+      <ng-content select=[textContentPopupConfirm]>
+      </ng-content>
+    </div>
+    <div class="dx-popup-footer">
+      <div class="dis-flex buttons">
+        <ng-content select="[amisButtons]"></ng-content>
+      </div>
+    </div>
+  </div>
+
+</dx-popup>

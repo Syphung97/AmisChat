@@ -1,0 +1,70 @@
+<div class="w-full receiver" [class.m-t-12]="_msg?.isFirstMessage">
+  <div
+    class="fs-11 text-grey m-b-2 m-l-32"
+    *ngIf="_conv?.isGroup && _msg?.isFirstMessage"
+  >
+    {{ receiverUser?.name ? receiverUser?.name : "" }}
+  </div>
+  <div class="m-l-32">
+
+    <amis-reply-message *ngIf="_msg?.content?.metadata?.Reference" [msg]="_msg" [type]="'receiver'"></amis-reply-message>
+  </div>
+  <div class="pos-relative flex-l-m">
+    <ng-template #actionOptionTemplate>
+      <div class="flex-m">
+        <amis-icon
+          (click)="actionOptionHandler()"
+          [classIcon]="'icon-mess-action'"
+          [(nzPopoverVisible)]="visibleActionPopover"
+          nz-popover
+          nzPopoverTrigger="click"
+          [nzPopoverPlacement]="['bottomLeft', 'topLeft']"
+          [nzPopoverOverlayClassName]="'mess-action'"
+          [nzPopoverContent]="actionTemplate"
+        >
+        </amis-icon>
+        <amis-icon [classIcon]="'icon-mess-reaction'"></amis-icon>
+      </div>
+    </ng-template>
+
+    <ng-template #actionTemplate>
+      <amis-message-action
+        (actionGenerate)="handleAction($event)"
+        [msg]="_msg"
+      ></amis-message-action>
+    </ng-template>
+    <amis-avatar
+      *ngIf="_msg?.isLastMessage"
+      class="ab-b-l"
+      [stringeeUserID]="receiverUser?.userId"
+      [size]="28"
+    >
+    </amis-avatar>
+    <div
+      class="receiver-text flex-c-m m-l-32"
+      [class.fs-22]="_msg?.isOnlyEmoji"
+      [class.last-mess]="_msg.isLastMessage"
+      [class.first-mess]="_msg.isFirstMessage"
+      [style.background-color]="
+        _msg?.type != messageType.Text || _msg?.isOnlyEmoji || _msg?.isOnlyEmoji
+          ? 'transparent'
+          : '#eeeeee'
+      "
+      [nzTooltipMouseEnterDelay]="0.5"
+      [nzTooltipTitle]="_msg?.createdAt | date: 'hh:mm'"
+      nzTooltipPlacement="top"
+      nz-tooltip
+      [(nzPopoverVisible)]="visibleOptionActionPopover"
+      nz-popover
+      nzPopoverTrigger="hover"
+      nzPopoverPlacement="right"
+      [nzPopoverOverlayClassName]="'mess-action-option'"
+      [nzPopoverContent]="actionOptionTemplate"
+      [nzPopoverOverlayClassName]="'mess-action-option'"
+      [nzPopoverMouseLeaveDelay]="2"
+      (click)="openAction()"
+    >
+      <div [innerHTML]="_msg?.content?.content | noSanitize"></div>
+    </div>
+  </div>
+</div>

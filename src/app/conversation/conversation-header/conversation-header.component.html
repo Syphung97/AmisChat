@@ -1,0 +1,43 @@
+<div class="header flex-sb-m w-full">
+  <div class="info flex-m">
+    <amis-avatar *ngIf="!_conversation?.isGroup" [size]="48" [useFor]="'Conv'" [parent]="'header'"
+      [conv]="_conversation"></amis-avatar>
+    <amis-avatar-group *ngIf="_conversation?.isGroup" [size]="48" [paticipant]="_conversation.participants">
+    </amis-avatar-group>
+    <div class="info">
+      <div class="user-name m-l-10 m-t-8 fs-16" title="{{_conversation|nameConv}}">
+        {{_conversation |nameConv}}
+      </div>
+      <div style="height: 20px;" class="flex-m" *ngIf="_conversation?.status==1">
+        <div style="width: 28px;" class="icon-user-online"></div>
+        <span class="text-grey">{{"ONLINE" | translate}}</span>
+      </div>
+
+      <div class="flex-m gray fs-13">
+        <ng-container *ngIf="_conversation?.IsActive">
+          <span class="active-status m-r-8"></span> <span class="text-grey">{{ 'ActiveStatus' |
+            translate}}</span>
+        </ng-container>
+        <ng-container *ngIf="!_conversation?.IsActive">
+
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="option flex-m" *ngIf="!_conversation.isGroup">
+    <amis-icon class="m-r-8" (clickAction)="makeCall(false)" [classIcon]="'icon-phone'">
+    </amis-icon>
+    <amis-icon class="m-r-8" [classIcon]="'icon-camera'" (clickAction)="makeCall(true)">
+    </amis-icon>
+    <!-- <amis-icon [classIcon]="'icon-info'"></amis-icon> -->
+  </div>
+</div>
+
+<amis-incomming-call [inComingCallObject]="inComingCallObject" (closePopup)="handleCallAnswer($event)"
+  *ngIf="isVisibleInCommingCall">
+</amis-incomming-call>
+
+<amis-outcoming-call [localStream]="localStream" [remoteStream]="remoteStream" [signalingstate]="signalingState"
+  [inComingCallObject]="inComingCallObject" *ngIf="isVisibleOutComingCall" [conv]="_conversation"
+  [isVideoCall]="isCallVideo" (onCancleCall)="hangUpCall()" (disableVoice)="mute()" (disableVideo)="enableVideoCall()">
+</amis-outcoming-call>

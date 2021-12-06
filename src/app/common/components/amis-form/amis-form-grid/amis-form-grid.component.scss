@@ -1,0 +1,31 @@
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+
+
+:host{
+    .hrm-form-grid{
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        .hrm-form-grid-header{
+            justify-content: space-between;
+        }
+        .hrm-form-grid-content{
+            height: calc(100% - 52px);
+            background-color: #fff;
+            border-radius: 4px;             
+        }
+    }
+       
+    .group-grid-nodata{
+        margin-top: 8px;
+        .no-data-grid-form{
+            font-style: italic;
+            color:$text-grey-2;
+            font-size: $font-size-base;
+            margin-right: 16px;
+        }
+        padding-bottom: 8px;
+    }
+    
+}

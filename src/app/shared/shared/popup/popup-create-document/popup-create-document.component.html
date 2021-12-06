@@ -1,0 +1,65 @@
+<amis-popup-base [title]="'CREATE_DOCUMENT' | translate" [(visiblePopup)]="_visiblePopup" [width]="800"
+  (closePopup)="closePopup()" [height]="'auto'" [offsetY]="offsetConfig">
+  <div contentPopup>
+    <div class="toolbar flex-sb-m">
+      <div class="left flex-c-m">
+        <dx-text-box mode="search" [width]="224" [(value)]="_searchValue"
+          (onValueChanged)="onValueChangedTextBox($event)" (onKeyUp)="onSearchTextBox($event)"
+          placeholder="{{'SEARCH' | translate}}"></dx-text-box>
+        <dx-select-box *ngIf="!documentType" width="280px" class="m-l-8" [dataSource]="_dataSelectBox"
+          [(value)]="_valueSelectBox" (onValueChanged)="onValueChangedSelectBox($event)" [displayExpr]="'displayExpr'"
+          [valueExpr]="'valueExpr'">
+        </dx-select-box>
+      </div>
+      <div class="right">
+        <amis-button name="{{'Tải lên mẫu văn bản'|translate}}" isMultiOption="true" iconLeft="icon-upload"
+          permissionCode="{{permissionCodeEntity.Insert}}" subSystemCode="{{subSystemCodeEntity.TemplateDocument}}"
+          (passPermissionClick)="openUploadTemplate()" (clickItemViewMoreButton)="opendFormCreate()" [oneOptionDropdowm]="true"
+          [viewMoreMenu]="viewMoreMenuList">
+        </amis-button>
+      </div>
+    </div>
+
+    <div class="data-grid m-t-16">
+      <amis-paging-grid #pagingGrid [valueExpr]="'TemplateID'" [isShowCustomColumn]="false" [columns]="_gridFieldConfig"
+        [showBorders]="true" [dataSource]="_templateData" [selectedItems]="_listSelectedRecord" [pageSize]="_pageSize"
+        [gridHeight]="248" [totalRecord]="_totalRecord" [contextMenuList]="_contextMenuOption"
+        [showNavigationButtons]="true" (clickViewMoreRow)="contextMenuExecuteAction($event)"
+        (contextMenuAction)="contextMenuExecuteAction($event)" (chooseRecord)="chooseRecord($event)"
+        (loadDataPaging)="getTemplateChangePaging($event)" [isSingleSelection]="typePopup === 'SelectTemplate'"
+        [isGridOnPopup]="true">
+      </amis-paging-grid>
+    </div>
+    <div *ngIf="typePopup !== 'SelectTemplate'" class="radio-group m-t-24 flex-m">
+      <dx-radio-group [items]="priorities" [(value)]="_radioGroupSelected" layout="horizontal" [displayExpr]="'Name'"
+        [valueExpr]="'Value'">
+      </dx-radio-group>
+    </div>
+    <div *ngIf="typePopup !== 'SelectTemplate'" class="formar-download m-t-24 flex-m" style="height: 36px">
+      <div class="m-r-16" style="color: #666666;">{{'DOCUMENT_FORMAT_VALUE_DOWNLOAD'| translate}}</div>
+      <dx-select-box width="280px" [dataSource]="_formatDocument" [(value)]="_formatDocumentSelected"
+        (onValueChanged)="onValueChangedDocType($event)" [displayExpr]="'Display'" [valueExpr]="'Value'">
+      </dx-select-box>
+    </div>
+  </div>
+
+  <div buttonsPopup>
+    <div class="button-action">
+      <amis-button class="mr-2" name="{{'CANCEL2'|translate}}" [type]="_buttonType.OnlyText"
+        [color]="_buttonColor.Normal" (clickButton)="closePopup()"></amis-button>
+      <amis-button *ngIf="typePopup !== 'SelectTemplate'; else elses1" [isDisable]="_isDisableDownload"
+        (clickButton)="downloadDocument()" name="{{'DOWNLOAD'|translate}}" [type]="_buttonType.OnlyText"
+        [color]="_buttonColor.BluePrimary">
+      </amis-button>
+      <ng-template #elses1>
+        <amis-button [isDisable]="_isDisableDownload" (clickButton)="onSelectFunc()" name="{{'Chọn'|translate}}"
+          [type]="_buttonType.OnlyText" [color]="_buttonColor.BluePrimary">
+        </amis-button>
+      </ng-template>
+    </div>
+  </div>
+</amis-popup-base>
+
+<amis-popup-view-document *ngIf="visiblePopupPreview" [src]="_filePreviewAPI"
+  [title]="this._templatePreview.TemplateName" (close)="visiblePopupPreview = false; _filePreviewAPI= null">
+</amis-popup-view-document>

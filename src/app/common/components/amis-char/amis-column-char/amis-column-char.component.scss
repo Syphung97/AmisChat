@@ -1,0 +1,150 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+
+//Chart báo cáo
+::ng-deep {
+  .dxc-tooltip {
+    z-index: 100000;
+  }
+
+  #column-char {
+    height: 100%;
+    width: 100%;
+
+    g.dxc-arg-elements text,
+    g.dxc-val-elements text {
+      font-family: Roboto, Helvetica, Arial, sans-serif !important;
+      fill: #686C7B !important;
+      font-size: 13px !important;
+    }
+
+    .dxc-markers {
+      rect {
+        fill: inherit !important;
+      }
+    }
+
+    .dx-export-menu {
+      display: none;
+    }
+
+    //Kẻ ngang của chart
+    .dxc-val-grid {
+      stroke-opacity: 0.2 !important;
+
+      path:first-child {
+        stroke-opacity: 0.4 !important;
+      }
+    }
+
+    .dxc-val-line {
+      path {
+        display: none;
+      }
+    }
+
+    .dxc-arg-line {
+      path {
+        display: none;
+      }
+    }
+
+    .dxc-item {
+      margin-top: 28px;
+      display: block;
+
+      text {
+        font-size: 13px;
+      }
+    }
+
+    .dxc-item>g {
+      margin-left: 48px;
+
+      &:first-child {
+        margin-left: 0px;
+      }
+    }
+
+    .text-title-chart {
+      font-size: 10px;
+      color: red;
+    }
+  }
+
+  .shortlistData {
+    .item-content-dx-legend {
+      align-items: center;
+
+      &:first-child {
+        margin-right: 102px !important;
+      }
+
+      &:nth-child(2) {
+        margin-right: 102px !important;
+      }
+
+      &:nth-child(4) {
+        margin-left: 102px !important;
+      }
+    }
+  }
+
+  .content-dx-legend {
+    height: auto;
+    margin-top: 28px;
+    overflow: auto;
+
+    .item-content-dx-legend {
+      align-items: center;
+
+      &:first-child {
+        margin-right: 54px;
+      }
+
+      &:nth-child(2) {
+        margin-right: 54px;
+      }
+
+      &:nth-child(4) {
+        margin-left: 54px;
+      }
+
+      &:nth-child(5) {
+        margin-left: 54px;
+      }
+
+      &:nth-child(6) {
+        margin-left: 54px;
+      }
+
+      .pallette-color-report {
+        min-width: 12px;
+        height: 12px;
+        width: 12px;
+        display: inline-block;
+        border-radius: 2px;
+        margin-right: 8px;
+      }
+
+      .name-status-report {
+        font-size: 13px;
+        white-space: pre;
+        transform: translate(514, 14);
+        text-anchor: start;
+        color: #767676;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .circle-legendary {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .padding-chart{
+    padding-bottom: 27px;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "apiServer": "https://amisapp.misa.vn/APIS/MessengerAPI/api",
+  "stickerCDN": "https://amisplatform.misacdn.net/apps/messenger/assets/sticker/img/",
+  "host": "https://amisapp.misa.vn",
+  "maxSizeFile": 10,
+  "cdnUrl": "https://amisplatform.misacdn.net/apps/messenger",
+  "newsfeedURL": "https://amisapp.misa.vn/newsfeed/",
+  "cdnAudioNewMessage": "https://amisplatform.misacdn.net/apjs/apchat/assets/audio-notification-message.wav",
+  "cdnAudioNewCall": "https://amisplatform.misacdn.net/apjs/apchat/assets/audio-notification-call.mp3",
+  "cdnDomain":"https://amisplatform.misacdn.net"
+}

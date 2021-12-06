@@ -1,0 +1,61 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" title="{{'HRM_EMPLOYEE_PLANNING_CRITERIA_FORM_TITLE'|translate}}"
+    width="900px" height="auto" (closePopup)="closePopup()" [maxHeightContent]="620" [offsetY]="offsetY">
+    <div contentPopup>
+        <div class="content-wrapper">
+            <div class="dis-flex dis-justify-content-between">
+                <div class="dis-flex">
+                    <dx-text-box [(value)]="filterValue" mode="search" class="mr-2" width="250"
+                        placeholder="{{'SEARCH'|translate}}" (onValueChanged)="onValueTextboxChange($event)"
+                        (onKeyUp)="onSearchControl($event)"></dx-text-box>
+
+                    <dx-select-box [dataSource]="listJobPositions" [displayExpr]="'JobPositionName'" width="250"
+                        [valueExpr]="'JobPositionID'" (onValueChanged)="onValueChanged($event)"
+                        (onOpened)="getJobPosition()" [(ngModel)]="selectedJobPositionID"></dx-select-box>
+
+                    <div *ngIf="selectedData?.length > 0" class="d-flex align-items-center ml-2">
+                        <div>{{'GRID_SELECTED'|translate}} <span class="count-record">{{selectedData?.length}}</span>
+                        </div>
+                        <div class="ml-4 mr-4 text-red cursor-pointer" (click)="removeSelectedRecord()">
+                            {{'GRID_UNSELECT'|translate}}</div>
+                    </div>
+                </div>
+                <amis-button subSystemCode="{{subSystemCodeEntity.PlanningCriteria}}"
+                    permissionCode="{{permissionCodeEntity.Insert}}" name="{{'CREATE'|translate}}"
+                    [iconLeft]="'icon-plus-blue'" [type]="buttonType.OnlyText" [color]="buttonColor.BlueWhiteSecondary"
+                    (passPermissionClick)="openPopupAdd()">
+                </amis-button>
+            </div>
+            <div class="grid-template m-t-17">
+                <amis-paging-grid #grid [dataSource]="dataSource" [columns]="columns" showBorders=false
+                    [isGridOnPopup]="true" [gridHeight]="height" [isPageSizeEditable]="false" [wordWrapEnabled]="false"
+                    [isSelectionOnly]="true" [showNavigationButtons]="false" [isShowMoreOption]="false"
+                    [allowColumnResizing]="true" [showInfo]="false" [showPageSizeSelector]="false" [isBorderGrid]="true"
+                    [selectedItems]="selectedData" (chooseRecord)="chooseRecord($event)" [clearSelection]="false"
+                    [isEdit]="true" [isSaveGrid]="isSaveGrid" [isShowCustomColumn]="false" [isShowSelection]="true"
+                    [isShowPaging]="false" (outputDataSource)="outputDataSource($event)"
+                    [valueExpr]="'PlanningCriteriaID'" [isSubmit]="isSubmit" (saveData)="submitSaveData($event)">
+                </amis-paging-grid>
+            </div>
+        </div>
+    </div>
+
+    <div buttonsPopup>
+        <div class="button-action">
+            <amis-button (clickButton)="closePopup()" class="mr-2" name="{{'CANCEL2'|translate}}"
+                [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+            <amis-button name="{{'SAVE'|translate}}" [isDisable]="selectedData?.length == 0"
+                [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary" (clickButton)="save()"></amis-button>
+        </div>
+    </div>
+</amis-popup-base>
+
+<amis-popup-base-add-data *ngIf="visiblePopupAdd" [visiblePopup]="visiblePopupAdd"
+    title="{{'HRM_EMPLOYEE_PLANNING_CRITERIA_ADD_TITLE'|translate}}" [labelClass]="'col-4 p-0 mr-2'"
+    [formMode]="formModeEntity.Insert" [groupConfig]="_groupConfigs" (closePopup)="visiblePopupAdd = false"
+    [currentItem]="currentItem" [dependentDatas]="dependentDatas" [modelController]="'PlanningCriteria'"
+    fieldName="{{'HRM_EMPLOYEE_PLANNING_CRITERIA_EVALUATE'|translate}}" [valueExpr]="'PlanningCriteriaID'"
+    (onDataChange)="onDataChange($event)">
+</amis-popup-base-add-data>
+
+
+<!-- <ng-container #planningCriteriaForm></ng-container> -->

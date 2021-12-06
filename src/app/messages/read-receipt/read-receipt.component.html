@@ -1,0 +1,8 @@
+<div [ngSwitch]="_msg.state">
+  <div *ngSwitchCase="MessageType.SENDING" class="icon-mess-send read-receipt"></div>
+  <div *ngSwitchCase="MessageType.SENT" class="icon-mess-sent read-receipt"></div>
+  <div *ngSwitchCase="MessageType.DELIVERED" class="icon-mess-delivered read-receipt"></div>
+  <div *ngSwitchCase="MessageType.READ" class="icon-read read-receipt flex-c-m">
+    <amis-avatar [size]="12" [src]="receiverUer?.avatar"></amis-avatar>
+  </div>
+</div>

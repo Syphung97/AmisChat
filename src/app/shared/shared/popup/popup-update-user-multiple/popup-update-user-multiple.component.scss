@@ -1,0 +1,31 @@
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-cls.scss";
+@import "../../../../assets/scss/var-icon.scss";
+@import "../../../../assets/scss/var-styleguide.scss";
+.popup-update-user-multiple{
+  height: 36px;
+  overflow: hidden;
+  .control-content{
+    .text-error{
+      display: none;
+    }
+    &.is-null{
+      .null-error{
+        display: block!important;
+      }
+    }
+  }
+  .operater{
+    margin: auto 10px;
+  }
+  .group-control-item{
+    width: 300px;
+    height: 36px;
+    .control-item{
+      border: solid 1px $border;
+      height: 100%;
+      border-radius: $border-radius;
+    }
+  }
+}

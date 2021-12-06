@@ -1,0 +1,23 @@
+.arena-footer {
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #F5F5F5;
+}
+.btn {
+    height: 36px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+.btn-save {
+    background-color: #0077FF;
+    color: #FFFFFF;
+    margin-right: 24px;
+}
+.btn-close{
+    background-color: #FFFFFF;
+}

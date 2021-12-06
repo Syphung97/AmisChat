@@ -1,0 +1,60 @@
+.dropdown-company, .search-user {
+    width: 50%;
+}
+.select-company {
+    width: 100%;
+}
+.selected-user {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.info-user-selected, .label-user-info,.select-all-user,.selected-users {
+    display: flex;
+    align-items: center;
+}
+.info-user-selected{
+    margin-bottom: 16px;
+}
+.checked {
+    height: 20px;
+    width: 20px;
+}
+
+.btn-function {
+    display: flex;
+    margin-right: 24px;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+.btn-close, .btn-ceated-group {
+    height: 36px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.footer-created-group{
+    height: 60px;
+    background-color: #F6F6F6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.btn-ceated-group {
+    background-color: #0077FF;
+}
+.btn-created-text {
+    color: #FFFFFF;
+}
+.btn-close {
+    background-color: #FFFFFF;
+}
+.user-name {
+    font-weight: bold;
+}

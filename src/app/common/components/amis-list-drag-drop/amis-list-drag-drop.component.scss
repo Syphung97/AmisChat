@@ -1,0 +1,98 @@
+@import "../../../assets/scss/var-color.scss";
+
+:host {
+  #list-demo {
+    ::ng-deep {
+      .dx-list-with-search {
+        position: relative;
+        padding: 0px;
+        .dx-searchbox {
+          position: fixed;
+          z-index: 1;
+          margin: 0 8px;
+          width: calc(100% - 34px);
+        }
+        .dx-scrollable-wrapper {
+          margin-top: 48px;
+          height: 100%;
+          .dx-scrollable-content {
+            max-height: 288px;
+          }
+          .dx-item.dx-list-item.dx-list-item-selected {
+            color: $text;
+          }
+        }
+      }
+      .dx-checkbox-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 10px !important;
+      }
+      .dx-state-hover {
+        .dx-checkbox-icon {
+          border-color: $selected;
+        }
+      }
+      .dx-list .dx-empty-message,
+      .dx-list-item {
+        border-top: none;
+      }
+      .dx-scrollable-scrollbar.dx-widget.dx-scrollbar-vertical.dx-scrollbar-hoverable {
+        width: 10px !important;
+      }
+
+      .dx-list-item-before-bag .dx-list-select-checkbox,
+      .dx-list-item-before-bag .dx-list-select-radiobutton {
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+
+  .widget-container {
+    display: flex;
+  }
+
+  .widget-container > * {
+    max-height: 400px;
+    width: 100%;
+    padding: 8px;
+  }
+  // @media only screen and (max-width: 1366px) {
+  //   .dx-scrollable-wrapper {
+  //     //
+  //     .dx-scrollable-content {
+  //       max-height: 216px;
+  //     }
+  //   }
+  // }
+}
+
+::ng-deep {
+  .max-selection {
+    .dx-item.dx-list-item {
+      pointer-events: none;
+      .dx-checkbox-icon {
+        background-color: #ddd;
+        border: none;
+      }
+    }
+    .dx-item.dx-list-item.dx-list-item-selected {
+      pointer-events: all;
+      .dx-checkbox-icon {
+        background-color: $bg-checkbox !important;
+        color: #ffffff;
+        border-color: transparent;
+      }
+    }
+  }
+  @media only screen and (max-width: 1366px) {
+    #list-demo {
+      .dx-scrollable-wrapper {
+        //
+        .dx-scrollable-content {
+          max-height: 216px !important;
+        }
+      }
+    }
+  }
+}

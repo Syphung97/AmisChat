@@ -1,0 +1,512 @@
+<ng-container [ngSwitch]="item.TypeControl">
+
+  <!-- Default -->
+  <ng-container *ngSwitchCase="typeControl.DefaultType" class="ng-container-item text-overflow">
+    <amis-amis-control-textbox #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [isViewEditable]="_typeShow.IsViewEditable"
+      [labelPositon]="'left'" [labelFontWeight]="'normal'" [labelText]="item.Caption" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [labelWidth]="_labelWidth"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [isSubmit]="_isSubmit"
+      [minLength]="item.MinLength" [maxLength]="item.MaxLength ? item.MaxLength : 255"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [data]="item"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (submitUpdateField)="updateFieldData()" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-textbox>
+  </ng-container>
+
+  <!-- Hyperlink ( input ) -->
+  <ng-container *ngSwitchCase="typeControl.Hyperlink" class="ng-container-item text-overflow">
+    <amis-amis-control-textbox #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [labelWidth]="_labelWidth" [isViewEditable]="_typeShow.IsViewEditable" [labelPositon]="'left'"
+      [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelFontWeight]="'normal'" [labelText]="item.Caption"
+      [labelClass]="_labelClass" [isShowLabel]="_isShowLable" [type]="'hyperlink'"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [isSubmit]="_isSubmit"
+      [minLength]="item.MinLength" [maxLength]="item.MaxLength ? item.MaxLength : 255"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [data]="item"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (submitUpdateField)="updateFieldData()" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-textbox>
+  </ng-container>
+
+  <!-- Một dòng ( input ) -->
+  <ng-container *ngSwitchCase="typeControl.OneRow" class="ng-container-item text-overflow">
+    <amis-amis-control-textbox #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [labelWidth]="_labelWidth" [isViewEditable]="_typeShow.IsViewEditable" [labelPositon]="'left'"
+      [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelFontWeight]="'normal'" [labelText]="item.Caption"
+      [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [isSubmit]="_isSubmit"
+      [minLength]="item.MinLength" [maxLength]="item.MaxLength ? item.MaxLength : 255"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [data]="item"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (submitUpdateField)="updateFieldData()" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-textbox>
+  </ng-container>
+
+  <!-- Email -->
+  <ng-container *ngSwitchCase="typeControl.Email" class="ng-container-item text-overflow">
+    <amis-amis-control-textbox #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [labelWidth]="_labelWidth" [isViewEditable]="_typeShow.IsViewEditable" [labelPositon]="'left'" [type]="'email'"
+      [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelFontWeight]="'normal'" [labelText]="item.Caption"
+      [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [isSubmit]="_isSubmit"
+      [minLength]="item.MinLength" [maxLength]="item.MaxLength ? item.MaxLength : 255"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [data]="item"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (submitUpdateField)="updateFieldData()" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-textbox>
+  </ng-container>
+
+  <!-- Nhiều dòng ( textarea ) -->
+  <ng-container *ngSwitchCase="typeControl.MultiRow" class="ng-container-item text-overflow">
+    <amis-amis-control-textarea #field [labelPositon]="'left'" [labelFontWeight]="'normal'" [labelWidth]="_labelWidth"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName" [tooltipContent]="item.Tooltip"
+      [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig" [isViewOnly]="_typeShow.IsViewOnly"
+      [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [isViewEditable]="_typeShow.IsViewEditable"
+      [labelText]="item.Caption" [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [data]="item" [isSubmit]="_isSubmit"
+      [minLength]="item.MinLength" [maxLength]="item.MaxLength ? item.MaxLength : 2000"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      [validateMethods]="item.ValidateMethod" [(ngModel)]="item.Value" (submitUpdateField)="updateFieldData()"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})">
+    </amis-amis-control-textarea>
+  </ng-container>
+
+  <!-- Ngày -->
+  <ng-container *ngSwitchCase="typeControl.Date" class="ng-container-item text-overflow">
+    <amis-amis-control-datebox #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth"
+      [isViewEditable]="_typeShow.IsViewEditable" [labelPositon]="'left'" [labelFontWeight]="'normal'"
+      [labelText]="item.Caption" [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [isSubmit]="_isSubmit"
+      [minValue]="item.MinValue" [maxValue]="item.MaxValue" [data]="item"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError" [placehoder]="'DD/MM/YYYY'"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [typeControl]="typeControl.Date" (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-datebox>
+  </ng-container>
+
+  <!-- Tháng năm -->
+  <ng-container *ngSwitchCase="typeControl.MonthYear" class="ng-container-item text-overflow">
+    <amis-amis-control-datebox #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth"
+      [isViewEditable]="_typeShow.IsViewEditable" [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip"
+      [labelPositon]="'left'" [labelFontWeight]="'normal'" [labelText]="item.Caption" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View"
+      [isSubmit]="_isSubmit" [minValue]="item.MinValue" [maxValue]="item.MaxValue" [data]="item"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError" [placehoder]="'MM/YYYY'"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [formatDate]="'MM/yyyy'" [typeControl]="typeControl.MonthYear"
+      (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-datebox>
+  </ng-container>
+
+  <!-- Năm -->
+  <ng-container *ngSwitchCase="typeControl.Year" class="ng-container-item text-overflow">
+    <amis-amis-control-numberbox #field [labelPositon]="'left'" [labelFontWeight]="'normal'"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName" [typeControl]="item.TypeControl"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth" [tooltipContent]="item.Tooltip"
+      [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig" [isViewOnly]="_typeShow.IsViewOnly"
+      [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)" [isViewEditable]="_typeShow.IsViewEditable"
+      [labelText]="item.Caption" [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [minValue]="item.MinValue"
+      [maxValue]="item.MaxValue" [data]="item" [isSubmit]="_isSubmit"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-numberbox>
+  </ng-container>
+
+  <!-- Số -->
+  <ng-container *ngSwitchCase="typeControl.Number" class="ng-container-item text-overflow">
+    <amis-amis-control-numberbox #field [format]="'#,###'" [labelPositon]="'left'" [labelFontWeight]="'normal'"
+      [fieldName]="item.FieldName" [typeControl]="item.TypeControl" [permissionObject]="item.PermissionConfig"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth" [tooltipContent]="item.Tooltip"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig" [isViewOnly]="_typeShow.IsViewOnly"
+      [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)" [isViewEditable]="_typeShow.IsViewEditable"
+      [labelText]="item.Caption" [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [maxLength]="item.MaxLength ? item.MaxLength : 20"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [minValue]="item.MinValue"
+      [maxValue]="item.MaxValue" [data]="item" [isSubmit]="_isSubmit"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-numberbox>
+  </ng-container>
+
+  <!-- Tiền tệ -->
+  <ng-container *ngSwitchCase="typeControl.Currency" class="ng-container-item text-overflow">
+    <amis-amis-control-numberbox #field [format]="'#,###.##'" [currencyCode]="item.CurrencyCode" [labelPositon]="'left'"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName" [labelFontWeight]="'normal'"
+      [typeControl]="item.TypeControl" [labelWidth]="_labelWidth" [tooltipContent]="item.Tooltip"
+      [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig" [isViewOnly]="_typeShow.IsViewOnly"
+      [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [isViewEditable]="_typeShow.IsViewEditable"
+      [labelText]="item.Caption" [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [maxLength]="item.MaxLength ? item.MaxLength : 20"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [data]="item" [isSubmit]="_isSubmit"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError" [minValue]="item.MinValue"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [maxValue]="item.MaxValue"
+      [validateMethods]="item.ValidateMethod" [showSpinButton]="false" [(ngModel)]="item.Value"
+      (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-numberbox>
+  </ng-container>
+
+  <!-- Số thập phân -->
+  <ng-container *ngSwitchCase="typeControl.Decimal" class="ng-container-item text-overflow">
+    <amis-amis-control-numberbox #field [format]="'#.##'" [labelPositon]="'left'" [labelFontWeight]="'normal'"
+      [fieldName]="item.FieldName" [typeControl]="item.TypeControl" [labelWidth]="_labelWidth"
+      [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [isViewOnly]="_typeShow.IsViewOnly" [permissionCode]="_typeShow.PermissionCode"
+      [permissionSubSystemCode]="_typeShow.SubSystemCode" [permissionObject]="item.PermissionConfig"
+      [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [isViewEditable]="_typeShow.IsViewEditable"
+      [labelText]="item.Caption" [labelClass]="_labelClass" [maxLength]="item.MaxLength ? item.MaxLength : 20"
+      [isShowLabel]="_isShowLable" [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [data]="item"
+      [isSubmit]="_isSubmit" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [minValue]="item.MinValue"
+      [maxValue]="item.MaxValue" [validateMethods]="item.ValidateMethod" [showSpinButton]="false"
+      [(ngModel)]="item.Value" (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-numberbox>
+  </ng-container>
+
+  <!-- Phần trăm -->
+  <ng-container *ngSwitchCase="typeControl.Percent" class="ng-container-item text-overflow">
+    <amis-amis-control-numberbox #field [format]="'#.## %'" [labelPositon]="'left'" [labelFontWeight]="'normal'"
+      [fieldName]="item.FieldName" [typeControl]="item.TypeControl" [labelWidth]="_labelWidth"
+      [isViewOnly]="_typeShow.IsViewOnly" [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip"
+      [customConfig]="item.CustomConfig" [permissionCode]="_typeShow.PermissionCode"
+      [permissionSubSystemCode]="_typeShow.SubSystemCode" [permissionObject]="item.PermissionConfig"
+      [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [isViewEditable]="_typeShow.IsViewEditable"
+      [labelText]="item.Caption" [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [data]="item" [isSubmit]="_isSubmit"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [showSpinButton]="false" [minValue]="item.MinValue" [maxValue]="item.MaxValue" [(ngModel)]="item.Value"
+      (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-numberbox>
+  </ng-container>
+
+  <!-- Check box -->
+  <ng-container *ngSwitchCase="typeControl.Checkbox" class="ng-container-item text-overflow">
+    <amis-amis-control-checkbox #field [labelPositon]="'left'" [labelFontWeight]="'normal'" [labelWidth]="_labelWidth"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName" [isViewOnly]="_typeShow.IsViewOnly"
+      [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [tooltipContent]="item.Tooltip"
+      [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [isViewEditable]="_typeShow.IsViewEditable" [labelText]="item.Caption" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [data]="item"
+      [isSubmit]="_isSubmit" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-checkbox>
+  </ng-container>
+
+  <!-- Combo box -->
+  <ng-container *ngSwitchCase="typeControl.Combobox" class="ng-container-item text-overflow">
+    <amis-amis-control-combobox #field [labelPositon]="'left'" [labelFontWeight]="'normal'" [isRemoteServer]="true"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName"
+      [isShowCustomData]="isShowCustomData && !_isCallFromEmployeeApp"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth"
+      [displayExpr]="item.DisplayFieldSource" [displayField]="item.DataFieldSource" [valueExpr]="item.FieldNameSource"
+      [labelText]="item.Caption" [dataPath]="item.DataPath" [groupFieldConfigs]="item.GroupFieldConfigs"
+      [isModifiable]="item.IsModifiable" [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip"
+      [(isReloadData)]="item.IsReloadData" [isDynamicCombobox]="item.IsDynamicCombobox" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [isUseFns]="item.IsUseFunc" [fnsLoadData]="item.FnsLoadData" [isSubmit]="_isSubmit"
+      [isGetMethod]="item.IsGetMethod" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [inputParam]="item.Param ? item.Param : {GroupFieldConfig: item, GroupFieldConfigs: item.GroupFieldConfigDependent}"
+      [setDataSource]="item.DataSource" [controller]="item.Controller ? item.Controller : controllerDictionary"
+      [url]="item.Url ? item.Url : urlDictionary" [(displayValue)]="item.ValueText" [subSystemCode]="item.SubsystemCode"
+      [tableName]="item.TableName" [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View"
+      [(ngModel)]="item.Value" [data]="item" [isViewOnly]="_typeShow.IsViewOnly"
+      [isViewEditable]="_typeShow.IsViewEditable" [customConfig]="item.CustomConfig"
+      [validateMethods]="item.ValidateMethod" [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      (submitUpdateField)="updateFieldData()" (updateFieldView)="updateFieldView()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-combobox>
+  </ng-container>
+
+  <!-- tag box -->
+  <ng-container *ngSwitchCase="typeControl.MultiCombobox" class="ng-container-item text-overflow">
+    <amis-amis-control-tagbox #field [labelPositon]="'left'" [labelFontWeight]="'normal'" [isRemoteServer]="true"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName" [labelWidth]="_labelWidth"
+      [groupFieldConfigs]="item.GroupFieldConfigs" [isModifiable]="item.IsModifiable" [tooltipContent]="item.Tooltip"
+      [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [isDynamicCombobox]="item.IsDynamicCombobox"
+      [isReloadData]="item.IsReloadData" [displayExpr]="item.DisplayFieldSource" [displayField]="item.DataFieldSource"
+      [valueExpr]="item.FieldNameSource" [labelText]="item.Caption" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [isUseFns]="false" [dataPath]="item.DataPath" [setDataSource]="item.DataSource"
+      [isGetMethod]="item.IsGetMethod" [controlValue]="item.ControlValue"
+      [isShowCustomData]="isShowCustomData && !_isCallFromEmployeeApp"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError" [isSubmit]="_isSubmit"
+      [inputParam]="item.Param ? item.Param : {GroupFieldConfig: item, GroupFieldConfigs: item.GroupFieldConfigDependent}"
+      [controller]="item.Controller ? item.Controller : controllerDictionary"
+      [url]="item.Url ? item.Url : urlDictionary" [(displayValue)]="item.ValueText"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [(ngModel)]="item.Value" [data]="item"
+      [isViewOnly]="_typeShow.IsViewOnly" [isViewEditable]="_typeShow.IsViewEditable"
+      [validateMethods]="item.ValidateMethod" [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-tagbox>
+  </ng-container>
+
+
+  <!-- Số tự tăng ( input ) -->
+  <ng-container *ngSwitchCase="typeControl.AutoNumber" class="ng-container-item text-overflow">
+    <amis-amis-control-textbox #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [isViewEditable]="_typeShow.IsViewEditable"
+      [labelPositon]="'left'" [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip"
+      [customConfig]="item.CustomConfig" [labelFontWeight]="'normal'" [labelText]="item.Caption"
+      [labelClass]="_labelClass" [isShowLabel]="_isShowLable" [labelWidth]="_labelWidth"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [isSubmit]="_isSubmit"
+      [minLength]="item.MinLength" [maxLength]="item.MaxLength ? item.MaxLength : 30"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [data]="item"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (submitUpdateField)="updateFieldData()" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-textbox>
+  </ng-container>
+
+  <!-- Công thức -->
+  <ng-container *ngSwitchCase="typeControl.Formula" class="ng-container-item text-overflow">
+    <amis-amis-control-formula #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth"
+      [isViewEditable]="_typeShow.IsViewEditable" [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip"
+      [labelPositon]="'left'" [labelFontWeight]="'normal'" [labelText]="item.Caption" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View"
+      [isSubmit]="_isSubmit" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [data]="item" [customConfig]="item.CustomConfig"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (submitUpdateField)="updateFieldData()" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-formula>
+  </ng-container>
+  <!-- upload ảnh ( input ) -->
+  <ng-container *ngSwitchCase="typeControl.UploadImage" class="ng-container-item text-overflow">
+    <amis-amis-control-upload-file #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName"
+      [labelWidth]="_labelWidth" [isViewEditable]="_typeShow.IsViewEditable" [labelPositon]="'left'"
+      [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelFontWeight]="'normal'" [labelText]="item.Caption"
+      [labelClass]="_labelClass" [isShowLabel]="_isShowLable" [storageType]="uploadTypeEnum.Avatar"
+      [acceptFileExtension]="'.jpg, .png'" [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View"
+      [isSubmit]="_isSubmit" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [errorMessage]="item.ErrorMessage" [validateMethods]="item.ValidateMethod"
+      [(ngModel)]="item.Value" [data]="item"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (submitUpdateField)="updateFieldData()" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-upload-file>
+  </ng-container>
+  <!-- upload tài liệu ( input ) -->
+  <ng-container *ngSwitchCase="typeControl.UploadDocument" class="ng-container-item text-overflow">
+    <amis-amis-control-upload-file #field [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [isCallFromEmployeeApp]="_isCallFromEmployeeApp" [permissionObject]="item.PermissionConfig"
+      (onKeyDown)="onKeyDown($event)" [fieldName]="item.FieldName" [labelWidth]="_labelWidth"
+      [isViewEditable]="_typeShow.IsViewEditable" [labelPositon]="'left'" [tooltipContent]="item.Tooltip"
+      [isShowTooltip]="item.IsShowTooltip" [readonly]="item.IsReadOnly || item.IsReadOnlyCustom"
+      [storageType]="uploadTypeEnum.EmployeeAttachment" [labelFontWeight]="'normal'" [labelText]="item.Caption"
+      [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [isSubmit]="_isSubmit"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [(isErrorCustom)]="item.IsErrorCustom" [customConfig]="item.CustomConfig" [errorMessage]="item.ErrorMessage"
+      [validateMethods]="item.ValidateMethod" [(displayValue)]="item.ValueText" [(ngModel)]="item.Value" [data]="item"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (submitUpdateField)="updateFieldData()" (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-upload-file>
+  </ng-container>
+  <!-- control select human-->
+  <ng-container *ngSwitchCase="typeControl.SelectHuman" class="ng-container-item text-overflow">
+    <amis-amis-control-select-human #field [labelPositon]="'left'" [labelFontWeight]="'normal'" [isRemoteServer]="true"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth"
+      [displayExpr]="item.DisplayFieldSource" [valueExpr]="item.FieldNameSource" [labelText]="item.Caption"
+      [dataPath]="item.DataPath" [groupFieldConfigs]="item.GroupFieldConfigs" [isModifiable]="item.IsModifiable"
+      [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip" [customConfig]="item.CustomConfig"
+      [(isReloadData)]="item.IsReloadData" [labelClass]="_labelClass" [isShowLabel]="_isShowLable"
+      [isUseFns]="item.IsUseFunc" [fnsLoadData]="item.FnsLoadData" [isSubmit]="_isSubmit"
+      [isGetMethod]="item.IsGetMethod" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [inputParam]="item.Param ? item.Param : {GroupFieldConfig: item, GroupFieldConfigs: item.GroupFieldConfigDependent}"
+      [controller]="item.Controller ? item.Controller : controllerDictionary"
+      [url]="item.Url ? item.Url : urlDictionary" [(displayValue)]="item.ValueText"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [(ngModel)]="item.Value" [data]="item"
+      [isViewOnly]="_typeShow.IsViewOnly" [isViewEditable]="_typeShow.IsViewEditable"
+      [validateMethods]="item.ValidateMethod" [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-select-human>
+  </ng-container>
+  <!-- tree box -->
+  <ng-container *ngSwitchCase="typeControl.TreeBox" class="ng-container-item text-overflow">
+    <amis-amis-control-treebox #field [labelPositon]="'left'" [labelFontWeight]="'normal'" [isRemoteServer]="true"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth"
+      [displayExpr]="item.DisplayFieldSource" [valueExpr]="item.FieldNameSource" [labelText]="item.Caption"
+      [dataPath]="item.DataPath" [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip"
+      [groupFieldConfigs]="item.GroupFieldConfigs" [isModifiable]="item.IsModifiable"
+      [(isReloadData)]="item.IsReloadData" [isDynamicCombobox]="item.IsDynamicCombobox" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [isUseFns]="item.IsUseFunc" [fnsLoadData]="item.FnsLoadData" [isSubmit]="_isSubmit"
+      [isGetMethod]="item.IsGetMethod" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [inputParam]="item.Param ? item.Param : {GroupFieldConfig: item, GroupFieldConfigs: item.GroupFieldConfigDependent}"
+      [setDataSource]="item.DataSource" [controller]="item.Controller ? item.Controller : controllerDictionary"
+      [url]="item.Url ? item.Url : urlDictionary" [(displayValue)]="item.ValueText"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [(ngModel)]="item.Value" [data]="item"
+      [isViewOnly]="_typeShow.IsViewOnly" [isViewEditable]="_typeShow.IsViewEditable" [customConfig]="item.CustomConfig"
+      [validateMethods]="item.ValidateMethod" [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      (submitUpdateField)="updateFieldData()" (updateFieldView)="updateFieldView()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-treebox>
+  </ng-container>
+  <!-- tree box multi -->
+  <ng-container *ngSwitchCase="typeControl.TreeBoxMulti" class="ng-container-item text-overflow">
+    <amis-amis-control-treeboxtag #field [labelPositon]="'left'" [labelFontWeight]="'normal'" [isRemoteServer]="true"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth"
+      [displayExpr]="item.DisplayFieldSource" [valueExpr]="item.FieldNameSource" [labelText]="item.Caption"
+      [dataPath]="item.DataPath" [tooltipContent]="item.Tooltip" [isShowTooltip]="item.IsShowTooltip"
+      [groupFieldConfigs]="item.GroupFieldConfigs" [isModifiable]="item.IsModifiable"
+      [(isReloadData)]="item.IsReloadData" [isDynamicCombobox]="item.IsDynamicCombobox" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [isUseFns]="item.IsUseFunc" [fnsLoadData]="item.FnsLoadData" [isSubmit]="_isSubmit"
+      [isGetMethod]="item.IsGetMethod" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [inputParam]="item.Param ? item.Param : {GroupFieldConfig: item, GroupFieldConfigs: item.GroupFieldConfigDependent}"
+      [setDataSource]="item.DataSource" [controller]="item.Controller ? item.Controller : controllerDictionary"
+      [url]="item.Url ? item.Url : urlDictionary" [(displayValue)]="item.ValueText"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [(ngModel)]="item.Value" [data]="item"
+      [isViewOnly]="_typeShow.IsViewOnly" [isViewEditable]="_typeShow.IsViewEditable" [customConfig]="item.CustomConfig"
+      [validateMethods]="item.ValidateMethod" [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      (submitUpdateField)="updateFieldData()" (updateFieldView)="updateFieldView()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-treeboxtag>
+  </ng-container>
+  <!-- Số -->
+  <ng-container *ngSwitchCase="typeControl.FileSize" class="ng-container-item text-overflow">
+    <amis-amis-control-filesize #field [format]="'#,###'" [labelPositon]="'left'" [labelFontWeight]="'normal'"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName" [typeControl]="item.TypeControl"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth" [tooltipContent]="item.Tooltip"
+      [isShowTooltip]="item.IsShowTooltip" [isViewOnly]="_typeShow.IsViewOnly" [isEditable]="_typeShow.IsEditable"
+      (onKeyDown)="onKeyDown($event)" [isViewEditable]="_typeShow.IsViewEditable" [labelText]="item.Caption"
+      [labelClass]="_labelClass" [isShowLabel]="_isShowLable" [customConfig]="item.CustomConfig"
+      [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View" [minValue]="item.MinValue"
+      [maxValue]="item.MaxValue" [data]="item" [isSubmit]="_isSubmit"
+      [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [validateMethods]="item.ValidateMethod" [(ngModel)]="item.Value" (submitUpdateField)="updateFieldData()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-filesize>
+  </ng-container>
+
+  <!-- Combo box -->
+  <ng-container *ngSwitchCase="typeControl.Autocomplete" class="ng-container-item text-overflow">
+    <amis-amis-control-autocomplete #field [labelPositon]="'left'" [labelFontWeight]="'normal'" [isRemoteServer]="true"
+      [permissionCode]="_typeShow.PermissionCode" [permissionSubSystemCode]="_typeShow.SubSystemCode"
+      [permissionObject]="item.PermissionConfig" [fieldName]="item.FieldName" [displayExpr]="item.DisplayFieldSource"
+      [readonly]="item.IsReadOnly || item.IsReadOnlyCustom" [labelWidth]="_labelWidth" [labelText]="item.Caption"
+      [dataPath]="item.DataPath" [groupFieldConfigs]="item.GroupFieldConfigs" [tooltipContent]="item.Tooltip"
+      [isShowTooltip]="item.IsShowTooltip" [(isReloadData)]="item.IsReloadData" [labelClass]="_labelClass"
+      [isShowLabel]="_isShowLable" [isUseFns]="item.IsUseFunc" [fnsLoadData]="item.FnsLoadData" [isSubmit]="_isSubmit"
+      [isGetMethod]="item.IsGetMethod" [isShowError]="item.IsRequire || item.ValidateMethod?.length || item.IsShowError"
+      [inputParam]="item.Param ? item.Param : {GroupFieldConfig: item, GroupFieldConfigs: item.GroupFieldConfigDependent}"
+      [setDataSource]="item.DataSource" [controller]="item.Controller ? item.Controller : controllerDictionary"
+      [url]="item.Url ? item.Url : urlDictionary" [(displayValue)]="item.ValueText" [subSystemCode]="item.SubsystemCode"
+      [tableName]="item.TableName" [isRequiredLabel]="item.IsRequire && formMode != formModeEntity.View"
+      [(ngModel)]="item.Value" [data]="item" [isViewOnly]="_typeShow.IsViewOnly"
+      [isViewEditable]="_typeShow.IsViewEditable" [customConfig]="item.CustomConfig"
+      [validateMethods]="item.ValidateMethod" [isEditable]="_typeShow.IsEditable" (onKeyDown)="onKeyDown($event)"
+      (submitUpdateField)="updateFieldData()" (updateFieldView)="updateFieldView()"
+      (valueChanged)="valueChange({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (focusOutField)="focusOut({FieldName:item.FieldName,Data: item,Value:$event,Target:field})"
+      (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+    </amis-amis-control-autocomplete>
+  </ng-container>
+
+
+
+</ng-container>

@@ -1,0 +1,55 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font-family.scss";
+@import "../../../../assets/scss/var-dx-styles.scss";
+
+::ng-deep {
+  .popup-delete-base.dx-popup-wrapper {
+    .dx-popup-normal {
+      display: flex;
+      flex-direction: column;
+      border-radius: 4px;
+      .dx-popup-content {
+        flex: 1;
+
+        .dx-template-wrapper.custom-template-wrapper {
+          display: flex;
+          justify-content: space-between;
+          flex-direction: column;
+        }
+        .content-popup-base {
+          font-size: $font-size-base;
+          padding: 0 16px;
+          flex: 1;
+        }
+
+        .dx-popup-footer {
+          padding: 20px 16px 16px;
+          .buttons {
+            justify-content: flex-end;
+            padding: 0;
+            amis-button {
+              &:last-child {
+                margin-right: 0;
+              }
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+
+      .dx-popup-title {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-title;
+        padding: 16px 16px 20px 16px;
+        .title-content{
+          margin-top: 4px;
+        }
+        .dx-icon-close {
+          font: 20px/1 DXIcons;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

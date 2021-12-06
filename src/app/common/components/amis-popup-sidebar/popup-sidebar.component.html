@@ -1,0 +1,7 @@
+<!-- Popup dùng chung trượt từ bên phải sang -->
+<div class="popup-sidebar" [class.active-popup]="isDisplay">
+  <div class="btn-close-popup">
+    <div class="ic-svg icon-close-big" (click)="hide()"></div>
+  </div>
+  <ng-content select="[contentTemplate]"></ng-content>
+</div>

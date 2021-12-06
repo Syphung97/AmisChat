@@ -1,0 +1,66 @@
+@import "mixin";
+
+.themeMixin({
+  :host {
+
+    @media only screen and (max-width: 992px) {
+      .conversation-item {
+        padding: 8px 8px !important;
+      }
+      .info{
+        display: none;
+      }
+      .wrap{
+        display: flex;
+        justify-content: center;
+      }
+      ::-webkit-scrollbar {
+        width: 0 !important;
+      }
+      ::-moz-scrollbar {
+        width: 0 !important;
+      }
+
+    }
+    .conversation-item {
+      height: 64px;
+      padding: 8px 16px;
+      cursor: pointer;
+      &:hover {
+        background-color: #e5f1ff;
+      }
+      color: @text-color;
+    }
+    .list-conver {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .user-online-in-contact {
+      position: absolute;
+      right: 10%;
+    }
+    .head{
+      font-weight: 600;
+      margin-left: 16px
+    }
+    .last-message {
+      max-width: 200px;
+      height: 21px;
+      white-space: nowrap;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+    }
+    .user-name {
+      max-width: 160px;
+      white-space: nowrap;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+    }
+  }
+
+
+});

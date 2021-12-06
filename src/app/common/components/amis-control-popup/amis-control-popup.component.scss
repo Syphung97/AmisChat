@@ -1,0 +1,13 @@
+@import "./../../../assets/scss/var-mixin.scss";
+@import "./../../../assets/scss/var-color.scss";
+
+:host {
+        .amis-formview-overlay-content {
+            position: fixed;
+            background-color: $background-gray;
+            z-index: 50;
+        }
+}
+
+
+

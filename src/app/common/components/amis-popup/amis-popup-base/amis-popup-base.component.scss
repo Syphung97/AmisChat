@@ -1,0 +1,87 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font-family.scss";
+@import "../../../../assets/scss/var-dx-styles.scss";
+
+::ng-deep {
+  .amis-popup-base.dx-popup-wrapper {
+    .dx-popup-flex-height{
+      flex-wrap: nowrap;
+      -webkit-flex-wrap: nowrap;
+    }
+    .dx-popup-normal {
+      display: flex;
+      flex-direction: column;
+      border-radius: 4px;
+      .dx-popup-content {
+        height: calc(100% - 59px) !important;
+        .dx-template-wrapper.custom-template-wrapper {
+          display: flex;
+          justify-content: space-between;
+          flex-direction: column;
+        }
+        .wrap-scroll-view{
+          .content-popup-base {
+            font-size: $font-size-base;
+            padding: 0 20px;
+            flex: 1;
+            .group-box{
+              padding: 0 !important;
+              box-shadow: none !important;
+              }
+          }
+        }
+        .content-no-scroll{
+          height: calc(100% - 77px);
+          .content-popup-base {
+            .group-box{
+              padding: 0 !important;
+              box-shadow: none !important;
+              }
+            font-size: $font-size-base;
+            padding: 0 20px;
+            // height: calc(100% - 36px) !important;
+            height: 100%;
+            flex: 0 !important;
+          }
+        }
+
+        .dx-popup-footer {
+          margin-top: 16px;
+          padding: 12px 20px;
+          border-top: 1px solid $border;
+          .buttons {
+            justify-content: flex-end;
+            padding: 0;
+
+            amis-button {
+              &:last-child {
+                margin-right: 0;
+              }
+              margin-right: 12px;
+            }
+          }
+        }
+      }
+
+      .dx-popup-title {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-title;
+        padding: 0px;
+        .title-wrapper{
+          padding: 20px;
+        }
+        .untitle-wrapper{
+          padding: 20px 20px 0px 20px;
+        }
+        .title-content{
+          margin-top: 4px;
+        }
+        .dx-icon-close {
+          font: 20px/1 DXIcons;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

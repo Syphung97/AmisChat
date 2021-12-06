@@ -1,0 +1,141 @@
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-cls.scss";
+@import "../../../../assets/scss/var-icon.scss";
+@import "../../../../assets/scss/var-styleguide.scss";
+
+::ng-deep {
+    .popup-import-multi-avatar {
+
+        .input-import {
+            display: none;
+        }
+
+        .import-file {
+            border: 1px $border dashed;
+            height: 324px;
+            width: 966px;
+            border-radius: $border-radius;
+            font-size: $font-size-small;
+
+            .item-middle {
+                margin-bottom: 12px;
+
+                &:first-child {
+                    font-size: $font-size-strong;
+                }
+            }
+
+            .gray {
+                color: $text-grey;
+            }
+        }
+
+        .manage-file {
+
+            .grid-avatar {
+                border: 1px $border solid;
+                border-radius: $border-radius;
+
+                .list-avatar-wrapper {
+                    height: 310px;
+                    width: 968px;
+                    max-height: 320px;
+                    min-height: 143px;
+                    // min-width: 430px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    height: 100%;
+                    padding: 8px 8px 0px 0px;
+
+                    img {
+                        object-fit: scale-down;
+                    }
+
+                    .avatar-wrapper {
+                        width: 80px;
+                        height: 116px;
+                        margin: 4px 4px 15px 12px;
+
+                        .avatar {
+                            position: relative;
+                            cursor: pointer;
+                            margin-bottom: 4px;
+                            border-radius: $border-radius;
+
+                            img {
+                                border-radius: inherit;
+                                height: 80px;
+                                min-height: 80px;
+                                width: 100%;
+                            }
+                        }
+
+                        &:hover .overlay {
+                            display: block;
+                        }
+
+                        .employee-id-input {
+                            border-color: $white !important;
+                        }
+
+                        .border-alert {
+                            border-color: $red !important;
+                        }
+
+                        &:hover .employee-id-input,
+                        .dx-state-focused {
+                            border-color: $selected !important;
+                            box-shadow: none;
+                        }
+
+                        .dx-texteditor-input {
+                            padding: 7px !important;
+                            text-align: center;
+                        }
+
+                        .loading {
+                            border-radius: inherit;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            height: 100%;
+                            width: 100%;
+                            background-color: $black-icon;
+                            opacity: 0.4;
+                            margin-bottom: 4px;
+                            padding: 6px;
+                        }
+
+                        .icon-notify {
+                            position: absolute;
+                            bottom: 5px;
+                            right: 5px;
+                        }
+
+                        .overlay {
+                            border-radius: inherit;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            height: 100%;
+                            width: 100%;
+                            display: none;
+                            background-color: $black-icon;
+                            opacity: 0.4;
+                            margin-bottom: 4px;
+                            padding: 6px;
+
+                            .icon-close-small {
+                                float: right;
+                                background-color: $white;
+                            }
+                        }
+
+                    }
+                }
+
+            }
+        }
+    }
+}

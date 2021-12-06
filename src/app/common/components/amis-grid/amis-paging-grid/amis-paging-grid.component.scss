@@ -1,0 +1,788 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+@import "../../../../assets/scss/var-font-family.scss";
+@import "../../../../assets/scss/var-dx-styles.scss";
+@import "../../../../assets/scss/var-cls.scss";
+@import "../../../../assets/scss/var-icon.scss";
+
+$radius: 4px;
+
+:host {
+  ::ng-deep {
+
+    .dx-datagrid {
+      td {background-color: white;}
+    }
+
+    .dx-datagrid-headers {
+      .dx-datagrid-table {
+        .dx-row td {
+          border-bottom: 1px solid $header-footer-border;
+        }
+      }
+
+      .dx-datagrid-content {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+    }
+
+    .dx-datagrid .dx-row-lines>td {
+      border-bottom: 1px solid $grid-line;
+    }
+
+    .dx-row.dx-header-row {
+      line-height: 30px;
+
+      .dx-datagrid-text-content.dx-text-content-alignment-left {
+        width: 100%;
+      }
+    }
+
+    .report-border {
+      border-radius: 4px;
+
+      ::ng-deep {
+
+        .dx-datagrid-content .dx-datagrid-table .dx-row>td,
+        .dx-datagrid-content .dx-datagrid-table .dx-row>tr>td {
+          border: 1px solid $border !important;
+          border-left: none !important;
+
+          &:last-child {
+            border-right: none !important;
+          }
+        }
+
+        .dx-datagrid-headers.dx-datagrid-nowrap {
+          border-bottom: none;
+          // margin-right: 19px;
+        }
+
+        .dx-freespace-row {
+          display: none;
+        }
+
+        .dx-datagrid-headers .dx-datagrid-table .dx-row>td {
+          padding-left: 9px;
+          padding-right: 9px;
+          border: 1px solid $border !important;
+          border-left: none !important;
+          border-top: none !important;
+          font-weight: $font-weight-medium;
+
+          &:last-child {
+            border-right: none !important;
+          }
+        }
+
+        .dx-scrollable-container {
+          overflow-y: auto !important;
+        }
+
+        .amis-custom-grid {
+          overflow: hidden !important;
+        }
+
+        .hrm-grid {
+          overflow: hidden !important;
+        }
+
+        .dx-row.dx-data-row {
+          &:nth-child(2n) {
+            background-color: $white;
+          }
+        }
+      }
+
+      .hrm-grid {
+        border-radius: 8px;
+      }
+
+      .amis-paging {
+        ::ng-deep {
+          .paging {
+            background-color: $white;
+          }
+        }
+      }
+
+      ::ng-deep {
+        .dx-datagrid-table .dx-row .dx-command-expand.dx-datagrid-group-space {
+          padding-top: 2px !important;
+        }
+
+        .dx-datagrid-rowsview .dx-row.dx-group-row {
+          color: $text !important;
+          background-color: $bg-row-group !important;
+          font-weight: $font-weight-regular !important;
+          height: 44px;
+        }
+
+        .dx-datagrid-group-opened {
+          position: relative;
+
+          &::before {
+            content: "" !important;
+            width: 24px !important;
+            height: 24px !important;
+            -webkit-mask-image: $link-icon !important;
+            mask-image: $link-icon !important;
+            -webkit-mask-position: -72px -24px !important;
+            mask-position: -72px -24px !important;
+            background-color: $default-icon !important;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            position: absolute;
+            top: 50%;
+            margin-top: -12px;
+            left: 50%;
+            margin-left: -12px;
+          }
+        }
+
+        .dx-datagrid-group-closed {
+          &::before {
+            content: "" !important;
+            width: 24px;
+            height: 24px;
+            -webkit-mask-image: $link-icon;
+            mask-image: $link-icon;
+            -webkit-mask-position: -96px -24px;
+            mask-position: -96px -24px;
+            background-color: $default-icon;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            position: absolute;
+            top: 50%;
+            margin-top: -12px;
+            left: 50%;
+            margin-left: -12px;
+          }
+        }
+      }
+
+      .custom-title {
+        font-weight: $font-weight-bold !important;
+        color: $text !important;
+        letter-spacing: 0.196px !important;
+        // padding: 4px auto !important;
+        padding-top: 4px !important;
+        line-height: 18px;
+      }
+
+      .custom-title-report {
+        padding-top: 3px;
+        line-height: 17px;
+      }
+
+      .dx-datagrid-content .dx-datagrid-table .dx-row.dx-data-row {
+        cursor: unset !important;
+      }
+    }
+
+    .dx-datagrid-headers .dx-datagrid-table .dx-row>td {
+      &:nth-child(n + 3) {
+        padding-left: 9px;
+        border-right: 1px solid transparent;
+        border-left: 1px solid transparent;
+
+        &:hover {
+          border-right: 1px solid $border;
+          border-left: 1px solid $border;
+        }
+      }
+    }
+
+    .dx-datagrid-content .dx-datagrid-table {
+      border-collapse: collapse;
+    }
+
+    .dx-row.dx-data-row {
+      line-height: 32px;
+
+      .dx-template-wrapper {
+        .custom-cell {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          user-select: text;
+          padding-top: 2px !important;
+          line-height: 18px !important;
+        }
+      }
+
+      // &:nth-child(2n) {
+      //   background-color: $bg-disable;
+      // }
+    }
+
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover:not(.dx-row-lines)>td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):not(.dx-row-lines)>td {
+      border-top: none;
+      border-bottom: 1px solid $bg-btn-normal-press;
+    }
+
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused)>td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused)>tr>td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover>td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover>tr>td {
+      background-color: $row-selected !important;
+      color: $border-2;
+      border-color: $border;
+    }
+
+    .dx-template-wrapper {
+      // flex-wrap: wrap;
+      line-height: 16px;
+    }
+
+    .dx-command-select {
+      text-align: left !important;
+
+      .dx-select-checkbox {
+        padding-left: 4px !important;
+      }
+
+      .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-select {
+        padding-left: 48px !important;
+      }
+    }
+
+    .dx-command-select .dx-select-checkbox {
+      padding-left: 0 !important;
+      line-height: 0 !important;
+    }
+
+    .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+      width: 44px !important;
+      min-width: 44px !important;
+    }
+
+    .dx-datagrid-headers.dx-datagrid-nowrap {
+      border-bottom: 1px solid $border;
+    }
+
+    .search-column {
+      input {
+        border: none !important;
+        border-bottom: 1px solid $border !important;
+        @include border-radius($radius !important);
+      }
+    }
+
+    .checkbox-item {
+      .dx-checkbox-text {
+        white-space: nowrap !important;
+      }
+    }
+
+    .icon-dot {
+      &.active {
+        background-color: $active-content;
+      }
+    }
+
+    .active-status {
+      color: $active-content;
+    }
+
+    .icon-dot {
+      &.approved {
+        background-color: $red-status;
+      }
+    }
+
+    .approved-status {
+      color: $red-status;
+    }
+
+    .icon-dot {
+      &.not-active {
+        background-color: $black-status;
+      }
+    }
+
+    .not-active-status {
+      color: $black-status;
+    }
+
+    .activing-status {
+      color: $text-blue-heavy;
+    }
+
+    .icon-dot {
+      &.inactive {
+        background-color: $black-status;
+      }
+    }
+
+    .inactive-status {
+      color: $black-status;
+    }
+
+    .icon-dot {
+      &.delete {
+        background-color: $red-status;
+      }
+    }
+
+    .delete-status {
+      color: $red-status;
+    }
+  }
+
+  .hrm-container-grid {
+    height: 100%;
+    @include border-radius($border-radius-8);
+    background: $white;
+
+    .amis-custom-grid {
+      height: calc(100% - 80px);
+      overflow-x: auto;
+    }
+
+    .custom-title {
+      font-weight: $font-weight-medium;
+      color: $black;
+      // padding: 4px auto;
+      padding-top: 2px !important;
+      line-height: 18px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .link-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        color: $text-blue-heavy;
+        text-decoration: underline;
+      }
+    }
+
+    .attachment {
+      color: $btn-link;
+
+      &:hover {
+        color: $btn-link-hover;
+        text-decoration: underline;
+      }
+    }
+
+    .hrm-grid {
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-radius: 8px;
+
+      .icon-signal-avatar {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+      }
+    }
+
+    .app-dropdown.menu-column {
+      border: none;
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.24);
+    }
+  }
+
+  .app-dropdown {
+    top: 36px !important;
+    left: 0px !important;
+    width: 240px;
+    padding: 0px !important;
+
+    .drop-header {
+      margin-bottom: 20px;
+      margin-top: 12px;
+      padding: 8px 16px 0px;
+      line-height: 24px;
+    }
+
+    .search-column-custom {
+      margin: 12px 16px;
+      @include border-radius($radius);
+      border: 1px solid $border;
+
+      input {
+        width: 100%;
+        border: none;
+      }
+    }
+
+    .item {
+      height: 40px;
+      margin: 0 8px;
+      padding: 0 8px;
+      @include border-radius(4px);
+
+      &:hover {
+        background-color: $bg-count;
+        cursor: pointer;
+
+        .ic-sort-order {
+          display: inline-block;
+          min-width: 16px;
+          cursor: all-scroll;
+        }
+      }
+
+      .checkbox-item {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .ic-sort-order {
+    min-width: 16px;
+  }
+
+  .drop-content {
+    max-height: 400px;
+    min-height: 200px;
+    padding: 0 8px 8px;
+  }
+
+  .drop-footer {
+    border-top: 1px solid $border;
+    padding: 12px 16px;
+    // margin-top: 32px;
+  }
+
+  .search-input {
+    border-color: unset !important;
+  }
+
+  .column-chooser {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 11;
+    cursor: pointer;
+  }
+
+
+
+  .column-chooser.hover-icon:focus {
+    background-color: $hover !important;
+
+    .icon-colunm-option {
+      background-color: $row-selected !important;
+    }
+  }
+
+  .column-chooser.hover-icon:focus-within {
+    background-color: $hover !important;
+
+    .icon-colunm-option {
+      background-color: $row-selected !important;
+    }
+  }
+
+  .viewmore {
+    margin: 0 auto;
+    display: none;
+    cursor: pointer;
+  }
+
+  .icon-eye.viewmore {
+    margin: 0px 8px 0px 0px;
+  }
+
+  .wrapper-button {
+    display: none;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    @include border-radius(50%);
+    color: $white;
+  }
+
+  .box-name-can {
+    width: calc(100% - 32px);
+  }
+}
+
+::ng-deep {
+
+  // Grid có border, màu phần header khác
+  .border-grid {
+    border: 1px solid $border;
+    border-radius: 4px;
+
+    .amis-custom-grid {
+      border-radius: 4px;
+      overflow-x: unset !important;
+
+      .dx-row.dx-header-row {
+        background-color: $bg-btn-normal;
+      }
+    }
+
+    .amis-paging {
+      border: 1px solid $border;
+      border-top: none;
+    }
+  }
+
+  .is-selection-only {
+    .dx-command-select {
+      width: 45px !important;
+      min-width: 45px !important;
+      max-width: 45px !important;
+    }
+
+    .dx-select-checkbox {
+      .dx-checkbox-container {
+        padding-left: 15px;
+      }
+    }
+  }
+
+  .not-selection-only {
+    .dx-command-select {
+      width: 24px !important;
+      min-width: 24px !important;
+      max-width: 24px !important;
+    }
+  }
+
+  .single-selection-grid {
+    .dx-checkbox-container {
+      width: 24px;
+      height: 24px;
+      -webkit-mask-image: url(/assets/images/Icon.svg);
+      mask-image: url(/assets/images/Icon.svg);
+      -webkit-mask-position: -240px -24px;
+      mask-position: -240px -24px;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      background-color: $default-icon;
+    }
+
+    .dx-selection {
+      .dx-checkbox-container {
+        -webkit-mask-position: -264px -24px;
+        mask-position: -264px -24px;
+        background-color: $selected;
+      }
+    }
+
+    .dx-checkbox-icon {
+      border: none;
+      background-color: transparent;
+      display: none;
+    }
+
+    .dx-checkbox-icon::before {
+      display: none;
+    }
+  }
+
+  .small-grid {
+    .amis-custom-grid {
+      .dx-row {
+        height: 47px !important;
+
+        .dx-template-wrapper {
+          .custom-cell {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+
+  .fix-sub-menu {
+    .dx-popover-arrow:after {
+      display: none !important;
+    }
+
+    .list-sub-button {
+      max-width: 240px;
+      margin: 8px 0;
+
+      .menu-item {
+        height: 36px;
+        @include border-radius(4px);
+        padding: 0 8px;
+        margin: 0 8px;
+
+        &:hover {
+          background-color: $hover;
+        }
+      }
+
+      .sub-menu {
+        padding: 0px 8px;
+        font-size: $font-size-base;
+        cursor: pointer;
+        height: 36px;
+        display: flex;
+        align-items: center;
+
+        .item-hover {
+          @include border-radius(4px);
+          padding: 0px 8px;
+          display: flex;
+          align-items: center;
+          height: 36px;
+          width: 100%;
+          justify-content: space-between;
+
+          &:hover {
+            background-color: $hover;
+          }
+        }
+
+        .item-child {
+          @include border-radius(4px);
+          padding: 0px 8px;
+          display: flex;
+          align-items: center;
+          height: 36px;
+          width: 100%;
+
+          &:hover {
+            background-color: $hover;
+          }
+        }
+
+        .wrapper-export {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      amis-button {
+        margin-right: 8px;
+      }
+
+      .column-view-more {
+        @include border-radius(4px);
+        border: 1px solid $border;
+      }
+
+      .p-context-menu {
+        margin: 8px 0;
+      }
+
+      .deleted {
+        color: $bg-btn-red-primary;
+      }
+
+      .wrapper-export {
+        position: relative;
+
+        .menu-column {
+          position: absolute;
+          left: 100%;
+          top: -16px;
+          display: none;
+        }
+
+        &:hover {
+          .menu-column {
+            display: block;
+          }
+        }
+      }
+
+      .columns-export {
+        width: 200px;
+        background: $white;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+        @include border-radius(4px);
+
+        .type-export {
+          margin-left: 8px;
+        }
+
+        padding: 8px;
+      }
+
+      .disabled {
+        pointer-events: none;
+        opacity: 0.5;
+        cursor: none;
+      }
+
+      .visible {
+        display: block;
+      }
+
+      .invisible {
+        display: none !important;
+      }
+    }
+  }
+
+  .edit-grid {
+    .dx-datagrid-revert-tooltip {
+      display: none;
+    }
+
+    .dx-datagrid-focus-overlay {
+      border: none !important;
+    }
+
+    td.dx-editor-cell {
+      padding: 0 4px !important;
+    }
+
+    td.dx-editor-cell.dx-command-select {
+      padding: 0 14px !important;
+    }
+
+    .dx-row.dx-data-row.dx-edit-row {
+      background-color: $bg-btn-white-active !important;
+    }
+  }
+
+  .amis-pop-select-grid-contro.dx-selectbox-popup-wrapper {
+    .dx-scrollable-container {
+      .dx-scrollable-content .dx-scrollview-content .dx-list-item .dx-item-content {
+        display: block !important;
+        word-break: break-word;
+        align-items: center;
+        width: auto;
+        white-space: normal;
+      }
+    }
+  }
+
+  .validate-grid {
+    .dx-datagrid-rowsview .dx-data-row .dx-validator.dx-datagrid-invalid.dx-focused>.dx-highlight-outline::after {
+      border: none !important;
+    }
+
+    .dx-datagrid-rowsview .dx-data-row .dx-validator.dx-datagrid-invalid .dx-highlight-outline::after {
+      border: none !important;
+    }
+
+    .dx-datagrid-invalid-message {
+      .dx-overlay-content.dx-resizable {
+        display: none !important;
+        // position: fixed !important;
+        // top: 99999px !important;
+      }
+    }
+  }
+}
+
+.dx-selection {
+  border-top: 1px solid $border !important;
+  border-bottom: 1px solid $border !important;
+}

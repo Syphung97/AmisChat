@@ -1,0 +1,48 @@
+<amis-popup-base [width]="400" *ngIf="visiblePopup" [visiblePopup]="visiblePopup" [offsetY]="offsetY" [title]="title"
+    (closePopup)="onClosePopup()">
+    <div contentPopup class="setup-data-popup mt-2">
+        <div class="data-setup-list" *ngIf="!isLoading">
+            <div class="widget-container">
+                <dx-scroll-view [height]="listHeight" #dxScrollView [showScrollbar]="'always'">
+                    <dx-list #list [items]="dataSource" [dataSource]="dataSource" [repaintChangesOnly]="true"
+                        itemTemplate="data" noDataText="{{'NO_DATA'| translate}}"
+                        nextButtonText="{{'SHOW_MORE' | translate}}" class="reorder-item-list">
+                        <div *dxTemplate="let data of 'data'"
+                            class="flex dis-align-items-center dis-flex list-data-item">
+                            {{data[displayExpr]}}
+                        </div>
+                        <dxo-item-dragging [data]="dataSource" [allowReordering]="true" [onDragStart]="onDragStart"
+                            [onAdd]="onAdd" [onRemove]="onRemove" [onDragEnd]="onDragEnd">
+                        </dxo-item-dragging>
+                    </dx-list>
+                </dx-scroll-view>
+            </div>
+        </div>
+        <div *ngIf="isLoading">
+            <div class="ph-item w-100">
+                <div class="loading-content">
+                    <div class="loading-sidebar-item" *ngFor="let item of [1,2,3,4]"></div>
+                    <div class="loading-sidebar-item" *ngFor="let item of [1,2,3,4]"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div buttonsPopup>
+        <amis-button [color]="buttonColor.Normal" name="{{'CANCEL2'| translate}}" (clickButton)="onClosePopup()">
+        </amis-button>
+        <amis-button name="{{'SAVE'| translate}}" (clickButton)="save()">
+        </amis-button>
+    </div>
+</amis-popup-base>
+
+<!-- popover tooltip -->
+<dx-popover *ngIf="visiblePopover" [(visible)]="visiblePopover" showEvent="dxhoverstart" hideEvent="dxhoverend"
+    [target]="tooltipTarget" class="tooltip-popover">
+    <div *dxTemplate="let data of 'content'">
+        <ng-container>
+            <div class="tooltip-content">
+                {{tooltipContent | translate}}
+            </div>
+        </ng-container>
+    </div>
+</dx-popover>

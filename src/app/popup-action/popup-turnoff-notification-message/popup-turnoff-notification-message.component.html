@@ -1,0 +1,20 @@
+<amis-popup [title]="'Tắt thông báo'" [width]="'416px'">
+ <div content>
+     <div class="m-b-8 f-s-14">Thông báo về cuộc trò chuyện sẽ bị tắt</div>
+     <div>
+        <nz-radio-group [(ngModel)]="radioValue">
+            <label nz-radio nzValue="A">15 phút</label>
+            <label nz-radio nzValue="B">1 giờ</label>
+            <label nz-radio nzValue="C">8 giờ</label>
+            <label nz-radio nzValue="M">24 giờ</label>
+            <label nz-radio nzValue="D">Cho đến khi được mở lại</label>
+          </nz-radio-group>
+     </div>
+ </div>
+ <div footer >
+    <div class="arena-footer">
+        <div class="btn btn-close m-r-8">Hủy</div>
+        <div class="btn btn-save">Lưu</div>
+    </div>
+ </div>
+</amis-popup>

@@ -1,0 +1,66 @@
+:host {
+  .conversation {
+    height: 64px;
+    justify-content: space-between;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .conversation:hover {
+    background-color: #e5f1ff;
+  }
+  .overflow-auto {
+    overflow: auto;
+  }
+  .bold {
+    font-weight: 500;
+  }
+  .user-name {
+    max-width: 160px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+  }
+
+  .last-message {
+    max-width: 200px;
+    height: 21px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+  }
+  .conversation-item {
+    height: 64px;
+    padding: 8px 16px;
+    cursor: pointer;
+    &:hover {
+      background-color: #e5f1ff;
+    }
+  }
+  .mess-unreadCount {
+    width: 16px;
+    height: 16px;
+    background-color: red;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+    align-items: center;
+    font-size: 10px;
+  }
+
+  @media only screen and (max-width: 992px) {
+    .conversation-item {
+      padding: 8px 8px !important;
+    }
+    ::-webkit-scrollbar {
+      width: 0 !important;
+    }
+    ::-moz-scrollbar {
+      width: 0 !important;
+    }
+  }
+}

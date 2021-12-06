@@ -1,0 +1,30 @@
+<amis-form-control [labelFontWeight]="_labelFontWeight" [labelClass]="_labelClass" [isShowLabel]="_isShowLabel"
+  [labelWidth]="_labelWidth" [labelText]="_labelText" [isRequired]="_isRequiredLabel " [labelPositon]="_labelPositon"
+  [fieldName]="_fieldName" [tooltipContent]="_tooltipContent" [isShowTooltip]="_isShowTooltip" [labelColor]="labelColor">
+  <dx-date-box format="monthAndYear" [useMaskBehavior]="true" displayFormat="{{_formatDate}}"
+    [placeholder]="_formatDate" #formControl="ngModel" [(ngModel)]="value"
+    [disabled]="_readonly  || isNotPermissionUpdate"
+    [class.border-error]="_isSubmit && _isShowError && (formControl.errors || _isErrorCustom || _isError)">
+  </dx-date-box>
+  <div *ngIf="_isSubmit && _isShowError && !_readonly">
+    <div class="text-error" *ngIf="formControl.errors && !_isErrorCustom && !_isError">
+      {{formControl.errors?.message}}</div>
+    <div class="text-error" *ngIf="_isErrorCustom || _isError">{{ _errorMessage }}</div>
+  </div>
+  <div *ngIf="_isEditable && !_isViewEditable" class="dis-flex dis-align-items-center option-icons pl-2">
+    <amis-icon [classIcon]="'icon-tick-circle-green'" (click)="onClickDone()" tooltipContent="{{'SAVE' | translate}}">
+    </amis-icon>
+
+    <amis-icon [classIcon]="'icon-error-circle'" (click)="onClickCancel()" tooltipContent="{{'CANCEL' | translate}}">
+    </amis-icon>
+  </div>
+  <div *ngIf="(_isEditable && _isViewEditable) && _readonly" class="option-icons">
+    <div class="no-hover-icon ml-2" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCode}}"
+      actionCode="{{permissionCodeEntity.Edit}}" permissionObject="{{_permissionObject}}">
+      <amis-icon [classIcon]="'icon-lock '" [isCursorPointer]="false" [isHoverState]="false" [isShowTooltip]="false">
+      </amis-icon>
+    </div>
+    <amis-icon [classIcon]="'icon-duplicate '" (click)="onClickDuplicate()" tooltipContent="{{'COPY' | translate}}">
+    </amis-icon>
+  </div>
+</amis-form-control>

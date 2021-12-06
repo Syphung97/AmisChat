@@ -1,0 +1,126 @@
+:host{
+  .black-overlay{
+    position: fixed;
+    z-index: 99999!important;
+    background-color: rgba(51, 51, 51, 0.1);
+}
+
+.black-overlay > svg {
+    top: calc(50% - 24px);
+    left: calc(50% - 24px);
+    margin: 0;
+    position: absolute;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.loading-text{
+    top: 55%!important;
+    z-index: 99999!important;
+}
+
+.spinner-big {
+    -webkit-animation: rotatorbig 1.4s linear infinite;
+            animation: rotatorbig 1.4s linear infinite;
+  }
+
+  @-webkit-keyframes rotatorbig {
+    0% {
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(270deg);
+              transform: rotate(270deg);
+    }
+  }
+
+  @keyframes rotatorbig {
+    0% {
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(270deg);
+              transform: rotate(270deg);
+    }
+  }
+  .path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    -webkit-transform-origin: center;
+            transform-origin: center;
+    -webkit-animation: dashbig 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+            animation: dashbig 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+  }
+
+  @-webkit-keyframes colors {
+    0% {
+      stroke: #008DF2;
+    }
+    25% {
+      stroke: #FA3D3F;
+    }
+    50% {
+      stroke: #F6BB02;
+    }
+    75% {
+      stroke: #1AC70E;
+    }
+    100% {
+      stroke: #008DF2;
+    }
+  }
+
+  @keyframes colors {
+    0% {
+      stroke: #008DF2;
+    }
+    25% {
+      stroke: #FA3D3F;
+    }
+    50% {
+      stroke: #F6BB02;
+    }
+    75% {
+      stroke: #1AC70E;
+    }
+    100% {
+      stroke: #008DF2;
+    }
+  }
+  @-webkit-keyframes dashbig {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      -webkit-transform: rotate(135deg);
+              transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      -webkit-transform: rotate(450deg);
+              transform: rotate(450deg);
+    }
+  }
+  @keyframes dashbig {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      -webkit-transform: rotate(135deg);
+              transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      -webkit-transform: rotate(450deg);
+              transform: rotate(450deg);
+    }
+  }
+
+}
+
+
+

@@ -1,0 +1,169 @@
+<div
+  style="overflow-x: hidden"
+  class="h-full overflow-auto"
+  (scroll)="onScroll($event)"
+>
+  <ng-container *ngIf="!isLoading; else loading">
+    <div
+      nz-popover
+      nzPopoverTrigger="hover"
+      nzPopoverPlacement="right"
+      [nzPopoverMouseEnterDelay]="1.25"
+      
+      [nzPopoverContent]="contentTemplate"
+      class="conversation cur flex-m"
+      *ngFor="
+        let conversation of listConversations;
+        let i = index;
+        trackBy: trackByConver
+      "
+      [ngClass]="{ 'active-item': conversationActive == conversation.id }"
+      (click)="showConverSation(conversation)"
+    >
+      <div class="conversation-info flex-m" title="{{ conversation.name }}">
+        <div class="avatar m-r-16">
+          <amis-avatar
+            *ngIf="!conversation?.isGroup"
+            [useFor]="'Conv'"
+            [size]="48"
+            [conv]="conversation"
+          ></amis-avatar>
+          <amis-avatar-group
+            *ngIf="conversation?.isGroup"
+            [size]="48"
+            [paticipant]="conversation.participants"
+          >
+          </amis-avatar-group>
+        </div>
+        <div class="info">
+          <div
+            class="user-name"
+            [ngClass]="{ bold: conversation.unreadCount > 0 ? true : false }"
+          >
+            {{ conversation | nameConv }}
+          </div>
+          <!-- <div class="last-message text-grey " [class.bold]="conversation.lastMessage.state != 4">
+          {{conversation.lastMessage.content.content}}</div> -->
+          <div class="flex-m">
+            <div
+              class="last-message text-grey"
+              [ngClass]="{ bold: conversation.unreadCount > 0 ? true : false }"
+            >
+              <ng-container
+                *ngIf="
+                  conversation.lastMessage.content.metadata &&
+                  conversation.lastMessage.type == messageType.Sticker
+                "
+              >
+                <ng-container
+                  *ngIf="
+                    conversation.lastMessage.sender ==
+                    currentUser.StringeeUserID
+                  "
+                >
+                  {{ "Bạn đã gửi 1 nhãn dán" }}
+                </ng-container>
+
+                <ng-container
+                  *ngIf="
+                    conversation.lastMessage.sender !=
+                      currentUser.StringeeUserID && conversation?.senderName
+                  "
+                >
+                  {{ conversation?.senderName }} đã gửi 1 nhãn dán
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="!conversation.lastMessage.metadata">
+                <div
+                  class="last-message text-grey"
+                  [innerHTML]="conversation.lastMessage.content.content"
+                ></div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="status flex-m">
+        <div class="mess-unreadCount" *ngIf="conversation.unreadCount > 0">
+          {{ conversation.unreadCount }}
+        </div>
+        <div class="icon-user-online" *ngIf="conversation.status == 1"></div>
+        <!-- <div>{{conversation.lastMessage.createdAt | date: "hh:mm"}}</div> -->
+      </div>
+      <ng-template #contentTemplate>
+        <amis-content-info *ngIf="!conversation.isGroup" [conv]="conversation"></amis-content-info>
+      </ng-template>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #loading>
+  <div class="conversation-item pos-relative flex-m">
+    <nz-skeleton-element
+      class="m-r-8 m-l-8"
+      [nzActive]="true"
+      nzType="avatar"
+      [nzSize]="48"
+    >
+    </nz-skeleton-element>
+    <nz-skeleton-element
+      nzType="input"
+      [nzSize]="'small'"
+      [nzActive]="true"
+      class="m-l-12"
+      style="width: 200px"
+    >
+    </nz-skeleton-element>
+  </div>
+  <div class="conversation-item pos-relative flex-m">
+    <nz-skeleton-element
+      class="m-r-8 m-l-8"
+      [nzActive]="true"
+      nzType="avatar"
+      [nzSize]="48"
+    >
+    </nz-skeleton-element>
+    <nz-skeleton-element
+      nzType="input"
+      [nzSize]="'small'"
+      [nzActive]="true"
+      class="m-l-12"
+      style="width: 200px"
+    >
+    </nz-skeleton-element>
+  </div>
+  <div class="conversation-item pos-relative flex-m">
+    <nz-skeleton-element
+      class="m-r-8 m-l-8"
+      [nzActive]="true"
+      nzType="avatar"
+      [nzSize]="48"
+    >
+    </nz-skeleton-element>
+    <nz-skeleton-element
+      nzType="input"
+      [nzSize]="'small'"
+      [nzActive]="true"
+      class="m-l-12"
+      style="width: 200px"
+    >
+    </nz-skeleton-element>
+  </div>
+  <div class="conversation-item pos-relative flex-m">
+    <nz-skeleton-element
+      class="m-r-8 m-l-8"
+      [nzActive]="true"
+      nzType="avatar"
+      [nzSize]="48"
+    >
+    </nz-skeleton-element>
+    <nz-skeleton-element
+      nzType="input"
+      [nzSize]="'small'"
+      [nzActive]="true"
+      class="m-l-12"
+      style="width: 200px"
+    >
+    </nz-skeleton-element>
+  </div>
+</ng-template>

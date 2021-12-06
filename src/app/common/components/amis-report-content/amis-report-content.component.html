@@ -1,0 +1,106 @@
+<div class="wrapper-content h-100">
+    <!-- Biểu đồ -->
+    <div id="view-chart" class="chart dis-align-items-center dis-flex dis-justify-content-center" *ngIf="isShowChart"
+        [ngClass]="{'full-chart':!isZoom}">
+
+        <!-- Loading -->
+        <div *ngIf="isLoading" class="report-loading">
+            <svg class="spinner-big" width="48px" height="48px" viewBox="0 0 66 66">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+                </circle>
+            </svg>
+        </div>
+        <div *ngIf="dataSource?.length > 0;else elses">
+            <ng-container [ngSwitch]="typeChart">
+                <!-- Biểu đồ donut -->
+                <div class="pie-chart">
+                    <ng-container *ngSwitchCase="1" class="ng-container-item text-overflow h-100">
+                        <!-- <amis-doughnut-char *ngIf="!isLoading" [width]="200" [height]="270" [radius]="0.5"
+                            [fontSizeContent]="'20px'" [palette]="palette" [listDataForPieChart]="listDataForPieChart"
+                            [isShowStatus]="isShowStatus" [argumentField]="'Text'" [valueField]="'Quantity'">
+                            <div customLegendary>
+                            </div>
+                        </amis-doughnut-char> -->
+                        <amis-doughnut-char *ngIf="!isLoading" [width]="700" [height]="heightChart" [radius]="0.5"
+                            [isRender]="isReRenderChart" [fontSizeContent]="'20px'"
+                            [listDataForPieChart]="listDataForPieChart" [isShowStatus]="isShowStatus"
+                            [argumentField]="'Text'" [valueField]="'Quantity'" [isExpand]="isExpand"
+                            [isShowLegend]="true">
+                            <div customLegendary>
+                            </div>
+                        </amis-doughnut-char>
+                    </ng-container>
+                </div>
+                <!-- <amis-loading *ngIf="isLoading" [text]="''" [position]="'view-chart'"></amis-loading> -->
+
+                <!-- Biểu đồ cột -->
+                <ng-container *ngSwitchCase="2" class="ng-container-item text-overflow">
+
+                </ng-container>
+
+                <!-- Biểu đồ phễu -->
+                <ng-container *ngSwitchCase="3" class="ng-container-item text-overflow">
+
+                </ng-container>
+            </ng-container>
+        </div>
+
+        <ng-template #elses>
+            <div class="dis-flex dis-flex-column empty-chart dis-align-items-center">
+                <div class="icon-empty-doughnut-chart"></div>
+                <div class="empty-content">{{'NO_DATA'|translate}}</div>
+            </div>
+        </ng-template>
+        <div class="zoom-chart">
+            <amis-icon *ngIf="isZoom"  [classIcon]="'icon-zoom-out'" (click)="onZoomFn(true)"
+                [tooltipContent]="'ZOOM_IN'|translate">
+            </amis-icon>
+            <amis-icon *ngIf="!isZoom" [classIcon]="'icon-zoom-in'" (click)="onZoomFn(false)"
+                [tooltipContent]="'ZOOM_OUT'|translate">
+            </amis-icon>
+        </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid-chart" *ngIf="isZoom" [ngClass]="{'grid-report': isShowChart, 'grid-not-chart':!isShowChart}">
+        <div class="grid-report-content h-100" *ngIf="dataSource?.length > 0;else notData">
+            <div *ngIf="isLoading" class="report-loading">
+                <svg class="spinner-big" width="48px" height="48px" viewBox="0 0 66 66">
+                    <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+                    </circle>
+                </svg>
+                <div class="loading-text">
+                    <span>{{"Đang tải..." | translate}}</span>
+                </div>
+            </div>
+            <amis-paging-grid #grid *ngIf="isFirstLoaded" [isShowToolPaging]="false" [columns]="columns"
+                [isShowCustomColumn]="false" [dataSource]="dataSource" [totalRecord]="totalRecord" [gridColumnConfig]="layoutGridDefault" (afterSaveColumnWidth)="resetConfigToSessionStorage($event, subSystemCode)"
+                [columnAutoWidth]="true" [isShowSelection]="false" [isShowMoreOption]="false" [isReport]="true"
+                [groupFieldName]="groupFieldName" [typeReport]="typeReport" [isFixed]="true" [numberFix]="2">
+            </amis-paging-grid>
+        </div>
+        <ng-template #notData>
+            <div class="dis-flex dis-flex-column h-100 empty-data dis-justify-content-center dis-align-items-center"
+                [ngClass]="{'empty-data-chart': isShowChart, 'empty-not-chart':!isShowChart}">
+                <div *ngIf="isLoading" class="report-loading">
+                    <svg class="spinner-big" width="48px" height="48px" viewBox="0 0 66 66">
+                        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+                        </circle>
+                    </svg>
+                    <div class="loading-text">
+                        <span>{{"Đang tải..." | translate}}</span>
+                    </div>
+                </div>
+                <div *ngIf="isFirstLoaded" class="icon-empty-data-report"></div>
+                <div *ngIf="isFirstLoaded" class="empty-content">{{'NO_DATA'|translate}}</div>
+            </div>
+        </ng-template>
+    </div>
+    <!-- Grid gom nhóm -->
+    <div class="group-grid" *ngIf="false"></div>
+</div>
+
+<!-- xuất khẩu nâng cao -->
+<amis-popup-advance-export *ngIf="visibleExportPopup" [visiblePopup]="visibleExportPopup" [items]="listInfoConfig"
+    [selectedItems]="listSelectedConfig" [isReordering]="true" (outputCancel)="closePopup()"
+    (afterExport)="handleAdvancedExport($event)"></amis-popup-advance-export>

@@ -1,0 +1,271 @@
+<div class="hrm-base-toolbar-filter">
+  <div class="header dis-flex m-b-10 padding-map align-items-center ">
+    <div class="header-title-filter flex">{{'FILTER_TITLE' | translate}}</div>
+    <amis-icon [classIcon]="'icon-close'" (click)="closeBox()" [isShowTooltip]="false"></amis-icon>
+  </div>
+  <!-- Nút chọn loại lọc-->
+  <div class="item-filter-type dis-align-self-center padding-map m-b-10 dis-flex">
+    <div class="box-drop-filter" [ngClass]="{'show-fliter': isSelectFilter}">
+      <amis-dropdown [isShowDropdown]="isHiddenChoose" [(listItem)]="listFilterConfig" key="FilterTemplateID"
+        display="FilterTemplateName" [selectedItem]="objFilterConfig" (eventSelectItem)="selectFilterConfig($event)">
+      </amis-dropdown>
+    </div>
+    <!-- Option -->
+    <div *ngIf="objFilterConfig?.FilterTemplateID" ngbDropdown placement="bottom-right" class="btn-dropdown-grid">
+      <div ngbDropdownToggle>
+        <amis-button [type]="buttonType.OnlyIcon" [color]="buttonColor.White" customClass="btn-action-template-fil"
+          icon="icon-optional-more" [isShowTooltip]="true" tooltipContent="{{'VIEW_MORE_OPTION'|translate}}"
+          isShowMore="true"></amis-button>
+      </div>
+      <div ngbDropdownMenu class="app-dropdown cus-drop-action-tem">
+        <div class="app-dropdown-item dis-flex align-items-center" (click)="editNameFilterConfig()">
+          <div class="icon-edit"></div>
+          <div class="m-l-8">{{'FILTER_NAME_CHANGE' | translate}}</div>
+        </div>
+        <div class="app-dropdown-item dis-flex align-items-center" (click)="removeFilterConfig()">
+          <div class="icon-delete-red"></div>
+          <div class="text-error m-l-8">{{'DELETE' | translate}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item-filter padding-map">
+    <dx-text-box mode="search" class="search-on-tab-can" placeholder="{{'SEARCH' | translate}}"
+      (onKeyUp)="onSearchControl($event.event.target)" (onValueChanged)="onSearchValueChanged($event)" [(value)]="searchText"></dx-text-box>
+  </div>
+  <div *ngIf="isHasFilterColumn" class="list-item-filter m-t-10 padding-map">
+    <dx-scroll-view>
+      <div class="scroll-view">
+        <div *ngFor="let item of listFilterSearch" class="item-filter">
+          <div class="item-check dis-flex cursor" (click)="enabelFilterItem(item)">
+            <div class="check-box-item m-r-8">
+              <div class="ic-svg {{item.IsActiveFilter ? 'icon-square-active': 'icon-square'}}"></div>
+            </div>
+            <div class="item-name">{{item.Caption}}</div>
+          </div>
+          <div *ngIf="item.IsActiveFilter" class="box-filter-value m-t-12">
+            <dx-select-box [(value)]="item.TypeID" class="m-b-10" valueExpr="Type" displayExpr="TypeName"
+              (onItemClick)="slelectType(item,$event)" placeholder="{{'SELECT_RULE_PLACE' | translate}}"
+              [items]="item.ListTypeFilter">
+            </dx-select-box>
+            <ng-container *ngIf="!item.IsHiddenFieldValue" [ngSwitch]="item.TypeControl">
+              <ng-container *ngSwitchCase="typeControl.Currency" class="ng-container-item">
+                <dx-number-box [format]="'#,###'" [min]="-2147483600" [max]="2147483600" [placeholder]="item.Tooltip"
+                  [showSpinButtons]="false" (onContentReady)="readyItemFilter($event)" showSpinButtons="false"
+                  (onValueChanged)="changeValueFilter(item)" (onOptionChanged)="valueTextChanger()"
+                  (onKeyPress)="valueTextChanger()" (onKeyUp)="valueTextChanger()" (onKeyDown)="valueTextChanger()"
+                  (onPaste)="valueTextChanger()" (onEnterKey)="applyFilter()" [(ngModel)]="item.Value">
+                </dx-number-box>
+              </ng-container>
+              <ng-container *ngSwitchCase="typeControl.Number" class="ng-container-item">
+                <dx-number-box [placeholder]="item.Tooltip" [min]="-2147483600" [max]="2147483600"
+                  showSpinButtons="false" (onValueChanged)="changeValueFilter(item)"
+                  (onContentReady)="readyItemFilter($event)" (onOptionChanged)="valueTextChanger()"
+                  (onKeyPress)="valueTextChanger()" (onKeyUp)="valueTextChanger()" (onKeyDown)="valueTextChanger()"
+                  (onPaste)="valueTextChanger()" (onEnterKey)="applyFilter()" [(ngModel)]="item.Value">
+                </dx-number-box>
+              </ng-container>
+
+              <!-- Ngày -->
+              <ng-container *ngSwitchCase="typeControl.Date" class="ng-container-item">
+                <!-- <dx-date-box *ngIf="!item.Value?.IsGetDate && item.TypeID!='between'" displayFormat="dd/MM/yyyy"
+                  stringFormat="dd/MM/yyyy" type="date" [useMaskBehavior]="true" (onContentReady)="readyItemFilter($event)"
+                  (onValueChanged)="changeValueFilter(item)" (onEnterKey)="applyFilter()" placeholder="DD/MM/YYYY"
+                  class="date-of-issue field-row-input flex" [(value)]="item.Value" id="id-date-of-issue"></dx-date-box> -->
+                <amis-amis-control-datebox *ngIf="!item.Value?.IsGetDate && item.TypeID!='between'"
+                  [(ngModel)]="item.Value" (valueChanged)="changeValueFilter(item)" [placehoder]="'DD/MM/YYYY'"
+                  [isRequiredLabel]="false" id="id-date-of-issue" class="date-of-issue field-row-input flex">
+                </amis-amis-control-datebox>
+                <div *ngIf="item.TypeID=='between'" class="m-b-10">
+                  <!-- <dx-date-box displayFormat="dd/MM/yyyy" stringFormat="dd/MM/yyyy" type="date" [useMaskBehavior]="true"
+                    (onContentReady)="readyItemFilter($event)" (onValueChanged)="changeValueFilter(item)"
+                    (onEnterKey)="applyFilter()" placeholder="DD/MM/YYYY" class="date-of-issue field-row-input flex"
+                    [(value)]="item.FromDate" id="id-date-of-issue">
+                  </dx-date-box> -->
+                  <amis-amis-control-datebox [(ngModel)]="item.Value.FromDate" [labelWidth]="200"
+                    (valueChanged)="changeValueFilter(item);fromdate_valueChanged(item.Value)" name="FromDate"
+                    [isShowError]="true" [isSubmit]="true" [isError]="_isErrorFromDate"
+                    [errorMessage]="errorMessageFrom" [placehoder]="'DD/MM/YYYY'" [isRequiredLabel]="false">
+                  </amis-amis-control-datebox>
+                </div>
+                <div *ngIf="item.TypeID=='between'" class="m-b-10">
+                  <!-- <dx-date-box displayFormat="dd/MM/yyyy" stringFormat="dd/MM/yyyy" type="date" [useMaskBehavior]="true"
+                    (onContentReady)="readyItemFilter($event)" (onValueChanged)="changeValueFilter(item)"
+                    (onEnterKey)="applyFilter()" placeholder="DD/MM/YYYY" class="date-of-issue field-row-input flex"
+                    [(value)]="item.ToDate" id="id-date-of-issue"></dx-date-box> -->
+
+                  <amis-amis-control-datebox [(ngModel)]="item.Value.ToDate"
+                    (valueChanged)="changeValueFilter(item);todate_valueChanged(item.Value)" name="ToDate"
+                    [isShowError]="true" [isSubmit]="true" [isError]="_isErrorToDate" [errorMessage]="errorMessageTo"
+                    [placehoder]="'DD/MM/YYYY'" [isRequiredLabel]="false" (onContentReady)="readyItemFilter($event)">
+                  </amis-amis-control-datebox>
+                </div>
+              </ng-container>
+              <!-- control tháng năm -->
+              <ng-container *ngSwitchCase="typeControl.MonthYear" class="ng-container-item">
+                <dx-date-box *ngIf="!item.Value?.IsGetDate " displayFormat="MM/yyyy" stringFormat="MM/yyyy" type="date"
+                  [useMaskBehavior]="true" (onContentReady)="readyItemFilter($event)"
+                  (onValueChanged)="changeValueFilter(item)" (onEnterKey)="applyFilter()" placeholder="MM/YYYY"
+                  class="date-of-issue field-row-input flex" [(value)]="item.Value" id="id-date-of-issue"></dx-date-box>
+                <div *ngIf="item.TypeID=='between'" class="m-b-10">
+                  <amis-amis-control-datebox [(ngModel)]="item.Value.FromDate" [labelWidth]="200"
+                    (valueChanged)="changeValueFilter(item);fromdate_valueChanged(item.Value)" name="FromDate"
+                    [isShowError]="true" [isSubmit]="true" [isError]="_isErrorFromDate"
+                    [errorMessage]="errorMessageFrom" [placehoder]="'MM/YYYY'" [isRequiredLabel]="false"
+                    (onContentReady)="readyItemFilter($event)">
+                  </amis-amis-control-datebox>
+                </div>
+                <div *ngIf="item.TypeID=='between'" class="m-b-10">
+                  <amis-amis-control-datebox [(ngModel)]="item.Value.ToDate"
+                    (valueChanged)="changeValueFilter(item);todate_valueChanged(item.Value)" name="ToDate"
+                    [isShowError]="true" [isSubmit]="true" [isError]="_isErrorToDate" [errorMessage]="errorMessageTo"
+                    [placehoder]="'MM/YYYY'" [isRequiredLabel]="false" (onContentReady)="readyItemFilter($event)">
+                  </amis-amis-control-datebox>
+                </div>
+              </ng-container>
+              <!--control năm-->
+              <ng-container *ngSwitchCase="typeControl.Year" class="ng-container-item">
+                <dx-number-box [min]="0" [max]="99999" [placeholder]="item.Tooltip" [showSpinButtons]="false"
+                  (onContentReady)="readyItemFilter($event)" showSpinButtons="false"
+                  (onValueChanged)="changeValueFilter(item)" (onOptionChanged)="valueTextChanger()"
+                  (onKeyPress)="valueTextChanger()" (onKeyUp)="valueTextChanger()" (onKeyDown)="valueTextChanger()"
+                  (onPaste)="valueTextChanger()" (onEnterKey)="applyFilter()" [(ngModel)]="item.Value">
+                </dx-number-box>
+                <!-- <dx-date-box type="date" displayFormat="yyyy" [useMaskBehavior]="true" (onContentReady)="readyItemFilter($event)" [calendarOptions]="calendarOptions"
+                  (onValueChanged)="changeValueFilter(item)" (onEnterKey)="applyFilter()" class="date-of-issue field-row-input flex"
+                  [(value)]="item.Value" id="id-date-of-issue"></dx-date-box> -->
+              </ng-container>
+              <!-- Combo box -->
+              <ng-container *ngSwitchCase="typeControl.Combobox" class="ng-container-item">
+                <!-- <amis-amis-control-combobox [isRemoteServer]="true" [isShowCustomMore]="isShowCustomMore"
+                  [displayExpr]="item.DisplayFieldSource" [valueExpr]="item.FieldNameSource" [isUseFns]="false"
+                  [inputParam]="{GroupFieldConfig: item}" [noDataText]="noDataText" [controller]="'Dictionary'"
+                  [url]="'data'" [(displayValue)]="item.ValueText" (onItemClick)="changerValueSelect(item)"
+                  [(ngModel)]="item.Value">
+                </amis-amis-control-combobox> -->
+                <div class="m-b-5">
+                  <amis-amis-control-tagbox [isRemoteServer]="true" [displayExpr]="item.DisplayFieldSource"
+                    [valueExpr]="item.FieldNameSource" [isUseFns]="false" [inputParam]="{GroupFieldConfig: item}"
+                    [isShowCustomData]="false" [controlValue]="item.ControlValue" [noDataText]="noDataText"
+                    [controller]="'Dictionary'" [url]="'data'" [(displayValue)]="item.ValueText"
+                    (valueChanged)="changerValueSelect(item)" [(ngModel)]="item.Value">
+                  </amis-amis-control-tagbox>
+                </div>
+                <!-- <dx-select-box [(value)]="item.FilterValue" class="m-b-10" valueExpr="Type" displayExpr="TypeName" placeholder="Chọn giá trị..."></dx-select-box> -->
+              </ng-container>
+              <!-- Combo box chọn người dùng -->
+              <ng-container *ngSwitchCase="typeControl.SelectHuman" class="ng-container-item">
+                <amis-amis-control-select-human #field [isRemoteServer]="true" [displayExpr]="item.DisplayFieldSource"
+                  [valueExpr]="item.FieldNameSource" [dataPath]="item.DataPath"
+                  [groupFieldConfigs]="item.GroupFieldConfigs" [isModifiable]="item.IsModifiable"
+                  [(isReloadData)]="item.IsReloadData" [isUseFns]="item.IsUseFunc" [fnsLoadData]="item.FnsLoadData"
+                  [isGetMethod]="item.IsGetMethod"
+                  [inputParam]="item.Param ? item.Param : {GroupFieldConfig: item, GroupFieldConfigs: item.GroupFieldConfigDependent}"
+                  [controller]="item.Controller ? item.Controller : 'Dictionary'" [url]="item.Url ? item.Url : 'data'"
+                  [(displayValue)]="item.ValueText" [(ngModel)]="item.Value" [data]="item"
+                  (onItemClick)="changerValueSelect(item)">
+                </amis-amis-control-select-human>
+                <!-- <dx-select-box [(value)]="item.FilterValue" class="m-b-10" valueExpr="Type" displayExpr="TypeName" placeholder="Chọn giá trị..."></dx-select-box> -->
+              </ng-container>
+              <!-- Combo tree chọn cơ cấu -->
+              <ng-container *ngSwitchCase="typeControl.TreeBox" class="ng-container-item">
+                <amis-amis-control-treebox #field [isRemoteServer]="true" [displayExpr]="item.DisplayFieldSource"
+                  [valueExpr]="item.FieldNameSource" [dataPath]="item.DataPath"
+                  [groupFieldConfigs]="item.GroupFieldConfigs" [isModifiable]="item.IsModifiable"
+                  [(isReloadData)]="item.IsReloadData" [isUseFns]="item.IsUseFunc" [fnsLoadData]="item.FnsLoadData"
+                  [isGetMethod]="item.IsGetMethod"
+                  [inputParam]="item.Param ? item.Param : {GroupFieldConfig: item, GroupFieldConfigs: item.GroupFieldConfigDependent}"
+                  [controller]="item.Controller ? item.Controller : 'Dictionary'" [url]="item.Url ? item.Url : 'data'"
+                  [(displayValue)]="item.ValueText" [(ngModel)]="item.Value" [data]="item"
+                  (onItemClick)="changerValueSelect(item)">
+                </amis-amis-control-treebox>
+              </ng-container>
+              <ng-container *ngSwitchCase="typeControl.Formula" class="ng-container-item">
+                <div *ngIf="item.DataType === dataType.DefaultType">
+                  <dx-text-box placeholder="{{'ADD_CONTENT_FILTER' | translate}}"
+                    (onContentReady)="readyItemFilter($event)" (onKeyPress)="valueTextChanger()"
+                    (onKeyUp)="valueTextChanger()" (onKeyDown)="valueTextChanger()" (onPaste)="valueTextChanger()"
+                    (onValueChanged)="valueTextChanger();changeValueFilter(item)" (onEnterKey)="applyFilter()"
+                    [(value)]="item.Value">
+                  </dx-text-box>
+                </div>
+                <div *ngIf="item.DataType === dataType.NumberType">
+                  <dx-number-box [placeholder]="item.Tooltip" [min]="-2147483600" [max]="2147483600"
+                    showSpinButtons="false" (onValueChanged)="changeValueFilter(item)"
+                    (onContentReady)="readyItemFilter($event)" (onOptionChanged)="valueTextChanger()"
+                    (onKeyPress)="valueTextChanger()" (onKeyUp)="valueTextChanger()" (onKeyDown)="valueTextChanger()"
+                    (onPaste)="valueTextChanger()" (onEnterKey)="applyFilter()" [(ngModel)]="item.Value">
+                  </dx-number-box>
+                </div>
+              </ng-container>
+              <!-- Một dòng ( input ) -->
+              <ng-container *ngSwitchDefault class="ng-container-item">
+                <dx-text-box placeholder="{{'ADD_CONTENT_FILTER' | translate}}"
+                  (onContentReady)="readyItemFilter($event)" (onKeyPress)="valueTextChanger()"
+                  (onKeyUp)="valueTextChanger()" (onKeyDown)="valueTextChanger()" (onPaste)="valueTextChanger()"
+                  (onValueChanged)="changeValueFilter(item)" (onEnterKey)="applyFilter()" [(value)]="item.Value">
+                </dx-text-box>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </dx-scroll-view>
+  </div>
+  <div *ngIf="!isHasFilterColumn" class="list-item-filter m-t-10 padding-map">
+    <div class="item-filter">
+      {{'NO_DATA_MATCH' | translate}}
+    </div>
+  </div>
+  <div class="list-button-action dis-flex">
+    <!-- hủy bỏ -->
+    <amis-button [type]="buttonType.OnlyText" customClass="btn-action-filter" class="flex m-r-10"
+      name="{{'FILTER_REJECT' | translate}}" [color]="buttonColor.Normal" (clickButton)="removeFilter()"></amis-button>
+    <!-- áp dụng bộ lọc -->
+    <amis-button *ngIf="!isApplyFilter" [type]="buttonType.OnlyText" customClass="btn-action-filter"
+      [isDisable]="_isErrorFromDate || _isErrorToDate || isDisableApply" name="{{'FILTER_APPLY' | translate}}"
+      [color]="buttonColor.BluePrimary" (clickButton)="applyFilter()">
+    </amis-button>
+    <!-- lưu mới bộ lọc -->
+    <amis-button *ngIf="(!isSelectFilter && isApplyFilter) || (isSelectFilter && isApplyFilter && !objFilterConfig?.FilterTemplateID)" [type]="buttonType.OnlyText" customClass="btn-action-filter"
+      [isDisable]="_isErrorFromDate || _isErrorToDate" name="{{'SAVE' | translate}}" [color]="buttonColor.BlueSecondary"
+      (clickButton)="saveFilterBox(true)">
+    </amis-button>
+    <!-- sửa bộ lọc -->
+    <amis-button *ngIf="isSelectFilter && isApplyFilter" (clickButton)="saveFilterBox(false)"
+      [type]="buttonType.OnlyText" customClass="btn-action-filter" name="{{'SAVE' | translate}}"
+      [color]="buttonColor.BlueSecondary" isMultiOption="true" [oneOptionDropdowm]="true"
+      [color]="buttonColor.BlueSecondary" (clickItemViewMoreButton)="onItemViewMoreClick($event, true)"
+      [viewMoreMenu]="viewMoreMenuList">
+    </amis-button>
+  </div>
+</div>
+<div *ngIf="visiblePopupSaveFilter">
+  <dx-popup class="popup-add-option-filter" title="{{'FILTER_SAVE_TITLE' | translate}}"
+    (onContentReady)="readyPopsave($event)" (onHidden)="visiblePopupSaveFilter = false" (onShown)="showPopupAdd($event)"
+    [visible]="visiblePopupSaveFilter" width="400" height="auto">
+    <div class="option-filter-content">
+      <div class="name-role align-items-center dis-flex">
+        <div class="column-text m-r-30">{{'FILTER_NAME' | translate}}
+          <span class="color-red">*</span>
+        </div>
+        <dx-text-box #txbName (onKeyPress)="changerNameFilter()" class="input-text-name flex"
+          [ngClass]="{'border-error': isNullName}" placeholder="{{'FILTER_NAME' | translate}}"
+          (onEnterKey)="saveFilter()" [(value)]="objFilterAdd.FilterTemplateName"></dx-text-box>
+      </div>
+      <div *ngIf="isNullName" class="text-error mg-30-per">{{'CAN_NOT_EMPTY' | translate}}</div>
+    </div>
+    <div class="option-filter-footer dis-flex m-row">
+      <div class="flex"></div>
+      <div class="right">
+        <amis-button class="mr-2" name="{{'CANCEL2' | translate}}" [type]="buttonType.OnlyText"
+          [color]="buttonColor.Normal" (clickButton)="cancelSaveFilter($event)"></amis-button>
+        <amis-button name="{{'SAVE' | translate}}" [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary"
+          (clickButton)="saveFilter()"></amis-button>
+      </div>
+    </div>
+  </dx-popup>
+</div>
+
+<popup-accept-remove [isVisible]="isShowPopDelete" [title]="titleDelete" [textRemove]="contentDelete"
+  (closePopup)="closePopupDelete($event)" (confirm)="deleteFilterTem()"></popup-accept-remove>

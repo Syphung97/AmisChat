@@ -1,0 +1,78 @@
+<amis-form-control [labelFontWeight]="_labelFontWeight" [labelClass]="_labelClass" [isShowLabel]="_isShowLabel"
+  [labelWidth]="_labelWidth" [labelText]="_labelText" [isRequired]="_isRequiredLabel  && !_isViewOnly"
+  [labelPositon]="_labelPositon" [fieldName]="_fieldName" [tooltipContent]="_tooltipContent"
+  [isShowTooltip]="_isShowTooltip" [labelColor]="labelColor">
+  <div #control class="wrap-control dis-flex dis-align-items-center" title="{{value && (_readonly || isNotPermissionUpdate) ? value : ''}}">
+    <div *ngIf="!_isViewOnly || (_isEditable && !_isViewEditable)" class="dis-flex-grow">
+      <div class="dis-flex dis-flex-grow">
+        <div [class.disabled-control]="_readonly  || isNotPermissionUpdate" class="dis-flex-grow">
+          <dx-date-box #datebox (keydown)="onKeyDown.emit($event)" [useMaskBehavior]="true" placeholder="DD/MM/YYYY"
+            type="{{_type}}" displayFormat="{{_formatDate}}" [placeholder]="_placeholder" #formControl="ngModel"
+            (onValueChanged)="valueChangedDate($event)" [min]="_minValue" [(ngModel)]="value"
+            [showClearButton]="_showClearButton" [disabled]="_readonly || isNotPermissionUpdate"
+            [calendarOptions]="calendarOptions" (onFocusIn)="selectAll(datebox, 'input')"
+            [class.border-error]="_isSubmit && _isShowError && (formControl.errors || _isErrorCustom || _isError)">
+          </dx-date-box>
+        </div>
+        <div *ngIf="_isEditable && !_isViewEditable" class="dis-flex dis-align-items-center option-icons ">
+          <div class=" ml-2 ">
+            <amis-icon [classIcon]="'icon-tick-circle-green cursor-pointer'" (click)="onClickDone();" [tooltipContent]="'SAVE' | translate">
+            </amis-icon>
+
+          </div>
+          <div class="ml-1">
+            <amis-icon [classIcon]="'icon-error-circle cursor-pointer'" (click)="onClickCancel();" [tooltipContent]="'CANCEL2' | translate">
+            </amis-icon>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="_isSubmit && _isShowError && !_readonly" class="white-space-initial">
+        <div class="text-error" *ngIf="formControl.errors && !_isErrorCustom && !_isError"
+          [innerHTML]="formControl.errors?.message">
+          <!-- {{formControl.errors?.message}} -->
+        </div>
+        <div class="text-error" *ngIf="_isErrorCustom || _isError" [innerHTML]="_errorMessage">
+          <!-- {{ _errorMessage }} -->
+        </div>
+      </div>
+    </div>
+    <div *ngIf="_isViewOnly || (_isEditable && _isViewEditable)" class="dis-flex-grow value-display">
+      <div class="dis-flex-grow dis-flex dis-flex-row field-value"
+        [class.editable-field-value]="!_readonly && _isEditable && _isViewEditable">
+        <div *ngIf="value"></div>
+        <div *ngIf="value" ngSwitch="{{_typeControl}}">
+          <div *ngSwitchCase="typeControlEntity.Date">{{value | date:"dd/MM/yyyy"}}</div>
+          <div *ngSwitchCase="typeControlEntity.Year">{{value | date:"yyyy"}}</div>
+          <div *ngSwitchCase="typeControlEntity.MonthYear">{{value | date:"MM/yyyy"}}</div>
+        </div>
+        <div *ngIf="!value">-</div>
+      </div>
+    </div>
+
+    <div *ngIf="(_isEditable && _isViewEditable) && !_readonly" class="cursor-pointer option-icons">
+      <div class="ml-2" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCode}}"
+        actionCode="{{permissionCodeEntity.Edit}}" permissionObject="{{_permissionObject}}">
+        <amis-icon [classIcon]="'icon-edit'" [tooltipContent]="'EDIT2' | translate" (click)="onClickEdit();">
+        </amis-icon>
+
+      </div>
+      <div class="ml-1">
+        <amis-icon [classIcon]="'icon-duplicate'" [tooltipContent]="'COPY' | translate" (click)="onClickDuplicate();">
+        </amis-icon>
+
+      </div>
+    </div>
+    <div *ngIf="(_isEditable && _isViewEditable) && _readonly" class="option-icons">
+      <div class="ml-2" subSystemCode="{{_permissionSubSystemCode}}" permissionCodeList="{{_permissionCode}}"
+        actionCode="{{permissionCodeEntity.Edit}}" permissionObject="{{_permissionObject}}">
+        <amis-icon [classIcon]="'icon-lock'" [isCursorPointer]="false" [tooltipContent]="'CANT_EDIT' | translate">
+        </amis-icon>
+      </div>
+      <div class="ml-1 cursor-pointer">
+        <amis-icon [classIcon]="'icon-duplicate'" [tooltipContent]="'COPY' | translate" (click)="onClickDuplicate();">
+        </amis-icon>
+
+      </div>
+    </div>
+  </div>
+</amis-form-control>

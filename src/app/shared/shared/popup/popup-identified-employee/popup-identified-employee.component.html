@@ -1,0 +1,69 @@
+<div [style]="positionLoad" [class.bg-identified-employee]="isCreateEmployee">
+    <amis-popup-base *ngIf="!isCreateEmployee && !isIdentifieding" [(visiblePopup)]="visiblePopup" [title]="'Nhận diện hồ sơ'"
+        [height]="400" [width]="600" (closePopup)="closePopup()">
+        <div contentPopup class="h-100" class="h-100 popup-identified-employee">
+            <div amisDragDropToUpload (fileDropped)="onFileDropped($event)"
+                class="import-file flex-c-m dis-flex-column h-100" id="identified-employee">
+                <div *ngIf="visibleImport">
+                    <div class="item-middle">{{'IMPORT_TEMPLATE_IMPORT_TUTORIAL'|translate}}</div>
+                    <div class="item-middle gray">{{'OR'|translate}}</div>
+                    <div class="item-middle">
+                        <amis-button (clickButton)="importFile()" iconLeft="icon-import" class="btn-choose-item"
+                            name="{{'IMPORT_TEMPLATE_PICK_FILE'|translate}}" [type]="buttonType.OnlyText"
+                            [color]="buttonColor.BlueWhiteSecondary">
+                        </amis-button>
+                        <input #importAttach #fileDropRef accept="{{_typeAccept}}"
+                            (change)="onFileChange($event);importAttach.value=null" class="input-import" type="file">
+                    </div>
+                    <div class="item-middle gray">
+                        {{'Chấp nhận file .doc, .docx, .pdf và có dung lượng tối đa 15MB'|translate}}</div>
+                </div>
+                <div *ngIf="!visibleImport">
+                    <div class="icon-file-import dflex-justify-content mb-2">
+                        <div class="icon-identified-employee"></div>
+                    </div>
+                    <div class="file-name-import dflex-justify-content mb-2">{{fileName}}</div>
+                    <div *ngIf="!isValidate" class="error-upload mb-2 text-red dflex-justify-content">{{errorUpload}}</div>
+                    <div class="dflex-justify-content">
+                        <amis-button (clickButton)="importFile()" iconLeft="icon-import" class="btn-choose-item"
+                            name="{{'Tải tệp khác'|translate}}" [type]="buttonType.OnlyText"
+                            [color]="buttonColor.BlueWhiteSecondary">
+                        </amis-button>
+                    </div>
+                </div>
+                <input #importAttach #fileDropRef accept="{{_typeAccept}}"
+                    (change)="onFileChange($event);importAttach.value=null" class="input-import" type="file">
+            </div>
+
+        </div>
+
+        <div buttonsPopup>
+            <div class="dx-popup-footer-import">
+                <amis-button (clickButton)="closePopup()" [color]="buttonColor.Normal" name="{{'CANCEL2'|translate}}">
+                </amis-button>
+                <amis-button (clickButton)="identified()" [color]="buttonColor.BluePrimary"
+                    [isDisable]="visibleImport || !isValidate" name="{{'Nhận diện'|translate}}">
+                </amis-button>
+            </div>
+
+        </div>
+    </amis-popup-base>
+
+    <amis-hrm-profile-create #profileCreate *ngIf="isCreateEmployee && !isIdentifieding" [inputParam]="paramLayout" [isTypeInFormGrid]="true"
+        (afterSaveSuccess)="afterSaveSuccess($event)" (afterCancel)="closePopup()"></amis-hrm-profile-create>
+</div>
+
+<!-- popup thông báo confirm hủy bỏ -->
+<amis-popup-notify *ngIf="visiblePopupNotify" [(visiblePopup)]="visiblePopupNotify" title="Thông báo"
+    (closePopup)="closePopup()">
+    <div textContentPopupConfirm>
+        <div [innerHTML]="popupNotifyContent">
+        </div>
+    </div>
+    <div amisButtons>
+        <amis-button name="{{'CANCEL2'|translate}}" [color]="buttonColor.Normal" (clickButton)="closePopup()">
+        </amis-button>
+        <amis-button name="{{'IMPORT_TEMPLATE_PICK_FILE'|translate}}" [color]="buttonColor.BluePrimary" (clickButton)="onConfirm()">
+        </amis-button>
+    </div>
+</amis-popup-notify>

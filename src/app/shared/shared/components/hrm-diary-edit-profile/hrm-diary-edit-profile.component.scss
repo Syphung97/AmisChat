@@ -1,0 +1,114 @@
+@import "../../../../assets/scss/var-font.scss";
+@import "../../../../assets/scss/var-color.scss";
+
+:host {
+  .title-time-content {
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+  }
+  .hrm-diary-edit-profile {
+    position: fixed;
+    background-color: $background-gray;
+    z-index: 1000;
+    // top: 56px;
+    // left: 200px;
+    // right: 0;
+    // bottom: 0;
+    padding: 16px 24px;
+    user-select: text;
+
+    .diary-edit-profile-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .title-name-profile {
+        font-size: $font-size-header;
+        color: $bg-icon-default;
+      }
+      .toolbar-right {
+        .toolbar-search-content {
+          width: 200px;
+        }
+      }
+    }
+
+    .diary-edit-profile-content {
+      width: 100%;
+      height: calc(100% - 55px);
+      margin-top: 16px;
+      background-color: $white;
+      border-radius: 4px;
+      .scroll-profile-content {
+        padding: 45px 50px;
+      }
+      .profile-content-history {
+        position: relative;
+        .content-group {
+          border-left: 1px solid $count-record-bg;
+          width: 2px;
+          left: 111px;
+          top: 4px;
+          height: calc(100% - 14px);
+          position: absolute;
+        }
+        .content-item {
+          display: flex;
+          // align-items: center;
+          margin: 25px 0 25px 20px;
+          .content-item-change {
+            font-size: 14px;
+            .expand{
+                padding-top: 8px;
+            }
+            .expand-data {
+              color: $blue;
+            }
+
+            .content-detail {
+                &.first-child{
+                    padding-top: 0 !important;
+                }
+              padding-top: 8px;
+              line-height: 17px;
+            }
+            .invisible {
+              display: none;
+            }
+          }
+          .content-item-createby {
+            color: $text-grey;
+            font-size: $font-size-base !important;
+            padding-top: 8px;
+          }
+          .content-item-time {
+            margin-top: 7px;
+            color: $text-grey;
+            // font-size: $font-size-strong;
+          }
+          .content-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 20;
+            margin-top: 2px;
+          }
+          .content-icon-insert {
+            background: $color-audit-add;
+          }
+          .content-icon-update {
+            background: $color-audit-update;
+          }
+          .content-icon-delete {
+            background: $color-audit-delete;
+          }
+          .content-icon-reload {
+            background: $color-audit-restore;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<amis-amis-control-group #controlgroup [listGroupbox]="listGroupbox" [isSubmit]="_isSubmit" [formMode]="_formMode"
+    (afterValidatedForm)="afterValidated($event)" [typeShow]="_typeShow" [labelClass]="_labelClass"
+    [headerType]="_headerType" [headerBtnPosition]="_headerBtnPosition" [labelWidth]="_labelWidth"
+    [isDisplayHeader]="_isDisplayHeader" [isShowButtonGrid]="_isShowButtonGrid" [inputAfterSubmit]="_inputAfterSubmit"
+    [isShowNodataGrid]="_isShowNodataGrid" [padding]="padding" [headerIconClass]="headerIconClass"
+    [isCustomHanldeValidateInfos]="isCustomHanldeValidateInfos" [isUseMasterData]="isUseMasterData"
+    [isViewOnly]="isViewOnly" [ConfigValidates]="ConfigValidates" [MasterData]="MasterData"
+    [isCallFromEmployeeApp]="isCallFromEmployeeApp" [subSystemCode]="_subSystemCode" [permissionCode]="_permissionCode"
+    [DependentClones]="DependentClones" (addItemGrid)="addItemIntoGrid($event)"
+    [DependentDictionaries]="DependentDictionaries" [DependentDatas]="DependentDatas"
+    [inputChangeView]="_inputChangeView" [positionFormDataGrid]="positionFormDataGrid" [masterIDValue]="masterIDValue" [masterField]="masterField"
+    [validateInfos]="_validateInfos" [inputReloadDataGroupConfig]="_inputReloadDataGroupConfig"
+    (afterUpdateField)="afterUpdateDataField($event)" (valueFieldChanged)="valueChangedData($event)"
+    (focusOutField)="focusOut($event)" (onClickNoEvent)="onClickNo($event)" (onClickYesEvent)="onClickYes($event)"
+    (afterChangeDataGrid)="afterChangedDataGrid($event)">
+</amis-amis-control-group>
+
+
+<!-- Popup thêm dữ liệu vào grid -->
+<!-- <amis-popup-base *ngIf="isShowCreateDataGrid && !isTypeForm" [(visiblePopup)]="isShowCreateDataGrid"
+    [maxHeightContent]="'500px'" [title]="titleFormGrid" [width]="500" [offsetY]="'0 150px'"
+    (closePopup)="onClosePopup()" (shownPopup)="setFocus()">
+    <div contentPopup #el>
+        <amis-amis-control-group [listGroupbox]="objectDataGrid?.GroupConfigs" [labelClass]="labelClass"
+            [labelWidth]="_labelWidth" [isSubmit]="isSubmitForm" [typeShow]="typeShowControlFormData"
+            [inputAfterSubmit]="objectAfterSubmitGrid" [isDisplayHeader]="isShowHeaderFromGrid"  [DependentClones]="GridDependentClones"
+            [DependentDictionaries]="GridDependentDictionaries" [DependentDatas]="GridDependentDatas" (valueFieldChanged)="valueChangedDataInFormGrid($event)"
+            (afterValidatedForm)="afterValidatedFormGrid($event)" (addItemGrid)="addItemIntoGrid($event)" [formMode]="formModeGrid">
+        </amis-amis-control-group>
+    </div>
+    <div buttonsPopup>
+        <amis-button [color]="buttonColor.Normal" name="Hủy" (clickButton)="closeFormDataGrid()"></amis-button>
+        <amis-button *ngIf="formModeGrid == formModeEntity.Insert" [color]="buttonColor.BlueSecondary"
+            name="Lưu và thêm" (clickButton)="onClickAdd(formModeEntity.SaveAndInsert)">
+        </amis-button>
+        <amis-button *ngIf="formModeGrid == formModeEntity.Insert" name="Lưu" [color]="buttonColor.BluePrimary"
+            (clickButton)="onClickAdd(formModeEntity.Insert)"></amis-button>
+        <amis-button *ngIf="formModeGrid == formModeEntity.Update" name="Lưu" [color]="buttonColor.BluePrimary"
+            (clickButton)="onClickAdd(formModeEntity.Update)"></amis-button>
+        <amis-button *ngIf="formModeGrid == formModeEntity.View" name="Sửa" iconLeft="icon-edit"
+            [color]="buttonColor.White">
+        </amis-button>
+    </div>
+</amis-popup-base> -->

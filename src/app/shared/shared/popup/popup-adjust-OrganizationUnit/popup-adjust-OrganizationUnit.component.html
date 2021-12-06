@@ -1,0 +1,14 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" (readyPopup)="readyPopup($event)" [resizeEnabled]="true" [title]="title"
+  [height]="height" [width]="width" [offsetY]="'0 150px'" (closePopup)="onClosePopup()" class="popup-base-add-data popup-adjust-orga">
+  <div class="amis-adjust-orga-container" contentPopup>
+    <amis-amis-control-form-group [listGroupbox]="listGroupConfigs" [isSubmit]="isSubmit" [ConfigValidates]="listConfigValidates"
+      [DependentDatas]="listDependentData" [DependentDictionaries]="listDependentDictionaries" [typeShow]="typeShow" [masterField]="'EmployeeID'"
+      [MasterData]="itemEmployee" [isDisplayHeader]="true" [formMode]="formModeEntity.None"
+      (afterValidatedForm)="afterValidated($event)" (valueFieldChanged)="valueFieldChanged($event)">
+    </amis-amis-control-form-group>
+  </div>
+  <div buttonsPopup>
+    <amis-button [color]="buttonColor.Normal" name="{{'CANCEL'|translate}}" (clickButton)="onClosePopup()"></amis-button>
+    <amis-button [color]="buttonColor.BluePrimary" [isDisable]="isDisableSave" name="{{'SAVE'|translate}}" (clickButton)="beforeSave()"></amis-button>
+  </div>
+</amis-popup-base>

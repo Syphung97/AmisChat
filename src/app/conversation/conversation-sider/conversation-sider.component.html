@@ -1,0 +1,198 @@
+<!-- tab chat tiện ích bên phải -->
+<div class="arena-conversation-sider">
+  <div>
+    <!-- khu vực thông tin user chat -->
+    <div class="conversation-info">
+      <div class="option">
+        <button
+          class="popover"
+          *ngIf="_conversation?.id"
+          nz-button
+          nzType="primary"
+          nz-popover
+          [(nzPopoverVisible)]="visible"
+          (nzPopoverVisibleChange)="change($event)"
+          nzPopoverTrigger="click"
+          [nzPopoverContent]="contentTemplate"
+          nzPopoverOverlayClassName="no-arrow popover-option-mess"
+        >
+          <ng-template #contentTemplate>
+            <!-- check là nhóm thì cho hiển thị rời nhóm -->
+            <ng-container *ngIf="_conversation?.isGroup">
+              <div class="option-mess-item">
+                <div class="flex-m cur p-r-8" (click)="openPopupLeaveGroup()">
+                  <amis-icon [classIcon]="'icon-leave-mess'"></amis-icon>
+                  <span>{{ "LEAVE_GROUP" | translate }}</span>
+                </div>
+              </div>
+            </ng-container>
+            <div class="option-mess-item">
+              <div
+                class="flex-m cur"
+                *ngIf="_conversation.isGroup ? false : true"
+                (click)="openDeleteConversation(_conversation)"
+              >
+                <amis-icon [classIcon]="'icon-delete-mess'"></amis-icon>
+                <span>{{ "DELETE_CONVERSATION" | translate }}</span>
+              </div>
+            </div>
+          </ng-template>
+          <amis-icon class="m-l-8" [classIcon]="'icon-option'"></amis-icon>
+        </button>
+      </div>
+      <div class="arena-user-info m-b-16">
+        <amis-avatar
+          *ngIf="!_conversation?.isGroup"
+          [size]="80"
+          [useFor]="'Conv'"
+          [parent]="'sider'"
+          [conv]="_conversation"
+        ></amis-avatar>
+
+        <amis-avatar-group
+          *ngIf="_conversation?.isGroup"
+          [size]="80"
+          [paticipant]="_conversation.participants"
+        >
+        </amis-avatar-group>
+        <div class="user-info">
+          <div class="name m-t-16 fs-16" title="{{ _conversation | nameConv }}">
+            {{ _conversation | nameConv }}
+          </div>
+          <ng-container *ngIf="_conversation?.isGroup">
+            <div
+              class="icon-edit-groupname cur"
+              (click)="openPopupRenameGroup()"
+            ></div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+    <!-- khu vực tìm kiếm chat, thông báo chat -->
+    <div class="function-conversation">
+      <!-- <div class="flex-m ">
+        <amis-icon class="m-l-8" [classIcon]="'icon-search-message'"></amis-icon>
+        <div class="cur">{{ "SearchMessage" | translate }}</div>
+      </div> -->
+      <div *ngIf="_conversation?.isGroup">
+        <div class="flex-m cur" (click)="openPopupMember()">
+          <amis-icon
+            class="m-l-8"
+            [classIcon]="'icon-member'"
+            [isHoverState]="false"
+            [isHoverState]="false"
+          >
+          </amis-icon>
+          <div>{{ "MEMBER" | translate }}</div>
+        </div>
+        <div class="flex-m cur" (click)="openPopupAddMember()">
+          <amis-icon
+            class="m-l-8"
+            [classIcon]="'icon-add-member'"
+            [isHoverState]="false"
+            [isHoverState]="false"
+          >
+          </amis-icon>
+          <div>{{ "ADD_MEMBER_TO_GROUP" | translate }}</div>
+        </div>
+      </div>
+
+      <!-- <div class="flex-m arena-notification">
+        <div class="flex-m">
+          <amis-icon class="m-l-8" [classIcon]="'icon-notification'"></amis-icon>
+          <div class="cur">{{ "Notification" | translate }}</div>
+        </div>
+        <div class="m-r-12">
+          <nz-switch [(ngModel)]="switchValue"></nz-switch>
+        </div>
+      </div> -->
+    </div>
+    <!-- <nz-divider></nz-divider> -->
+  </div>
+  <!-- khu vực các resource đã chia sẻ -->
+  <div class="share-file" (scroll)="onScroll($event)">
+    <ul nz-menu nzMode="inline" style="width: 100%" [nzSelectable]="false">
+      <li
+        nz-submenu
+        [(nzOpen)]="openMap.file"
+        (nzOpenChange)="openHandler('file')"
+        nzTitle="File đã chia sẻ"
+      >
+        <ul style="padding: 0 24px 0 12px">
+          <li
+            nz-menu-item
+            class="attachment m-r-12 flex-m pos-relative hov-pointer"
+            *ngFor="let item of listAttachment; let i = index"
+            (click)="downloadFile(item)"
+          >
+            <div class="icon-{{ item?.Type }}"></div>
+            <div
+              class="attachment-name m-l-8"
+              title="{{ item?.AttachmentName }}"
+            >
+              {{ item?.AttachmentName }}
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li
+        nz-submenu
+        [(nzOpen)]="openMap.image"
+        (nzOpenChange)="openHandler('image')"
+        nzTitle="{{ 'Image' | translate }}"
+      >
+        <ul class="flex-m flex-wrap list-image">
+          <li
+            *ngFor="let item of listImage; let i = index"
+            class="images hov-pointer"
+          >
+            <img
+              nz-image
+              (click)="preview(i)"
+              [nzDisablePreview]="true"
+              class="w-full h-full"
+              nzSrc="{{ item.PreviewUrl }}"
+              alt=""
+            />
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<amis-popup-delete-group
+  [isVisible]="isPopupDeleteChat"
+  (isPopupDeleteGroupChat)="onchangeVisiablePopupDelete($event)"
+  [conversation]="_conversation"
+></amis-popup-delete-group>
+
+<amis-popup-rename-group
+  *ngIf="isPopupRenameGroup"
+  [isVisible]="isPopupRenameGroup"
+  (isPopupRenameGroup)="onchangeVisiablePopupRename($event)"
+  [conversation]="_conversation"
+>
+</amis-popup-rename-group>
+
+<amis-popup-add-user
+  *ngIf="isPopupAddMember"
+  [isVisible]="isPopupAddMember"
+  (isPopupAddMember)="onchangeVisiablePopupAdd($event)"
+  [conversation]="_conversation"
+></amis-popup-add-user>
+
+<amis-popup-member
+  *ngIf="isPopupMember"
+  [isVisible]="isPopupAddMember"
+  (isPopupMember)="onchangeVisiablePopupMember($event)"
+  [conversation]="_conversation"
+></amis-popup-member>
+
+<amis-popup-leave-group
+  *ngIf="isLeaveGroup"
+  [isVisible]="isLeaveGroup"
+  (isPopupLeaveGroup)="onchangeVisiablePopupLeaveGroup($event)"
+  [conversation]="_conversation"
+></amis-popup-leave-group>

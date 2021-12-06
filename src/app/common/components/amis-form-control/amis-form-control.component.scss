@@ -1,0 +1,12 @@
+@import "./../../../assets/scss/var-color.scss";
+
+.height-horizontal {
+    height: 36px;
+}
+
+.required {
+    &::after {
+      color: $red;
+      content: "\00a0 *";
+    }
+  }

@@ -1,0 +1,35 @@
+@import "../../../assets/scss/var-color.scss";
+:host {
+  .amis-upload-control {
+    .control-content{
+      position: relative;
+      .remove-file {
+        position: absolute;
+        right: 42px;
+      }
+      .field-row-input{
+        padding-right: 70px;
+        text-overflow: ellipsis;
+        color: $selected;
+      }
+      .btn-upload{
+        width: 36px;
+        height: 34px;
+        right: 1px;
+        position: absolute;
+        border-left: solid 1px $border;
+        border-radius: 0 4px 4px 0;
+        background-color: $bg-icon-right-input;
+        .ic-up{
+          margin: 5px;
+        }
+        &:hover{
+          background-color: $bg-icon-right-input-hover;
+        }
+        &:active{
+          background-color: $bg-icon-right-input-press;
+        }
+      }
+    }
+  }
+}

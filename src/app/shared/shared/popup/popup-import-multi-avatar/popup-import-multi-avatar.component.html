@@ -1,0 +1,103 @@
+<amis-popup-base [(visiblePopup)]="visiblePopup" [title]="'IMPORT_MULTI_AVATAR_TITLE'|translate" width="auto"
+    height="auto" (closePopup)="outputCancel.emit()" [maxHeightContent]="620">
+    <div contentPopup>
+        <div class="popup-import-multi-avatar content-wrapper">
+            <div amisDragDropToUpload (fileDropped)="onFileDropped($event)" class="import-file flex-c-m dis-flex-column"
+                *ngIf="visibleImport">
+                <div class="item-middle">{{'IMPORT_TEMPLATE_IMPORT_TUTORIAL'|translate}}</div>
+                <div class="item-middle gray">{{'OR'|translate}}</div>
+                <div class="item-middle">
+                    <amis-button (clickButton)="importFile()" iconLeft="icon-picture-small" class="btn-choose-item"
+                        name="{{'HRM_PROFILE_VIEW_MASTER_SELECT_IMG'|translate}}" [type]="buttonType.OnlyText"
+                        [color]="buttonColor.BlueWhiteSecondary">
+                    </amis-button>
+                    <input #importTemplateDoc #fileDropRef multiple accept=".png,.jpg,.gif,.tiff,.bmp"
+                        (change)="onFileChange($event)" class="input-import" type="file">
+                </div>
+                <div class="item-middle gray">{{'IMPORT_MULTI_AVATAR_TOTURIAL'|translate}}</div>
+            </div>
+            <div class="manage-file" *ngIf="!visibleImport">
+                <div class="header flex-sb-m">
+                    <div class="flex-sb-m">
+                        <div class="icon-notify m-r-6"></div>
+                        {{'IMPORT_MULTI_AVATAR_HEADER'|translate}}
+                    </div>
+                    <amis-button (clickButton)="importFile()" iconLeft="icon-picture-small" class="btn-choose-item"
+                        [isDisable]="isWorking || isDisableBtnChoose" name="{{'HRM_PROFILE_VIEW_MASTER_SELECT_IMG'|translate}}"
+                        [type]="buttonType.OnlyText" [color]="buttonColor.BlueWhiteSecondary"></amis-button>
+                    <input #importTemplateDoc multiple accept=".png,.jpg,.gif,.tiff,.bmp"
+                        (change)="onFileChange($event)" class="input-import" type="file">
+                </div>
+                <div class="grid-avatar m-t-17">
+                    <dx-scroll-view>
+                        <div class="list-avatar-wrapper">
+                            <div *ngFor="let item of listAvatar let i = index" class="avatar-wrapper">
+                                <div class="avatar">
+                                    <img [src]="item.IMGData" alt="{{'IMPORT_MULTI_AVATAR_ON_AVATAR'|translate}}">
+                                    <div *ngIf="!item.Loading.startCall" class="overlay">
+                                        <div class="icon-close-small" *ngIf="!isWorking"
+                                            (click)="deleteAvatar(item)"></div>
+                                    </div>
+                                    <div [class.loading]="item.Loading.startCall && !item.Loading.finishCall"
+                                        misaLoadingButton [startCall]="item.Loading.startCall"
+                                        [finishCall]="item.Loading.finishCall">
+                                    </div>
+                                    <div class="icon-notify icon-warning-yellow"
+                                        *ngIf="item.Errors.length || item.NotifyMessage"
+                                        (mouseenter)="showToolTip($event, item)"></div>
+                                    <div class="icon-notify icon-success-green" *ngIf="item.State === state.Success">
+                                    </div>
+                                </div>
+
+                                <div class="employee-id-input-wrapper">
+                                    <dx-text-box [disabled]="item.State === state.Success"
+                                        [(value)]="item.Employee.EmployeeCode" mode="text"
+                                        class="employee-id-input {{item?.Errors?.length || item?.NotifyMessage ? 'border-alert' : ''}}"
+                                        (onValueChanged)="validateText($event,item)">
+                                    </dx-text-box>
+                                </div>
+                            </div>
+                        </div>
+                    </dx-scroll-view>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div buttonsPopup>
+        <div class="button-action">
+            <amis-button (clickButton)="cancel()" class="mr-2" name="{{'CANCEL2' |translate}}"
+                [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+            <amis-button name="{{'IMPORT_UPDATE'|translate}}" [isDisable]="isDisableBtnSave"
+                [type]="buttonType.OnlyText" [color]="buttonColor.BluePrimary" (clickButton)="saveFile()"></amis-button>
+        </div>
+    </div>
+</amis-popup-base>
+<!-- poup thông báo || xác nhận hủy -->
+<amis-popup-notify title="{{'HRM_SETTING_JOB_ROLE_NOTIFY'|translate}}" [visiblePopup]="visibleNotify"
+    *ngIf="visibleNotify" (closePopup)="cancelPopupNotify()">
+    <div textContentPopupConfirm>
+        <div [innerHTML]="contentNotify"></div>
+    </div>
+    <div amisButtons *ngIf="!isPopupWarning">
+        <amis-button (clickButton)="cancelPopupNotify()" [color]="buttonColor.BluePrimary" [type]="buttonType.OnlyText"
+            name="{{'CLOSE'|translate}}"></amis-button>
+    </div>
+    <div amisButtons *ngIf="isPopupWarning">
+        <amis-button (clickButton)="cancelPopupNotify()" class="mr-2" [color]="buttonColor.White"
+            [type]="buttonType.OnlyText" name="{{'NO'|translate}}"></amis-button>
+        <amis-button (clickButton)="acceptPopupNotify()" [color]="buttonColor.RedPrimary" [type]="buttonType.OnlyText"
+            name="{{'YES'|translate}}"></amis-button>
+    </div>
+</amis-popup-notify>
+<!-- tooltip thông báo -->
+<dx-popover *ngIf="visiblePopover" [(visible)]="visiblePopover" showEvent="dxhoverstart" hideEvent="dxhoverend"
+    [target]="tooltipTarget" class="tooltip-popover">
+    <div *dxTemplate="let data of 'content'">
+        <ng-container>
+            <div class="tooltip-content">
+                {{tooltipContent | translate}}
+            </div>
+        </ng-container>
+    </div>
+</dx-popover>

@@ -1,0 +1,61 @@
+<amis-popup-base #popupPreview [(visiblePopup)]="visiblePopup" [title]="title" [height]="height" [width]="1200"
+  [offsetY]="'0 50'" (closePopup)="closePopup()" [isResizePopup]="true" [isHaveScrollView]="false"
+  [isHaveFooterBtn]="true" (shownPopup)="showPopup()">
+  <div contentPopupNoScroll id="preview-pdf-popup" class="preview-pdf-popup pos-relative h-100">
+    <div *ngIf="isLoading" class="remind-loading flex-c-m flex-col">
+      <svg class="spinner-big" width="48px" height="48px" viewBox="0 0 66 66">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+        </circle>
+      </svg>
+      <div class="loading-text m-t-8">
+        <span>{{"Đang tải..." | translate}}</span>
+      </div>
+    </div>
+
+    <ng-container *ngIf="previewType == 'PDF'">
+      <iframe #iFrame id="iFrame" style="width: 100%; height: 100%;"></iframe>
+
+    </ng-container>
+    <ng-container *ngIf="previewType == 'IMG'">
+      <div class="w-100 h-100 flex-c-m">
+        <img #img alt="">
+
+      </div>
+    </ng-container>
+
+
+    <div class="next flex-c-m" *ngIf="index < _dataSources.length -1" (click)="next()">
+      <div class="icon-big-caret-right">
+
+      </div>
+    </div>
+    <div class="back flex-c-m" *ngIf="index > 0" (click)="back()">
+      <div class="icon-big-caret-left"></div>
+    </div>
+    <!-- <embed type="application/x-google-chrome-pdf" style="width: 100%; height: 820px" [src]="_src" /> -->
+
+    <!-- <ngx-extended-pdf-viewer #pdfViewer *ngIf="!isLoading" [src]="_src" useBrowserLocale="true" height="80vh"
+      [showOpenFileButton]="false" (pdfLoaded)="pdfLoaded()"></ngx-extended-pdf-viewer> -->
+  </div>
+  <div buttonsPopup class="group-btn flex-m">
+    <amis-button [type]="buttonType.OnlyIcon" icon="icon-download" [color]="buttonColor.Normal"
+      (clickButton)="downloadAttachment()" [isShowTooltip]="true" [tooltipContent]="'DOWNLOAD'|translate">
+    </amis-button>
+    <amis-button [type]="buttonType.OnlyIcon" icon="icon-delete-red" [color]="buttonColor.RedSecondary"
+      (clickButton)="deleteAttachment()" [isShowTooltip]="true" [tooltipContent]="'DELETE'|translate">
+    </amis-button>
+    <!-- <div class="icon-btn flex-c-m cursor-pointer" (click)="downloadAttachment()">
+
+      <div class="icon-export"></div>
+    </div>
+    <div class="icon-btn flex-c-m cursor-pointer m-l-8" (click)="deleteAttachment()">
+
+      <div class="icon-delete-red"></div>
+    </div> -->
+  </div>
+  <div buttonsPopup>
+
+    <amis-button [color]="buttonColor.Normal" (clickButton)="closePopup()" name="{{'CLOSE'|translate}}">
+    </amis-button>
+  </div>
+</amis-popup-base>

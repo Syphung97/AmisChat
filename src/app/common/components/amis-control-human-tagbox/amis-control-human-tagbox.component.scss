@@ -1,0 +1,14 @@
+@import "../../../assets/scss/var-color.scss";
+::ng-deep {
+    .pop-select-human {
+      min-width: 300px;
+      .dx-list-item{
+        .dx-item-content{
+          height: unset !important;
+        }
+      }
+    }
+    .custom-dx-tag-box{
+      background-color: $background-gray;
+    }
+}

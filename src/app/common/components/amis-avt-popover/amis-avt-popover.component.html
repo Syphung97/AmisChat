@@ -1,0 +1,49 @@
+<!-- Avatar -->
+<img src="{{avatarUrl}}" class="avatar-user text-center m-r-16 cursor-pointer" id="popover-show-avt"
+  (click)="visiblePopoverAvt = !visiblePopoverAvt">
+
+<dx-popover *ngIf="visiblePopoverAvt" [visible]="visiblePopoverAvt" class="popover-avt" target="#popover-show-avt"
+  [width]="'280'" height="auto" (onHidden)="visiblePopoverAvt = false;"
+  [position]="{my: 'right top', at: 'right top', of: '#popover-show-avt', offset: '12 35'}">
+  <div *dxTemplate="let data of 'content'">
+    <div class="body-popover">
+      <div class="m-t-5 text-user-info">
+
+        <!-- Avatar -->
+        <img src="{{avatarUrl}}" class="img-avt m-b-12 dis-flex">
+
+        <div class="dis-flex dis-flex-content-center name">
+          <span class="">{{currentUserInfo?.FullName}}</span>
+        </div>
+        <div class="mail dis-flex dis-flex-content-center">
+          <span class="">{{userName}}</span>
+        </div>
+        <div class="role dis-flex dis-flex-content-center">
+          <span>{{roleName}}</span>
+        </div>
+        <!-- Thông tin cá nhân -->
+
+      </div>
+
+    </div>
+    <div class="setting">
+
+        <!--Thiết lập người dùng-->
+        <div class="dis-flex setting-user  setting-child dis-align-items-center cursor-pointer"
+          *ngIf="roleCode === 'Administrator' || roleCode === 'Administrator_Task'" (click)="settingUser()">
+          <div class="icon-setting-user icon-setting-user m-r-16 m-l-24"></div>
+          <span class="">{{'PROFILE_ACTION_USER_SETTING' | translate}}</span>
+        </div>
+
+        <!--Thiết lập chung-->
+
+
+        <!--Đăng xuất-->
+        <div class="dis-flex logout setting-child dis-align-items-center cursor-pointer" (click)="logout()">
+          <div class="icon-setting-general icon-logout m-r-16 m-l-24"></div>
+          <span>{{'PROFILE_ACTION_LOGOUT' | translate}}</span>
+        </div>
+
+      </div>
+  </div>
+</dx-popover>

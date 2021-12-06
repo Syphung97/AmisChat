@@ -1,0 +1,35 @@
+<div class="popup-terminate-contract">
+    <amis-popup-base [(visiblePopup)]="visiblePopup" [title]="'CONTEXT_MENU_TERMINATE_CONTRACT'|translate" width="auto"
+        height="auto" (closePopup)="closePopup()" [maxHeightContent]="620">
+        <div contentPopup class="content-popup-terminate-contract">
+            <div class="content-notify">
+                Sau khi chấm dứt, hợp đồng sẽ chuyển sang trạng thái <b>Hết hiệu lực</b>.
+                <div class="m-t-16">Bạn có muốn cập nhật <b>Ngày hết hạn</b> của hợp đồng không?</div>
+            </div>
+            <div class="radio-group m-t-16 m-l-17 flex-m">
+                <dx-radio-group [items]="priorities" [(value)]="_radioGroupSelected" [displayExpr]="'Name'"
+                    [valueExpr]="'Value'" layout="vertical" (onValueChanged)="onValueRadioChanged()">
+                </dx-radio-group>
+                <div class="date-box m-l-30">
+                    <amis-amis-control-datebox #field [isRequiredLabel]="true" [isShowError]="true"
+                        [isSubmit]="true" [isError]="_isError" [readonly]="!_radioGroupSelected"
+                        [fieldName]="'Ngày hết hạn'" [labelWidth]="'0'" [labelPositon]="'left'" [isShowLabel]="false"
+                        [errorMessage]="'Ngày hết hạn không được để trống'" [placehoder]="'DD/MM/YYYY'" [(ngModel)]="endDate"
+                        [typeControl]="typeControl" (submitUpdateField)="updateFieldData()"
+                        (valueChanged)="valueChange($event)"
+                        (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)">
+                    </amis-amis-control-datebox>
+                </div>
+            </div>
+        </div>
+
+        <div buttonsPopup>
+            <div class="button-action">
+                <amis-button (clickButton)="closePopup()" class="mr-2" name="{{'CANCEL2' |translate}}"
+                    [type]="buttonType.OnlyText" [color]="buttonColor.Normal"></amis-button>
+                <amis-button name="{{'Chấm dứt'|translate}}" [type]="buttonType.OnlyText"
+                    [color]="buttonColor.RedPrimary" (clickButton)="save()"></amis-button>
+            </div>
+        </div>
+    </amis-popup-base>
+</div>

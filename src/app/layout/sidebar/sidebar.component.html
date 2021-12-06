@@ -1,0 +1,90 @@
+<div class="menu-sidebar">
+  <div class="head-sidebar flex-sb-m padding-base">
+    <amis-avatar
+      *ngIf="!isFocusSearch"
+      class="avatar-cur-user"
+      [src]="currentUser.Avatar"
+    ></amis-avatar>
+    <div class="search-box flex-m m-l-8">
+      <amis-icon
+        *ngIf="isFocusSearch"
+        (clickAction)="
+          switchTab(conversationTab.Conversation); isFocusSearch = false
+        "
+        class="m-r-12"
+        classIcon="icon-back-gray"
+      ></amis-icon>
+      <amis-search-box
+        [value]="valueSearch"
+        [class]="'search-conv'"
+        (onSearch)="onSearch($event)"
+        (onFocus)="onFocusSearch($event)"
+      ></amis-search-box>
+    </div>
+    <amis-icon
+      (clickAction)="createNewConversation()"
+      class="icon-create m-l-8"
+      classIcon="icon-create-conversation"
+    >
+    </amis-icon>
+  </div>
+
+  <ng-container #contactContainer></ng-container>
+
+  <!-- <div class="tab flex-c-m">
+    <div class="tab-item flex-c-m" [class.active]="tabActive == conversationTab?.Conversation"
+      (click)="switchTab(conversationTab.Conversation)">
+      {{"Conversation" | translate}}
+    </div>
+    <div class="tab-item flex-c-m" [class.active]="tabActive == conversationTab?.Directory" style="margin-left: -8px;"
+      (click)="switchTab(conversationTab.Directory)">
+      {{"Directory" | translate}}
+    </div>
+  </div>
+
+  <ul class="tab-small flex-c-m" nz-menu [nzMode]="'vertical'">
+    <li nz-submenu nzTitle="Tab">
+      <ul>
+        <li nz-menu-item nzSelected (click)="switchTab(conversationTab.Conversation)">{{"Conversation" | translate}}
+        </li>
+        <li nz-menu-item (click)="switchTab(conversationTab.Directory)">{{"Directory" | translate}}</li>
+      </ul>
+    </li>
+  </ul> -->
+</div>
+
+<!-- <ng-template #createChatTemplate>
+  <div>
+    <div class="conversation-item flex-m" (click)="createNewConversation()">Tạo cuộc trò chuyện mới</div>
+    <div class="conversation-item flex-m">Tạo nhóm mới</div>
+  </div>
+</ng-template> -->
+
+<!-- <ng-template #loading>
+  <div class="conversation-item pos-relative flex-m">
+    <nz-skeleton-element [nzActive]="true" nzType="avatar" [nzSize]="48">
+    </nz-skeleton-element>
+    <nz-skeleton-element nzType="input" [nzSize]="'small'" [nzActive]="true" class="m-l-12" style="width:200px">
+    </nz-skeleton-element>
+  </div>
+  <div class="conversation-item pos-relative flex-m">
+    <nz-skeleton-element [nzActive]="true" nzType="avatar" [nzSize]="48">
+    </nz-skeleton-element>
+    <nz-skeleton-element nzType="input" [nzSize]="'small'" [nzActive]="true" class="m-l-12" style="width:200px">
+    </nz-skeleton-element>
+  </div>
+  <div class="conversation-item pos-relative flex-m">
+    <nz-skeleton-element [nzActive]="true" nzType="avatar" [nzSize]="48">
+    </nz-skeleton-element>
+    <nz-skeleton-element nzType="input" [nzSize]="'small'" [nzActive]="true" class="m-l-12" style="width:200px">
+    </nz-skeleton-element>
+  </div>
+  <div class="conversation-item pos-relative flex-m">
+    <nz-skeleton-element [nzActive]="true" nzType="avatar" [nzSize]="48">
+    </nz-skeleton-element>
+    <nz-skeleton-element nzType="input" [nzSize]="'small'" [nzActive]="true" class="m-l-12" style="width:200px">
+    </nz-skeleton-element>
+  </div>
+  <amis-conversation-list></amis-conversation-list>
+</ng-template> -->
+<!-- <amis-popup-new-conversation></amis-popup-new-conversation> -->

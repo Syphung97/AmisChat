@@ -1,0 +1,43 @@
+<dx-tag-box #tagBox class="flex tagbox-control" tabindex="2" id="tag-select" paginate="true" [items]="[]"
+    [dataSource]="dataSource" [(value)]="listCandidateSelected" [valueExpr]="'EmployeeID'" [deferRendering]="true"
+    itemTemplate="customItem" [searchExpr]="['FullName', 'OfficeEmail', 'UnsignedFullName', 'EmployeeCode']"
+    placeholder="" [showSelectionControls]="true" [maxDisplayedTags]="3" selectAllMode="allPages"
+    [showMultiTagOnly]="false" [searchEnabled]="true" tagTemplate="tagTemplate" showDataBeforeSearch="true"
+    searchTimeout="500" (onEnterKey)="addEmailOutSideSystem($event)" (onInput)="onChangeInput()"
+    (onOpened)="onOpened($event)" (onValueChanged)="onValueChangedFunc()">
+    <!-- Hiển thị template sổ xuống -->
+    <div *dxTemplate="let data of 'customItem'">
+        <div class="profile-item-select-human dis-flex w-100 flex-c-m">
+            <img *ngIf="data.Avatar" style=" width: 40px;height: 40px;margin-right: 12px;border-radius: 50%;"
+                class="profile-img" src="{{data.Avatar}}">
+            <div class="profile-info dis-flex flex">
+                <div class="profile-employee flex">
+                    <div class="profile-employee-name dis-flex text-overflow">
+                        <div class="employee-name text-overflow" title="{{data.FullName}}">{{data.FullName}}
+                        </div>
+                        <div *ngIf="data.EmployeeCode" class="text-secondary m-l-8">({{data.EmployeeCode}})</div>
+                    </div>
+                    <div *ngIf="data.OfficeEmail" class="profile-employee-job-title text-overflow">
+                        {{data.OfficeEmail}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- custom tag hiện lên  -->
+    <div *dxTemplate="let tagData of 'tagTemplate'"
+        class="dx-tag-content custom-dx-tag-box dis-flex dis-align-items-center cursor-pointer">
+        <span>
+            {{tagData.FullName}}
+            <ng-container *ngIf="tagData.OfficeEmail">
+                <ng-container *ngIf="tagData.FullName">(</ng-container>{{tagData.OfficeEmail}}<ng-container
+                    *ngIf="tagData.FullName">)</ng-container>
+            </ng-container>
+            <span *ngIf="!tagData.FullName && !tagData.OfficeEmail">{{tagData}}</span>
+        </span>
+        <amis-icon [classIcon]="'icon-close-small '" class="m-l-8" [isShowTooltip]="false" [_backgroundType]="backgroundType.Grey">
+        </amis-icon>
+        <!-- <div class="icon-close-small tag-remove-icon dx-tag-remove-button">
+        </div> -->
+    </div>
+</dx-tag-box>

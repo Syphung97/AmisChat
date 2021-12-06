@@ -1,0 +1,5 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div>
+  <ckeditor #ckeditor [disabled]="_disabled" [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="_value"
+    (change)="onChange($event)" [config]="config" (focus)="onFocus($event)"></ckeditor>
+</div>

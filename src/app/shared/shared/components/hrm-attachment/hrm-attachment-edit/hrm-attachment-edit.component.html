@@ -1,0 +1,77 @@
+<amis-amis-control-popup [position]="formPosition" [isVisible]="visibleForm">
+  <div amisPopupContent class="h-100">
+    <amis-amis-form-components>
+      <div formTitle class="dis-flex">
+        <amis-icon *ngIf="formMode === formModeEntity.View" [classIcon]="'icon-arrow-left'" class="mr-2" (click)="closeForm()" [_backgroundType]="backgroundIcon"
+            [tooltipContent]="'BACK_2'|translate">
+        </amis-icon>
+        {{formTitle}}
+      </div>
+      <div formHeaderButton class="dis-flex">
+        <ng-content select=[amisLayoutCustomButton]></ng-content>
+        <amis-button *ngIf="formMode !== formModeEntity.View" class="mr-2" name="{{'CANCEL' | translate}}"
+          [color]="buttonColor.White" (clickButton)="closeForm()">
+        </amis-button>
+        <amis-button *ngIf="formMode === formModeEntity.Update" name="{{'SAVE' | translate}}"
+          [color]="buttonColor.BluePrimary" (passPermissionClick)="submitForm(formModeEntity.Update)" isIgnorePermission="{{subSystemActionCode ? this.isIgnorePermission : true}}" permissionCode="{{permissionActionCode}}" subSystemCode="{{subSystemActionCode}}">
+        </amis-button>
+        <amis-button *ngIf="formMode === formModeEntity.View" name="{{'EDIT2'|translate}}" iconLeft="icon-edit"
+          [color]="buttonColor.White" (passPermissionClick)="edit()" isIgnorePermission="{{subSystemActionCode ? this.isIgnorePermission : true}}" permissionCode="{{permissionActionCode}}" subSystemCode="{{subSystemActionCode}}">
+        </amis-button>
+        <div ngbDropdown placement="bottom-right" class="dropdown-more-option ml-2"
+          *ngIf="formMode === formModeEntity.View">
+          <div ngbDropdownToggle>
+            <amis-button [color]="buttonColor.White" [type]="buttonType.OnlyIcon" [isShowTooltip]="true"
+            tooltipContent="{{'VIEW_MORE_OPTION'|translate}}" [icon]="'icon-optional-more'"
+              [isShowMore]="true" id="optionMore">
+            </amis-button>
+          </div>
+          <div ngbDropdownMenu class="app-dropdown-optionMore">
+            <div *ngFor="let item of listOption; let index=index" class="app-dropdown-item"
+              (passPermissionClick)="selectItem(item.Key)" isIgnorePermission="{{subSystemActionCode ? isIgnorePermission : true }}" permissionCode="{{permissionActionCode}}" subSystemCode="{{subSystemActionCode}}">
+              <div class="dis-flex dis-align-items-center">
+                <div class="{{item.Icon}} mr-2"></div>
+                <div class="item-option-dropdown-text" [class.text-red]="item.Key==formModeEntity.Delete">
+                  {{item.Value}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div formContent class="w-100 h-100">
+        <dx-scroll-view>
+          <div class="amis-form-layout-container" style="padding-right: 16px;">
+            <div class="amis-form-group-container p-24">
+              <amis-amis-form-field [isDisplayHeader]="false" [groupConfig]="groupBox"
+                [inputAfterSubmit]="objectAfterSubmit" [isSubmit]="objectSubmit" [typeShow]="typeShow"
+                (afterValidatedForm)="afterValidate($event)" (valueFieldChanged)="valueFieldChanged($event)"> </amis-amis-form-field>
+            </div>
+          </div>
+        </dx-scroll-view>
+      </div>
+    </amis-amis-form-components>
+  </div>
+</amis-amis-control-popup>
+
+
+<!-- Xóa tài liệu đính kèm -->
+<amis-popup-delete *ngIf="popupDelete.VisiblePopupDelete" [title]="popupDelete.TitlePopupDelete"
+  [visiblePopup]="popupDelete.VisiblePopupDelete" [content]="popupDelete.ContentPopupDelete"
+  (eventDelete)="confirmPopupDelete($event)" (eventHiddenPopup)="cancelPopupDelete($event)"></amis-popup-delete>
+<!-- popup thông báo confirm hủy bỏ -->
+<amis-popup-notify *ngIf="visiblePopupNotify" [(visiblePopup)]="visiblePopupNotify" title="Thông báo"
+  (closePopup)="closePopupNotify()">
+  <div textContentPopupConfirm>
+    <div [innerHTML]="popupNotifyContent">
+    </div>
+  </div>
+  <div amisButtons>
+    <amis-button name="{{'CANCEL2'|translate}}" [color]="buttonColor.Normal" (clickButton)="closePopupNotify()">
+    </amis-button>
+    <amis-button name="{{'Không lưu'|translate}}" [color]="buttonColor.BlueSecondary" (clickButton)="onConfirm()">
+    </amis-button>
+    <amis-button name="{{'SAVE'|translate}}" [color]="buttonColor.BluePrimary"
+      (clickButton)="closePopupNotify();submitForm(formMode)">
+    </amis-button>
+  </div>
+</amis-popup-notify>

@@ -1,0 +1,27 @@
+<!-- [style.width.px]="width" [style.height.px]="height" -->
+<div class="square-chart" >
+  <div class="horizontal">
+    <p>{{dataSource.textBottom}}</p>
+  </div>
+  <div class="content">
+    <div class="left1">
+      <p>{{dataSource.number1}}</p>
+    </div>
+    <div class="right1">
+      <p>{{dataSource.number2}}</p>
+    </div>
+    <div class="left2">
+      <p>{{dataSource.number3}}</p>
+    </div>
+    <div class="right2">
+      <p>{{dataSource.number4}}</p>
+    </div>
+    <span class="text-vartical">
+      {{dataSource.textLeft}}
+    </span>
+  </div>
+</div>
+<div class="dis-flex flex-wrap justify-content-center legnd">
+  <p class="text1 dis-flex justify-content-center align-items-center font-15"><span class="medium ">{{dataSource.number2}}</span> {{dataSource.textLegend1}}</p>
+  <p class="text2 dis-flex justify-content-center align-items-center ml-3 font-15"><span class="medium ">{{dataSource.number1}}</span> {{dataSource.textLegend2}}</p>
+</div>

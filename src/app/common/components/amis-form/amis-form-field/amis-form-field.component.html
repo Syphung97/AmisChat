@@ -1,0 +1,43 @@
+<div #formField amisFirstFocus>
+    <div *ngIf="groupConfig">
+        <div id="groupbox-{{groupConfig.GroupConfigID}}" #groupbox [ngStyle]="{'padding': padding}">
+            <header class="dis-flex dis-flex-row dis-justify-content-between group-box-header" *ngIf="_isDisplayHeader">
+                <div class="dis-align-self-center dis-flex">
+                    <div class="dis-flex dis-align-items-center {{_headerType}}"
+                        [innerHTML]="groupConfig.GroupConfigName">
+                    </div>
+                    <div class="hover-icon ml-2" *ngIf="_headerBtnPosition === 'rightOfText'">
+                        <div class="{{headerIconClass}}"></div>
+                    </div>
+                </div>
+                <div *ngIf="_headerBtnPosition === 'right'"
+                    class="right-item dis-flex dis-align-items-center dis-justify-content-end">
+                    <div class="hover-icon">
+                        <div class="{{headerIconClass}}"></div>
+                    </div>
+                </div>
+            </header>
+            <footer [ngStyle]="{'padding': padding}" [ngClass]="{'group-box-footer': _isDisplayHeader}"
+                class="dis-flex-grow dis-flex dis-flex-column">
+                <section>
+                    <div>
+                        <amis-amis-control-group-row [labelClass]="labelClass" #groupRow class="w-100"
+                            [groupbox]="groupConfig" [isSubmit]="_isSubmit" [typeShow]="_typeShow"
+                            [labelWidth]="_labelWidth" (valueChanged)="valueChangedData($event)"
+                            [labelClass]="_labelClass" (afterUpdateField)="updatedField($event)"
+                            (afterUpdateFieldView)="updatedFieldView($event)"
+                            (valueChangedWithFieldAndValue)="afterChangedWihFieldAndValue($event)"
+                            (onTab)="handleTabGroupRow($event)">
+                        </amis-amis-control-group-row>
+                    </div>
+                </section>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<!-- xử lý lỗi trên group config -->
+<amis-handle-group-configs-validation [listGroupConfig]="[groupConfig]" [validateInfos]="_validateInfos"
+    [isConfirmNotify]="isConfirmNotify" (onError)="onError($event)" (clickNoEvent)="onClickNo($event)"
+    (clickYesEvent)="onClickYes($event)">
+</amis-handle-group-configs-validation>
