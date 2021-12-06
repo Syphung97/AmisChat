@@ -3,8 +3,9 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from "@angular/c
 import { Observable } from "rxjs";
 import { AmisCommonUtils } from "../fn/common-utils";
 import { tap } from "rxjs/operators";
-import { EnvironmentKey } from "src/app/shared/constant/environment/environment-key";
+
 import { ServerResponse } from "../models/server-reponse";
+import { EnvironmentKey } from "src/app/shared/constant/environment-key";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
