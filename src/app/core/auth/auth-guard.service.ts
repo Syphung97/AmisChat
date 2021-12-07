@@ -39,7 +39,7 @@ export class AuthGuardService implements CanActivate {
             this.tranferDataSV.handleAfterGetUserInfo(true);
             const userData = CommonFn.getCacheStringeeUser(true);
             if (location.hostname === 'localhost') {
-              resolve(true);
+              // resolve(true);
             }
             this.connectStringee()
               .pipe(

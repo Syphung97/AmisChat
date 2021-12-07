@@ -12,6 +12,7 @@ import { MessageUploadFileComponent } from './message-upload-file/message-upload
 import { UploadDirectiveModule } from 'src/app/core/directives/upload-directive/upload-directive.module';
 import { MessageUploadImageComponent } from './message-upload-image/message-upload-image.component';
 import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 @NgModule({
   declarations: [
     MessageComposerComponent,
@@ -28,7 +29,9 @@ import { NzImageModule } from 'ng-zorro-antd/image';
     EmojiModule,
     NzModalModule,
     UploadDirectiveModule,
-    NzImageModule
+    NzImageModule,
+    NzPopoverModule,
+    AvatarModule
   ],
   exports: [MessageComposerComponent]
 })

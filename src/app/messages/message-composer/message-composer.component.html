@@ -75,8 +75,25 @@
     (keydown)="inputHandler($event)"
     (paste)="onPaste($event)"
     placeholder="Nhập tin nhắn và nhấn enter để gửi..."
+    nz-popover
+    nzPopoverPlacement="topLeft"
+    [nzPopoverOverlayClassName]="'mention-action'"
+    [nzPopoverContent]="mentionTemplate"
+    [nzPopoverOverlayClassName]="'mention-action'"
+    [nzPopoverMouseLeaveDelay]="2"
+    [nzPopoverTrigger]="null"
+    [(nzPopoverVisible)]="visibleMentionPopover"
   ></div>
-
+  <ng-template #mentionTemplate>
+    <div class="mention-box">
+      <div class="flex-m mention-item" [class.active]="item.IsActive" *ngFor="let item of listParticipant; let i = index" (click)="handleSelectParticipant(item, i)">
+        <amis-avatar [stringeeUserID]="item.StringeeUserID"></amis-avatar>
+        <div class="m-l-8">
+          {{item.DisplayName}}
+        </div>
+      </div>
+    </div>
+  </ng-template>
   <div class="flex-sb-m flex-1 p-l-8 p-r-8">
     <div class="flex-m">
       <emoji-mart

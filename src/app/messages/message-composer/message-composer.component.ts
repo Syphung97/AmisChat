@@ -77,16 +77,24 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
 
   isVisibleUploadImage: any;
 
+  visibleMentionPopover = false;
+
+  listParticipant = new Array();
+
+  listParticipantMention = new Array();
+
   @Output() onSendMessage = new EventEmitter();
 
   // tslint:disable-next-line:variable-name
   _conv!: any;
   @Input() set conv(data) {
     if (data) {
+
       if (data?.id != this._conv?.id) {
         this.resetComposer();
       }
       this._conv = data;
+      this.getListParticipant(data);
     }
   }
 
@@ -121,7 +129,7 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
     this.currentStringeeUser = UserService.UserInfo.StringeeUserID;
   }
 
-  onSelect(value: string): void {}
+  onSelect(value: string): void { }
 
   /**
    * Toggle Emoji
@@ -164,14 +172,15 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
 
   inputHandler(e): void {
     this.emojiToggled = false;
-
+    this.handleMention(e);
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
 
       const idUrl = this.route.snapshot.paramMap.get('id');
       this.stringeeService.userEndTyping(idUrl, this.currentStringeeUser);
       this.sendMessage();
-    } else {
+    }
+    else {
       if (e.ctrlKey || e.shiftKey || e.keyCode < 48) {
       } else if (e) {
         if (this.composer.nativeElement.innerText?.trim().length >= 1000) {
@@ -180,6 +189,7 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
           return;
         }
       }
+      
       this.checkUserTyping();
     }
 
@@ -218,6 +228,7 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
   resetComposer(): void {
     this.listFileUpload = new Array<any>();
     this.listImageUpload = new Array<any>();
+    this.listParticipant = new Array<any>();
     this.composer.nativeElement.innerText = '';
     this._replyObject = undefined;
   }
@@ -383,7 +394,7 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
     try {
       if (
         e.clipboardData.getData('Text').length +
-          this.composer.nativeElement.innerText?.trim().length >=
+        this.composer.nativeElement.innerText?.trim().length >=
         1000
       ) {
         this.translateSV
@@ -541,6 +552,44 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
     data.payload.senderName = CommonFn.getUserByStringeeID(
       data.payload.sender
     )?.DisplayName;
+  }
+
+  getListParticipant(data) {
+    data?.participants.forEach(e => {
+      this.listParticipant.push(CommonFn.getUserByStringeeID(e.userId));
+    })
+    if (this.listParticipant.length) {
+
+      this.listParticipant[0].IsActive = true;
+    }
+  }
+
+  handleMention(e): void {
+    if (e.key == '@') {
+      this.visibleMentionPopover = true;
+    }
+    else {
+      this.visibleMentionPopover = false;
+    }
+
+  }
+
+  handleSelectParticipant(item, i): void {
+    this.listParticipant.forEach(e => e.IsActive = false);
+    this.listParticipant[i].IsActive = true;
+    this.insertMention();
+  }
+
+
+  insertMention(): void {
+    const mentionSelected = this.listParticipant.find(e => e.IsActive == true);
+
+    this.composer.nativeElement.innerHTML += `<span style="background-color: #1877f233 !important">${mentionSelected.DisplayName}</span>`;
+    this.autoFocusInput();
+    this.moveCursorToEnd()
+    this.listParticipant.forEach(e => e.IsActive = false);
+    this.listParticipant[0].IsActive = true;
+    this.visibleMentionPopover = false;
   }
   //#endregion
 }

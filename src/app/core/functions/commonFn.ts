@@ -85,9 +85,7 @@ export const CommonFn = {
 
   getUserByStringeeID(stringeeUserID): any {
     try {
-      const listUserString = sessionStorage.getItem(
-        StorageConstant.StringeeUser
-      );
+      const listUserString = CommonFn.getCacheStringeeUser();
       if (listUserString && listUserString != '') {
         const stringeeUsers = JSON.parse(listUserString);
         return stringeeUsers.find((x) => x.StringeeUserID == stringeeUserID);

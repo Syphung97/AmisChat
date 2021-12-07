@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div class="option flex-m" *ngIf="!_conversation.isGroup">
+  <div class="option flex-m" *ngIf="!_conversation?.isGroup">
     <amis-icon class="m-r-8" (clickAction)="makeCall(false)" [classIcon]="'icon-phone'">
     </amis-icon>
     <amis-icon class="m-r-8" [classIcon]="'icon-camera'" (clickAction)="makeCall(true)">
