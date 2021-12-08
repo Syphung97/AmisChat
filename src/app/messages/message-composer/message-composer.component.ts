@@ -32,6 +32,7 @@ import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/core/base.component';
 import { AmisTranslationService } from 'src/app/core/services/amis-translation-service.service';
 import { MessageAction } from '../models/MessageAction';
+import { MentionFn } from 'src/app/core/functions/mentionFn';
 
 declare var stickerBoxAQ: any;
 declare var $: any;
@@ -148,12 +149,14 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
   addEmoji(event): void {
     try {
       this.selectedEmoji = event;
-      // this.inputValue += event.emoji.native;
+      // const curPos = MentionFn.getCurrentPosition(this.composer.nativeElement);
+      // MentionFn.insertTextToPosition(this.composer.nativeElement, curPos, event.emoji.native);
+      this.inputValue += event.emoji.native;
       this.composer.nativeElement.innerText += event.emoji.native;
       this.autoFocusInput();
       this.moveCursorToEnd();
 
-      // this.emojiToggled = false;
+      this.emojiToggled = false;
     } catch (error) {
       CommonFn.logger(error);
     }
@@ -189,7 +192,7 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
           return;
         }
       }
-      
+
       this.checkUserTyping();
     }
 
@@ -554,10 +557,10 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
     )?.DisplayName;
   }
 
-  getListParticipant(data) {
+  getListParticipant(data): void {
     data?.participants.forEach(e => {
       this.listParticipant.push(CommonFn.getUserByStringeeID(e.userId));
-    })
+    });
     if (this.listParticipant.length) {
 
       this.listParticipant[0].IsActive = true;
@@ -565,7 +568,7 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
   }
 
   handleMention(e): void {
-    if (e.key == '@') {
+    if (e.key === '@') {
       this.visibleMentionPopover = true;
     }
     else {
@@ -584,9 +587,12 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
   insertMention(): void {
     const mentionSelected = this.listParticipant.find(e => e.IsActive == true);
 
-    this.composer.nativeElement.innerHTML += `<span style="background-color: #1877f233 !important">${mentionSelected.DisplayName}</span>`;
-    this.autoFocusInput();
-    this.moveCursorToEnd()
+    // this.composer.nativeElement.innerHTML += `<span style="background-color: #1877f233 !important">${mentionSelected.DisplayName}</span>`;
+
+    const curPos = MentionFn.getCurrentPosition(this.composer.nativeElement);
+    MentionFn.insertTextToPosition(this.composer.nativeElement, curPos, `${mentionSelected.DisplayName}`);
+    // this.autoFocusInput();
+    // this.moveCursorToEnd();
     this.listParticipant.forEach(e => e.IsActive = false);
     this.listParticipant[0].IsActive = true;
     this.visibleMentionPopover = false;
