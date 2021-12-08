@@ -1,6 +1,6 @@
 export class MentionFn {
     static getCurrentPosition(parentElement: HTMLElement): number {
-        parentElement.childNodes[0].textContent = parentElement.childNodes[0].textContent?.trim() ?? "";
+        // parentElement.childNodes[0].textContent = parentElement.childNodes[0].textContent?.trim() ?? "";
         const selection = document.getSelection();
         let chartCount = -1;
         let node: Node;

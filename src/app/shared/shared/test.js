@@ -1,14 +1,5 @@
 function setCaret() {
-    var el = document.getElementById("editable")
-    var range = document.createRange()
-    var sel = window.getSelection()
-
-    // range.setStart(el.childNodes[1].childNodes[0], el.childNodes[1].childNodes[0].textContent.length)
-    range.selectNodeContents(el)
-    range.collapse(false);
-
-    sel.removeAllRanges()
-    sel.addRange(range)
+    alert(window.getSelection())
 }
 function getpos() {
     var el = document.getElementById("editable")
@@ -53,7 +44,7 @@ function isChildOf(node, parentElement) {
 }
 
 function getCurrentPosition(parentElement) {
-    parentElement.childNodes[0].textContent = parentElement.childNodes[0].textContent.trim();
+    // parentElement.childNodes[0].textContent = parentElement.childNodes[0].textContent.trim();
     const selection = document.getSelection();
     let chartCount = -1;
     let node;
