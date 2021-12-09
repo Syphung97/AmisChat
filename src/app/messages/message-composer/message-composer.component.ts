@@ -600,12 +600,12 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
     const focusElement = MentionFn.getFocusElement();
 
     if (focusElement.isEqualNode(target)) {
-      focusElement.innerHTML = MentionFn.createTag(text, false);
+      focusElement.innerHTML = MentionFn.createTag(text, true);
 
       const nextSpan = document.createElement("span");
-      nextSpan.innerText = " ";
+      nextSpan.innerHTML = "&nbsp; ";
       focusElement.appendChild(nextSpan);
-      MentionFn.setCaretPosition(focusElement, curPos + text.length + 1);
+      MentionFn.setCaretPosition(target, curPos + text.length);
     }
 
   }

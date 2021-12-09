@@ -156,7 +156,7 @@ export class MentionFn {
             text = text.substr(0, text.length - 1) + this.SPACE_ENCODED;
         }
         if (isFocus) {
-            return "<" + this.HASHTAG_TAGNAME + " focus='true'>" + text + "</" + this.HASHTAG_TAGNAME + ">";
+            return "<" + this.HASHTAG_TAGNAME + " class='mention' focus='true'>" + text + "</" + this.HASHTAG_TAGNAME + ">";
         } else {
             return "<" + this.HASHTAG_TAGNAME + ">" + text + "</" + this.HASHTAG_TAGNAME + ">";
         }

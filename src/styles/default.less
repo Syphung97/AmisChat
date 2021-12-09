@@ -1,6 +1,7 @@
 @import "../../node_modules/ng-zorro-antd/ng-zorro-antd";
 @import "./themes/default";
 @import "./themes/ng-zorro-custom.less";
+
 ::-webkit-scrollbar {
   width: 16px;
   height: 16px;
@@ -72,37 +73,53 @@
 .editor * {
   background-color: transparent !important;
   color: #212121 !important;
+
+
+}
+
+.editor .mention {
+  background-color: #1877f233 !important;
 }
 
 .receiver-text * {
   background-color: transparent !important;
   color: #212121 !important;
 }
+
 .call-overlay {
-  position: fixed !important; /* Sit on top of the page content */ /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
+  position: fixed !important;
+  /* Sit on top of the page content */
+  /* Hidden by default */
+  width: 100%;
+  /* Full width (cover the whole page) */
+  height: 100%;
+  /* Full height (cover the whole page) */
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background-color: rgba(0, 0, 0, 0.9); /* Black background with opacity */
+  background-color: rgba(0, 0, 0, 0.9);
+
+  /* Black background with opacity */
   .incomming-call {
     width: 360px;
     height: 100%;
     left: 50%;
     transform: translate(-50%, 0);
     z-index: 1000;
+
     .caller {
       font-weight: 700;
       font-size: 20px;
       color: @white;
     }
+
     .call-type {
       color: @white;
     }
   }
 }
+
 .btn-action-out-call {
   position: absolute;
   bottom: 0;
@@ -110,6 +127,7 @@
   transform: translateX(-50%);
   z-index: 1002;
 }
+
 #localVideo {
   width: 260px;
   height: 146px;
