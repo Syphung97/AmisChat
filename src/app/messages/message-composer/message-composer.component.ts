@@ -587,15 +587,27 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
   insertMention(): void {
     const mentionSelected = this.listParticipant.find(e => e.IsActive == true);
 
-    // this.composer.nativeElement.innerHTML += `<span style="background-color: #1877f233 !important">${mentionSelected.DisplayName}</span>`;
+    this.processHTMLMention(mentionSelected.DisplayName, this.composer.nativeElement);
 
-    const curPos = MentionFn.getCurrentPosition(this.composer.nativeElement);
-    MentionFn.insertTextToPosition(this.composer.nativeElement, curPos, `${mentionSelected.DisplayName}`);
-    // this.autoFocusInput();
-    // this.moveCursorToEnd();
     this.listParticipant.forEach(e => e.IsActive = false);
     this.listParticipant[0].IsActive = true;
     this.visibleMentionPopover = false;
+  }
+
+  processHTMLMention(text: string, target: HTMLElement): void {
+    const curPos = MentionFn.getCurrentPosition(target);
+
+    const focusElement = MentionFn.getFocusElement();
+
+    if (focusElement.isEqualNode(target)) {
+      focusElement.innerHTML = MentionFn.createTag(text, false);
+
+      const nextSpan = document.createElement("span");
+      nextSpan.innerText = " ";
+      focusElement.appendChild(nextSpan);
+      MentionFn.setCaretPosition(focusElement, curPos + text.length + 1);
+    }
+
   }
   //#endregion
 }

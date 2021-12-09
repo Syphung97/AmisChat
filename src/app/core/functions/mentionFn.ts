@@ -1,4 +1,10 @@
 export class MentionFn {
+    static readonly SPACE_ENCODED = "&nbsp;";
+    static readonly HASHTAG_CLASS = "hashtag";
+    static readonly START_HASHTAG = "{@hashtag}";
+    static readonly END_HASHTAG = "{@endhashtag}";
+    static readonly HASHTAG_TAGNAME = "span";
+
     static getCurrentPosition(parentElement: HTMLElement): number {
         // parentElement.childNodes[0].textContent = parentElement.childNodes[0].textContent?.trim() ?? "";
         const selection = document.getSelection();
@@ -40,6 +46,29 @@ export class MentionFn {
             node = node.parentNode;
         }
         return false;
+    }
+
+    static setCaretPosition(el, caretPos): void {
+        this.setCurrentCursorPosition(caretPos, el);
+        el.focus();
+    }
+
+    static setCurrentCursorPosition(chars, element): void {
+        try {
+            if (chars >= 0) {
+                const selection = window.getSelection();
+                const range = this.createRange(element, {
+                    count: chars
+                });
+                if (range) {
+                    range.collapse(false);
+                    selection?.removeAllRanges();
+                    selection?.addRange(range);
+                }
+            }
+        } catch (ex) {
+            console.log(ex);
+        }
     }
 
     static createRange(node: Node, chars: any, range?: Range | null): Range | null | undefined {
@@ -88,7 +117,7 @@ export class MentionFn {
         return range;
     }
 
-    static insertTextToPosition(node: Node, pos: number, text): void {
+    static insertTextToPosition(node: any, pos: number, text: string): void {
         if (document.createRange != null) {
             const range = this.createRange(node, { count: pos });
             if (range) {
@@ -96,8 +125,10 @@ export class MentionFn {
                 const sel = window.getSelection();
                 sel?.removeAllRanges();
                 sel?.addRange(range);
-                range.insertNode(document.createTextNode(text));
+                const note = document.createTextNode(text);
+                range.insertNode(note);
             }
+
 
 
         }
@@ -115,5 +146,32 @@ export class MentionFn {
             selection.removeAllRanges();
             selection.addRange(range);
         }
+    }
+
+    static createTag(text, isFocus): string {
+        if (text[0] == " ") {
+            text = this.SPACE_ENCODED + text.substr(1);
+        }
+        if (text[text.length - 1] == " ") {
+            text = text.substr(0, text.length - 1) + this.SPACE_ENCODED;
+        }
+        if (isFocus) {
+            return "<" + this.HASHTAG_TAGNAME + " focus='true'>" + text + "</" + this.HASHTAG_TAGNAME + ">";
+        } else {
+            return "<" + this.HASHTAG_TAGNAME + ">" + text + "</" + this.HASHTAG_TAGNAME + ">";
+        }
+    }
+
+    static getFocusElement(): HTMLElement {
+        let focusNode;
+        if (window.getSelection) {
+            focusNode = window.getSelection()?.focusNode;
+        } else if (document.getSelection != null) {
+            focusNode = document.getSelection()?.focusNode;
+        }
+        if (focusNode) {
+            return focusNode.parentNode;
+        }
+        return new HTMLElement();
     }
 }
