@@ -173,7 +173,7 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
     }
   }
 
-  inputHandler(e): void {
+  inputHandler(e: KeyboardEvent): void {
     this.emojiToggled = false;
     this.handleMention(e);
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -567,13 +567,17 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
     }
   }
 
-  handleMention(e): void {
+  handleMention(e: KeyboardEvent): void {
     if (e.key === '@') {
       this.visibleMentionPopover = true;
     }
     else {
       this.visibleMentionPopover = false;
     }
+
+  }
+
+  checkVisibleMention(e: KeyboardEvent): void {
 
   }
 
@@ -603,7 +607,7 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
       focusElement.innerHTML = MentionFn.createTag(text, true);
 
       const nextSpan = document.createElement("span");
-      nextSpan.innerHTML = "&nbsp; ";
+      nextSpan.innerHTML = " ";
       focusElement.appendChild(nextSpan);
       MentionFn.setCaretPosition(target, curPos + text.length);
     }
