@@ -27,6 +27,6 @@ export class ImageService extends BaseService<any>  {
     const tenantID = UserService.UserInfo.TenantID;
     const tenantCode = UserService.UserInfo.TenantCode;
     // return `${this.url}?storageType=${storageType}&fileName=${fileName}&path=${path}&isScale=${isScale}&height=${height}&width=${width}&imageType=${imageType}&temp=${temp}&preview=${preview}`;
-    return `${AppConfigService.settings.cdnDomain}${AppConfigService.settings.apiServer}/Image/${tenantCode}?storageType=${storageType}&fileName=${fileName}&path=${path}&isScale=${isScale}&height=${height}&width=${width}&imageType=${imageType}&temp=${temp}&preview=${preview}`;
+    return `${AppConfigService.settings.cdnDomain}/APIS/MessengerAPI/api/Image/${tenantCode}.jpg?storageType=${storageType}&fileName=${fileName}&path=${path}&isScale=${isScale}&height=${height}&width=${width}&imageType=${imageType}&temp=${temp}&preview=${preview}`;
   }
 }

@@ -128,6 +128,9 @@ export class UserListComponent implements OnInit, OnChanges {
         }
         this.checkEmpty();
       }
+    }, err => {
+      this.isLoading = false;
+      this.checkEmpty();
     });
   }
 
@@ -279,9 +282,12 @@ export class UserListComponent implements OnInit, OnChanges {
               }
             );
           }
-          this.checkEmpty()
+          this.checkEmpty();
         });
-    } catch (error) { }
+    } catch (error) {
+      this.isLoading = false;
+      this.checkEmpty();
+    }
   }
 
   /**
@@ -423,7 +429,7 @@ export class UserListComponent implements OnInit, OnChanges {
   }
 
   checkEmpty(): void {
-    if (this.listConversations?.length && this.listDirectory?.length) {
+    if (this.listConversations?.length || this.listDirectory?.length) {
       this.isEmpty = false;
     }
     else {

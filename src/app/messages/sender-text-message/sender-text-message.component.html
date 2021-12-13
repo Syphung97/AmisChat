@@ -43,7 +43,7 @@
       [class.last-mess]="_msg.isLastMessage"
       [class.first-mess]="_msg.isFirstMessage"
       [nzTooltipMouseEnterDelay]="0.5"
-      [nzTooltipTitle]="_msg?.createdAt | date: 'hh:mm'"
+      [nzTooltipTitle]="_msg?.createdAt | date: 'hh:mm a'"
       nzTooltipPlacement="top"
       nz-tooltip
       [(nzPopoverVisible)]="visibleOptionActionPopover"

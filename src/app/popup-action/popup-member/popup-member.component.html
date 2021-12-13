@@ -10,19 +10,24 @@
               <div class="member-detail" *ngFor="let user of users">
                 <div class="member-info">
                   <div class="avatar m-r-16">
-                    <amis-avatar [size]="48" [stringeeUserID]="user?.userId"></amis-avatar>
+                    <amis-avatar [size]="48" [src]="user.AvatarUrl"></amis-avatar>
                     <div class="icon-user-online" *ngIf="user?.status == 1"></div>
                   </div>
                   <div class="info">
-                    <div class="name">{{user?.name}}</div>
-                    <!-- <div class="department">{{user.avatar}}</div> -->
+                    <div class="name bold">{{user?.DisplayName}}</div>
+                    <div *ngIf="user.JobPositionName || user.OrganizationUnitName" class="sub-info text-grey fs-14 p-r-12" style="text-align: center;">
+                      {{user.JobPositionName}} <span *ngIf="user.JobPositionName && user.OrganizationUnitName"> &nbsp;-
+                        &nbsp; </span>
+                      {{user.OrganizationUnitName}}
+                    </div>
                   </div>
                 </div>
-                <div class="function-member" *ngIf="currentUser == admin?.userId ? true : false">
+                <div class="function-member" *ngIf="currentUser == admin?.StringeeUserID? true : false">
                   <!-- <div class="btn-set-admin m-r-16">
                                         <span class="btn-text-set-admin">Đặt làm quản trị viên</span>
                                     </div> -->
-                  <div class="btn-delete-member" (click)="openDialogDeleteGroup(user)">
+                  <div *ngIf="currentUser != user.StringeeUserID" class="btn-delete-member"
+                    (click)="openDialogDeleteGroup(user)">
                     <span class="btn-text-delete-member">{{"BUTTON.DELETE" | translate}}</span>
                   </div>
                 </div>
@@ -38,10 +43,10 @@
               <div class="member-detail">
                 <div class="member-info">
                   <div class="avatar m-r-16">
-                    <amis-avatar [size]="48" [stringeeUserID]="admin?.userId"></amis-avatar>
+                    <amis-avatar [size]="48" [src]="admin?.AvatarUrl"></amis-avatar>
                   </div>
                   <div class="info">
-                    <div class="name">{{admin?.name}}</div>
+                    <div class="name">{{admin?.DisplayName}}</div>
                     <!-- <div class="department">AMIS Core - Khối sản xuất</div> -->
                   </div>
                 </div>

@@ -34,7 +34,7 @@
       class=""
       [class.fs-22]="_msg?.isOnlyEmoji"
       [nzTooltipMouseEnterDelay]="1"
-      [nzTooltipTitle]="_msg?.createdAt | date: 'hh:mm'"
+      [nzTooltipTitle]="_msg?.createdAt | date: 'hh:mm a'"
       nzTooltipPlacement="top"
       nz-tooltip
       [(nzPopoverVisible)]="visibleOptionActionPopover"
@@ -49,7 +49,7 @@
       <nz-image-group
         class="flex flex-wrap flex-r-m w-full h-full"
         [nzTooltipMouseEnterDelay]="0.5"
-        [nzTooltipTitle]="_msg?.createdAt | date: 'hh:mm'"
+        
         nzTooltipPlacement="top"
         nz-tooltip
         [(nzPopoverVisible)]="visibleOptionActionPopover"
@@ -61,6 +61,7 @@
         [nzPopoverOverlayClassName]="'mess-action-option'"
         [nzPopoverMouseLeaveDelay]="2"
         (click)="openAction()"
+        #previewRef
       >
         <div
           class="attachment flex-m pos-relative hov-pointer"
@@ -78,6 +79,7 @@
               nz-image
               nzSrc="{{ item.PreviewUrl }}"
               alt=""
+              
             />
           </div>
 

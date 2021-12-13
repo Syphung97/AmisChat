@@ -1,6 +1,6 @@
 <amis-popup-confirm [title]="'Xóa khỏi nhóm'" [width]="'475px'" [isVisible]="isVisible" (onCancel)="closePopup($event)">
     <div content class="content">
-        <div>Bạn có chắc muốn xóa <span class="important">{{user.name}}</span> khỏi nhóm?</div>
+        <div>Bạn có chắc chắn xóa <span class="important">{{user.DisplayName}}</span> khỏi nhóm?</div>
     </div>
     <div footer style="display: flex;">
         <div class="btn btn-cancel m-r-8 flex-m" (click)="close()">

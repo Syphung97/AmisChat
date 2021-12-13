@@ -11,7 +11,7 @@
     </div>
     <div>Chuyển tiếp</div>
   </div>
-  <div style="padding: 8px 16px 8px 8px;" class="conversation-item flex-m" (click)="copyAction()">
+  <div *ngIf="_msg?.type == 1" style="padding: 8px 16px 8px 8px;" class="conversation-item flex-m" (click)="copyAction()">
     <div class="icon-mess-copy">
 
     </div>

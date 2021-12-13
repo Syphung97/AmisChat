@@ -16,6 +16,8 @@ export class AmisTranferDataService {
 
   @Output() onNewCall = new EventEmitter();
 
+  @Output() onImageNextBack = new EventEmitter();
+
   constructor() { }
 
 
@@ -48,5 +50,7 @@ export class AmisTranferDataService {
     this.onNewCall.emit(data);
   }
 
-
+  nextBackImage(type: string): void {
+    this.onImageNextBack.emit(type);
+  }
 }

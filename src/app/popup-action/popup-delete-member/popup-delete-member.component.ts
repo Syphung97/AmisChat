@@ -45,12 +45,12 @@ export class PopupDeleteMemberComponent implements OnInit {
   async deleteMember() {
     try {
       const listUserId = new Array();
-      listUserId.push(this.user.userId);
+      listUserId.push(this.user.StringeeUserID);
       this.conversationSV
-      .removeParticipant(this.conversation.id, this.user.userId)
+      .removeParticipant(this.conversation.id, this.user.StringeeUserID)
       .subscribe((data) => {});
       this.stringeeService.removePaticipants(this.conversation.id, listUserId, async (res) => {
-        //console.log('xóa thành viên:' + this.conversation.id + "--" + this.user.userId + "---" + res);
+        //console.log('xóa thành viên:' + this.conversation.id + "--" + this.user.StringeeUserID + "---" + res);
         if (res) {
           this.isVisible = false;
           this.isPopupDeleteMember.emit(false);

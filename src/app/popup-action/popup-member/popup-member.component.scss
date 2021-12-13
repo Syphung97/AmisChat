@@ -1,108 +1,148 @@
+::ng-deep {
+    .popup-member {
+        .sub-info {
+            max-width    : 410px;
+            white-space  : nowrap;
+            box-sizing   : border-box;
+            overflow     : hidden;
+            text-overflow: ellipsis;
+            word-break   : break-all;
+        }
+    }
+}
+
 .arena-member {
-    display: flex;
+    display        : flex;
     justify-content: space-between;
-    align-items: center;
+    align-items    : center;
 }
-.popup-member, .member-info, .function-member {
+
+.popup-member,
+.member-info,
+.function-member {
     display: flex;
 }
+
 .member-info {
     align-items: center;
 }
-.arena-member, .member {
+
+.arena-member,
+.member {
     width: 100%;
 }
+
 .member {
     margin-bottom: 16px;
 
 }
-.btn-add-member, .btn-close {
-    height: 36px;
-    width: 80px;
+
+.btn-add-member,
+.btn-close {
+    height          : 36px;
+    width           : 80px;
     background-color: #0077FF;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
+    align-items     : center;
+    display         : flex;
+    justify-content : center;
+    cursor          : pointer;
 }
+
 .btn-add-member {
-    position: absolute;
-    right: 10px;
+    position     : absolute;
+    right        : 10px;
     border-radius: 3px;
-    width: 80px;
+    width        : 80px;
 }
+
 .btn-close {
     background-color: #0077FF;
     //border: 1px solid #E0E0E0;
-    border-radius: 3px;
+    border-radius   : 3px;
 }
+
 .btn-text-add {
-    color: #FFFFFF;
+    color       : #FFFFFF;
     margin-right: 12px;
 }
+
 .content-member {
-    height: 360px;
+    height    : 360px;
     max-height: 360px;
     overflow-y: scroll;
 }
+
 .name {
     // font-weight: bold;
     color: #212121;
+    font-weight: 500;
 }
+
 .footer-popup-member {
-    height: 61px;
+    height          : 61px;
     background-color: #F6F6F6;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 24px;
+    display         : flex;
+    align-items     : center;
+    justify-content : flex-end;
+    padding-right   : 24px;
 }
+
 .member-detail {
-    display: flex;
+    display        : flex;
     justify-content: space-between;
-    align-items: center;
+    align-items    : center;
 
 }
+
 .member-detail {
     margin-bottom: 16px;
 }
+
 .btn-delete-member {
-    height: 20px;
+    height          : 20px;
     background-color: #FFEEEE;
-    border-radius: 13px;
-    width: 47px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    border-radius   : 13px;
+    width           : 47px;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    cursor          : pointer;
 }
+
 .btn-text-delete-member {
     color: #DB1313;
 
 }
+
 .btn-set-admin {
     background-color: #DBEAFB;
-    border-radius: 13px;
-    cursor: pointer;
+    border-radius   : 13px;
+    cursor          : pointer;
 }
+
 .btn-text-set-admin {
     margin: 0 16px 0 16px;
-    color: #0077FF;
+    color : #0077FF;
 }
+
 .department {
     color: #999999;
 }
-.amis-icon :hover  {
+
+.amis-icon :hover {
     background-color: none;
 }
+
 .btn-text-close {
     color: #FFFFFF;
 }
+
 .icon-user-online {
     position: absolute;
-    bottom: -10px;
-    right: -10px;
+    bottom  : -10px;
+    right   : -10px;
 }
+
 .avatar {
     position: relative;
 }

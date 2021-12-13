@@ -90,7 +90,7 @@ export const CommonFn = {
         const stringeeUsers = JSON.parse(listUserString);
         return stringeeUsers.find((x) => x.StringeeUserID == stringeeUserID);
       }
-    } catch (error) {}
+    } catch (error) { }
   },
 
   getCacheStringeeUser(isClear = false): any {
@@ -122,4 +122,35 @@ export const CommonFn = {
     };
     sessionStorage.setItem(StorageConstant.StringeeUser, JSON.stringify(item));
   },
+
+
+  convertDateToString(date: Date): string {
+    let res = "";
+    if (date) {
+      res = this.convertDayToString(date.getDate()) + "/" + this.convertMonthToString(date.getMonth()) + "/" + date.getFullYear()
+    }
+    return res;
+  },
+
+  convertMonthToString(month: number): string {
+    let res = "";
+    if (month <= 8) {
+      res = "0" + (month + 1);
+    }
+    else {
+      res = (month + 1).toString();
+    }
+    return res;
+  },
+
+  convertDayToString(day: number): string {
+    let res = "";
+    if (day <= 9) {
+      res = "0" + day;
+    }
+    else {
+      res = (day).toString();
+    }
+    return res;
+  }
 };

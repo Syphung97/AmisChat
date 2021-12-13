@@ -1,5 +1,5 @@
 <div (scroll)="onScroll($event)" class="h-full list-conver">
-  <ng-container *ngIf="!isLoading && !isEmpty; else loading">
+  <ng-container *ngIf="!isLoading; else loading">
     <div *ngIf="_valueSearch && listConversations?.length" class="head m-t-8 m-b-8 text-gray">
       Cuộc trò chuyện
     </div>
@@ -61,7 +61,7 @@
       <ng-template [ngTemplateOutlet]="loading"></ng-template>
     </ng-container>
   </ng-container>
-  <ng-container *ngIf="!isLoading && isEmpty;then empty">
+  <ng-container *ngIf="!isLoading && isEmpty">
     <div class="text-grey flex-c-m w-full h-full">
       {{'NODATA' | translate}}
     </div>

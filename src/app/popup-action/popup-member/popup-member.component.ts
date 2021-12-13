@@ -27,22 +27,28 @@ export class PopupMemberComponent implements OnInit {
   @Input() set conversation(data) {
     if (data) {
       this.listUserOnline = UserService.UserOnline;
-      data.participants.forEach(e => {
-        e.name = CommonFn.getUserByStringeeID(e.userId)?.DisplayName;
-      });
+
       this._conversation = data;
-      this.users = this._conversation?.participants;
-      this.checkConversationOnline(this.users);
       this.creator = this._conversation?.creator;
-      this._conversation?.participants?.forEach(element => {
-        if (element.userId == this.creator) {
+
+
+      this.users = this._conversation?.participants.map(u => {
+        return CommonFn.getUserByStringeeID(u.userId);
+      }).sort((a, b) => {
+        return a.DisplayName.localeCompare(b.DisplayName);
+      });
+
+      this.users?.forEach(element => {
+        if (element.StringeeUserID == this.creator) {
           this.admin = element;
         }
       });
 
+      this.checkConversationOnline(this.users);
     }
   }
   users: any;
+
   creator = '';
   admin!: any;
 
@@ -71,11 +77,11 @@ export class PopupMemberComponent implements OnInit {
    * @param userDelete
    * dvquang2 31/05/2021
    */
-  reloadMember(userDelete: any) {
+  reloadMember(userDelete: any): void {
     try {
       for (let index = 0; index < this.users.length; index++) {
-        const element = this.users[index].userId;
-        if (userDelete.userId == element) {
+        const element = this.users[index].StringeeUserID;
+        if (userDelete.StringeeUserID == element) {
           this.users.splice(index, 1);
           index--;
         }
@@ -108,7 +114,7 @@ export class PopupMemberComponent implements OnInit {
     try {
       part.forEach(element => {
         this.listUserOnline?.forEach((you: any) => {
-          if (element.userId == you.userId) {
+          if (element.StringeeUserID == you.userId) {
             element.status = 1;
           }
         });

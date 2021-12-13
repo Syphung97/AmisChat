@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NzImageService } from 'ng-zorro-antd/image';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NzImagePreviewRef, NzImageService } from 'ng-zorro-antd/image';
+import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/core/base.component';
 import { CommonFn } from 'src/app/core/functions/commonFn';
+import { AmisTranferDataService } from 'src/app/core/services/amis-tranfer-data.service';
 import { DownloadService } from 'src/app/core/services/download.service';
 import { ImageService } from 'src/app/core/services/image.service';
 import { UserService } from 'src/app/core/services/users/user.service';
@@ -16,6 +18,8 @@ import { Message } from '../models/Message';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SenderPhotoMessageComponent extends BaseComponent implements OnInit {
+  @ViewChild("previewRef", { static: true })
+  previewRef!: NzImagePreviewRef;
   // tslint:disable-next-line:variable-name
   _msg!: Message;
   @Input() set msg(data) {
@@ -46,12 +50,25 @@ export class SenderPhotoMessageComponent extends BaseComponent implements OnInit
 
   constructor(
     private imageSV: ImageService,
-    private nzImageService: NzImageService
+    private nzImageService: NzImageService,
+    private tranferSV: AmisTranferDataService,
+
   ) {
     super();
   }
 
   ngOnInit(): void {
+  }
+
+  subscribeTranfer(): void {
+    this.tranferSV.onImageNextBack.pipe(takeUntil(this._onDestroySub)).subscribe((data: string) => {
+      if (data == 'ArrowLeft') {
+
+      }
+      else if (data == 'ArrowRight') {
+
+      }
+    });
   }
 
   getReceiverUser(): void {
@@ -115,6 +132,8 @@ export class SenderPhotoMessageComponent extends BaseComponent implements OnInit
       }
     }
 
-    this.nzImageService.preview(imagesSorted, { nzZoom: 1, nzRotate: 0, });
+    this.nzImageService.preview(imagesSorted, { nzZoom: 0.75, nzRotate: 0, });
   }
+
+
 }

@@ -75,7 +75,7 @@ export class NotifyMessageComponent implements OnInit {
       }
       else if (MessageType.Creation) {
         const creator = this._conv.participants?.find(e => e.userId == this._msg.content.creator);
-        this.notifyText = `${creator.name} đã tạo cuộc trò chuyện`;
+        this.notifyText = `${creator.name} đã tạo cuộc trò chuyện ngày ${CommonFn.convertDateToString(new Date(this._msg.createdAt))}`;
       }
     } catch (error) {
       CommonFn.logger(error);

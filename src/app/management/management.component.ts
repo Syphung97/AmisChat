@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -61,7 +62,7 @@ export class ManagementComponent extends BaseComponent implements OnInit {
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-  
+
         AmisStateService.BrowserVisited = false;
       } else {
 
@@ -72,5 +73,10 @@ export class ManagementComponent extends BaseComponent implements OnInit {
 
   toggleTheme(): void {
     this.themeService.toggleTheme().then();
+  }
+
+  @HostListener("window:keyup", ['$event'])
+  handleKeyDown(event: KeyboardEvent): void {
+    this.tranferSV.nextBackImage(event.key);
   }
 }
