@@ -13,18 +13,18 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        CookieClone: "_gcl_au=1.1.1276300600.1638755306; _fbp=fb.1.1638755306673.203189888; __zlcmid=17PkX7TiezIWL9k; x-culture=vi; x-deviceid=589cd60c-64ce-42e9-a92f-b52ddf9efcf2; _gid=GA1.2.954015992.1638859337; _ga_6NQ98LXLDM=GS1.1.1638926699.1.1.1638926724.0; _ga=GA1.2.1623295409.1638755307; _gat_gtag_UA_34323757_8=1; x-sessionid=1eaa64ae7bbe475998ea12339c7be13d; x-lastapp=Messenger;/messenger; x-tenantid=iJnd53nRQa8qGk9fASGYiJySa5Q5CgOjtWlhbvLHxoCxbeSwsSM7kQqcRgysq+GT; TS01937fdc=010fb97404b120500d13767af54f308ccbcff1eebfa5a351d301a6b64695170e85140390bd9ac31dc60b691212bf34b17494120266cd3cffe4f82a3c714a1def6d6c68d7b80a52370ffb987d4c9cbaf7fe552497a40896df5dda5c73802fae1b408e9cb55e5735fec73bb76a26ad69b0cc7f4e181962283ff33c879c21e346f0fc14660f5a22da799f989928f4cfa8640a7247b3f6"
+        CookieClone: "initialTrafficSource=utmccn=(not set); _ga_QEZY3PSJPE=GS1.1.1627382025.3.0.1627382025.0; _ga_VM6H96BJ61=GS1.1.1627699033.4.1.1627699287.0; _ga_6NQ98LXLDM=GS1.1.1627880634.7.0.1627880634.0; _ga=GA1.2.1957242333.1602950337; x-culture=vi; _gid=GA1.2.1413275351.1639186512; _gat_gtag_UA_34323757_8=1; x-deviceid=f0978891-4c24-4e6c-8292-6f7fb55d2f3b; x-sessionid=c2828dcffdce4510b4f86175e5ff29e6; x-lastapp=Messenger;/messenger; x-tenantid=iJnd53nRQa8qGk9fASGYiJySa5Q5CgOjtWlhbvLHxoCxbeSwsSM7kQqcRgysq+GT; TS01937fdc=010fb974048d79c3c35464a5afad357c3800bd30017b86de4597f030be76d46e6898f612ab691e3cf5231e1d6834db4de8ec185e17cb07f02739ecbedbcf1e5cf73ee7fe66b729c156af3317bbe21464f7910d9318d8781d3ae7a013550b0a5fe28d0d509d9b749bfe5577442e504c350374b6e6545390bd6236e340d25527d9f4c56d1b24"
       }
     });
     return next.handle(request).pipe(catchError(err => {
       switch (err.status) {
-        // case 401:
-        //   // Xử lý chung unauthorization
-        //   location.href = "/logout";
-        //   break;
-        // case 402:
-        //   location.href = "/logout";
-        //   break;
+        case 401:
+          // xử lý chung unauthorization
+          location.href = "/logout";
+          break;
+        case 402:
+          location.href = "/logout";
+          break;
         case 403: {
           APCore.Fn.show403();
           break;

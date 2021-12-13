@@ -37,6 +37,8 @@ export class UserListComponent implements OnInit, OnChanges {
   visiblePopoverCreateChat = false;
 
   isLoadMore = false;
+
+  isEmpty = false;
   // dùng cho active class
   isValue = 0;
 
@@ -62,9 +64,9 @@ export class UserListComponent implements OnInit, OnChanges {
     private router: Router,
     private stringeeService: StringeeService,
     private conversationSV: ConversationService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   // tslint:disable-next-line:typedef
   ngOnChanges(changes: SimpleChanges) {
@@ -104,7 +106,7 @@ export class UserListComponent implements OnInit, OnChanges {
   getUserFromSystem(callback: Function | undefined): void {
     this.userSV.getUserFromSystem(this.pagingRequest).subscribe((data) => {
       this.isLoading = false;
-      
+
       if (data?.Success) {
         this.totalDirectory = data.Data.Total;
         if (!callback) {
@@ -120,9 +122,11 @@ export class UserListComponent implements OnInit, OnChanges {
             }
           });
           this.listDirectory = pageData;
+
         } else {
           callback(data);
         }
+        this.checkEmpty();
       }
     });
   }
@@ -271,11 +275,13 @@ export class UserListComponent implements OnInit, OnChanges {
                   this.encodeHTML(e.lastMessage);
                 });
                 this.listConversations = convFilter;
+
               }
             );
           }
+          this.checkEmpty()
         });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   /**
@@ -335,11 +341,10 @@ export class UserListComponent implements OnInit, OnChanges {
               e.lastMessage.content.removedBy !=
               e.lastMessage.content.participants[0].user
             ) {
-              e.lastMessage.content.content = `${creator} đã xóa ${
-                CommonFn.getUserByStringeeID(
-                  e.lastMessage.content.participants[0].user
-                )?.DisplayName
-              } khỏi cuộc trò chuyện`;
+              e.lastMessage.content.content = `${creator} đã xóa ${CommonFn.getUserByStringeeID(
+                e.lastMessage.content.participants[0].user
+              )?.DisplayName
+                } khỏi cuộc trò chuyện`;
             }
             // Case tự rời nhóm
             if (
@@ -415,6 +420,15 @@ export class UserListComponent implements OnInit, OnChanges {
 
   trackByConver(index, item): any {
     return item.id;
+  }
+
+  checkEmpty(): void {
+    if (this.listConversations?.length && this.listDirectory?.length) {
+      this.isEmpty = false;
+    }
+    else {
+      this.isEmpty = true;
+    }
   }
   //#endregion
 }

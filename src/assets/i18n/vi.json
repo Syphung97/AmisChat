@@ -44,5 +44,6 @@
   "OVER_FILE_SIZE": "Dung lượng tải lên vượt quá 10Mb",
   "OVER_MAX_LENGTH_MESSAGE": "Độ dài không vượt quá 1000 kí tự",
   "ERROR_FILE_TYPE": "Định dạng không cho phép",
-  "ERROR_HAPPEN":"Đã có lỗi xảy ra"
+  "ERROR_HAPPEN":"Đã có lỗi xảy ra",
+  "NODATA":"Không có dữ liệu"
 }

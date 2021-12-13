@@ -54,15 +54,20 @@ export class ConversationSiderComponent extends BaseComponent implements OnInit 
           top: 0,
           behavior: 'smooth',
         });
+
       }, 300);
 
       this.listAttachment = new Array<any>();
       this.listImage = new Array<any>();
       this.getAttachment();
       this.getPagingImage();
+      this.getUserInConv();
     }
   }
   visible = false;
+
+
+  displayUser;
 
   listAttachment = new Array<any>();
 
@@ -321,5 +326,30 @@ export class ConversationSiderComponent extends BaseComponent implements OnInit 
       item.UrlDownload = this.downloadSV.downloadFile(data.Data);
       window.open(item.UrlDownload, '_blank');
     });
+  }
+
+  getUserInConv(): void {
+    try {
+      const listUserString = CommonFn.getCacheStringeeUser();
+      if (listUserString && listUserString != '') {
+        const stringeeUsers = JSON.parse(listUserString);
+
+        const listParticipant = this._conversation.participants;
+        if (!this._conversation.isGroup) {
+          // nếu trùng user đang đăng nhập thì gán tên hội thoại name
+          if (this._conversation.creator == UserService.UserInfo.StringeeUserID) {
+            const displayUser = listParticipant.find(d => d.userId != this._conversation.creator);
+            this.displayUser = stringeeUsers?.find(e => e.StringeeUserID == displayUser.userId);
+          }
+          // nếu ko trùng user đang đăng nhâp thì gán bằng người tạo
+          else if (this._conversation.creator != UserService.UserInfo.StringeeUserID) {
+            const displayUser = listParticipant.find(d => d.userId == this._conversation.creator);
+            this.displayUser = stringeeUsers?.find(e => e.StringeeUserID == displayUser.userId);
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

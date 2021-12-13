@@ -7,6 +7,7 @@ import { AvatarGroupModule } from 'src/app/shared/components/avatar-group/avatar
 import { NameConvModule } from 'src/app/core/pipes/name-conv/name-conv.module';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { ContentInfoModule } from 'src/app/shared/components/content-info/content-info.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -21,7 +22,8 @@ import { ContentInfoModule } from 'src/app/shared/components/content-info/conten
     AvatarGroupModule,
     NameConvModule,
     NzPopoverModule,
-    ContentInfoModule
+    ContentInfoModule,
+    TranslateModule
   ],
   exports: [UserListComponent]
 })
