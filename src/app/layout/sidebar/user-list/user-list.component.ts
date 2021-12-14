@@ -197,7 +197,7 @@ export class UserListComponent implements OnInit, OnChanges {
       this.getPagingData();
     }
     const option = {
-      isDistinct: true,
+      isDistinct: false,
       isGroup: false,
     };
 

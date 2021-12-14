@@ -562,18 +562,17 @@ export class MessageComposerComponent extends BaseComponent implements OnInit {
       this.listParticipant.push(CommonFn.getUserByStringeeID(e.userId));
     });
     if (this.listParticipant.length) {
-
       this.listParticipant[0].IsActive = true;
     }
   }
 
   handleMention(e: KeyboardEvent): void {
-    if (e.key === '@') {
-      this.visibleMentionPopover = true;
-    }
-    else {
-      this.visibleMentionPopover = false;
-    }
+    // if (e.key === '@') {
+    //   this.visibleMentionPopover = true;
+    // }
+    // else {
+    //   this.visibleMentionPopover = false;
+    // }
 
   }
 

@@ -17,7 +17,8 @@
     "CLOSE": "Đóng",
     "ANGREE": "Đồng ý",
     "ADD": "Thêm",
-    "DELETE": "Xóa"
+    "DELETE": "Xóa",
+    "LEAVE": "Rời khỏi"
   },
   "ADMIN": "Quản trị viên",
   "DELETE_MEMBER": "Bạn có muốn xóa {{FullName}} khỏi nhóm?",

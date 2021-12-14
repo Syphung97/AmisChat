@@ -53,7 +53,7 @@ export class PopupDeleteGroupComponent implements OnInit {
             this.isPopupDeleteGroupChat.emit(false);
             const deleteConversation = await this.translateSV.getValueByKey("DELETE_CONVERSATION_SUCSSES", undefined).toPromise()
             this.nzMessage.success(deleteConversation);
-            this.tranferSV.handleDeleteConversation();
+            this.tranferSV.handleDeleteConversation(this.conversation.id);
           }
           else {
             const deleteConversationF = await this.translateSV.getValueByKey("DELETE_CONVERSATION_FALSE", undefined).toPromise()
@@ -84,7 +84,7 @@ export class PopupDeleteGroupComponent implements OnInit {
               this.isPopupDeleteGroupChat.emit(false);
               const deleteConversation = await this.translateSV.getValueByKey("", undefined).toPromise()
               this.nzMessage.success(deleteConversation);
-              this.tranferSV.handleDeleteConversation();
+              this.tranferSV.handleDeleteConversation(this.conversation.id);
             }
             else {
               this.nzMessage.error('Xóa cuộc trò chuyện thất bại!');

@@ -59,7 +59,7 @@ export class PopupLeaveGroupComponent implements OnInit {
               .getValueByKey('LEAVE_GROUP_SUCSSES', undefined)
               .toPromise();
             this.nzMessage.success(leaveGroup);
-            this.tranferSV.handleDeleteConversation();
+            this.tranferSV.handleDeleteConversation(this.conversation.id);
           } else {
             const leaveGroupF = await this.translateSV
               .getValueByKey('LEAVE_GROUP_FALSE', undefined)

@@ -31,8 +31,8 @@ export class AmisTranferDataService {
     this.afterGetUserInfo.emit(isSuccess);
   }
 
-  handleDeleteConversation(): void {
-    this.afterDeleteConversation.emit();
+  handleDeleteConversation(id): void {
+    this.afterDeleteConversation.emit(id);
   }
 
   blueContent(): void {

@@ -61,8 +61,8 @@
     </div>
 
 
-    <video [style.visibility]="isVideoCall? 'unset' : 'hidden'" #localVideo class="pos-absolute"
-      style="border: 1px solid white;" id="localVideo" muted playsinline autoplay></video>
+    <video  [style.visibility]="isVideoCall? 'unset' : 'hidden'" #localVideo class="pos-absolute"
+      style="border: 1px solid white; z-index: 10000000;" id="localVideo" muted playsinline autoplay></video>
 
     <div *ngIf="!isVideoCall && (_signalingstate?.code == callState.ANSWERED || _inComingCallObject) "
       style="bottom: 40px; right: 56px;" class="flex-c-m pos-absolute">

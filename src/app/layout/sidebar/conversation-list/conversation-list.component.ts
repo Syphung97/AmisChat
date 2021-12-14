@@ -55,6 +55,8 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
 
   pagingRequest = new PagingRequest();
 
+  unreadTotal = 0;
+
   @Output() clearSearch = new EventEmitter();
 
   @Output() noConvData = new EventEmitter();
@@ -91,7 +93,11 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
 
     this.tranferSV.afterDeleteConversation
       .pipe(takeUntil(this._onDestroySub))
-      .subscribe(() => {
+      .subscribe((id) => {
+        // Nếu là cuộc trò chuyện đầu tiên
+        if (this.listConversations[0].id == id) {
+          this.listConversations.splice(0, 1);
+        }
         this.bindingFirstConversation();
       });
 
@@ -107,7 +113,7 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
       }
     });
 
-    this.activatedRoute.params?.subscribe((params) => {});
+    this.activatedRoute.params?.subscribe((params) => { });
   }
 
   /**
@@ -143,7 +149,11 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
   handleRealTimeUpdate(data): void {
     try {
       if (data.objectType == StringeeObjectChange.ConvChange) {
+
         this.getLastConversation(this.count);
+
+
+
       } else if (data.objectType == StringeeObjectChange.MessageChangge) {
         // Case tin nhắn mới
         if (data.changeType != StringeeTypeChange.Update) {
@@ -167,16 +177,14 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
                   if (!AmisStateService.BrowserVisited) {
                     this.tranferSV.newMessameCome(true);
                   }
-                  conv.unreadCount++;
-                  conv.unreadCountClone = 1;
-                  this.calculateUnreadConv();
+
                 }
               }
             });
 
-            if (!existConv) {
-              this.getLastConversation(this.count);
-            }
+            // if (!existConv) {
+            //   this.getLastConversation(this.count);
+            // }
           });
         }
       }
@@ -193,7 +201,7 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
   calculateUnreadConv(): void {
     let unreadConv = 0;
     this.listConversations.forEach((e) => {
-      if (e.unreadCountClone) {
+      if (e.unreadCount) {
         unreadConv++;
       }
     });
@@ -256,6 +264,7 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
           }
           this.listConversations = convs;
 
+          this.calculateUnreadConv();
           // check tên cuộc hội thoại
           const listConvTmp = this.listConversations;
 
@@ -320,11 +329,10 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
               e.lastMessage.content.removedBy !=
               e.lastMessage.content.participants[0].user
             ) {
-              e.lastMessage.content.content = `${creator} đã xóa ${
-                CommonFn.getUserByStringeeID(
-                  e.lastMessage.content.participants[0].user
-                )?.DisplayName
-              } khỏi cuộc trò chuyện`;
+              e.lastMessage.content.content = `${creator} đã xóa ${CommonFn.getUserByStringeeID(
+                e.lastMessage.content.participants[0].user
+              )?.DisplayName
+                } khỏi cuộc trò chuyện`;
             }
             // Case tự rời nhóm
             if (
@@ -500,11 +508,18 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
             con: conversation,
           },
         });
+        this.conversationActive = conversation.id;
+      }
+      else {
+        this.router.navigate(['/'], {
+        });
       }
     } catch (error) {
       CommonFn.logger(error);
     }
   }
+
+
 
   /**
    * xóa cuộc trò chuyện khi thành viên bị xóa khỏi nhóm

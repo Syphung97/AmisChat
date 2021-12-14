@@ -94,7 +94,7 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
 
     this.stringeeService.stringeeRevokeMessage
       .pipe(takeUntil(this._onDestroySub))
-      .subscribe((data) => {});
+      .subscribe((data) => { });
   }
 
   subScribeParam(): void {
@@ -185,7 +185,7 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
             (data.objectChanges[0]?.state == 2 ||
               (data.objectChanges[0]?.state == 3 &&
                 data.objectChanges[0].sender !=
-                  UserService.UserInfo.StringeeUserID))
+                UserService.UserInfo.StringeeUserID))
           ) {
             // this.getLastMessage();
             this.listMessage.push(...data.objectChanges);
@@ -260,9 +260,14 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
 
             for (let index = msgs.length - 1; index > 0; index--) {
               if (
-                msgs[index].sender == msgs[index - 1].sender &&
+                msgs[index]?.sender == msgs[index - 1]?.sender &&
                 msgs[index].type != MessageType.Notification &&
-                msgs[index].type != MessageType.Creation
+                msgs[index].type != MessageType.Creation &&
+                !this.isDateDifferent(
+                  msgs[index - 1].createdAt,
+                  msgs[index].createdAt
+                )
+                && !msgs[index - 1].content?.metadata?.Reference
               ) {
                 msgs[index - 1].isLastMessage = false;
               }
@@ -271,7 +276,11 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
               if (
                 msgs[index].sender != msgs[index - 1].sender ||
                 msgs[index - 1].type == MessageType.Notification ||
-                msgs[index - 1].type == MessageType.Creation
+                msgs[index - 1].type == MessageType.Creation || this.isDateDifferent(
+                  msgs[index - 1].createdAt,
+                  msgs[index].createdAt
+                ) ||
+                msgs[index - 1].content?.metadata?.Reference
               ) {
                 msgs[index].isFirstMessage = true;
               }
@@ -370,7 +379,7 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
         this.stringeeService.deleteMessage(
           e.payload.conversationId,
           e.payload.id,
-          (status, code, message) => {}
+          (status, code, message) => { }
         );
         break;
       case MessageActionConst.Revoke:
@@ -543,4 +552,27 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
     platformConv.ListParticipant = users;
     return platformConv;
   }
+
+  /**
+   * Compares two dates and sets Date on a a new day
+   */
+  isDateDifferent(firstDate, secondDate): boolean | undefined {
+    try {
+      // tslint:disable-next-line:one-variable-per-declaration
+      let firstDateObj: Date, secondDateObj: Date;
+      firstDateObj = new Date(firstDate);
+      secondDateObj = new Date(secondDate);
+      if (
+        firstDateObj.getDate() === secondDateObj.getDate() &&
+        firstDateObj.getMonth() === secondDateObj.getMonth() &&
+        firstDateObj.getFullYear() === secondDateObj.getFullYear()
+      ) {
+        return false;
+      }
+      return true;
+    } catch (error) {
+      return;
+    }
+  }
+
 }

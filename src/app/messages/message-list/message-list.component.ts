@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -110,6 +111,7 @@ export class MessageListComponent
         behavior: 'smooth',
       });
     }, 10);
+    this.cdr.detectChanges();
   }
 
   typingIndicatorObject: any;
@@ -127,7 +129,8 @@ export class MessageListComponent
   isViewMoreMessage = false;
   constructor(
     private stringeeService: StringeeService,
-    private differs: IterableDiffers
+    private differs: IterableDiffers,
+    private cdr: ChangeDetectorRef
   ) {
     super();
   }

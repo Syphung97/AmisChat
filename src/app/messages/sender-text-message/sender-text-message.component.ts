@@ -10,8 +10,8 @@ declare const APEmojiMart: any;
 @Component({
   selector: 'amis-sender-text-message',
   templateUrl: './sender-text-message.component.html',
-  styleUrls: ['./sender-text-message.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./sender-text-message.component.less']
+
 })
 export class SenderTextMessageComponent extends BaseComponent implements OnInit {
 
