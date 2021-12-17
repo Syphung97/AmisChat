@@ -100,6 +100,8 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
   subScribeParam(): void {
     try {
       this.activatedRoute.params.subscribe((params) => {
+        console.log(params);
+        
         this.clearBox();
         if (params.id === 'new') {
           this.isNewConversation = true;

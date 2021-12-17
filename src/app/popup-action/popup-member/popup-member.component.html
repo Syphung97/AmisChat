@@ -10,15 +10,15 @@
               <div class="member-detail" *ngFor="let user of users">
                 <div class="member-info">
                   <div class="avatar m-r-16">
-                    <amis-avatar [size]="48" [src]="user.AvatarUrl"></amis-avatar>
+                    <amis-avatar [size]="48" [src]="user?.AvatarUrl"></amis-avatar>
                     <div class="icon-user-online" *ngIf="user?.status == 1"></div>
                   </div>
                   <div class="info">
                     <div class="name bold">{{user?.DisplayName}}</div>
-                    <div *ngIf="user.JobPositionName || user.OrganizationUnitName" class="sub-info text-grey fs-14 p-r-12" style="text-align: center;">
-                      {{user.JobPositionName}} <span *ngIf="user.JobPositionName && user.OrganizationUnitName"> &nbsp;-
+                    <div *ngIf="user?.JobPositionName || user?.OrganizationUnitName" class="sub-info text-grey fs-14 p-r-12" style="text-align: center;">
+                      {{user.JobPositionName}} <span *ngIf="user?.JobPositionName && user?.OrganizationUnitName"> &nbsp;-
                         &nbsp; </span>
-                      {{user.OrganizationUnitName}}
+                      {{user?.OrganizationUnitName}}
                     </div>
                   </div>
                 </div>

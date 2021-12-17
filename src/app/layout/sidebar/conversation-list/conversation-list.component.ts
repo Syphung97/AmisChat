@@ -261,7 +261,12 @@ export class ConversationListComponent extends BaseComponent implements OnInit {
         (status, code, message, convs) => {
           if (!convs?.length && !this._valueSearch) {
             this.noConvData.emit();
+            this.tranferSV.emitNoConversation(true);
           }
+          else {
+            this.tranferSV.emitNoConversation(false);
+          }
+
           this.listConversations = convs;
 
           this.calculateUnreadConv();

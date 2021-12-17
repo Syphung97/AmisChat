@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../core/base.component';
 import { AmisTranferDataService } from '../core/services/amis-tranfer-data.service';
@@ -22,6 +23,7 @@ import { ThemeService } from '../core/services/theme.service';
 export class ManagementComponent extends BaseComponent implements OnInit {
   isCollapsed = false;
 
+  isNoConv = false;
   constructor(
     private themeService: ThemeService,
     private tranferSV: AmisTranferDataService,
@@ -59,6 +61,10 @@ export class ManagementComponent extends BaseComponent implements OnInit {
           x.src = '';
         }
       });
+
+    this.tranferSV.noConversation.pipe(takeUntil(this._onDestroySub)).subscribe(data => {
+      this.isNoConv = data;
+    });
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {

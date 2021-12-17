@@ -114,7 +114,7 @@ export class PopupMemberComponent implements OnInit {
     try {
       part.forEach(element => {
         this.listUserOnline?.forEach((you: any) => {
-          if (element.StringeeUserID == you.userId) {
+          if (element?.StringeeUserID == you.userId) {
             element.status = 1;
           }
         });

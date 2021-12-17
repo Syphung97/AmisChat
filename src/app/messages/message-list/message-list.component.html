@@ -85,6 +85,19 @@
 
           </ng-container>
         </ng-container>
+        <ng-container *ngSwitchCase="MessageType.Video">
+          <ng-container *ngIf="msg?.sender == currentUserStringeeID">
+            <amis-sender-video-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+            </amis-sender-video-message>
+
+          </ng-container>
+          <ng-container *ngIf="msg?.sender != currentUserStringeeID">
+
+            <amis-receiver-video-message (actionGenerate)="handleAction($event)" [msg]="msg" [conv]="_conv">
+            </amis-receiver-video-message>
+
+          </ng-container>
+        </ng-container>
       </ng-container>
     </div>
 

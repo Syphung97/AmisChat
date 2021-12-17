@@ -9,6 +9,8 @@ import { SenderFileMessageModule } from '../sender-file-message/sender-file-mess
 import { ReceiverFileMessageModule } from '../receiver-file-message/receiver-file-message.module';
 import { SenderPhotoMessageModule } from '../sender-photo-message/sender-photo-message.module';
 import { ReceiverPhotoMessageModule } from '../receiver-photo-message/receiver-photo-message.module';
+import { SenderVideoMessageModule } from '../sender-video-message/sender-video-message.module';
+import { ReceiverVideoMessageModule } from '../receiver-video-message/receiver-video-message.module';
 
 
 
@@ -25,7 +27,9 @@ import { ReceiverPhotoMessageModule } from '../receiver-photo-message/receiver-p
     SenderFileMessageModule,
     ReceiverFileMessageModule,
     SenderPhotoMessageModule,
-    ReceiverPhotoMessageModule
+    ReceiverPhotoMessageModule,
+    SenderVideoMessageModule,
+    ReceiverVideoMessageModule
   ],
   exports: [MessageListComponent]
 })

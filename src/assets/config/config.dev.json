@@ -1,13 +1,12 @@
 {
-  "apiServer": "https://testamisapp.misa.vn/APIS/MessengerAPI/api",
-  "stickerCDN": "https://testcndamisapp.misa.vn/apps/messenger/assets/sticker/img/",
+  "apiServer": "https://misajsc.amis.vn/APIS/MessengerAPI/api",
+  "stickerCDN": "https://amismisa.misacdn.net/apps/messenger/assets/sticker/img/",
+  "host": "https://misajsc.amis.vn",
   "maxSizeFile": 10,
-  "cdnUrl": "https://testcdnamisapp.misa.vn/apps/messenger",
-  "newsfeedURL": "https://testamisapp.misa.vn/newsfeed/",
-  "cdnAudioNewMessage": "https://testcdnamisapp.misa.vn/apjs/apchat/assets/audio-notification-message.wav",
-  "cdnAudioNewCall": "https://testcdnamisapp.misa.vn/apjs/apchat/assets/audio-notification-call.wav",
-  "cdnDomain":"https://testcdnamisapp.misa.vn",
+  "cdnUrl": "https://amismisa.misacdn.net/apps/messenger",
+  "newsfeedURL": "https://misajsc.amis.vn/newsfeed/",
+  "cdnAudioNewMessage": "https://amismisa.misacdn.net/apjs/apchat/assets/audio-notification-message.wav",
+  "cdnAudioNewCall": "https://amismisa.misacdn.net/apjs/apchat/assets/audio-notification-call.mp3",
+  "cdnDomain": "https://amismisa.misacdn.net",
   "fileExtension": ".txt, .doc, .docx, .odt, .rtf, .xls, .xlsx, .ods, .csv, .ppt, .pptx, .odp, .pdf, .xmind, .mmap, .zip, .7z, .rar, .png, .jpg, .jpeg, .gif, .html, .htm, .dwg, .dwf, .edb, .e2k, .msg, .svg, .webm, .mpg, .mp2, .mpeg, .mpe, .mpv, .ogg, .mp4, .m4p, .m4v, .avi, .wmv, .mov, .qt, .flv, .swf"
-  
-
 }

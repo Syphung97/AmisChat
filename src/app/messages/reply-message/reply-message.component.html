@@ -8,45 +8,28 @@
   </div>
   <ng-container [ngSwitch]="_msg.content?.metadata?.Reference.type">
     <ng-container *ngSwitchCase="messageType.Text">
-      <div
-        class="receiver-text text-gray bg-gray-rep"
-        [class.bg-blue-rep]="_msg.isReplyMe"
-        [innerHTML]="
+      <div class="receiver-text text-gray bg-gray-rep" [class.bg-blue-rep]="_msg.isReplyMe" [innerHTML]="
           _msg.content?.metadata?.Reference.content.content | noSanitize
-        "
-      ></div>
+        "></div>
     </ng-container>
     <ng-container *ngSwitchCase="messageType.Sticker">
-      <div
-        class="receiver-text"
-        [innerHTML]="
+      <div class="receiver-text" [innerHTML]="
           _msg.content?.metadata?.Reference.content.content | noSanitize
-        "
-      ></div>
+        "></div>
     </ng-container>
     <ng-container *ngSwitchCase="messageType.Photo">
-      <div
-      class="flex-m pos-relative hov-pointer"
-    >
-      <div
-        style="border-radius: 8px; overflow: hidden"
-        class="overflow-hidden single m-t-8"
-      >
-        <img
-          [nzDisablePreview]="true"
-          nz-image
-          nzSrc="{{ _msg?.content?.metadata?.Reference.content?.metadata?.ListFile[0].PreviewUrl }}"
-          alt=""
-        />
+      <div class="receiver-text text-gray bg-gray-rep" [class.bg-blue-rep]="_msg.isReplyMe" >Video</div>
+    </ng-container>
+    <ng-container *ngSwitchCase="messageType.Video">
+      <div class="flex-m pos-relative hov-pointer">
+        <div style="max-width: 100%;" class="receiver-text text-gray bg-gray-rep" [class.bg-blue-rep]="_msg.isReplyMe">Video</div>
       </div>
-    </div>
     </ng-container>
     <ng-container *ngSwitchCase="messageType.File">
-      <div
-        class="attachment flex-m pos-relative hov-pointer"
-      >
+      <div class="attachment flex-m pos-relative hov-pointer">
         <div class="icon-{{ _msg?.content?.metadata?.Reference.content?.metadata?.ListFile[0]?.Type }}"></div>
-        <div class="attachment-name m-l-8" title="{{ _msg?.content?.metadata?.Reference.content?.metadata?.ListFile[0]?.FileName }}">
+        <div class="attachment-name m-l-8"
+          title="{{ _msg?.content?.metadata?.Reference.content?.metadata?.ListFile[0]?.FileName }}">
           {{ _msg?.content?.metadata?.Reference.content?.metadata?.ListFile[0]?.FileName }}
         </div>
       </div>

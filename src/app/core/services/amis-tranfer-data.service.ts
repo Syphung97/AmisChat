@@ -18,6 +18,8 @@ export class AmisTranferDataService {
 
   @Output() onImageNextBack = new EventEmitter();
 
+  @Output() noConversation = new EventEmitter();
+
   constructor() { }
 
 
@@ -52,5 +54,9 @@ export class AmisTranferDataService {
 
   nextBackImage(type: string): void {
     this.onImageNextBack.emit(type);
+  }
+
+  emitNoConversation(isNoConversation: boolean): void {
+    this.noConversation.emit(isNoConversation);
   }
 }

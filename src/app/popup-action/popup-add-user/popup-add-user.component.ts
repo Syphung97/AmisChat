@@ -9,8 +9,9 @@ import { CommonFn } from 'src/app/core/functions/commonFn';
 import { AmisTranslationService } from 'src/app/core/services/amis-translation-service.service';
 import { Participant } from 'src/app/shared/models/participant';
 import { ConversationService } from 'src/app/conversation/services/conversation.service';
+import {OrganizationUnitService} from 'src/app/core/services/organization-unit.service'
 import { FormMode } from 'src/app/core/models/FormMode';
-
+import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
 @Component({
   selector: 'amis-popup-add-user',
   templateUrl: './popup-add-user.component.html',
@@ -23,8 +24,9 @@ export class PopupAddUserComponent implements OnInit {
     private stringeeService: StringeeService,
     private nzMessage: NzMessageService,
     private translateSV: AmisTranslationService,
-    private conversationSV: ConversationService
-  ) {}
+    private conversationSV: ConversationService,
+    private organizationSV: OrganizationUnitService
+  ) { }
 
   // nhận input từ siders
   @Input() conversation: any;
@@ -43,9 +45,11 @@ export class PopupAddUserComponent implements OnInit {
   timeOutSearch: any;
   delayTime = 500;
 
+
   @Input() isVisible = true;
 
   @Output() isPopupAddMember = new EventEmitter();
+
 
   ngOnInit(): void {
     this.pagingRequest.Filter = window.btoa(
@@ -215,7 +219,7 @@ export class PopupAddUserComponent implements OnInit {
    * thêm thành viên vào nhóm
    * dvquang2 27/05/2021
    */
-  async addMember() {
+  async addMember(): Promise<any> {
     try {
       const listUserID = this.listUserSelected.map((e) => e.StringeeUserID);
       const listParticipant = new Array<Participant>();
@@ -229,7 +233,7 @@ export class PopupAddUserComponent implements OnInit {
 
       this.conversationSV
         .addParticipant(listParticipant)
-        .subscribe((data) => {});
+        .subscribe((data) => { });
 
       this.stringeeService.addPaticipants(
         this.conversation.id,

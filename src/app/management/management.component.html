@@ -10,6 +10,9 @@
 
     <nz-content>
       <router-outlet></router-outlet>
+      <div *ngIf="isNoConv" class="w-full h-full flex-c-m">
+        Không có cuộc trò chuyện
+      </div>
       <audio id="callNotify" #audio ></audio>
     </nz-content>
   </nz-layout>

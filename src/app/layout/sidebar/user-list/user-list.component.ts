@@ -382,6 +382,10 @@ export class UserListComponent implements OnInit, OnChanges {
         e.lastMessage.content.content =
           e?.senderName + ' đã gửi ' + photoCount + ' ảnh';
         break;
+      case MessageType.Video:
+        e.lastMessage.content.content =
+          e?.senderName + ' đã gửi ' + ' video';
+        break;
       case MessageType.Sticker:
         e.lastMessage.content.content = e?.senderName + ' đã gửi 1 nhãn dán';
         break;
