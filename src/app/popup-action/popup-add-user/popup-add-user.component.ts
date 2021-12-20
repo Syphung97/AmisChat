@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from 'src/app/core/services/users/user.service';
 import { AvatarService } from 'src/app/core/services/users/avatar.service';
 import { PagingRequest } from 'src/app/core/models/PagingRequest';
@@ -9,9 +9,11 @@ import { CommonFn } from 'src/app/core/functions/commonFn';
 import { AmisTranslationService } from 'src/app/core/services/amis-translation-service.service';
 import { Participant } from 'src/app/shared/models/participant';
 import { ConversationService } from 'src/app/conversation/services/conversation.service';
-import {OrganizationUnitService} from 'src/app/core/services/organization-unit.service'
+import { OrganizationUnitService } from 'src/app/core/services/organization-unit.service'
 import { FormMode } from 'src/app/core/models/FormMode';
 import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
+import { ListOrg } from "./org";
+import { OrganizationUnit } from 'src/app/shared/shared/models/organization-unit/organization-unit';
 @Component({
   selector: 'amis-popup-add-user',
   templateUrl: './popup-add-user.component.html',
@@ -28,6 +30,7 @@ export class PopupAddUserComponent implements OnInit {
     private organizationSV: OrganizationUnitService
   ) { }
 
+  @ViewChild("scrollable", { static: false }) scrollable!: ElementRef;
   // nhận input từ siders
   @Input() conversation: any;
   pagingRequest = new PagingRequest();
@@ -50,6 +53,37 @@ export class PopupAddUserComponent implements OnInit {
 
   @Output() isPopupAddMember = new EventEmitter();
 
+  /**
+   * Cơ cấu tổ chức
+  */
+
+  listOrgs!: Array<any>;
+  expandKeys = new Array<any>();
+  selectedOrgID?: string;
+  MISACode = "";
+  nodes = [
+    // {
+    //   title: 'parent 1',
+    //   key: '100',
+    //   children: [
+    //     {
+    //       title: 'parent 1-0',
+    //       key: '1001',
+    //       children: [
+    //         { title: 'leaf 1-0-0', key: '10010' },
+    //         { title: 'leaf 1-0-1', key: '10011' }
+    //       ]
+    //     },
+    //     {
+    //       title: 'parent 1-1',
+    //       key: '1002',
+    //       children: [{ title: 'leaf 1-1-0', key: '10020' }]
+    //     }
+    //   ]
+    // }
+  ];
+
+
 
   ngOnInit(): void {
     this.pagingRequest.Filter = window.btoa(
@@ -59,7 +93,7 @@ export class PopupAddUserComponent implements OnInit {
     this.pagingRequest.PageSize = 20;
     this.pagingRequest.Sort = window.btoa(`[{"selector":"FullName","desc":"false"}]`);
     this.getUserFromSystem(undefined);
-
+    this.getAllOU();
     this.listUserSelected = [];
   }
 
@@ -84,6 +118,70 @@ export class PopupAddUserComponent implements OnInit {
     } catch (error) {
       CommonFn.logger(error);
     }
+  }
+
+  /**
+   *
+   * @param $event Sự kiện chọn lọc cơ cấu
+   */
+  onSelectOrg($event: string): void {
+    const id = $event;
+    const selectedOrg = this.listOrgs.find(e => e.OrganizationUnitID == id);
+    if (selectedOrg) {
+      this.MISACode = selectedOrg.MISACode;
+    }
+    else {
+      this.MISACode = "";
+    }
+    this.buidlParamsCallAPI();
+    this.getUserFromSystem(undefined);
+  }
+
+
+  getAllOU(): void {
+    this.organizationSV.getAllOrg().subscribe(res => {
+      if (res?.Success) {
+        this.listOrgs = res.Data;
+      }
+    });
+
+    this.listOrgs = ListOrg;
+    const rootOrg = this.listOrgs.find(e => e.ParentID == null);
+    const rootNode = [{
+      title: rootOrg?.OrganizationUnitName,
+      key: rootOrg?.OrganizationUnitID,
+      children: []
+    }];
+
+    this.selectedOrgID = rootOrg?.OrganizationUnitID;
+    this.MISACode = rootOrg?.OrganizationUnitCode ?? "";
+
+    this.expandKeys.push(this.selectedOrgID)
+
+    const listNode = this.buildTreeOrgUnit(this.listOrgs, rootNode);
+    this.nodes = listNode;
+  }
+
+  buildTreeOrgUnit(listOrg: Array<any>, nodes = new Array<any>()): any {
+
+    // Duyệt danh sách node
+    for (let index = 0; index < nodes.length; index++) {
+      const node = nodes[index];
+      // Lấy ra danh sách node con
+      const childOrg = listOrg.filter(e => e.ParentID == node.key);
+      node.children = childOrg.map(e => {
+        return {
+          title: e?.OrganizationUnitName,
+          key: e?.OrganizationUnitID,
+          children: []
+        }
+      });
+
+      // Tiêp tục build cctc con
+      this.buildTreeOrgUnit(listOrg, node.children)
+    }
+    return nodes;
+
   }
 
   /**
@@ -165,14 +263,7 @@ export class PopupAddUserComponent implements OnInit {
   onSearch(): void {
     try {
       const dataSearch = encodeURI(this.inputValue.trim());
-
-      this.pagingRequest.Filter = window.btoa(
-        `[[["FullName","contains","${dataSearch}"],"or",["EmployeeCode","contains","${dataSearch}"],"or",["Mobile","contains","${dataSearch}"],"or",["ContactEmail","contains","${dataSearch}"]], "AND", ["Status","=","3"]]`
-      );
-      this.pagingRequest.PageIndex = 1;
-      this.pagingRequest.PageSize = 20;
-      this.pagingRequest.Sort = window.btoa(`[{"selector":"FullName","desc":"false"}]`);
-
+      this.buidlParamsCallAPI();
       clearTimeout(this.timeOutSearch);
 
       this.timeOutSearch = setTimeout(() => {
@@ -184,6 +275,29 @@ export class PopupAddUserComponent implements OnInit {
     } catch (error) {
       CommonFn.logger(error);
     }
+  }
+
+  buidlParamsCallAPI(): void {
+    const dataSearch = encodeURI(this.inputValue.trim());
+
+
+
+    if (this.MISACode) {
+      this.pagingRequest.Filter = window.btoa(
+        `[[["FullName","contains","${dataSearch}"],"or",["EmployeeCode","contains","${dataSearch}"],"or",["Mobile","contains","${dataSearch}"],"or",["ContactEmail","contains","${dataSearch}"]], "AND", ["Status","=","3"], "AND", ["MisaCode", "startswith", "${this.MISACode}"]]`
+      );
+    }
+    else {
+      this.pagingRequest.Filter = window.btoa(
+        `[[["FullName","contains","${dataSearch}"],"or",["EmployeeCode","contains","${dataSearch}"],"or",["Mobile","contains","${dataSearch}"],"or",["ContactEmail","contains","${dataSearch}"]], "AND", ["Status","=","3"]]`
+      );
+    }
+
+    this.pagingRequest.PageIndex = 1;
+    this.pagingRequest.PageSize = 20;
+    this.pagingRequest.Sort = window.btoa(`[{"selector":"FullName","desc":"false"}]`);
+
+    this.scrollable?.nativeElement?.scrollTo(0, 0);
   }
 
   /**

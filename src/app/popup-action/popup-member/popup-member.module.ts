@@ -20,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
     AvatarModule,
     IconModule,
     PopupDeleteMemberModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [PopupMemberComponent]
 })

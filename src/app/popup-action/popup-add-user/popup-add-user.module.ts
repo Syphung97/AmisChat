@@ -8,7 +8,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { AvatarModule } from 'src/app/shared/components/avatar/avatar.module';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 @NgModule({
   declarations: [
     PopupAddUserComponent
@@ -21,8 +21,9 @@ import { TranslateModule } from '@ngx-translate/core';
     NzSelectModule,
     AvatarModule,
     NzMessageModule,
-    TranslateModule
-  
+    TranslateModule,
+    NzTreeSelectModule
+
   ],
   exports: [PopupAddUserComponent]
 })
