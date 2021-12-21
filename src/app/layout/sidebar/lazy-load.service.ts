@@ -21,4 +21,9 @@ export class LazyLoadService {
     }
 
   }
+
+  async loadPopup(url: string): Promise<ComponentFactory<any>> {
+    const module = await import(url);
+    return this.factoryResolver.resolveComponentFactory(module)
+  }
 }

@@ -13,6 +13,7 @@ import { MessageListModule } from 'src/app/messages/message-list/message-list.mo
 import { MessageComposerModule } from 'src/app/messages/message-composer/message-composer.module';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { TypingIndicatorModule } from 'src/app/shared/components/typing-indicator/typing-indicator.module';
+import { PopupForwardMessageModule } from 'src/app/popup-action/popup-forward-message/popup-forward-message.module';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { TypingIndicatorModule } from 'src/app/shared/components/typing-indicato
     AvatarModule,
     MessageListModule,
     NzMessageModule,
-    TypingIndicatorModule
+    TypingIndicatorModule,
+    PopupForwardMessageModule
   ]
 })
 export class ConversationBoxModule { }

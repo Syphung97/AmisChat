@@ -29,4 +29,4 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class UserListModule {
   public static component = { Component: UserListComponent };
- }
+}
