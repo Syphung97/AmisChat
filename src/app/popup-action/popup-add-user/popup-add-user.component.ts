@@ -142,24 +142,22 @@ export class PopupAddUserComponent implements OnInit {
     this.organizationSV.getAllOrg().subscribe(res => {
       if (res?.Success) {
         this.listOrgs = res.Data;
+        const rootOrg = this.listOrgs.find(e => e.ParentID == null);
+        const rootNode = [{
+          title: rootOrg?.OrganizationUnitName,
+          key: rootOrg?.OrganizationUnitID,
+          children: []
+        }];
+
+        this.selectedOrgID = rootOrg?.OrganizationUnitID;
+        this.MISACode = rootOrg?.OrganizationUnitCode ?? "";
+
+        this.expandKeys.push(this.selectedOrgID)
+
+        const listNode = this.buildTreeOrgUnit(this.listOrgs, rootNode);
+        this.nodes = listNode;
       }
     });
-
-    this.listOrgs = ListOrg;
-    const rootOrg = this.listOrgs.find(e => e.ParentID == null);
-    const rootNode = [{
-      title: rootOrg?.OrganizationUnitName,
-      key: rootOrg?.OrganizationUnitID,
-      children: []
-    }];
-
-    this.selectedOrgID = rootOrg?.OrganizationUnitID;
-    this.MISACode = rootOrg?.OrganizationUnitCode ?? "";
-
-    this.expandKeys.push(this.selectedOrgID)
-
-    const listNode = this.buildTreeOrgUnit(this.listOrgs, rootNode);
-    this.nodes = listNode;
   }
 
   buildTreeOrgUnit(listOrg: Array<any>, nodes = new Array<any>()): any {
@@ -191,22 +189,44 @@ export class PopupAddUserComponent implements OnInit {
   selectAll(): void {
     try {
       this.listDirectory.forEach((element) => {
-        if (element.checked === true) {
+        const check = this.listUserSelected.findIndex(x => x.StringeeUserID == element.StringeeUserID);
+        if (this.allChecked === true) {
           element.checked = true;
-        } else {
-          element.checked = true;
+
+          // Nếu chưa tồn tại trong list select thì push vào
+          if (check < 0) {
+            this.listUserSelected.push(element)
+          }
         }
-
-        this.countUser = this.listDirectory.length;
-
         if (this.allChecked === false) {
           element.checked = false;
-          this.countUser = 0;
+           // Nếu chưa tồn tại trong list select thì push vào
+           if (check >= 0) {
+            this.listUserSelected.splice(check, 1)
+          }
         }
       });
+      if (this.allChecked === false) {
+        this.countUser = 0;
+        this.listUserSelected = [];
+      }
+      else {
+        this.countUser = this.listUserSelected.length;
+      }
     } catch (error) {
       CommonFn.logger(error);
     }
+  }
+
+  unSelectAll(): void {
+
+    this.listDirectory.forEach((element) => {
+      if (this.allChecked === false) {
+        element.checked = false;
+
+      }
+    });
+    this.countUser = 0;
   }
 
   close(): void {
@@ -239,11 +259,13 @@ export class PopupAddUserComponent implements OnInit {
       this.userSV.getUserFromSystem(this.pagingRequest).subscribe((data) => {
         //this.isLoading = false;
         if (data?.Success) {
+          this.allChecked = false;
           if (!callback) {
             const pageData = data.Data.PageData;
             pageData.forEach((e) => {
               e.Avatar = this.getAvatar(e.AvatarToken, e.UserID, e.EditVersion);
             });
+
             this.listDirectory = pageData;
             this.filterMember();
           } else {
@@ -390,6 +412,12 @@ export class PopupAddUserComponent implements OnInit {
           }
         });
       });
+
+      this.listDirectory.forEach(e => {
+        if(this.listUserSelected.map(v => v.StringeeUserID).includes(e.StringeeUserID)) {
+          e.checked = true;
+        }
+      })
     } catch (error) {
       CommonFn.logger(error);
     }

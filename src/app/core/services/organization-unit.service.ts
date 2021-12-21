@@ -24,6 +24,6 @@ export class OrganizationUnitService extends BaseService<any>{
   }
 
   getAllOrg(): Observable<ServiceResponse> {
-    return this.http.get("getAllOrg") as Observable<ServiceResponse>;
+    return this.http.get(`${this.hostApi}/${this.controller}/getAllOrg`) as Observable<ServiceResponse>;
   }
 }

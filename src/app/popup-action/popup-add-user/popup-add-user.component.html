@@ -13,8 +13,8 @@
       </div>
       <div class="dropdown-company">
         <nz-tree-select style="width: 250px" nzVirtualHeight="300px" nzShowSearch [nzExpandedKeys]="expandKeys"
-          [nzNodes]="nodes" [nzAllowClear]="false" nzShowSearch nzPlaceHolder="Please select" [(ngModel)]="selectedOrgID"
-          (ngModelChange)="onSelectOrg($event)">
+          [nzNodes]="nodes" [nzAllowClear]="false" nzShowSearch nzPlaceHolder="Please select"
+          [(ngModel)]="selectedOrgID" (ngModelChange)="onSelectOrg($event)">
         </nz-tree-select>
       </div>
     </div>
@@ -41,13 +41,13 @@
 
   <div footer class="footer-add-user">
     <div class="flex">
-      <!-- <div class="select-all-user m-l-24 m-r-32" (change)="selectAll()">
-                <input class="checked" [(ngModel)]="allChecked" type="checkbox" >
-                <label for="allChecked">Chọn tất cả</label><br>
+      <div class="select-all-user m-l-24 m-r-32" (change)="selectAll()">
+        <input class="checked" [(ngModel)]="allChecked" type="checkbox">
+        <label for="allChecked">Chọn tất cả</label><br>
 
-            </div> -->
+      </div>
       <div class="selected-users m-l-12">
-        <span>Đã chọn: {{countUser}}</span>
+        <span>Đã chọn: <b>{{countUser}}</b></span>
         <div class="amount-user"></div>
       </div>
     </div>
