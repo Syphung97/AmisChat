@@ -1,27 +1,63 @@
-<amis-popup [title]="'Chuyển tiếp tin nhắn'" [width]="'416px'">
- 
+<amis-popup [title]="'Chuyển tiếp tin nhắn'" [width]="'416px'" [isVisible]="isVisible" (onCancel)="hide($event)">
+
     <div content class="content">
         <div class="forward-mess">
             <!-- <div class="title-forward-mess fs-14">{{"AMIS_CHAT" | translate}}</div> -->
-            <div class="title-forward-mess fs-14">Tin nhắn</div>
-            <div class="message">Vầng anh, em sẽ cố gắng ạ.</div>
+            <div class="title-forward-mess fs-14">Tin nhắn từ <b>{{_msg?.senderName}}</b></div>
+            <ng-container [ngSwitch]="_msg?.type">
+                <div *ngSwitchCase="messageType.Text" class="user-message text-gray fs-12"
+                    [innerHTML]="_msg?.content?.content">
+                </div>
+                <div *ngSwitchCase="messageType.Photo" class="user-message text-gray fs-12">
+                    Hình ảnh
+                </div>
+                <div *ngSwitchCase="messageType.File" class="user-message text-gray fs-12">
+                    Tệp
+                </div>
+                <div *ngSwitchCase="messageType.Video" class="user-message text-gray fs-12">
+                    Video
+                </div>
+            </ng-container>
         </div>
+
         <div class="search-user">
+
             <div class="from-to fs-14">Gửi đến</div>
+            <nz-input-group class="m-t-12" nzSize="large" [nzSuffix]="suffixIconSearch">
+                <input placeholder="Tìm kiếm" nz-input [(ngModel)]="_valueSearch" (keyup)="onSearch()" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search" class="icon icon-32 icon-search-chat"></i>
+            </ng-template>
+
             <div class="searching"></div>
         </div>
         <div class="contact-recently">
             <div class="group-recently">
-                <div class="title-group fs-14">Nhóm gần đây</div>
-                <div></div>
+                <div class="title-group fs-14">Cuộc trò chuyện gần đây</div>
+                <div class="list-conv">
+                    <div *ngFor="let conversation of listConversations; trackBy: trackByConver" class="conv flex-m">
+                        <div class="avatar m-r-16">
+                            <amis-avatar [size]="32" *ngIf="!conversation?.isGroup" [useFor]="'Conv'"
+                                [conv]="conversation"></amis-avatar>
+                            <amis-avatar-group [size]="40" *ngIf="conversation?.isGroup" 
+                                [paticipant]="conversation.participants">
+                            </amis-avatar-group>
+                        </div>
+                        <div class="info">
+                            <div class="user-name">
+                                {{ conversation | nameConv }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="contact-recently"></div>
         </div>
 
     </div>
     <div footer class="footer-forward-mess">
         <div class="btn-done">
-            <span class="btn-done-text">Xong</span>
+            <span (click)="hide($event)" class="btn-done-text">Xong</span>
         </div>
     </div>
 </amis-popup>

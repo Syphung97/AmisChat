@@ -32,6 +32,7 @@ import { ConversationService } from '../services/conversation.service';
 import { PlatformConversation } from '../models/PlatformConversation';
 import { FormMode } from 'src/app/core/models/FormMode';
 import { MessageAction } from 'src/app/messages/models/MessageAction';
+import { Message } from 'src/app/messages/models/Message';
 
 @Component({
   selector: 'amis-conversation-box',
@@ -68,6 +69,11 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
   messageComing!: object;
 
   actionObject!: MessageAction;
+
+  // Hiển thị popup
+  isVisiblePopupForward = false;
+
+  messageForward!: Message;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -402,6 +408,9 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
       case MessageActionConst.Copy:
         this.copyMessage(e.payload.content.content);
         break;
+      case MessageActionConst.Forward:
+        this.messageForward = e?.payload;
+        this.openPopupForward();
     }
   }
 
@@ -579,6 +588,7 @@ export class ConversationBoxComponent extends BaseComponent implements OnInit {
 
 
   openPopupForward(): void {
+    this.isVisiblePopupForward = true;
 
   }
 

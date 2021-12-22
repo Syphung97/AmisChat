@@ -19,7 +19,8 @@
         <!-- <div  class="flex-m text-grey typing-indicator p-l-12"> -->
         <amis-typing-indicator *ngIf="typingIndicatorObject"></amis-typing-indicator>
         <!-- </div> -->
-        <amis-message-composer #messageComposer [conv]="conversation" [replyObject]="actionObject" (onSendMessage)="onSendMessage($event)">
+        <amis-message-composer #messageComposer [conv]="conversation" [replyObject]="actionObject"
+          (onSendMessage)="onSendMessage($event)">
         </amis-message-composer>
 
       </nz-content>
@@ -34,3 +35,6 @@
   </nz-sider>
 </nz-layout>
 
+<amis-popup-forward-message *ngIf="isVisiblePopupForward" [isVisible]="isVisiblePopupForward" [msg]="messageForward"
+  [conv]="conversation" (onHidden)="isVisiblePopupForward = false">
+</amis-popup-forward-message>
