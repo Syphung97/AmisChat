@@ -60,6 +60,23 @@
     padding     : 4px 16px;
     height: 48px;
     &:hover {
-        background-color: #e5f1ff;
+        // background-color: #e5f1ff;
+    }
+    .btn-send{
+        background-color: #DBEAFB;
+        border-radius: 13px;
+        cursor: pointer;
+        color: #0077FF;
+        padding: 0 12px;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    }
+    .user-name{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 }
+

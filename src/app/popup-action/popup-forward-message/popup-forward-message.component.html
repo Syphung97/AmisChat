@@ -32,25 +32,32 @@
 
             <div class="searching"></div>
         </div>
-        <div class="contact-recently">
+        <div>
             <div class="group-recently">
-                <div class="title-group fs-14">Cuộc trò chuyện gần đây</div>
-                <div class="list-conv">
-                    <div *ngFor="let conversation of listConversations; trackBy: trackByConver" class="conv flex-m">
+                <div  class="title-group fs-14 m-t-8 m-b-4">Cuộc trò chuyện gần đây</div>
+                <div *ngIf="!isLoading; else loading" class="list-conv">
+                    <div *ngFor="let conversation of listConversations;" class="conv flex-m">
                         <div class="avatar m-r-16">
-                            <amis-avatar [size]="32" *ngIf="!conversation?.isGroup" [useFor]="'Conv'"
+                            <amis-avatar [size]="36" *ngIf="!conversation?.isGroup" [useFor]="'Conv'"
                                 [conv]="conversation"></amis-avatar>
-                            <amis-avatar-group [size]="40" *ngIf="conversation?.isGroup" 
+                            <amis-avatar-group [size]="36" *ngIf="conversation?.isGroup" 
                                 [paticipant]="conversation.participants">
                             </amis-avatar-group>
                         </div>
-                        <div class="info">
-                            <div class="user-name">
+                        <div class="info flex-sb-m w-full">
+                            <div class="user-name flex-1">
                                 {{ conversation | nameConv }}
+                            </div>
+                            <div class="btn-send flex-c-m" (click)="handleForward(conversation)">
+                                <span *ngIf="!conversation.IsSent">Gửi</span>
+                                <span *ngIf="conversation.IsSent">Đã gửi</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- <div *ngTemplateOutlet="loading">
+
+                </div> -->
             </div>
         </div>
 
@@ -60,4 +67,30 @@
             <span (click)="hide($event)" class="btn-done-text">Xong</span>
         </div>
     </div>
+    <ng-template #loading>
+        <div class="conv pos-relative flex-m">
+          <nz-skeleton-element class="" [nzActive]="true" nzType="avatar" [nzSize]="32">
+          </nz-skeleton-element>
+          <nz-skeleton-element nzType="input" [nzSize]="'small'" [nzActive]="true" class="m-l-12" style="width: 200px">
+          </nz-skeleton-element>
+        </div>
+        <div class="conv pos-relative flex-m">
+          <nz-skeleton-element class="" [nzActive]="true" nzType="avatar" [nzSize]="32">
+          </nz-skeleton-element>
+          <nz-skeleton-element nzType="input" [nzSize]="'small'" [nzActive]="true" class="m-l-12" style="width: 200px">
+          </nz-skeleton-element>
+        </div>
+        <div class="conv pos-relative flex-m">
+          <nz-skeleton-element class="" [nzActive]="true" nzType="avatar" [nzSize]="32">
+          </nz-skeleton-element>
+          <nz-skeleton-element nzType="input" [nzSize]="'small'" [nzActive]="true" class="m-l-12" style="width: 200px">
+          </nz-skeleton-element>
+        </div>
+        <div class="conv pos-relative flex-m">
+          <nz-skeleton-element class="" [nzActive]="true" nzType="avatar" [nzSize]="32">
+          </nz-skeleton-element>
+          <nz-skeleton-element nzType="input" [nzSize]="'small'" [nzActive]="true" class="m-l-12" style="width: 200px">
+          </nz-skeleton-element>
+        </div>
+      </ng-template>
 </amis-popup>

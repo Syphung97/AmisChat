@@ -10,4 +10,5 @@ export class MessageData {
   content!: string;
   metadata!: object;
   sticker: any;
+  video: any;
 }

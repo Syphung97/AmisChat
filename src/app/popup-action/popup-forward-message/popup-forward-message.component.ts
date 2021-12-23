@@ -1,19 +1,21 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter, Pipe } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
 import { ConversationService } from 'src/app/conversation/services/conversation.service';
+import { BaseComponent } from 'src/app/core/base.component';
 import { CommonFn } from 'src/app/core/functions/commonFn';
 import { PagingRequest } from 'src/app/core/models/PagingRequest';
 import { StringeeService } from 'src/app/core/services/stringee.service';
 import { UserService } from 'src/app/core/services/users/user.service';
 import { Message } from 'src/app/messages/models/Message';
 import { MessageType } from 'src/app/shared/enum/message-type.enum';
+import { MessageContent, MessageData } from 'src/app/shared/models/stringee-model/MessageContent';
 
 @Component({
   selector: 'amis-popup-forward-message',
   templateUrl: './popup-forward-message.component.html',
   styleUrls: ['./popup-forward-message.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PopupForwardMessageComponent implements OnInit {
+export class PopupForwardMessageComponent extends BaseComponent implements OnInit {
 
   senderName = "";
   messageType = MessageType;
@@ -34,15 +36,21 @@ export class PopupForwardMessageComponent implements OnInit {
   // tslint:disable-next-line:variable-name
   _valueSearch = "";
 
+  timeoutSearch!: any;
+
   convPagingRequest = new PagingRequest();
 
   listConversations!: any;
+
+  isLoading = false;
 
   @Output() onHidden = new EventEmitter();
   constructor(
     private conversationSV: ConversationService,
     private stringeeService: StringeeService
-  ) { }
+  ) {
+    super();
+  }
 
   @Input() isVisible = false;
 
@@ -60,7 +68,11 @@ export class PopupForwardMessageComponent implements OnInit {
   }
 
   onSearch(): void {
-    this.getPlatformConversation();
+    clearTimeout(this.timeoutSearch);
+    this.timeoutSearch = setTimeout(() => {
+      this.getPlatformConversation();
+    }, 500);
+
   }
 
   //#region  Conversation
@@ -71,6 +83,7 @@ export class PopupForwardMessageComponent implements OnInit {
    */
   getPlatformConversation(): void {
     try {
+      this.isLoading = true;
       this.convPagingRequest.Filter = window.btoa(
         `[["ConversationName","contains","${this._valueSearch.trim()}"]]`
       );
@@ -85,11 +98,13 @@ export class PopupForwardMessageComponent implements OnInit {
       this.conversationSV
         .getPagingPlatformConversation(this.convPagingRequest)
         .subscribe((data) => {
+
           if (data?.Success) {
             this.stringeeService.getLastConversation(
               1000,
               false,
               (status, code, message, convs) => {
+                this.isLoading = false;
                 const flatformConv = data.Data.PageData;
                 const convFilter = convs?.filter((el) => {
                   return flatformConv
@@ -103,7 +118,25 @@ export class PopupForwardMessageComponent implements OnInit {
           }
         });
     } catch (error) {
+      this.isLoading = false;
     }
+  }
+
+  handleForward(conv): void {
+
+    const msgs = new MessageData();
+    msgs.content = this._msg.content.content;
+    msgs.metadata = this._msg.content.metadata;
+    msgs.video = this._msg.content.video;
+    const messageContent = new MessageContent();
+    messageContent.message = msgs;
+    messageContent.type = this._msg.type;
+    messageContent.convId = conv.id;
+    this.stringeeService.sendMessage(messageContent, (status, code, message, msg) => {
+      if (msg) {
+        conv.IsSent = true;
+      }
+    });
   }
 
   trackByConver(index, item): any {

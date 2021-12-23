@@ -13,7 +13,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        CookieClone: "x-deviceid=08957a92-5ea6-491a-8acc-dc563e37878b; _ga_9XEFWHNC6Z=GS1.1.1638848385.1.1.1638848453.0; _ga_X3HSST6E2Z=GS1.1.1638848386.1.1.1638848453.0; _ga_Q7T546RR39=GS1.1.1639042380.1.0.1639042383.0; _ga_6NQ98LXLDM=GS1.1.1639703977.20.0.1639703977.0; _ga=GA1.2.914578765.1638755289; x-culture=vi; _gid=GA1.2.1772912856.1640134339; x-sessionid=ac7f0348399b4a19a312be9564f037d4; x-tenantid=bBtomi+oAvG96Hcgu5lXamIioSCz/chFsh3uiKngd8/A6iplZNdxOP8/neTpY6LI; x-lastapp=Messenger;/messenger/"
+        CookieClone: "x-deviceid=08957a92-5ea6-491a-8acc-dc563e37878b; _ga_Q7T546RR39=GS1.1.1639042380.1.0.1639042383.0; x-culture=vi; _gid=GA1.2.1772912856.1640134339; _ga_X3HSST6E2Z=GS1.1.1640169639.5.0.1640169639.0; _ga_9XEFWHNC6Z=GS1.1.1640169638.5.1.1640169655.0; x-sessionid=a9ccbf84f5fd4acdbe9fdb6f84449c1f; x-tenantid=bBtomi+oAvG96Hcgu5lXamIioSCz/chFsh3uiKngd8/A6iplZNdxOP8/neTpY6LI; _ga=GA1.1.914578765.1638755289; _ga_6NQ98LXLDM=GS1.1.1640219589.23.1.1640219622.0; x-lastapp=Messenger;/messenger/"
       }
     });
     return next.handle(request).pipe(catchError(err => {

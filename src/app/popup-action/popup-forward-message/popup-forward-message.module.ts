@@ -9,6 +9,7 @@ import { AvatarModule } from 'src/app/shared/components/avatar/avatar.module';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { AvatarGroupModule } from 'src/app/shared/components/avatar-group/avatar-group.module';
 import { NameConvModule } from 'src/app/core/pipes/name-conv/name-conv.module';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 
 @NgModule({
@@ -24,8 +25,8 @@ import { NameConvModule } from 'src/app/core/pipes/name-conv/name-conv.module';
     AvatarModule,
     NzMessageModule,
     AvatarGroupModule,
-    NameConvModule
-  ],
+    NameConvModule,
+    NzSkeletonModule],
   exports: [PopupForwardMessageComponent]
 })
 export class PopupForwardMessageModule { }
